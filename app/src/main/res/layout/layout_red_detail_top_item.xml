@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_title_divider"
+            android:layout_width="2dp"
+            android:layout_height="24dip"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/img_title_divider" />
+
+        <TextView
+            android:id="@+id/tv_red_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/iv_title_divider"
+            android:lineSpacingExtra="7dip"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/font_size_sp_22" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_title"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_head_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:src="@drawable/img_default_head" />
+
+        <TextView
+            android:id="@+id/tv_red_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head_logo"
+            android:text="哈哈"
+            android:textColor="@color/font_red_detail_gray"
+            android:textSize="@dimen/font_size_sp_12" />
+
+        <TextView
+            android:id="@+id/tv_red_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_red_name"
+            android:layout_toRightOf="@+id/iv_head_logo"
+            android:text="2015/8/12 15:14:19"
+            android:textColor="@color/font_red_detail_gray"
+            android:textSize="@dimen/font_size_sp_12" />
+
+        <ImageView
+            android:id="@+id/iv_company_v"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignBottom="@+id/tv_red_time"
+            android:layout_below="@+id/tv_red_name"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@+id/tv_red_time"
+            android:src="@drawable/img_company_v" />
+    </RelativeLayout>
+
+    <com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery
+        android:id="@+id/vp_pictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tv_red_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:autoLink="web"
+        android:lineSpacingExtra="4dip"
+        android:textColor="@android:color/black"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/font_size_sp_16" />
+
+</merge>

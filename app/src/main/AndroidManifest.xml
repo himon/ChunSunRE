@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chunsun.redenvelope" >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".app.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.WelcomeActivity" />
+        <activity android:name=".ui.activity.account.RegisterActivity" />
+        <activity android:name=".ui.activity.account.LoginActivity" />
+        <activity android:name=".ui.activity.account.QuickLoginActivity" />
+        <activity android:name=".ui.activity.account.ForgetPwdActivity" />
+        <activity android:name=".ui.activity.account.RegisterNextActivity" />
+        <activity android:name=".ui.activity.CommonWebActivity" />
+        <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
+        <activity android:name=".ui.activity.RedDetailActivity" />
+        <activity android:name=".ui.activity.WebRedDetailActivity" />
+        <activity android:name=".ui.activity.EditInfoActivity" />
+        <activity android:name=".ui.activity.personal.NotReceivingRedActivity" />
+        <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordClassifyActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordListActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordDetailActivity" />
+        <activity android:name=".ui.activity.personal.BalanceActivity" />
+        <activity android:name=".ui.activity.personal.BalanceDetailListActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawCashAlipayActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawCashBankActivity" />
+        <activity
+            android:name=".ui.activity.personal.WithdrawcashAlipayConfirmActivity"
+            android:label="@string/title_activity_withdrawcash_confirm" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.PhoneRechargeActivity"
+            android:label="@string/title_activity_phone_recharge" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.PhoneRechargeConfirmActivity"
+            android:label="@string/title_activity_phone_recharge_confirm" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.BalanceRechargeActivity"
+            android:label="@string/title_activity_balance_recharge" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.MineInviteCodeActivity"
+            android:label="@string/title_activity_mine_invite_code" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.InviteRecordListActivity"
+            android:label="@string/title_activity_invite_record_list" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.AboutUsActivity"
+            android:label="@string/title_activity_about_us" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.UpdatePasswordActivity"
+            android:label="@string/title_activity_update_password" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.UserPrivacyActivity"
+            android:label="@string/title_activity_user_privacy" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phonenum"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_input_phone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_phonenum"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="#c8c7cd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/validate_code"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_input_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_validate_code"
+                android:inputType="number"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:background="#c8c7cd" />
+
+            <Button
+                android:id="@+id/btn_get_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="@string/get_validate_code"
+                android:textColor="@color/font_blue"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_gray_line" />
+    </LinearLayout>
+
+</merge>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_dialog_radius_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/dialog_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/font_size_sp_18" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_confirm_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_dialog_button_bottom_left"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/cancel"
+            android:textColor="@color/font_normal_gray"
+            android:textSize="@dimen/font_size_sp_18" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_gray" />
+
+        <Button
+            android:id="@+id/btn_confirm_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_dialog_button_bottom_right"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/ok"
+            android:textColor="@color/font_normal_gray"
+            android:textSize="@dimen/font_size_sp_18" />
+    </LinearLayout>
+
+</LinearLayout>

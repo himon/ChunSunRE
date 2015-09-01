@@ -1,0 +1,159 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.personal.AboutUsActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_mid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:layout_marginTop="50dip"
+                android:src="@drawable/img_login_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:text="当前版本：1.2.4"
+                android:textColor="@color/font_gray"
+                android:textSize="@dimen/font_size_sp_12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="20dip"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dip">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/img_aboutus_mobile" />
+
+                    <TextView
+                        android:id="@+id/tv_phonenum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_tel" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dip">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/img_aboutus_email" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_email" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dip">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/img_aboutus_qq" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_qq" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dip">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/img_aboutus_qq_group" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_qq_group" />
+                </LinearLayout>
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dip">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginRight="5dip"
+                        android:src="@drawable/img_aboutus_address" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/contact_address" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="150dip"
+                android:layout_height="55dip"
+                android:layout_marginTop="50dip"
+                android:src="@drawable/img_aboutus_logo" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

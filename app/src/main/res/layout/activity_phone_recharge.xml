@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_gray"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.personal.PhoneRechargeActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffff00"
+        android:padding="6dp"
+        android:text="@string/phone_recharge_remind"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_sp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="12dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phonenum"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:background="@color/transparency"
+            android:hint="@string/input_recharge_phone"
+            android:inputType="number"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/font_hint_gray"
+            android:textSize="@dimen/font_size_sp_16" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="7dp"
+        android:divider="@color/transparency"
+        android:dividerHeight="0.5dp"></ListView>
+
+</LinearLayout>

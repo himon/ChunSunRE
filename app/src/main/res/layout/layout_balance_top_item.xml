@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_beige"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/balance"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
+                android:id="@+id/tv_total_balance"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textColor="@color/global_red"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/tv_recharge"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@color/button_bg_green"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/recharge"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:text="@string/withdrawal_money_tips"
+            android:textColor="#2e9bf8"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_gray_line" />
+
+    <RelativeLayout
+        android:id="@+id/ital_withdrawal_bankcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_balance_list_item">
+
+        <RelativeLayout
+            android:id="@+id/rl_bankcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_bankcard" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/rl_bankcard"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/bank_withdraw_cash"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-8dp"
+                android:text="@string/bank_withdraw_cash_prompt"
+                android:textColor="@color/font_gray"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/img_next"
+            android:gravity="center_vertical"
+            android:textColor="@color/font_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ital_withdrawal_zhifubao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/selector_balance_list_item">
+
+        <RelativeLayout
+            android:id="@+id/rl_zhifubao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_zhifubao" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/rl_zhifubao"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/alipay_withdraw_cash"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-8dp"
+                android:text="@string/alipay_withdraw_cash_prompt"
+                android:textColor="@color/font_gray"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/img_next"
+            android:gravity="center_vertical"
+            android:textColor="@color/font_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ital_withdrawal_huafei"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/selector_balance_list_item">
+
+        <RelativeLayout
+            android:id="@+id/rl_huafei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="35dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_huafei" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_toRightOf="@id/rl_huafei"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/phone_recharge"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="-8dp"
+                android:text="@string/phone_recharge_prompt"
+                android:textColor="@color/font_gray"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/img_next"
+            android:gravity="center_vertical"
+            android:textColor="@color/font_gray" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_record_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="#e1e1e1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:drawableLeft="@drawable/img_record_icon"
+            android:drawablePadding="4dp"
+            android:text="@string/account_details"
+            android:textColor="@color/font_gray"
+            android:textSize="@dimen/font_size_sp_14" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="#e1e1e1" />
+    </LinearLayout>
+
+</LinearLayout>

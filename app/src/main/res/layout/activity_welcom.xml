@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.chunsun.redenvelope.ui.activity.WelcomeActivity">
+
+    <ImageView
+        android:id="@+id/iv_start_pager"
+        android:layout_gravity="clip_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_start_page"
+        android:visibility="visible" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:visibility="gone" />
+
+</RelativeLayout>

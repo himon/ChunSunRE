@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:louis="http://schemas.android.com/apk/res-auto/com.chunsun.redenvelope"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
+
+    <include layout="@layout/layout_gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <com.chunsun.redenvelope.widget.ChangeColorIconWithText
+            android:id="@+id/indicator_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            louis:tab_color="@color/global_red"
+            louis:tab_icon="@drawable/img_icon_home_selected"
+            louis:tab_text="@string/home"
+            louis:tab_text_size="@dimen/font_size_sp_12" />
+
+        <com.chunsun.redenvelope.widget.ChangeColorIconWithText
+            android:id="@+id/indicator_ad"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            louis:tab_color="@color/font_gray"
+            louis:tab_icon="@drawable/img_icon_ad"
+            louis:tab_text="@string/ad"
+            louis:tab_text_size="@dimen/font_size_sp_12" />
+
+        <com.chunsun.redenvelope.widget.ChangeColorIconWithText
+            android:id="@+id/indicator_near"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            louis:tab_color="@color/font_gray"
+            louis:tab_icon="@drawable/img_icon_near"
+            louis:tab_text="@string/near"
+            louis:tab_text_size="@dimen/font_size_sp_12" />
+
+        <com.chunsun.redenvelope.widget.ChangeColorIconWithText
+            android:id="@+id/indicator_me"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            louis:tab_color="@color/font_gray"
+            louis:tab_icon="@drawable/img_icon_me"
+            louis:tab_text="@string/me"
+            louis:tab_text_size="@dimen/font_size_sp_12" />
+
+    </LinearLayout>
+
+</LinearLayout>

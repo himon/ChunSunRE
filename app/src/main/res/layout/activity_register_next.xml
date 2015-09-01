@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.account.RegisterNextActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="@string/pwd"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_input_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_pwd"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="#c8c7cd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="@string/comfirm_pwd"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_confirm_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_again_pwd"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_gray_line" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_button_red_radius"
+        android:gravity="center"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_sp_18" />
+
+</LinearLayout>

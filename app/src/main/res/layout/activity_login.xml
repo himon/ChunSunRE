@@ -1,0 +1,122 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.account.LoginActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_gray_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:text="@string/account"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_input_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_account"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="#c8c7cd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:text="@string/login_pwd"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <EditText
+                android:id="@+id/et_input_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="@string/input_pwd"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/font_hint_gray"
+                android:textSize="@dimen/font_size_sp_16" />
+        </LinearLayout>
+
+        <include layout="@layout/layout_gray_line" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_no_pwd_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quick_login"
+            android:textColor="#989898"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/forget_pwd"
+            android:textColor="@color/font_blue"
+            android:textSize="@dimen/font_size_sp_16" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_button_red_radius"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_sp_18" />
+
+</LinearLayout>

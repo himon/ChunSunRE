@@ -1,0 +1,406 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.personal.UserPrivacyActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tv_name_title_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/name"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_name_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sex_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_sex"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@color/font_gray"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_sex_is_secret"
+                        android:layout_width="41dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_toogle_btn"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_age_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/age"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_age"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@color/font_gray"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_age_is_secret"
+                        android:layout_width="41dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_toogle_btn"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_job_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/occupation"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_job"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@color/font_gray"
+                        android:textSize="@dimen/font_size_sp_16" />
+
+                    <ToggleButton
+                        android:id="@+id/tb_job_is_secret"
+                        android:layout_width="41dp"
+                        android:layout_height="26dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_toogle_btn"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="15dp"
+                android:background="#c8c7cd" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phonenum"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_phone_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/telephone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_tel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_tel_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wechat"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_weixin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_weixin_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QQ"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_qq"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_qq_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="15dp"
+                android:background="#c8c7cd" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sended_red_envelope"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_send_red"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/font_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <ToggleButton
+                    android:id="@+id/tb_send_red_is_secret"
+                    android:layout_width="41dp"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/selector_toogle_btn"
+                    android:checked="true"
+                    android:textOff=""
+                    android:textOn="" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="15dp"
+                android:background="#c8c7cd" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

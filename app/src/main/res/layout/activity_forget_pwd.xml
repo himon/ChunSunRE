@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.account.ForgetPwdActivity">
+
+    <include layout="@layout/layout_user_login" />
+
+    <Button
+        android:id="@+id/btn_next_step"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_button_red_radius"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_sp_18" />
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.account.QuickLoginActivity">
+
+    <include layout="@layout/layout_user_login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_agree_service_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_checkbox_login"
+            android:checked="true"
+            android:gravity="left|center_vertical"
+            android:linksClickable="false"
+            android:paddingLeft="20dp"
+            android:text="@string/read_and_agree"
+            android:textColor="#8e8e93"
+            android:textSize="@dimen/font_size_sp_14" />
+
+        <TextView
+            android:id="@+id/tv_service_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:text="@string/agreement"
+            android:textColor="#007aff"
+            android:textSize="@dimen/font_size_sp_14" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/selector_button_red_radius"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_size_sp_18" />
+
+</LinearLayout>

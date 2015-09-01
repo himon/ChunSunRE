@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.personal.SettingActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/global_gray"
+            android:orientation="vertical">
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_check_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_clear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_update_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/si_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            </com.chunsun.redenvelope.widget.SettingItem>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

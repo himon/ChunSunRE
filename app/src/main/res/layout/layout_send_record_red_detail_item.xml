@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_gray"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/bg_beige" />
+
+    <RelativeLayout
+        android:id="@+id/rl_classify_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_beige"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_classify_status"
+            android:src="@drawable/img_not_pay" />
+
+        <TextView
+            android:id="@+id/tv_classify_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/font_blue2"
+            android:textSize="@dimen/font_size_sp_20" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_beige"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_range_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/range"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_range_title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_range_title"
+            android:text="@string/type"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_range"
+            android:layout_toRightOf="@+id/tv_type_title"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_total_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_type_title"
+            android:text="@string/total_quantity"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_total_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_type"
+            android:layout_toRightOf="@+id/tv_total_num_title"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_total_money_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_num_title"
+            android:text="@string/aggregate_amount"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_num"
+            android:layout_toRightOf="@+id/tv_total_money_title"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_not_receive_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_money_title"
+            android:text="@string/not_receiving"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_not_receive_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_total_money"
+            android:layout_toRightOf="@+id/tv_not_receive_num_title"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_receive_num_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_not_receive_num_title"
+            android:text="@string/have_received"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <TextView
+            android:id="@+id/tv_receive_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_not_receive_num"
+            android:layout_toRightOf="@+id/tv_receive_num_title"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_16" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp">
+
+        <include layout="@layout/layout_red_detail_top_item" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pay_red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="1dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_pay_red"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_button_red_radius"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_18" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_record_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_comment_record"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_red_detail_radio_button_background"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/comment"
+            android:textColor="@drawable/selector_red_detail_radio_button_text"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <RadioButton
+            android:id="@+id/rb_get_red_record"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_red_detail_radio_button_background"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/red_envelope_collect_list"
+            android:textColor="@drawable/selector_red_detail_radio_button_text"
+            android:textSize="@dimen/font_size_sp_16" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/red_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/global_red" />
+
+</LinearLayout>

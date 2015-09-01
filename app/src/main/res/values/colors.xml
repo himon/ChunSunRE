@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- 全局 -->
+    <color name="global_red">#F54C4C</color>
+    <color name="global_gray">#f6f5fa</color>
+    <color name="global_red_tran">#99f54c4c</color>
+    <color name="transparency">#00000000</color>
+    <color name="black">#000000</color>
+
+    <!-- 字体 -->
+    <color name="font_gray">#808080</color>
+    <color name="font_gray2">#8E8E93</color>
+    <color name="font_gray_red_envelope">#B2B2B2</color>
+    <color name="font_web_red_detail">#BCBCBC</color>
+    <color name="font_red_detail_gray">#696969</color>
+    <color name="font_blue">#007AFF</color>
+    <color name="font_blue2">#2e9bf8</color>
+    <color name="font_hint_gray">#c8c8c8</color>
+    <color name="font_normal_gray">#656565</color>
+    <color name="button_select">#cacaca</color>
+    <color name="font_black">#000000</color>
+    <color name="font_white">#FFFFFF</color>
+    <color name="font_yellow">#ffe96f</color>
+    <color name="font_yellow2">#FFA53E</color>
+
+    <!-- 线条 -->
+    <color name="line_gray">#B0B0B0</color>
+    <color name="line_gray2">#C8C7CC</color>
+    <color name="line_gray3">#C8C8C8</color>
+
+    <!-- 背景色 -->
+    <color name="bg_gray">#F6F6F6</color>
+    <color name="bg_list_gray">#ABACA9</color>
+    <color name="bg_web_red_detail">#E3E3E3</color>
+    <color name="bg_red_detail_bg">#DDDDE5</color>
+    <color name="dialog_bg">#F6F6F6</color>
+    <color name="red_detail_gralley_gray">#905A5A5A</color>
+    <color name="bg_beige">#fff7f0</color>
+    <color name="button_bg_green">#00C921</color>
+    <color name="bg_yellow">#FFF5C4</color>
+    <color name="bg_rice_yellow">#FFFEF9</color>
+    <color name="bg_yellow_deep">#FFEF6B</color>
+
+
+    <color name="white">#FFFFFF</color>
+
+
+</resources>
