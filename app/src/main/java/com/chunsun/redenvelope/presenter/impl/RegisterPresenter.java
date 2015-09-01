@@ -2,7 +2,6 @@ package com.chunsun.redenvelope.presenter.impl;
 
 import android.text.TextUtils;
 
-import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RegisterMode;
@@ -10,9 +9,6 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
 import com.chunsun.redenvelope.model.impl.RegisterModeImpl;
-import com.chunsun.redenvelope.presenter.OnRegisterGetValidataCodeListener;
-import com.chunsun.redenvelope.presenter.OnRegisterNextStepListener;
-import com.chunsun.redenvelope.presenter.OnRegisterValidataInviteCodeListener;
 import com.chunsun.redenvelope.ui.activity.account.RegisterActivity;
 import com.chunsun.redenvelope.ui.view.IRegisterView;
 import com.chunsun.redenvelope.utils.ShowToast;

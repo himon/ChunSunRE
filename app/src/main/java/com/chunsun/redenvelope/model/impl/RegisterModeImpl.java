@@ -10,15 +10,9 @@ import com.chunsun.redenvelope.model.RegisterMode;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnRegisterGetValidataCodeListener;
-import com.chunsun.redenvelope.presenter.OnRegisterNextStepListener;
-import com.chunsun.redenvelope.presenter.OnRegisterValidataInviteCodeListener;
 import com.chunsun.redenvelope.ui.activity.account.RegisterActivity;
 import com.chunsun.redenvelope.utils.JSONUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

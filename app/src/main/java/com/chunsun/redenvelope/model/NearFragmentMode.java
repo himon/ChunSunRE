@@ -1,10 +1,6 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.presenter.OnGetHbAdListener;
-import com.chunsun.redenvelope.presenter.OnGetHbPoolListener;
-import com.chunsun.redenvelope.presenter.OnGrabRedEnvelopeListener;
-import com.chunsun.redenvelope.presenter.impl.NearFragmentPresenter;
 
 /**
  * Created by Administrator on 2015/8/10.

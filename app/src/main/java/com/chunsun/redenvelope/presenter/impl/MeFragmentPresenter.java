@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.presenter.impl;
 
-import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
@@ -10,14 +9,9 @@ import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.impl.MeFragmentModeImpl;
-import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.OnGetUserInfoListener;
 import com.chunsun.redenvelope.ui.fragment.MeFragment;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 

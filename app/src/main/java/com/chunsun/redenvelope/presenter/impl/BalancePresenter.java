@@ -6,7 +6,6 @@ import com.chunsun.redenvelope.model.BalanceMode;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.impl.BalanceModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetUserAmountListener;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
 import com.chunsun.redenvelope.utils.ShowToast;

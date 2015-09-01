@@ -11,8 +11,6 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnGetUserInfoListener;
-import com.chunsun.redenvelope.presenter.OnRegisterFinishedListener;
 import com.chunsun.redenvelope.ui.activity.account.RegisterNextActivity;
 import com.chunsun.redenvelope.utils.JSONUtils;
 import com.chunsun.redenvelope.utils.StringUtil;

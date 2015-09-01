@@ -9,17 +9,10 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.event.RedDetailEvent;
-import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.model.impl.RedDetailFragmentModeImpl;
-import com.chunsun.redenvelope.presenter.OnRedDetailCommentListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailGetCommentListListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailGetRedRecordListListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailSetFavoriteListener;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
-
-import java.text.BreakIterator;
 
 import de.greenrobot.event.EventBus;
 

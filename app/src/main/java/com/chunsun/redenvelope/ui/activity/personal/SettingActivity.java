@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -129,6 +130,7 @@ public class SettingActivity extends BaseActivity implements ISettingView, View.
     @Override
     public void toLogout() {
         new Preferences(this).setToken("");
+        MainApplication.getContext().setmUserEntity(null);
         EventBus.getDefault().post(new MainEvent(Constants.FROM_LOGIN_BACK));
         back();
     }

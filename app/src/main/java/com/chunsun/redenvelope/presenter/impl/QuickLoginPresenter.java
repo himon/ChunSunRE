@@ -11,8 +11,6 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
 import com.chunsun.redenvelope.model.impl.QuickLoginModeImpl;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.OnLoginFinishedListener;
-import com.chunsun.redenvelope.presenter.OnRegisterGetValidataCodeListener;
 import com.chunsun.redenvelope.ui.activity.account.QuickLoginActivity;
 import com.chunsun.redenvelope.ui.view.IQuickLoginView;
 import com.chunsun.redenvelope.utils.ShowToast;

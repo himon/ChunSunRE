@@ -172,11 +172,11 @@ public class BalanceEntity extends BaseEntity {
              * id : 2
              * real_amount : 22
              */
-            private int amount;
+            private float amount;
             private int id;
-            private int real_amount;
+            private float real_amount;
 
-            public void setAmount(int amount) {
+            public void setAmount(float amount) {
                 this.amount = amount;
             }
 
@@ -184,11 +184,11 @@ public class BalanceEntity extends BaseEntity {
                 this.id = id;
             }
 
-            public void setReal_amount(int real_amount) {
+            public void setReal_amount(float real_amount) {
                 this.real_amount = real_amount;
             }
 
-            public int getAmount() {
+            public float getAmount() {
                 return amount;
             }
 
@@ -196,7 +196,7 @@ public class BalanceEntity extends BaseEntity {
                 return id;
             }
 
-            public int getReal_amount() {
+            public float getReal_amount() {
                 return real_amount;
             }
 
@@ -207,9 +207,9 @@ public class BalanceEntity extends BaseEntity {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(this.amount);
+                dest.writeFloat(this.amount);
                 dest.writeInt(this.id);
-                dest.writeInt(this.real_amount);
+                dest.writeFloat(this.real_amount);
             }
 
             public CzPoundageEntity() {
@@ -235,17 +235,17 @@ public class BalanceEntity extends BaseEntity {
         /**
          * 银行卡提现费率
          */
-        public static class CashPoundageRateEntity {
+        public static class CashPoundageRateEntity implements Parcelable {
             /**
              * amount : 2000
              * id : 27
              * rate : 0.01
              */
-            private int amount;
+            private float amount;
             private int id;
             private double rate;
 
-            public void setAmount(int amount) {
+            public void setAmount(float amount) {
                 this.amount = amount;
             }
 
@@ -257,7 +257,7 @@ public class BalanceEntity extends BaseEntity {
                 this.rate = rate;
             }
 
-            public int getAmount() {
+            public float getAmount() {
                 return amount;
             }
 
@@ -268,6 +268,37 @@ public class BalanceEntity extends BaseEntity {
             public double getRate() {
                 return rate;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeFloat(this.amount);
+                dest.writeInt(this.id);
+                dest.writeDouble(this.rate);
+            }
+
+            public CashPoundageRateEntity() {
+            }
+
+            protected CashPoundageRateEntity(Parcel in) {
+                this.amount = in.readFloat();
+                this.id = in.readInt();
+                this.rate = in.readDouble();
+            }
+
+            public static final Parcelable.Creator<CashPoundageRateEntity> CREATOR = new Parcelable.Creator<CashPoundageRateEntity>() {
+                public CashPoundageRateEntity createFromParcel(Parcel source) {
+                    return new CashPoundageRateEntity(source);
+                }
+
+                public CashPoundageRateEntity[] newArray(int size) {
+                    return new CashPoundageRateEntity[size];
+                }
+            };
         }
 
         /**
@@ -279,14 +310,14 @@ public class BalanceEntity extends BaseEntity {
              * id : 2
              * poundage : 2
              */
-            private int amount;
+            private float amount;
             private int id;
             /**
              * 扣除的手续费
              */
-            private int poundage;
+            private float poundage;
 
-            public void setAmount(int amount) {
+            public void setAmount(float amount) {
                 this.amount = amount;
             }
 
@@ -294,11 +325,11 @@ public class BalanceEntity extends BaseEntity {
                 this.id = id;
             }
 
-            public void setPoundage(int poundage) {
+            public void setPoundage(float poundage) {
                 this.poundage = poundage;
             }
 
-            public int getAmount() {
+            public float getAmount() {
                 return amount;
             }
 
@@ -306,7 +337,7 @@ public class BalanceEntity extends BaseEntity {
                 return id;
             }
 
-            public int getPoundage() {
+            public float getPoundage() {
                 return poundage;
             }
 
@@ -317,9 +348,9 @@ public class BalanceEntity extends BaseEntity {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(this.amount);
+                dest.writeFloat(this.amount);
                 dest.writeInt(this.id);
-                dest.writeInt(this.poundage);
+                dest.writeFloat(this.poundage);
             }
 
             public ZfbPoundageEntity() {

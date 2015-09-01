@@ -234,9 +234,13 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         } else if (Constants.FROM_AD.equals(event.getMsg())) {
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(0, false);
+            //刷新MeFragment页面
+            mMeFragment.getData();
         } else if (Constants.FROM_ME.equals(event.getMsg())) {
             mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
             mViewPager.setCurrentItem(0, false);
+            //刷新MeFragment页面
+            mMeFragment.getData();
         }
     }
 

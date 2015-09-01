@@ -7,15 +7,10 @@ import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.WithdrawcashAlipayConfirmMode;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnRechargeByAlipayListener;
-import com.chunsun.redenvelope.ui.activity.personal.WithdrawCashAlipayActivity;
 import com.chunsun.redenvelope.ui.activity.personal.WithdrawcashAlipayConfirmActivity;
-import com.chunsun.redenvelope.ui.view.IWithdrawcashAlipayConfirmView;
 import com.chunsun.redenvelope.utils.JSONUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
 

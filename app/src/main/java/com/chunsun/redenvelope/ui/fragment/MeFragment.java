@@ -120,7 +120,7 @@ public class MeFragment extends BaseFragment implements IMeFragmentView {
         });
     }
 
-    private void getData() {
+    public void getData() {
 
         mList = mPresenter.getData(new Preferences(getActivity()).getToken());
         if (mList != null) {

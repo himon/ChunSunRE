@@ -1,8 +1,6 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.presenter.OnGetFavoriteRedEnvelopeListener;
-import com.chunsun.redenvelope.presenter.OnGrabRedEnvelopeListener;
 
 /**
  * Created by Administrator on 2015/8/15.

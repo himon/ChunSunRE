@@ -4,12 +4,10 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordListMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordListModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetSendRedEnvelopeRecordListListener;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordListActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

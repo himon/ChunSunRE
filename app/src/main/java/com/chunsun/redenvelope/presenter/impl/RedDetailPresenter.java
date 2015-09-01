@@ -7,12 +7,10 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.impl.RedDetailModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetRedDetailListener;
 import com.chunsun.redenvelope.ui.activity.RedDetailActivity;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/10.

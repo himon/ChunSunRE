@@ -4,7 +4,6 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.AdFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.impl.AdFragmentModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetAdDelaySecondsRateListener;
 import com.chunsun.redenvelope.ui.fragment.AdFragment;
 import com.chunsun.redenvelope.ui.view.IAdFragment;
 import com.chunsun.redenvelope.utils.ShowToast;

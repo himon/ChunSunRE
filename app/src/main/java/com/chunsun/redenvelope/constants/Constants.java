@@ -31,7 +31,7 @@ public interface Constants {
     //String HOST_URL = "http://sv.chunsunkeji.com";
     String HOST_URL = "https://1.193.162.20:899";// 外网
     //String IMG_HOST_URL = "http://admin.chunsunkeji.com";
-    String IMG_HOST_URL = "https://1.193.162.20:899";
+    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
      * 正式发布时需要修正-----web service地址

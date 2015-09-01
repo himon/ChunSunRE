@@ -11,14 +11,9 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEnt
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnGrabRedEnvelopeListener;
-import com.chunsun.redenvelope.presenter.OnNotReceivingRedListener;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
 import com.chunsun.redenvelope.utils.JSONUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -10,13 +10,9 @@ import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnGetRedDetailListener;
 import com.chunsun.redenvelope.ui.activity.RedDetailActivity;
 import com.chunsun.redenvelope.utils.JSONUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;

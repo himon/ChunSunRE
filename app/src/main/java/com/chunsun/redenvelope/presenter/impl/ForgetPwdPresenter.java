@@ -2,7 +2,6 @@ package com.chunsun.redenvelope.presenter.impl;
 
 import android.text.TextUtils;
 
-import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.ForgetPwdMode;
@@ -10,8 +9,6 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
 import com.chunsun.redenvelope.model.impl.ForgetPwdModeImpl;
-import com.chunsun.redenvelope.presenter.OnRegisterGetValidataCodeListener;
-import com.chunsun.redenvelope.presenter.OnRegisterNextStepListener;
 import com.chunsun.redenvelope.ui.activity.account.ForgetPwdActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdView;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -21,7 +18,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/1.
  */
-public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity>, OnRegisterGetValidataCodeListener, OnRegisterNextStepListener {
+public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
     private IForgetPwdView forgetPwdView;
     private ForgetPwdMode forgetPwdMode;
@@ -30,8 +27,6 @@ public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity>, 
     public ForgetPwdPresenter(ForgetPwdActivity view) {
         forgetPwdView = view;
         forgetPwdMode = new ForgetPwdModeImpl(view);
-
-
     }
 
     /**
@@ -52,17 +47,11 @@ public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity>, 
         forgetPwdMode.nextStep(phonenum, code, this);
     }
 
-    @Override
-    public void onRegisterGetValidataError() {
-
-    }
-
     /**
      * 获取验证码成功
      *
      * @param entity
      */
-    @Override
     public void onRegisterGetValidataSuccess(SampleResponseEntity entity) {
         forgetPwdView.hideLoading();
         if (entity.isSuccess()) {
@@ -77,19 +66,13 @@ public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity>, 
      *
      * @param response
      */
-    @Override
     public void nextStepSuccess(SampleResponseEntity response) {
         forgetPwdView.hideLoading();
-        if(response.isSuccess()){
+        if (response.isSuccess()) {
             forgetPwdView.nextStep();
-        }else{
+        } else {
             ShowToast.Short(response.getMsg());
         }
-    }
-
-    @Override
-    public void nextStepError(VolleyError error) {
-
     }
 
     /**
@@ -119,16 +102,23 @@ public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity>, 
 
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
-
+        switch (event_tag) {
+            case Constants.LISTENER_TYPE_GET_CODE:
+                onRegisterGetValidataSuccess((SampleResponseEntity) data);
+                break;
+            case Constants.LISTENER_TYPE_NEXT_STEP:
+                nextStepSuccess((SampleResponseEntity) data);
+                break;
+        }
     }
 
     @Override
     public void onError(String msg) {
-
+        ShowToast.Short(msg);
     }
 
     @Override
     public void onException(String msg) {
-
+        ShowToast.Short(msg);
     }
 }

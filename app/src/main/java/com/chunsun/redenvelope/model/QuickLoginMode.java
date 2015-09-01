@@ -1,8 +1,6 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.presenter.OnLoginFinishedListener;
-import com.chunsun.redenvelope.presenter.OnRegisterGetValidataCodeListener;
 
 /**
  * Created by Administrator on 2015/8/1.

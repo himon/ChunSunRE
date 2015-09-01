@@ -4,7 +4,6 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.WithdrawcashAlipayConfirmMode;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.WithdrawcashAlipayConfirmModeImpl;
-import com.chunsun.redenvelope.presenter.OnRechargeByAlipayListener;
 import com.chunsun.redenvelope.ui.activity.personal.WithdrawcashAlipayConfirmActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawcashAlipayConfirmView;
 import com.chunsun.redenvelope.utils.ShowToast;

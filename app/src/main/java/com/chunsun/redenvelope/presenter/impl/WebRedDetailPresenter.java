@@ -5,7 +5,6 @@ import com.chunsun.redenvelope.model.WebRedDetailMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.model.impl.WebRedDetailModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetRedDetailListener;
 import com.chunsun.redenvelope.ui.activity.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;
 import com.chunsun.redenvelope.utils.ShowToast;

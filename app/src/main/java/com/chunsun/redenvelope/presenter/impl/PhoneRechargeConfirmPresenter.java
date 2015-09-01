@@ -7,8 +7,6 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.CarrierOperatorEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.PhoneRechargeConfirmModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetCarrierOperatorListener;
-import com.chunsun.redenvelope.presenter.OnRechargeMobileListener;
 import com.chunsun.redenvelope.ui.activity.personal.PhoneRechargeConfirmActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeConfirmView;
 import com.chunsun.redenvelope.utils.ShowToast;

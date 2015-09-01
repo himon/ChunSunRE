@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.presenter.impl;
 
-import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
@@ -10,8 +9,6 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.impl.RegisterNextModeImpl;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.OnGetUserInfoListener;
-import com.chunsun.redenvelope.presenter.OnRegisterFinishedListener;
 import com.chunsun.redenvelope.ui.activity.account.RegisterNextActivity;
 import com.chunsun.redenvelope.ui.view.IRegisterNextView;
 import com.chunsun.redenvelope.utils.ShowToast;

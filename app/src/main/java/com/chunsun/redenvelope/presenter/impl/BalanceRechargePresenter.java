@@ -4,7 +4,6 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.BalanceRechargeMode;
 import com.chunsun.redenvelope.model.entity.json.BalanceRechargeEntity;
 import com.chunsun.redenvelope.model.impl.BalanceRechargeModeImpl;
-import com.chunsun.redenvelope.presenter.OnRechargeBalanceListener;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceRechargeView;
 import com.chunsun.redenvelope.utils.ShowToast;

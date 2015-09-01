@@ -4,7 +4,6 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.MineInviteCodeMode;
 import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
 import com.chunsun.redenvelope.model.impl.MineInviteCodeModeImpl;
-import com.chunsun.redenvelope.presenter.OnGetInviteRecordListener;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeActivity;
 import com.chunsun.redenvelope.ui.view.IMineInviteCodeView;
 import com.chunsun.redenvelope.utils.ShowToast;

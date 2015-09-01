@@ -8,10 +8,8 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.AdFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.OnGetAdDelaySecondsRateListener;
 import com.chunsun.redenvelope.ui.fragment.AdFragment;
 import com.chunsun.redenvelope.utils.StringUtil;
 

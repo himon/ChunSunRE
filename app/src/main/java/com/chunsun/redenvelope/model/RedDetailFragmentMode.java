@@ -1,11 +1,6 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailCommentListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailGetCommentListListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailGetRedRecordListListener;
-import com.chunsun.redenvelope.presenter.OnRedDetailSetFavoriteListener;
-import com.chunsun.redenvelope.presenter.impl.RedDetailFragmentPresenter;
 
 /**
  * Created by Administrator on 2015/8/12.
