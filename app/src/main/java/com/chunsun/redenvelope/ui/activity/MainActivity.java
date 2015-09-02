@@ -107,6 +107,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     }
 
     private void initEvent() {
+
+        mNavRight.setOnClickListener(this);
+
         mHome.setOnClickListener(this);
         mAd.setOnClickListener(this);
         mNear.setOnClickListener(this);
@@ -134,8 +137,13 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
     @Override
     public void onClick(View v) {
-
-        clickTab(v);
+        switch (v.getId()) {
+            case R.id.tv_nav_right:
+                toAdExplain();
+                break;
+            default:
+                clickTab(v);
+        }
     }
 
     private void clickTab(View v) {
@@ -193,11 +201,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
      * 重置其他的TabIndicator的颜色
      */
     private void resetOtherTabs() {
-
         for (int i = 0; i < mTabIndicators.size(); i++) {
             mTabIndicators.get(i).setmIcon(bitmaps.get(i), mUnSelectedColor);
         }
-
     }
 
     @Override
@@ -225,6 +231,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void toAdExplain() {
+        Intent intent = new Intent(this, CommonWebActivity.class);
+        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, "说明");
+        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, Constants.SEND_RED_INSTRUCTION_URL);
+        startActivity(intent);
     }
 
     public void onEvent(MainEvent event) {

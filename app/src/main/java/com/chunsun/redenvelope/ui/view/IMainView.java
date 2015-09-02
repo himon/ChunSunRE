@@ -6,4 +6,6 @@ package com.chunsun.redenvelope.ui.view;
 public interface IMainView {
 
     boolean isLogin();
+
+    void toAdExplain();
 }

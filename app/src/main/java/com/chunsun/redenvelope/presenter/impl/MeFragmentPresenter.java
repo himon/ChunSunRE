@@ -168,6 +168,6 @@ public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity>
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+        //ShowToast.Short(msg);
     }
 }

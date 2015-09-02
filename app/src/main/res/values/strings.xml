@@ -135,7 +135,7 @@
     <string name="wechat">微信</string>
     <string name="sended_red_envelope">已发红包</string>
     <string name="name">名字</string>
-    
+
     <!-- 发送广告 -->
     <string name="immediate_send">即时发送</string>
     <string name="time_send">定时发送</string>
@@ -149,6 +149,16 @@
     <string name="delayed">定时</string>
     <string name="invoice">发票</string>
     <string name="ad_price">广告价</string>
+    <string name="ad_content">输入内容不超过2000个字，请不要发布黄色、暴力或对他人、团体、造成影响的言论或内容，一经发现将冻结资金，永久封号</string>
+    <string name="ad_title">输入标题不超过30字</string>
+    <string name="distance">距离</string>
+    <string name="city">市</string>
+    <string name="province">省</string>
+    <string name="choose_type">选择类型</string>
+
+
+    <string name="title_activity_select_list_info">SelectListInfoActivity</string>
+    <string name="title_activity_create_ad_next_page">CreateAdNextPageActivity</string>
 
 
 </resources>

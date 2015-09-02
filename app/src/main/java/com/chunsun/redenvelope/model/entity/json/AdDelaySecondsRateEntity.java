@@ -1,5 +1,8 @@
 package com.chunsun.redenvelope.model.entity.json;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 
 import java.util.List;
@@ -57,7 +60,7 @@ public class AdDelaySecondsRateEntity extends BaseEntity {
             return hb_min_price;
         }
 
-        public static class DelaySecondsRateEntity {
+        public static class DelaySecondsRateEntity implements Parcelable {
             /**
              * id : 13
              * delay_seconds : 5
@@ -65,7 +68,8 @@ public class AdDelaySecondsRateEntity extends BaseEntity {
              */
             private int id;
             private int delay_seconds;
-            private int delay_poundage;
+            private float delay_poundage;
+            private boolean check;
 
             public void setId(int id) {
                 this.id = id;
@@ -75,7 +79,7 @@ public class AdDelaySecondsRateEntity extends BaseEntity {
                 this.delay_seconds = delay_seconds;
             }
 
-            public void setDelay_poundage(int delay_poundage) {
+            public void setDelay_poundage(float delay_poundage) {
                 this.delay_poundage = delay_poundage;
             }
 
@@ -87,9 +91,51 @@ public class AdDelaySecondsRateEntity extends BaseEntity {
                 return delay_seconds;
             }
 
-            public int getDelay_poundage() {
+            public float getDelay_poundage() {
                 return delay_poundage;
             }
+
+            public boolean isCheck() {
+                return check;
+            }
+
+            public void setCheck(boolean check) {
+                this.check = check;
+            }
+
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeInt(this.delay_seconds);
+                dest.writeFloat(this.delay_poundage);
+                dest.writeByte(check ? (byte) 1 : (byte) 0);
+            }
+
+            public DelaySecondsRateEntity() {
+            }
+
+            protected DelaySecondsRateEntity(Parcel in) {
+                this.id = in.readInt();
+                this.delay_seconds = in.readInt();
+                this.delay_poundage = in.readFloat();
+                this.check = in.readByte() != 0;
+            }
+
+            public static final Parcelable.Creator<DelaySecondsRateEntity> CREATOR = new Parcelable.Creator<DelaySecondsRateEntity>() {
+                public DelaySecondsRateEntity createFromParcel(Parcel source) {
+                    return new DelaySecondsRateEntity(source);
+                }
+
+                public DelaySecondsRateEntity[] newArray(int size) {
+                    return new DelaySecondsRateEntity[size];
+                }
+            };
         }
     }
 }

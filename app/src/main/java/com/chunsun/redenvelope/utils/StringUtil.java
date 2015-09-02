@@ -51,6 +51,13 @@ public class StringUtil {
         return false;
     }
 
+    /**
+     * 验证密码
+     *
+     * @param pwd
+     * @param repwd
+     * @return
+     */
     public static boolean validataPwd(String pwd, String repwd) {
         if (TextUtils.isEmpty(pwd)) {
             ShowToast.Short("请输入密码！");
@@ -63,5 +70,46 @@ public class StringUtil {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 验证是否是无效的金额
+     *
+     * @param amount
+     * @return
+     */
+    public static boolean isAvailAmout(String amount) {
+        amount = backValidAmount(amount);
+        if ("0".equals(amount) || "0.0".equals(amount) || "0.00".equals(amount)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 返回有效的金额
+     *
+     * @param amount
+     * @return
+     */
+    public static String backValidAmount(String amount) {
+        if ("".equals(amount) || ".".equals(amount)) {
+            return "0";
+        }
+
+        if (amount.startsWith(".")) {
+            amount = "0" + amount;
+        }
+
+        if (amount.endsWith(".")) {
+            amount = amount.substring(0, amount.length() - 1);
+        }
+        if (amount.indexOf(".") != -1) {
+            if (amount.indexOf(".") + 2 < amount.length() - 1) {
+                amount = amount.substring(0, amount.indexOf(".") + 3);
+            }
+        }
+
+        return amount;
     }
 }

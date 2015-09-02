@@ -168,6 +168,7 @@ public interface Constants {
     String EXTRA_KEY_TITLE = "extra_key_title";
     String EXTRA_KEY_TEXT = "extra_key_text";
     String EXTRA_KEY_TYPE = "extra_key_type";
+    String EXTRA_LIST_KEY = "extra_list_key";
 
     /**
      * EditInfoActivity显示类型
@@ -197,6 +198,11 @@ public interface Constants {
     String SEND_GUARANTEE_URL = "http://www.chunsunkeji.com/danbao/db.html";
     // 银联充值余额
     String BACK_RECHARGE_URL = HOST_URL + "/api/payment/unionpay/notify_url.aspx?order_no=";
+    // 发广告的说明WebView
+    String SEND_RED_INSTRUCTION_URL = "http://chunsunkeji.com/hbexplain/hbshuoming.html";
+    // 发广告的价格说明WebView
+    String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/help/price/dj.html";
+
 
     /**
      * MeFragment item type
@@ -273,4 +279,12 @@ public interface Constants {
     int LISTENER_TYPE_NEXT_STEP = 0x2014;
     int LISTENER_TYPE_GET_INVITE_CODE = 0X2015;
     int LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL = 0x2016;
+
+    /**
+     * 发广告默认数据
+     */
+    String AD_DEFAULT_PRICE = "0.03";
+    String AD_DEFAULT_NUM = "2000";
+    String AD_DEFAULT_DAYS = "1";
+
 }
