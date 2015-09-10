@@ -52,7 +52,7 @@ public class BalanceRechargePresenter implements BaseSingleLoadedListener<Balanc
 
     @Override
     public void onSuccess(BalanceRechargeEntity response) {
-        mIBalanceRechargeView.getOrderIdFinish(response.getResult().getOrder_no());
+        mIBalanceRechargeView.getOrderIdFinish(response.getResult().getOrder_no(), response.getResult().getAmount());
     }
 
     @Override

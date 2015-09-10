@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.UpdatePasswordActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class UpdatePasswordModeImpl implements UpdatePasswordMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_UPDATE_PWD_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initPasswordDataToJson(token, old_pwd, new_pwd, confirm_pwd));
+                params.put("parames", JsonManager.initPasswordDataToJson(token, old_pwd, new_pwd, confirm_pwd));
                 return params;
             }
         };
@@ -85,7 +85,7 @@ public class UpdatePasswordModeImpl implements UpdatePasswordMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_UPDATE_PWD_NOT_HAS_OLD_PWD_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataPasswordToJson(token, new_pwd, confirm_pwd));
+                params.put("parames", JsonManager.initDataPasswordToJson(token, new_pwd, confirm_pwd));
                 return params;
             }
         };

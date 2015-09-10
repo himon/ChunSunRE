@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordClassifyEnti
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class SendRedEnvelopeRecordClassifyModeImpl implements SendRedEnvelopeRec
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_SEND_RECORD_CLASSIFY_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataTokenToJson(token));
+                params.put("parames", JsonManager.initDataTokenToJson(token));
                 return params;
             }
         };

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.RedDetailActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class RedDetailModeImpl implements RedDetailMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRedEnvelopeDetailToJson(token, hb_id));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailToJson(token, hb_id));
                 return params;
             }
         };

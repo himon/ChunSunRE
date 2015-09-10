@@ -13,7 +13,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_COMMENT_LIST_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initRecordToJson(hb_id, page_index));
+                params.put("parames", JsonManager.initRecordToJson(hb_id, page_index));
                 return params;
             }
         };
@@ -87,7 +87,7 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_RED_RECORD_LIST_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initRecordToJson(hb_id, page_index));
+                params.put("parames", JsonManager.initRecordToJson(hb_id, page_index));
                 return params;
             }
         };
@@ -119,7 +119,7 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_SET_FAVORITE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRedEnvelopeDetailToJson(token, hb_id));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailToJson(token, hb_id));
                 return params;
             }
         };
@@ -151,7 +151,7 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_COMMENT_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRedEnvelopeDetailCommentToJson(token, hb_id, content));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailCommentToJson(token, hb_id, content));
                 return params;
             }
         };

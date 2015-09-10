@@ -32,14 +32,10 @@ public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
      *
      * @param token
      * @param type
-     * @param province
-     * @param city
-     * @param longitude
-     * @param latitude
      * @param page_index
      */
-    public void loadData(String token, String type, String province, String city, String longitude, String latitude, int page_index) {
-        mHomeFragmentMode.loadData(token, type, province, city, longitude, latitude, page_index, this);
+    public void loadData(String token, String type, int page_index) {
+        mHomeFragmentMode.loadData(token, type, page_index, this);
     }
 
     /**
@@ -83,6 +79,11 @@ public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
     }
 
     @Override

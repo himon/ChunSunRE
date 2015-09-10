@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.account.QuickLoginActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class QuickLoginModeImpl implements QuickLoginMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.LOGIN_GET_VALIDATA_CODE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataSmsToJson(mobile));
+                params.put("parames", JsonManager.initDataSmsToJson(mobile));
                 return params;
             }
         };
@@ -88,7 +88,7 @@ public class QuickLoginModeImpl implements QuickLoginMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.QUICK_LOGIN_CODE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataQuickLoginToJson(phone, code, phoneInfo, pushDeviceToken));
+                params.put("parames", JsonManager.initDataQuickLoginToJson(phone, code, phoneInfo, pushDeviceToken));
                 return params;
             }
         };

@@ -139,7 +139,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             mList.clear();
             mPresenter.getAdData(Constants.RED_DETIAL_TYPE_LEFT);
         }
-        mPresenter.loadData(mToken, Constants.RED_DETIAL_TYLE_SAMPLE, "不限", "不限", "0", "0", mCurrentPage);
+        mPresenter.loadData(mToken, Constants.RED_DETIAL_TYLE_SAMPLE, mCurrentPage);
     }
 
     @Override

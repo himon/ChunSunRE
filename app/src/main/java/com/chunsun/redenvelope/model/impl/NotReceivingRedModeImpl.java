@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class NotReceivingRedModeImpl implements NotReceivingRedMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_UNRECEIVE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataTokenToJson(token));
+                params.put("parames", JsonManager.initDataTokenToJson(token));
                 return params;
             }
         };
@@ -86,7 +86,7 @@ public class NotReceivingRedModeImpl implements NotReceivingRedMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_GRAB_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRedEnvelopeDetailToJson(token, hb_id));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailToJson(token, hb_id));
                 return params;
             }
         };

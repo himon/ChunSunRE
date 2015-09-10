@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.PhoneRechargeConfirmActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public class PhoneRechargeConfirmModeImpl implements PhoneRechargeConfirmMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.RECHARGE_MOBILE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataMobileRechargeToJson(token, mobile, yunyingshang, cz_poundage_id));
+                params.put("parames", JsonManager.initDataMobileRechargeToJson(token, mobile, yunyingshang, cz_poundage_id));
                 return params;
             }
         };

@@ -109,7 +109,6 @@ public class StringUtil {
                 amount = amount.substring(0, amount.indexOf(".") + 3);
             }
         }
-
         return amount;
     }
 }

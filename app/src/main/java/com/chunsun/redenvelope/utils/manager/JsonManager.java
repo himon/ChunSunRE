@@ -1,15 +1,20 @@
-package com.chunsun.redenvelope.utils;
+package com.chunsun.redenvelope.utils.manager;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.model.entity.AdEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import me.iwf.photopicker.entity.Photo;
+
 /**
  * Created by Administrator on 2015/8/26.
  */
-public class JSONUtils {
+public class JsonManager {
 
     /**
      * 红包详情
@@ -446,4 +451,5 @@ public class JSONUtils {
         }
         return object.toString();
     }
+
 }

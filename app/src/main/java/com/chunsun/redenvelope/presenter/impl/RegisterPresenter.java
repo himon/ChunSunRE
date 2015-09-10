@@ -181,6 +181,11 @@ public class RegisterPresenter implements BaseMultiLoadedListener<BaseEntity> {
     }
 
     @Override
+    public void onError(int event_tag, String msg) {
+
+    }
+
+    @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
     }

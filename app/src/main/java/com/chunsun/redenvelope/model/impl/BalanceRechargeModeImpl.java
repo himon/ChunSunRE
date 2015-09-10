@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.BalanceRechargeEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class BalanceRechargeModeImpl implements BalanceRechargeMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_RECHARGE_BALANCE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRechargeToJson(token, type, amount));
+                params.put("parames", JsonManager.initDataRechargeToJson(token, type, amount));
                 return params;
             }
         };

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.UserPrivacyActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class UserPrivacyModeImpl implements UserPrivacyMode {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_UPDATE_INFO_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataUpdateInfoToJson(token, field_value));
+                params.put("parames", JsonManager.initDataUpdateInfoToJson(token, field_value));
                 return params;
             }
         };

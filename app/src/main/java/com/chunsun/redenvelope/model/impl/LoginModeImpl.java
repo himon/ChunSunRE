@@ -10,7 +10,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.android.volley.Request.Method;
 
@@ -37,21 +37,25 @@ public class LoginModeImpl implements LoginMode {
 
             @Override
             public void onResponse(SampleResponseEntity response) {
-                listener.onSuccess(response);
+                if (response.isSuccess()) {
+                    listener.onSuccess(response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onError(error.getMessage());
+                listener.onException(error.getMessage());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.LOGIN_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataLoginToJson(mobile_or_chunsun, password, push_device_token, json_str));
+                params.put("parames", JsonManager.initDataLoginToJson(mobile_or_chunsun, password, push_device_token, json_str));
                 return params;
             }
         };

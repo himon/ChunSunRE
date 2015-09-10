@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.WithdrawcashAlipayConfirmActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class WithdrawcashAlipayConfirmModeImpl implements WithdrawcashAlipayConf
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.RECHARGE_ALIPAY_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataWithdrawCashAlipayToJson(token, zfb_no, zfb_name, zfb_poundage_id));
+                params.put("parames", JsonManager.initDataWithdrawCashAlipayToJson(token, zfb_no, zfb_name, zfb_poundage_id));
                 return params;
             }
         };

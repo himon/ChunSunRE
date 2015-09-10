@@ -17,6 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -28,4 +33,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile project(':PhotoPicker')
+    compile files('libs/locSDK_6.03.jar')
+    compile files('libs/alipaySDK-20150818.jar')
 }

@@ -12,13 +12,9 @@ import com.chunsun.redenvelope.model.ForgetPwdNextMode;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.presenter.SampleListener;
 import com.chunsun.redenvelope.ui.activity.account.ForgetPwdNextActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +58,7 @@ public class ForgetPwdNextModeImpl implements ForgetPwdNextMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.FIND_PWD_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataFindPasswordToJson(mobile, verify_code, new_pwd, confirm_pwd));
+                params.put("parames", JsonManager.initDataFindPasswordToJson(mobile, verify_code, new_pwd, confirm_pwd));
                 return params;
             }
         };

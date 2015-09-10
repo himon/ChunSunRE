@@ -118,6 +118,12 @@ public interface Constants {
     String USER_UPDATE_INFO_JSON_REQUEST_URL = "user_info_edit_byuser";
     //获取广告延时时间
     String GET_AD_DELAY_SECONDS_RATE_JSON_REQUEST_URL = "send_delay_seconds_to_rate";
+    //创建广告
+    String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2";
+    //获取红包支付明细
+    String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
+    //余额支付广告费用
+    String AD_PAY_BY_BALANCE = "hb_user_zhifu_by_balance";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -196,13 +202,14 @@ public interface Constants {
      */
     // 担保交易WebView
     String SEND_GUARANTEE_URL = "http://www.chunsunkeji.com/danbao/db.html";
-    // 银联充值余额
+    // 调用银联充值余额
     String BACK_RECHARGE_URL = HOST_URL + "/api/payment/unionpay/notify_url.aspx?order_no=";
+    // 调用银联支付的url
+    String BACK_PAY_URL = HOST_URL + "/api/payment/unionpay/index.aspx?order_no=";
     // 发广告的说明WebView
     String SEND_RED_INSTRUCTION_URL = "http://chunsunkeji.com/hbexplain/hbshuoming.html";
     // 发广告的价格说明WebView
     String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/help/price/dj.html";
-
 
     /**
      * MeFragment item type
@@ -279,6 +286,10 @@ public interface Constants {
     int LISTENER_TYPE_NEXT_STEP = 0x2014;
     int LISTENER_TYPE_GET_INVITE_CODE = 0X2015;
     int LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL = 0x2016;
+    int LISTENER_TYPE_GET_PROVINCE_AND_CITY = 0x2017;
+    int LISTENER_TYPE_COMMIT_AD = 0x2018;
+    int LISTENER_TYPE_GET_AD_AMOUNT_DETAIL = 0x2019;
+    int LISTENER_TYPE_PAY_BY_BANLANCE = 0x2020;
 
     /**
      * 发广告默认数据
@@ -286,5 +297,40 @@ public interface Constants {
     String AD_DEFAULT_PRICE = "0.03";
     String AD_DEFAULT_NUM = "2000";
     String AD_DEFAULT_DAYS = "1";
+
+    /**
+     * 广告类型 1 生活 ， 2 企业 ， 3 附近 ， 4 链接
+     */
+    String AD_LEFT_TYPE = "1";
+    String AD_COMPANY_TYPE = "2";
+    String AD_NEAR_TYPE = "3";
+    String AD_LINK_TYPE = "4";
+
+    /**
+     * 发广告 选择列表类型
+     */
+    int AD_SELECT_LIST_TYPE = 1;
+    int AD_SELECT_LIST_DISTANCE = 2;
+    int AD_SELECT_LIST_PROVINCE = 3;
+    int AD_SELECT_LIST_CITY = 4;
+
+    /**
+     * startActivityForResult
+     */
+    int REQUEST_CODE = 1;
+
+    /**
+     * 支付宝
+     */
+    // 商户PID
+    String PARTNER = "2088911439210941";
+    // 商户收款账号
+    String SELLER = "576806999@qq.com";
+    // 商户私钥，pkcs8格式
+    String RSA_PRIVATE = "MIICXgIBAAKBgQC497m3M57yDN0wYDr+f1YFsuCMFLfJZvX6WPuke4TQf5SfjUFTI8CPMioKlXeymFzryp4Fk099+M8Z60P3DUIGcxy59a4RzeTkwOczll5HJFLt+LivApz5PpVij+x1MgTrtZyoUnVNL4Ol2NTPDo3WrVDYMLy4FZB3ttneVCq2xwIDAQABAoGBAI9ALDDaZcsIc3W30XiwnaqkMovKr9vnRbGxoJJupxni9PPsrh75nXRJYY343E8Q+UYUEfY3dGUXgS2Nq4F2Xx7WPcHo1k7J47aIX4MdnAzsXLx4mshfI9oCaYpYgq8mAE1OyRcFqvBwu2l4NDQpdRA3yqxwEmfBWa0YdpaWqQKBAkEA41+E/auMyOYKB3vrEfamF7RJunA1PjvGcV1Hlbk3IizO578HHIGxDqhz5CKQOSG6gMMv7h96549z6xIuSBUpNwJBANBBbswbqNQ9ftjcjEylOwrqqBcGwspuWMJthlu4f+3+TqQSQc9FeB4iI6yFowOd5LVyLYWpUxxxzPhJnoJFZvECQQC8+VWqE5uGGZM6VyavnmS7DM++UaYe3EV5UQK/ENoe4Ejy2ZUKf0vuF9mCQavGoB7HB/LdIXLf5B1+wXSP2m6PAkAPN8jV52uF3tyHEk66RxSyboVL8XWIf1nDE2fPCgNnK78pZCAk+kmVwh7jO3y3BfGxhJ9o9f+Zw4Mb3Z1UnaexAkEA4R+XMs7hw0J0jdtbOmcUG69EzqEH0R3sXx6CxLgGh35bDTSjwGIDW765BUrOChLwiZfcZdpoFG1BQ3rTDXWFlQ==";
+    // 支付宝公钥
+    String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
+    //异步支付结果获取接口
+    String ZHIFU_NOTIFY_URL = "http://admin.chunsunkeji.com/api/payment/alipay/notify_url_mobile.aspx";
 
 }

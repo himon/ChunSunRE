@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="actionBarSize">48dip</dimen>
+  <dimen name="item_photo_size">80dip</dimen>
+  <dimen name="item_camera_size">80dip</dimen>
+
+  <dimen name="tools_bar_height">50dp</dimen>
+
+</resources>

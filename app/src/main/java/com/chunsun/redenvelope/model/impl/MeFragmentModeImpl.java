@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.fragment.MeFragment;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class MeFragmentModeImpl implements MeFragmentMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.GET_USERINFO_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataTokenToJson(token));
+                params.put("parames", JsonManager.initDataTokenToJson(token));
                 return params;
             }
         };

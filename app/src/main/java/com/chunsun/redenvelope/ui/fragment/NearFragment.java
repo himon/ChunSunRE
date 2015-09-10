@@ -134,7 +134,7 @@ public class NearFragment extends BaseFragment implements INearFragmentView {
             mList.clear();
             mPresenter.getAdData(Constants.RED_DETIAL_TYPE_LEFT);
         }
-        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETIAL_TYLE_NEAR, "不限", "不限", "0", "0", mCurrentPage);
+        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETIAL_TYLE_NEAR, mCurrentPage);
     }
 
     @Override

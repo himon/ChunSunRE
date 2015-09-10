@@ -13,6 +13,7 @@ import android.view.View;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Override
     protected void initView() {
 
-        initTitleBar("春笋红包", "不限", "", Constants.TITLE_TYPE_HOME);
+        initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_HOME);
 
         mTabIndicators.add(mHome);
         mTabIndicators.add(mAd);
@@ -109,6 +110,8 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     private void initEvent() {
 
         mNavRight.setOnClickListener(this);
+        mNavIcon.setOnClickListener(this);
+        mNavLeft.setOnClickListener(this);
 
         mHome.setOnClickListener(this);
         mAd.setOnClickListener(this);
@@ -140,6 +143,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         switch (v.getId()) {
             case R.id.tv_nav_right:
                 toAdExplain();
+                break;
+            case R.id.tv_nav_left:
+            case R.id.iv_nav_icon:
+                MainApplication.getContext().getLocationClient().start();
                 break;
             default:
                 clickTab(v);
@@ -186,7 +193,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         switch (type) {
             case R.id.indicator_home:
             case R.id.indicator_near:
-                initTitleBar("春笋红包", "不限", "", Constants.TITLE_TYPE_HOME);
+                initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_HOME);
                 break;
             case R.id.indicator_ad:
                 initTitleBar("发广告", "", "说明", Constants.TITLE_TYPE_AD);
@@ -257,6 +264,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
         }
     }
+
+    public void onEvent(BaiduMapLocationEvent event) {
+        mNavLeft.setText(MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity());
+    }
+
 
     @Override
     protected void onDestroy() {

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.presenter.impl.ForgetPwdNextPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdNextView;
-import com.chunsun.redenvelope.utils.AppManager;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
 

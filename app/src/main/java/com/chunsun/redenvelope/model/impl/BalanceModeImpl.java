@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class BalanceModeImpl implements BalanceMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_AMOUNT_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataTokenToJson(token));
+                params.put("parames", JsonManager.initDataTokenToJson(token));
                 return params;
             }
         };

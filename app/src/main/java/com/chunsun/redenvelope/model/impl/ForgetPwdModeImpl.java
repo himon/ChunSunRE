@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.account.ForgetPwdActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class ForgetPwdModeImpl implements ForgetPwdMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.LOGIN_GET_VALIDATA_CODE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataSmsToJson(mobile));
+                params.put("parames", JsonManager.initDataSmsToJson(mobile));
                 return params;
             }
         };
@@ -85,7 +85,7 @@ public class ForgetPwdModeImpl implements ForgetPwdMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.REGISTER_NEXT_STEP_CODE_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataVerifyToJson(mobile, verify_code));
+                params.put("parames", JsonManager.initDataVerifyToJson(mobile, verify_code));
                 return params;
             }
         };

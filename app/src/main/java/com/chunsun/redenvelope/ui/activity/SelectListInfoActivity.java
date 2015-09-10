@@ -12,10 +12,14 @@ import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
+import com.chunsun.redenvelope.model.event.SelectAdNextPageEvent;
 import com.chunsun.redenvelope.ui.adapter.SelectListInfoAdaper;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.SelectListBase;
 import com.chunsun.redenvelope.ui.view.ISelectListInfoView;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
     ListView mLvMain;
 
     private SelectListInfoAdaper mAdapter;
-    private ArrayList<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> mList;
+    private ArrayList<SelectListBase> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +61,7 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
         mLvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity entity = (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) parent.getAdapter().getItem(position);
+                SelectListBase entity = (SelectListBase) parent.getAdapter().getItem(position);
                 selectAdDelaySecondsRate(entity);
             }
         });
@@ -88,14 +92,34 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
     }
 
     @Override
-    public void selectAdDelaySecondsRate(AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity entity) {
+    public void selectAdDelaySecondsRate(SelectListBase entity) {
 
-        for (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity item : mList) {
+        if (entity instanceof AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) {
+            AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity delaySecondsRateEntity = (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) entity;
+            EventBus.getDefault().post(new SelectAdDelaySecondsRateEvent(delaySecondsRateEntity.getId() + ""));
+        } else if (entity instanceof SampleEntity) {
+            SampleEntity sampleEntity = (SampleEntity) entity;
+            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
+        } else if (entity instanceof DistrictEntity.AreaEntity) {
+            DistrictEntity.AreaEntity areaEntity = (DistrictEntity.AreaEntity) entity;
+            SampleEntity sampleEntity = new SampleEntity();
+            sampleEntity.setType(Constants.AD_SELECT_LIST_PROVINCE);
+            sampleEntity.setKey(areaEntity.getP());
+            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
+        } else if (entity instanceof DistrictEntity.AreaEntity.CcEntity) {
+            DistrictEntity.AreaEntity.CcEntity ccEntity = (DistrictEntity.AreaEntity.CcEntity) entity;
+            SampleEntity sampleEntity = new SampleEntity();
+            sampleEntity.setType(Constants.AD_SELECT_LIST_CITY);
+            sampleEntity.setKey(ccEntity.getC());
+            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
+        }
+
+        for (SelectListBase item : mList) {
             item.setCheck(false);
         }
+
         entity.setCheck(true);
         mAdapter.notifyDataSetChanged();
-        EventBus.getDefault().post(new SelectAdDelaySecondsRateEvent(entity.getId() + ""));
         back();
     }
 }

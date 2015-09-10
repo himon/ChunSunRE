@@ -25,8 +25,8 @@ public class NearFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
         mNearFragmentMode = new NearFragmentModeImpl((NearFragment) nearFragmentView);
     }
 
-    public void loadData(String token, String type, String province, String city, String longitude, String latitude, int page_index) {
-        mNearFragmentMode.loadData(token, type, province, city, longitude, latitude, page_index, this);
+    public void loadData(String token, String type, int page_index) {
+        mNearFragmentMode.loadData(token, type, page_index, this);
     }
 
     public void getAdData(String type) {
@@ -58,6 +58,11 @@ public class NearFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
     }
 
     @Override

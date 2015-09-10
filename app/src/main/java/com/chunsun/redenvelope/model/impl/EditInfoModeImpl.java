@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
-import com.chunsun.redenvelope.utils.JSONUtils;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class EditInfoModeImpl implements EditInfoMode {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_REPORT_JSON_REQUEST_URL);
-                params.put("parames", JSONUtils.initDataRedEnvelopeDetailReportToJson(token, hb_id, reason));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailReportToJson(token, hb_id, reason));
                 return params;
             }
         };

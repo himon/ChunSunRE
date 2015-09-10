@@ -34,6 +34,8 @@ public interface BaseMultiLoadedListener<T> {
      */
     void onError(String msg);
 
+    void onError(int event_tag, String msg);
+
     /**
      * when data call back occurred exception
      *

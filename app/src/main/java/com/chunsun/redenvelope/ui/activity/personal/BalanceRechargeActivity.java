@@ -1,18 +1,16 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alipay.sdk.pay.demo.PayPresenter;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -20,6 +18,7 @@ import com.chunsun.redenvelope.presenter.impl.BalanceRechargePresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceRechargeView;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import butterknife.Bind;
@@ -143,17 +142,18 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
     }
 
     @Override
-    public void getOrderIdFinish(String orderId) {
+    public void getOrderIdFinish(String orderId, String amount) {
         if (Constants.BALANCE_RECHARGE_TYPE_ALIPAY.equals(mPayWay)) {
-
+            payByAlipay(orderId, amount);
         } else if (Constants.BALANCE_RECHARGE_TYPE_BANK.equals(mPayWay)) {
             payByBank(orderId);
         }
     }
 
     @Override
-    public void payByAlipay(String orderId) {
-
+    public void payByAlipay(String orderId, String amount) {
+        PayPresenter payPresenter = new PayPresenter(this);
+        payPresenter.pay(this, orderId, "", "", amount);
     }
 
     @Override
@@ -162,5 +162,15 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
         intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, Constants.BACK_RECHARGE_URL + orderId);
         intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, "银联支付");
         startActivity(intentWeb);
+    }
+
+    @Override
+    public void setAlipayResult(boolean result, String msg) {
+        if (result) {
+            ShowToast.Short(msg);
+            back();
+        } else {
+            ShowToast.Short(msg);
+        }
     }
 }

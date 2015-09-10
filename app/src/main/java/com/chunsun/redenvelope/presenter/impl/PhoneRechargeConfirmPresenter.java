@@ -53,6 +53,11 @@ public class PhoneRechargeConfirmPresenter implements BaseMultiLoadedListener<Ba
     }
 
     @Override
+    public void onError(int event_tag, String msg) {
+
+    }
+
+    @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
     }

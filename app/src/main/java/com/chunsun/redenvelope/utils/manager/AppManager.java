@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.utils;
+package com.chunsun.redenvelope.utils.manager;
 
 import android.app.Activity;
 import android.content.Context;

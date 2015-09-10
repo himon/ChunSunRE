@@ -8,24 +8,23 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
 import com.chunsun.redenvelope.app.MainApplication;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.model.event.WelcomeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.WelcomePresenter;
+import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
+import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 启动页+引导页
  */
 public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.OnClickListener {
 
-    @Bind(R.id.vp_welcome)
     ViewPager mViewPager;
 
     private ArrayList<View> mViews = null;
@@ -37,15 +36,15 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
-        ButterKnife.bind(this);
         mPresenter = new WelcomePresenter(this);
+        EventBus.getDefault().register(this);
         initView();
         initData();
     }
 
     @Override
     protected void initView() {
-
+        mViewPager = (ViewPager) findViewById(R.id.vp_welcome);
     }
 
     @Override
@@ -91,8 +90,22 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_entry:
-                mPresenter.onSuccess();
+                toMainActivity();
                 break;
         }
+    }
+
+    public void onEventMainThread(WelcomeEvent event) {
+        if ("1".equals(event.getMsg())) {
+            toMainActivity();
+        } else {
+            initPager();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

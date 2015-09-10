@@ -332,6 +332,8 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
             if (item.getId() == id) {
                 item.setCheck(true);
                 mTvShowTime.setText(item.getDelay_seconds() + "秒");
+            }else{
+                item.setCheck(false);
             }
         }
     }

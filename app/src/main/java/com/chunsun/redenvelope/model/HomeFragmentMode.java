@@ -12,15 +12,10 @@ public interface HomeFragmentMode {
      *
      * @param token
      * @param type       -1（生活、企业），3（附近）
-     * @param province
-     * @param city
-     * @param longitude
-     * @param latitude
      * @param page_index
      * @param listener
      */
-    void loadData(String token, String type, String province,
-                  String city, String longitude, String latitude, int page_index, BaseMultiLoadedListener listener);
+    void loadData(String token, String type, int page_index, BaseMultiLoadedListener listener);
 
     /**
      * 红包列表广告
