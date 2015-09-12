@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 互动平台按钮的尺寸 -->
+    <dimen name="main_tab_size">60dp</dimen>
+</resources>

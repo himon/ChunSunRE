@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.ui.activity;
+package com.chunsun.redenvelope.ui.activity.red;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -148,12 +148,12 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
 
     private void countDown() {
 
-        if (mRed.getIs_open()) {
+        if (mRed.is_open()) {
             mIvIcon.setVisibility(View.GONE);
             mTvContent.setText("您已经领取红包" + mRed.getPrice() + "元");
             mRlGetRed.setBackgroundColor(getResources().getColor(
                     R.color.global_red_tran));
-        } else if (!mRed.getHb_status()) {
+        } else if (!mRed.isHb_status()) {
             mIvIcon.setVisibility(View.GONE);
             mTvContent.setText("来晚了，红包已抢空");
             mTvContent

@@ -1,11 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.chunsun.redenvelope.ui.fragment.RedDetailFragment">
+<LinearLayout android:id="@+id/main"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.chunsun.redenvelope.ui.fragment.RedDetailFragment">
 
-    <include layout="@layout/layout_title_bar" />
+    <include layout="@layout/layout_title_bar"/>
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_main"
@@ -18,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/global_gray"
-            android:dividerHeight="5dp" />
+            android:dividerHeight="5dp"/>
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
     <LinearLayout
@@ -39,7 +40,7 @@
             android:maxLength="160"
             android:minHeight="40dp"
             android:textColorHint="@color/font_hint_gray"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <Button
             android:id="@+id/btn_send_comment"
@@ -53,6 +54,6 @@
             android:paddingTop="2dp"
             android:text="@string/send"
             android:textColor="@color/font_hint_gray"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
     </LinearLayout>
 </LinearLayout>

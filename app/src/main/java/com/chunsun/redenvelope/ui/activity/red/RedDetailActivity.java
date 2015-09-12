@@ -1,7 +1,6 @@
-package com.chunsun.redenvelope.ui.activity;
+package com.chunsun.redenvelope.ui.activity.red;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.event.MainEvent;
+import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.RedDetailPresenter;
@@ -20,9 +19,6 @@ import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicPreviewFragment;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +41,11 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     private FragmentPagerAdapter mAdapter;
     private List<Fragment> mFragments;
 
-    private DisplayImageOptions mOptions;
-
     //红包id
     private String mRedDetailId;
     private RedDetailFragment mRedDetailFragment;
+    private String mToken;
+    private ShareLimitEntity.ResultEntity mShareLimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +61,6 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     @Override
     protected void initView() {
         mMainNav.setVisibility(View.GONE);
-
-        mOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default_capture)
-                .showImageForEmptyUri(R.drawable.img_default_unlink)
-                .showImageOnFail(R.drawable.img_default_error)
-                .resetViewBeforeLoading(true).cacheOnDisk(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
 
         mFragments = new ArrayList<Fragment>();
 
@@ -115,19 +102,22 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     @Override
     protected void initData() {
 
+        mToken = new Preferences(this).getToken();
+
         Intent intent = getIntent();
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
         }
         mFragments = new ArrayList<Fragment>();
-        mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);
+        mPresenter.getShareLimit(mToken);
+
     }
 
     @Override
     public void setData(ArrayList<String> urls, RedDetailEntity.ResultEntity.DetailEntity detail) {
 
         for (String str : urls) {
-            RedDetailPicPreviewFragment fragment = new RedDetailPicPreviewFragment(str, mOptions);
+            RedDetailPicPreviewFragment fragment = new RedDetailPicPreviewFragment(str);
             mFragments.add(fragment);
         }
 
@@ -135,12 +125,19 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
         Bundle data = new Bundle();
         data.putParcelable(Constants.EXTRA_KEY, detail);
         data.putStringArrayList(Constants.EXTRA_KEY2, urls);
+        data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
         mRedDetailFragment.setArguments(data);
         mFragments.add(mRedDetailFragment);
 
         mViewPager.setAdapter(mAdapter);
         //设置预加载数
         mViewPager.setOffscreenPageLimit(urls.size() + 1);
+    }
+
+    @Override
+    public void getShareLimit(ShareLimitEntity.ResultEntity result) {
+        mShareLimit = result;
+        mPresenter.getData(mToken, mRedDetailId);
     }
 
     public void onEvent(RedDetailBackEvent event) {

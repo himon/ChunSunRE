@@ -2,8 +2,8 @@ package com.chunsun.redenvelope.ui.fragment;
 
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.ui.activity.RedDetailActivity;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.chunsun.redenvelope.utils.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
@@ -39,14 +38,13 @@ public class RedDetailPicPreviewFragment extends BaseFragment {
     @Bind(R.id.tv_scanf)
     TextView mTvScan;
 
-    private DisplayImageOptions mOptions;
     private String mUrl;
 
-    public RedDetailPicPreviewFragment(){}
+    public RedDetailPicPreviewFragment() {
+    }
 
     @SuppressLint("ValidFragment")
-    public RedDetailPicPreviewFragment(String url, DisplayImageOptions options) {
-        this.mOptions = options;
+    public RedDetailPicPreviewFragment(String url) {
         this.mUrl = url;
     }
 
@@ -67,6 +65,6 @@ public class RedDetailPicPreviewFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        ImageLoader.getInstance().displayImage(mUrl, mIvPicture, mOptions);
+        ImageLoader.getInstance().displayImage(mUrl, mIvPicture, ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions());
     }
 }

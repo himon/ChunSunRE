@@ -170,11 +170,18 @@
     <string name="need_pay_prompt">需要支付金额：</string>
     <string name="pay_error_prompt">支付失败原因未知，麻烦大侠返回发广告，重新支付！</string>
 
+    <!-- 分享 -->
+    <string name="wecharmoments">朋友圈</string>
+    <string name="qzone">QQ空间</string>
+    <string name="sina_weibo">新浪微博</string>
+    <string name="get_moeny">直接领钱</string>
 
-    <string name="title_activity_select_list_info">SelectListInfoActivity</string>
-    <string name="title_activity_create_ad_next_page">CreateAdNextPageActivity</string>
-    <string name="title_activity_ad_pay">AdPayActivity</string>
-    <string name="title_activity_pay_result">PayResultActivity</string>
+    <!-- 互动平台 -->
+    <string name="notice_board">系统公告</string>
+    <string name="nationwide">全国</string>
+
+
+    <string name="title_activity_interactive_platform">InteractivePlatformActivity</string>
 
 
 </resources>

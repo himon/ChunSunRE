@@ -5,7 +5,15 @@ package com.chunsun.redenvelope.ui.view;
  */
 public interface IMainView {
 
-    boolean isLogin();
+    boolean isLogin(String from);
 
+    /**
+     * 跳转发广告的说明
+     */
     void toAdExplain();
+
+    /**
+     * 跳转互动平台
+     */
+    void toInteract();
 }

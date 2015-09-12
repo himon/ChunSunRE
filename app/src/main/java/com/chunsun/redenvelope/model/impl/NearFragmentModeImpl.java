@@ -13,7 +13,7 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.fragment.NearFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 

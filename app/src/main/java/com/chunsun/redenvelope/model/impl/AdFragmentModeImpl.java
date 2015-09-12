@@ -10,7 +10,7 @@ import com.chunsun.redenvelope.model.AdFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.fragment.AdFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;

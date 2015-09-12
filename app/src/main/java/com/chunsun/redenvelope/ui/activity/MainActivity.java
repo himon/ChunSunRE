@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
@@ -18,11 +19,12 @@ import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
-import com.chunsun.redenvelope.ui.fragment.AdFragment;
-import com.chunsun.redenvelope.ui.fragment.HomeFragment;
-import com.chunsun.redenvelope.ui.fragment.MeFragment;
-import com.chunsun.redenvelope.ui.fragment.NearFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 
 import java.util.ArrayList;
@@ -44,6 +46,8 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     ChangeColorIconWithText mMe;
     @Bind(R.id.vp_viewpager)
     ViewPager mViewPager;
+    @Bind(R.id.iv_toInteractive)
+    ImageView mIvInteractive;
 
 
     private ArrayList<ChangeColorIconWithText> mTabIndicators = new ArrayList<ChangeColorIconWithText>();
@@ -118,6 +122,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mNear.setOnClickListener(this);
         mMe.setOnClickListener(this);
         mViewPager.setOnPageChangeListener(this);
+        mIvInteractive.setOnClickListener(this);
     }
 
     @Override
@@ -148,6 +153,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             case R.id.iv_nav_icon:
                 MainApplication.getContext().getLocationClient().start();
                 break;
+            case R.id.ib_nav_right:
+                ShowToast.Short("aaaaaaaaaaaaaa");
+                break;
+            case R.id.iv_toInteractive:
             default:
                 clickTab(v);
         }
@@ -163,7 +172,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 showTitleBar(v.getId());
                 break;
             case R.id.indicator_ad:
-                if (isLogin()) {
+                if (isLogin(Constants.FROM_AD)) {
                     mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
                     mViewPager.setCurrentItem(1, false);
                     showTitleBar(v.getId());
@@ -175,11 +184,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 showTitleBar(v.getId());
                 break;
             case R.id.indicator_me:
-                if (isLogin()) {
+                if (isLogin(Constants.FROM_ME)) {
                     mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
                     mViewPager.setCurrentItem(3, false);
                     showTitleBar(v.getId());
                 }
+                break;
+            case R.id.iv_toInteractive:
+                toInteract();
                 break;
         }
     }
@@ -230,10 +242,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     }
 
     @Override
-    public boolean isLogin() {
+    public boolean isLogin(String from) {
         if (TextUtils.isEmpty(new Preferences(MainApplication.getContext()).getToken())) {
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_AD);
+            intent.putExtra(Constants.EXTRA_KEY, from);
             startActivity(intent);
             return false;
         }
@@ -246,6 +258,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, "说明");
         intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, Constants.SEND_RED_INSTRUCTION_URL);
         startActivity(intent);
+    }
+
+    @Override
+    public void toInteract() {
+        if (isLogin(Constants.FROM_LOGIN_BACK)) {
+            Intent intent = new Intent(this, InteractivePlatformActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onEvent(MainEvent event) {

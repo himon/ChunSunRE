@@ -2,14 +2,9 @@ package com.chunsun.redenvelope.utils.manager;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.AdEntity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
-
-import me.iwf.photopicker.entity.Photo;
 
 /**
  * Created by Administrator on 2015/8/26.
@@ -450,6 +445,51 @@ public class JsonManager {
             e.printStackTrace();
         }
         return object.toString();
+    }
+
+    /**
+     * 互动平台
+     *
+     * @param token
+     * @param province
+     * @param city
+     * @param page_index
+     * @return
+     */
+    public static String initInterractiveDataToJson(String token, String province, String city, String page_index) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+            jsonObject.put("page_index", String.valueOf(page_index));
+            jsonObject.put("page_size", Constants.PAGE_NUM);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 互动平台评论
+     *
+     * @param token
+     * @param province
+     * @param city
+     * @param content
+     * @return
+     */
+    public static String initInterractiveCommentDataToJson(String token, String province, String city, String content) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+            jsonObject.put("content", content);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 
 }

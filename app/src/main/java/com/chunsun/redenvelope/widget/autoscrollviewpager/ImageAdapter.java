@@ -9,7 +9,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.utils.DensityUtil;
+import com.chunsun.redenvelope.utils.DensityUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,7 +26,7 @@ public class ImageAdapter extends BaseAdapter {
 		this.imageUrls = imageUrls;
 		size = imageUrls.size();
 		this.context = context;
-		height = (int) (DensityUtil.getScreenDensity() * 260);
+		height = (int) (DensityUtils.getDensity(context) * 260);
 
 		mOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.img_default_capture)

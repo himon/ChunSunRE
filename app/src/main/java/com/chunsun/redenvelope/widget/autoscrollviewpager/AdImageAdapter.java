@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.widget.autoscrollviewpager;
 
-import java.util.List;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
@@ -11,9 +10,11 @@ import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.utils.DensityUtil;
+import com.chunsun.redenvelope.utils.DensityUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.List;
 
 public class AdImageAdapter extends BaseAdapter {
 	public List<RedAutoAdEntity.ResultEntity.AdvertEntity> imageUrls; // 图片地址list
@@ -26,7 +27,7 @@ public class AdImageAdapter extends BaseAdapter {
 		this.imageUrls = imageUrls;
 		size = imageUrls.size();
 		this.context = context;
-		height = (int) (DensityUtil.getScreenDensity() * 120);
+		height = (int) (DensityUtils.getDensity(context) * 120);
 
 		mOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.img_default_capture)

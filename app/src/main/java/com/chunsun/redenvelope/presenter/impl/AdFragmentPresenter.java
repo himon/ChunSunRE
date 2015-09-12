@@ -5,7 +5,7 @@ import com.chunsun.redenvelope.model.AdFragmentMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.impl.AdFragmentModeImpl;
-import com.chunsun.redenvelope.ui.fragment.AdFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
 import com.chunsun.redenvelope.ui.view.IAdFragment;
 import com.chunsun.redenvelope.utils.ShowToast;
 

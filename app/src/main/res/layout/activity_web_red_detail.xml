@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/main"
-    tools:context="com.chunsun.redenvelope.ui.activity.WebRedDetailActivity">
+    tools:context="com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity">
 
     <include layout="@layout/layout_title_bar" />
 

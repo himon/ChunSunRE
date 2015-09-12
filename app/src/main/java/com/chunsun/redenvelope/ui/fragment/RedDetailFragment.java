@@ -1,9 +1,9 @@
 package com.chunsun.redenvelope.ui.fragment;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -26,6 +26,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.model.event.RedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -57,6 +58,8 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class RedDetailFragment extends BaseFragment implements View.OnClickListener, IRedDetailFragmentView {
 
+    @Bind(R.id.main)
+    LinearLayout mMain;
     @Bind(R.id.iv_nav_icon)
     ImageView mNavIcon;
     @Bind(R.id.tv_nav_left)
@@ -113,6 +116,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     private int mCurrentCheckType = 0;
 
     private String mToken;
+    //分享的限制信息
+    private ShareLimitEntity.ResultEntity mShareLimitResult;
 
     public RedDetailFragment() {
     }
@@ -240,16 +245,17 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         Bundle bundle = getArguments();
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
         ArrayList urls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
+        mShareLimitResult = bundle.getParcelable(Constants.EXTRA_KEY3);
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(mDetail.getNick_name());
         //判断是否是代理
-        if (mDetail.getIs_v()) {
+        if (mDetail.is_v()) {
             mIvCompanyIcon.setVisibility(View.VISIBLE);
         } else {
             mIvCompanyIcon.setVisibility(View.GONE);
         }
         //判断是否是担保交易
-        if (mDetail.getIs_danbao()) {
+        if (mDetail.is_danbao()) {
             mLLGuarantee.setVisibility(View.VISIBLE);
         } else {
             mLLGuarantee.setVisibility(View.GONE);
@@ -284,8 +290,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
      */
     private void setRedEnvelopeStatus() {
 
-        if (mDetail.getGrab_status()) {
-            if (mDetail.getIs_open()) {
+        if (mDetail.isGrab_status()) {
+            if (mDetail.is_open()) {
                 mBtnOpenRed.setText("您已经领取红包");
                 mBtnOpenRed.setTextColor(getResources().getColor(R.color.font_white));
                 mTvRedPrice.setText(mDetail.getPrice() + "元");
@@ -293,7 +299,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 mPresenter.countDown(mDetail.getDelay_seconds());
             }
         } else {
-            if (!mDetail.getHb_status()) {
+            if (!mDetail.isHb_status()) {
                 mBtnOpenRed.setText("红包已领空");
                 mBtnOpenRed.setTextColor(getResources().getColor(R.color.font_white));
                 mBtnOpenRed.setEnabled(false);
@@ -304,7 +310,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
             }
         }
 
-        if (mDetail.getFavorite_status()) {
+        if (mDetail.isFavorite_status()) {
             mIvCollect.setImageResource(R.drawable.img_collect_select);
         } else {
             mIvCollect.setImageResource(R.drawable.img_collect_normal);
@@ -368,7 +374,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 changerDataList();
                 break;
             case R.id.btn_open_red://打开红包
-
+                //ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult);
+                //menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_collect_container://收藏
                 mPresenter.favorite(mToken, mDetail.getId());
@@ -384,6 +391,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
     }
+
+
 
     /**
      * 切换列表

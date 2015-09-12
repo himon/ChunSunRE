@@ -8,7 +8,7 @@ import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.HomeFragmentModeImpl;
-import com.chunsun.redenvelope.ui.fragment.HomeFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 

@@ -10,7 +10,7 @@ import com.chunsun.redenvelope.model.WebRedDetailMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.activity.WebRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 

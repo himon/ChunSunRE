@@ -3,11 +3,8 @@ package com.chunsun.redenvelope.ui.activity.personal;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,16 +13,14 @@ import android.widget.RadioGroup;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.WithdrawcashAlipayConfirmMode;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity.ResultEntity.ZfbPoundageEntity;
 import com.chunsun.redenvelope.presenter.impl.WithdrawCashAlipayPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawCashAlipayView;
-import com.chunsun.redenvelope.utils.DensityUtil;
+import com.chunsun.redenvelope.utils.DensityUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -96,8 +91,8 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
             rbItem.setBackgroundResource(R.drawable.selector_withdraw_cash_money);
             rbItem.setButtonDrawable(R.color.transparency);
             rbItem.setGravity(Gravity.CENTER);
-            rbItem.setPadding(0, DensityUtil.dip2px(this, 5), 0,
-                    DensityUtil.dip2px(this, 5));
+            rbItem.setPadding(0, DensityUtils.dip2px(this, 5), 0,
+                    DensityUtils.dip2px(this, 5));
             rbItem.setText(info.getAmount() + "元");
             rbItem.setTextSize(16);
 
@@ -114,7 +109,7 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
 
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(0,
                     RadioGroup.LayoutParams.WRAP_CONTENT, 1);
-            params.rightMargin = DensityUtil.dip2px(this, 3);
+            params.rightMargin = DensityUtils.dip2px(this, 3);
 
             mRgWithdrawCash.addView(rbItem, params);
         }

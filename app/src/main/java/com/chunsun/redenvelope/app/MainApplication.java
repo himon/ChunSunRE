@@ -18,10 +18,10 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
+import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import org.json.JSONException;
@@ -138,9 +138,10 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initIMEI();
-        initImageLoader();
         initHeadOptions();
         initBaiduMap();
+
+        ImageLoader.getInstance().init(ImageLoaderHelper.getInstance(this).getImageLoaderConfiguration(Constants.IMAGE_LOADER_CACHE_PATH));
     }
 
     private void initHeadOptions() {
@@ -150,17 +151,6 @@ public class MainApplication extends Application {
                 .showImageOnFail(R.drawable.img_default_head)
                 .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(20))//为图片添加圆角显示在ImageAware中
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
-    }
-
-    /**
-     * 初始化ImageLoader
-     */
-    private void initImageLoader() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .writeDebugLogs()
-                .build();
-        ImageLoader.getInstance().init(config);
     }
 
     /**
@@ -201,6 +191,12 @@ public class MainApplication extends Application {
         TelephonyManager telephonyManager = (TelephonyManager) this
                 .getSystemService(Context.TELEPHONY_SERVICE);
         mImei = telephonyManager.getDeviceId();
+    }
+
+    public void exitApp() {
+        AppManager.getAppManager().finishAllActivityAndExit();
+        System.gc();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     /*--------------------------------------------------- 百度地图 -----------------------------------------------------------*/

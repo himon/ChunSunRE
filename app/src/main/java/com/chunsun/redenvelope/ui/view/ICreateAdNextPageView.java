@@ -4,14 +4,14 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.ui.base.BaseView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2015/9/2.
  */
-public interface ICreateAdNextPageView {
+public interface ICreateAdNextPageView extends BaseView{
 
     /**
      * 初始化省市信息
@@ -49,7 +49,4 @@ public interface ICreateAdNextPageView {
      */
     void toAdPayActivity(CreateAdResultEntity.ResultEntity result);
 
-    void showLoading();
-
-    void hideLoading();
 }

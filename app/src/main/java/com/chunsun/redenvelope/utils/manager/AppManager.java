@@ -1,7 +1,6 @@
 package com.chunsun.redenvelope.utils.manager;
 
 import android.app.Activity;
-import android.content.Context;
 
 import java.util.Stack;
 
@@ -79,7 +78,7 @@ public class AppManager {
         }
     }
 
-    public void finishAllActivityAndExit(Context context) {
+    public void finishAllActivityAndExit() {
         if (null != activityStack) {
             for (int i = 0, size = activityStack.size(); i < size; i++) {
                 if (null != activityStack.get(i)) {

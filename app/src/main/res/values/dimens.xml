@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="font_size_sp_10">10sp</dimen>
     <dimen name="font_size_sp_12">12sp</dimen>
     <dimen name="font_size_sp_14">14sp</dimen>
     <dimen name="font_size_sp_16">16sp</dimen>
@@ -12,6 +13,9 @@
 
     <dimen name="corners">5dp</dimen>
 
+    <!-- toolsbar的高度 -->
     <dimen name="tools_bar_height">50dp</dimen>
+    <!-- 互动平台按钮的尺寸 -->
+    <dimen name="main_tab_size">70dp</dimen>
 
 </resources>

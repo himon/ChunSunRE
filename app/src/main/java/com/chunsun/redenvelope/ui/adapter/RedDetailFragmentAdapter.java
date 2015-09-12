@@ -1,7 +1,6 @@
 package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,9 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.utils.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 import java.util.List;
 
@@ -39,13 +38,7 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
         this.mCurrentCheckType = currentCheckType;
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
-
-        mOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default_capture)
-                .showImageForEmptyUri(R.drawable.img_default_head)
-                .showImageOnFail(R.drawable.img_default_head)
-                .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(20))//为图片添加圆角显示在ImageAware中
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(20);
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {

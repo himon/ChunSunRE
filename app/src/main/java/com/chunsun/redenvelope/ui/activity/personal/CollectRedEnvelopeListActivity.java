@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.CollectRedEnvelopeListPresenter;
-import com.chunsun.redenvelope.ui.activity.RedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.NotReceivingAndCollectRedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICollectRedEnvelopeListView;

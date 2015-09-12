@@ -7,7 +7,7 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.model.impl.NearFragmentModeImpl;
-import com.chunsun.redenvelope.ui.fragment.NearFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.ui.view.INearFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 

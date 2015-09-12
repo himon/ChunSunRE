@@ -1,6 +1,8 @@
 package com.chunsun.redenvelope.constants;
 
 
+import android.os.Environment;
+
 /**
  * Created by Administrator on 2015/7/28.
  */
@@ -28,9 +30,9 @@ public interface Constants {
     /**
      * 服务器地址
      */
-    //String HOST_URL = "http://sv.chunsunkeji.com";
+//    String HOST_URL = "http://sv.chunsunkeji.com";
     String HOST_URL = "https://1.193.162.20:899";// 外网
-    //String IMG_HOST_URL = "http://admin.chunsunkeji.com";
+    //    String IMG_HOST_URL = "http://admin.chunsunkeji.com";
     String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
@@ -124,6 +126,12 @@ public interface Constants {
     String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
     //余额支付广告费用
     String AD_PAY_BY_BALANCE = "hb_user_zhifu_by_balance";
+    //控制每天分享次数
+    String HB_SHARE_LIMIT_JSON_REQUEST_URL = "user_share_limit_condition";
+    //获取互动评论列表
+    String INTERACTION_COMMENT_LIST = "interaction_comment_list";
+    //互动平台评论
+    String INTERACTION_COMMENT_LIST_COMMENT = "interaction_comment_add";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -212,6 +220,11 @@ public interface Constants {
     String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/help/price/dj.html";
 
     /**
+     * 分享url
+     */
+    String SHARE_RED_ENVELOPE_URL = "pages/share/index.aspx?grab_id=";
+
+    /**
      * MeFragment item type
      */
     int ME_FRAGMENT_TYPE_MINE = 1;
@@ -290,6 +303,9 @@ public interface Constants {
     int LISTENER_TYPE_COMMIT_AD = 0x2018;
     int LISTENER_TYPE_GET_AD_AMOUNT_DETAIL = 0x2019;
     int LISTENER_TYPE_PAY_BY_BANLANCE = 0x2020;
+    int LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT = 0x2021;
+    int LISTENER_TYPE_GET_INTERACTIVE_COUNTRY = 0x2022;
+    int LISTENER_TYPE_GET_INTERACTIVE_LOCAL = 0x2023;
 
     /**
      * 发广告默认数据
@@ -332,5 +348,17 @@ public interface Constants {
     String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
     //异步支付结果获取接口
     String ZHIFU_NOTIFY_URL = "http://admin.chunsunkeji.com/api/payment/alipay/notify_url_mobile.aspx";
+
+
+    /**
+     * ImageLoader 缓存路径
+     */
+    String IMAGE_LOADER_CACHE_PATH = "/SimplifyReader/Images/";
+
+    /**
+     * sd卡路径
+     */
+    String BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+
 
 }

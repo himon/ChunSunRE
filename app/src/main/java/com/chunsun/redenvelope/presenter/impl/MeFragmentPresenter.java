@@ -9,7 +9,7 @@ import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.impl.MeFragmentModeImpl;
-import com.chunsun.redenvelope.ui.fragment.MeFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
