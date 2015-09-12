@@ -16,7 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.ActionItem;
+import com.chunsun.redenvelope.model.entity.TitlePopupItemEntity;
 import com.chunsun.redenvelope.utils.DensityUtils;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class TitlePopup extends PopupWindow {
     private ListView mListView;
 
     //定义弹窗子类项列表
-    private ArrayList<ActionItem> mActionItems = new ArrayList<ActionItem>();
+    private ArrayList<TitlePopupItemEntity> mActionItems = new ArrayList<TitlePopupItemEntity>();
 
     public TitlePopup(Context context){
         //设置布局的参数
@@ -149,7 +149,7 @@ public class TitlePopup extends PopupWindow {
                     textView = (TextView) convertView;
                 }
 
-                ActionItem item = mActionItems.get(position);
+                TitlePopupItemEntity item = mActionItems.get(position);
 
                 //设置文本文字
                 textView.setText(item.mTitle);
@@ -181,7 +181,7 @@ public class TitlePopup extends PopupWindow {
     /**
      * 添加子类项
      */
-    public void addAction(ActionItem action){
+    public void addAction(TitlePopupItemEntity action){
         if(action != null){
             mActionItems.add(action);
             mIsDirty = true;
@@ -201,7 +201,7 @@ public class TitlePopup extends PopupWindow {
     /**
      * 根据位置得到子类项
      */
-    public ActionItem getAction(int position){
+    public TitlePopupItemEntity getAction(int position){
         if(position < 0 || position > mActionItems.size())
             return null;
         return mActionItems.get(position);
@@ -219,6 +219,6 @@ public class TitlePopup extends PopupWindow {
      *	功能描述：弹窗子类项按钮监听事件
      */
     public static interface OnItemOnClickListener{
-        public void onItemClick(ActionItem item , int position);
+        public void onItemClick(TitlePopupItemEntity item , int position);
     }
 }

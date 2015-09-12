@@ -9,11 +9,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.model.entity.TitlePopupItemEntity;
 import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -24,8 +26,8 @@ import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
-import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
+import com.chunsun.redenvelope.widget.popupwindow.TitlePopup;
 
 import java.util.ArrayList;
 
@@ -62,6 +64,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     //选中Tab页图标的颜色
     private int mSelectedColor;
     private int mUnSelectedColor;
+
+    //定义标题栏弹窗按钮
+    private TitlePopup mTitlePopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +113,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(4);
 
+        //实例化标题栏弹窗
+        mTitlePopup = new TitlePopup(this, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         initEvent();
     }
 
@@ -116,6 +124,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mNavRight.setOnClickListener(this);
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mNavRightIcon.setOnClickListener(this);
 
         mHome.setOnClickListener(this);
         mAd.setOnClickListener(this);
@@ -140,6 +149,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_ad_selected));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_near_selected));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_me_selected));
+
+        //给标题栏弹窗添加子类
+        mTitlePopup.addAction(new TitlePopupItemEntity(this, "发起聊天", R.drawable.img_dialog_platform));
+        mTitlePopup.addAction(new TitlePopupItemEntity(this, "听筒模式", R.drawable.img_dialog_scan));
+
     }
 
 
@@ -154,9 +168,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 MainApplication.getContext().getLocationClient().start();
                 break;
             case R.id.ib_nav_right:
-                ShowToast.Short("aaaaaaaaaaaaaa");
+                mTitlePopup.show(v);
                 break;
             case R.id.iv_toInteractive:
+                toInteract();
             default:
                 clickTab(v);
         }

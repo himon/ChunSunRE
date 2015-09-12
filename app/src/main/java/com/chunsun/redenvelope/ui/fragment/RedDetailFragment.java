@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
+import com.chunsun.redenvelope.widget.popupwindow.ShareRedEnvelopePopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -374,8 +376,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 changerDataList();
                 break;
             case R.id.btn_open_red://打开红包
-                //ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult);
-                //menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult);
+                menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_collect_container://收藏
                 mPresenter.favorite(mToken, mDetail.getId());
