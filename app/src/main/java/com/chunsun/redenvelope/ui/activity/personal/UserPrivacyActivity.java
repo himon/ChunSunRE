@@ -1,10 +1,7 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -26,6 +23,9 @@ import org.json.JSONObject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/***
+ * 隐私设置Activity
+ */
 public class UserPrivacyActivity extends BaseActivity implements IUserPrivacyView, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     @Bind(R.id.tv_name_title_tag)

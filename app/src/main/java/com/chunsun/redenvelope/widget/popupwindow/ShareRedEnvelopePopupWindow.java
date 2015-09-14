@@ -118,7 +118,6 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         mLLQzone.setOnClickListener(this);
         mLLSina.setOnClickListener(this);
         mBtnCancel.setOnClickListener(this);
-        mLLGetMoney.setOnClickListener(this);
     }
 
     private void initShareSDK() {
@@ -157,7 +156,12 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
     private void initData() {
         if (mDetail != null) {
-            mShowUrl = (mShareLimitResult.getShare_host() + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
+            if ("4".equals(mDetail.getHb_type())) {
+                mShowUrl = mDetail.getContent();
+                mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
+            } else {
+                mShowUrl = (mShareLimitResult.getShare_host() + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
+            }
         } else {
             // 邀请码分享
             mShowUrl = mShareLimitResult.getShare_host() + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();

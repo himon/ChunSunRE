@@ -18,6 +18,9 @@ import com.chunsun.redenvelope.ui.view.IMineInviteCodeView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 我的邀请码Activity
+ */
 public class MineInviteCodeActivity extends BaseActivity implements IMineInviteCodeView, View.OnClickListener {
 
     @Bind(R.id.tv_code)

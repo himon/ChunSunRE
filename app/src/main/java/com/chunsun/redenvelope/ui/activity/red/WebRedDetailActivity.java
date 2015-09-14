@@ -3,24 +3,34 @@ package com.chunsun.redenvelope.ui.activity.red;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.ShareEntitiy;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
+import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.WebRedDetailPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;
+import com.chunsun.redenvelope.utils.DensityUtils;
+import com.chunsun.redenvelope.widget.popupwindow.ShareRedEnvelopePopupWindow;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -30,12 +40,12 @@ import de.greenrobot.event.EventBus;
  */
 public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailView, View.OnClickListener {
 
-    @Bind(R.id.webView)
-    WebView mWebView;
-    @Bind(R.id.lay_common_webview_load_error)
-    LinearLayout mLLError;
-    @Bind(R.id.btn_common_webview_load_error)
-    Button mBtnError;
+    @Bind(R.id.main_nav)
+    RelativeLayout mToolsBar;
+    @Bind(R.id.viewpager)
+    ViewPager mViewPager;
+    @Bind(R.id.ib_button)
+    ImageButton mIbInfo;
     @Bind(R.id.rl_get_red)
     RelativeLayout mRlGetRed;
     @Bind(R.id.iv_icon)
@@ -49,13 +59,29 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
     @Bind(R.id.main)
     LinearLayout mLLMain;
 
-    private boolean mIsSuccessLoad = true;
     private String mRedDetailId;
     private RedDetailEntity.ResultEntity.DetailEntity mRed;
     //红包倒计时秒数
     private int mDelaySeconds;
 
     private WebRedDetailPresenter mPresenter;
+    private FragmentPagerAdapter mAdapter;
+    private List<Fragment> mFragments;
+
+    //button移动用到的属性
+    private int lastX, lastY;
+    private int downX, downY;
+    //四边的边界
+    private int mLeftSide;
+    private int mRightSide;
+    private int mTopSide;
+    private int mBottomSide;
+
+
+    private String mToken;
+    private ShareLimitEntity.ResultEntity mShareLimit;
+    //当前显示的webview是第几个
+    private int mCurrentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,76 +98,166 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
     protected void initView() {
         initTitleBar("春笋红包", "", "", Constants.TITLE_TYPE_SAMPLE);
 
-        mWebView.setWebViewClient(new WebViewClient() {
+        mFragments = new ArrayList<Fragment>();
+
+        mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
-            public void onReceivedError(WebView view, int errorCode,
-                                        String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-                mIsSuccessLoad = false;
-                mWebView.setVisibility(View.GONE);
-                mLLError.setVisibility(View.VISIBLE);
+            public Fragment getItem(int position) {
+                return mFragments.get(position);
             }
 
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                if (mDialog != null && mDialog.isShowing()) {
-                    mDialog.dismiss();
-                }
-                if (mIsSuccessLoad) {
-                    mWebView.setVisibility(View.VISIBLE);
-                } else {
-                    mWebView.setVisibility(View.GONE);
-                }
+            public int getCount() {
+                return mFragments.size();
             }
-        });
-        WebSettings setting = mWebView.getSettings();
-        setting.setJavaScriptEnabled(true);
+        };
 
         initEvent();
     }
 
     private void initEvent() {
         mNavLeft.setOnClickListener(this);
+        mNavIcon.setOnClickListener(this);
+        mIbInfo.setOnClickListener(this);
+        mRlGetRed.setOnClickListener(this);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int arg0) {
+                mCurrentPage = arg0;
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+
+        mIbInfo.setOnTouchListener(new View.OnTouchListener() {
+
+            /**
+             * 这有一点要说明的是 ****小理解点******* 1. event.getX : 是以 widget（控件） 的左上角 为 原点的
+             * X坐标 event.getRawX() : 是以 屏幕左上角 为原点的 X坐标 2. View.layout(left, top,
+             * right, bottom); left ： 控件左端以 父 控件的 左上角为原点的X坐标 top ： 控件顶端以 父 控件的
+             * 左上角为原点的Y坐标 right ： 控件右端以 父 控件的 左上角为原点的X坐标 bottom ： 控件底端以 父 控件的
+             * 左上角为原点的Y坐标 这个地方如果不明白会在博客上图说明。
+             */
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                /**
+                 * 这个地方的逻辑是： 在 down 的时候记录一下距离屏幕左上角的距离 然后move的时候来再来计算一下距离 2着的差值就是分别
+                 * x轴和y轴移动的距离
+                 */
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        // 按下的时候距离屏幕左上角的距离
+                        lastX = (int) event.getRawX();
+                        lastY = (int) event.getRawY();
+                        downX = lastX;
+                        downY = lastY;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        // 移动的时候距离屏幕左上角的距离
+                        int nowX = (int) event.getRawX();
+                        int nowY = (int) event.getRawY();
+
+                        if ((nowX >= mLeftSide && nowX <= mRightSide)
+                                && (nowY >= mTopSide && nowY <= mBottomSide)) {
+
+                            // X轴和Y轴移动的距离
+                            int moveX = nowX - lastX;
+                            int moveY = nowY - lastY;
+                            // 分别计算距离
+                            int top = v.getTop() + moveY;
+                            int bottom = v.getBottom() + moveY;
+                            int left = v.getLeft() + moveX;
+                            int right = v.getRight() + moveX;
+
+                            v.layout(left, top, right, bottom);
+
+                            lastX = (int) event.getRawX();
+                            lastY = (int) event.getRawY();
+                            return true;
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        int upX = (int) event.getRawX();
+                        int upY = (int) event.getRawY();
+                        if (Math.abs(upX - downX) > 5 || Math.abs(upY - downY) > 5) {
+                            return true;
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     protected void initData() {
+
+        mToken = new Preferences(this).getToken();
+
         Intent intent = getIntent();
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
         }
-        mDialog.show();
         mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);
+        mPresenter.getShareLimit(mToken);
+        showLoading();
     }
 
     @Override
     public void loadUrl(RedDetailEntity.ResultEntity.DetailEntity entity) {
         mRed = entity;
-        mWebView.loadUrl(entity.getContent());
-        countDown();
+        initFragment();
+        setRedStatus();
+        initButtonMoveSide();
     }
 
     @Override
-    public void setData(RedDetailEntity.ResultEntity.DetailEntity entity) {
+    public void getShareLimit(ShareLimitEntity.ResultEntity result) {
+        mShareLimit = result;
+    }
 
+    /**
+     * 初始化Button移动的范围
+     */
+    private void initButtonMoveSide() {
+        int statusBarH = DensityUtils.getStatusBarH(this);
+        int toolBarH = mToolsBar.getHeight();
+        int recordButtonW = mIbInfo.getWidth();
+        int recordButtonH = mIbInfo.getHeight();
+        int getRedRectH = mRlGetRed.getHeight();
+
+        mLeftSide = recordButtonW;
+        mRightSide = DensityUtils.getDisplayWidth(this) - recordButtonW;
+        mTopSide = statusBarH + toolBarH + recordButtonH;
+        mBottomSide = DensityUtils.getDisplayHeight(this) - getRedRectH - recordButtonH;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_nav_left:
+            case R.id.iv_nav_icon:
                 back();
                 break;
-            case R.id.btn_common_webview_load_error:
-                mIsSuccessLoad = true;
-                mLLError.setVisibility(View.GONE);
-                mDialog.show();
-                mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);
-                break;
             case R.id.rl_get_red:
-                ShareEntitiy entity = new ShareEntitiy();
-                entity.setContent("我正在看【" + mRed.getContent() + "】分享你一起来看");
+                String path = mRed.getContent().split("，")[mCurrentPage];
+                mRed.setContent(path);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mShareLimit);
+                menuWindow.showAtLocation(mLLMain, Gravity.BOTTOM
+                        | Gravity.CENTER_HORIZONTAL, 0, 0);
+                break;
+            case R.id.ib_button:
+                Intent intent = new Intent(this, WebRedDetailCommentActivity.class);
+                intent.putExtra(Constants.EXTRA_KEY, mRed.getId());
+                startActivity(intent);
                 break;
         }
     }
@@ -180,11 +296,71 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
         }
     }
 
+    /**
+     * 初始化有多少fragment
+     */
+    private void initFragment() {
+        boolean repeat = mRed.is_repeat();
+        boolean allowRepeat = mRed.is_allow_repeat();
+
+        int linknum = mRed.getCan_open_linknum();
+        if (repeat && !allowRepeat) {
+            linknum = 1;
+        }
+
+        String[] urls = mRed.getContent().split("，");
+        if (urls.length < linknum) {
+            linknum = urls.length;
+        }
+
+        boolean flag = false;
+        for (int i = 0; i < linknum; i++) {
+            String url = urls[i];
+            if (i == 0) {
+                flag = true;
+            }
+            WebRedDetailFragment fragment = new WebRedDetailFragment();
+            Bundle data = new Bundle();
+            data.putString(Constants.EXTRA_KEY, url);
+            data.putBoolean(Constants.EXTRA_KEY2, flag);
+            fragment.setArguments(data);
+            mFragments.add(fragment);
+            flag = false;
+        }
+        mViewPager.setAdapter(mAdapter);
+        // 设置预加载数
+        mViewPager.setOffscreenPageLimit(mFragments.size());
+    }
+
+    /**
+     * 设置红包状态
+     */
+    private void setRedStatus() {
+        if (mRed.isGrab_status()) {
+            if (mRed.is_open()) {
+                mIvIcon.setVisibility(View.GONE);
+                mTvContent.setText("您已经领取红包" + mRed.getPrice() + "元");
+                mRlGetRed.setBackgroundColor(getResources().getColor(R.color.global_red_tran));
+            } else {
+                countDown();
+            }
+        } else if (mRed.isHb_status()) {
+            mIvIcon.setVisibility(View.GONE);
+            mTvContent.setText("来晚了，红包已抢空");
+            mTvContent.setTextColor(getResources().getColor(R.color.font_web_red_detail));
+            mRlGetRed.setBackgroundColor(getResources().getColor(R.color.bg_web_red_detail));
+        } else {
+            countDown();
+        }
+    }
+
     public void onEventMainThread(WebRedDetailEvent event) {
-        if("".equals(event.getMsg())) {
+        if ("".equals(event.getMsg())) {
             mDelaySeconds = mRed.getDelay_seconds();
             refreshDelaySeconds();
-        }else{
+        } else if ("1".equals(event.getMsg())) {
+            hideLoading();
+        } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -199,5 +375,17 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
         //取消注册EventBus
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void showLoading() {
+        mDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

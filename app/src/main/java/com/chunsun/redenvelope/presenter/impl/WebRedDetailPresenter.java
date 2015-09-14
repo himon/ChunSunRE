@@ -1,8 +1,11 @@
 package com.chunsun.redenvelope.presenter.impl;
 
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
+import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailMode;
+import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
+import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.model.impl.WebRedDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
@@ -14,14 +17,14 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/11.
  */
-public class WebRedDetailPresenter implements BaseSingleLoadedListener<RedDetailEntity> {
+public class WebRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
-    private IWebRedDetailView webRedDetailView;
-    private WebRedDetailMode webRedDetailMode;
+    private IWebRedDetailView mIWebRedDetailView;
+    private WebRedDetailMode mWebRedDetailMode;
 
     public WebRedDetailPresenter(IWebRedDetailView webRedDetailView) {
-        this.webRedDetailView = webRedDetailView;
-        webRedDetailMode = new WebRedDetailModeImpl((WebRedDetailActivity) webRedDetailView);
+        this.mIWebRedDetailView = webRedDetailView;
+        mWebRedDetailMode = new WebRedDetailModeImpl((WebRedDetailActivity) webRedDetailView);
     }
 
     /**
@@ -31,7 +34,15 @@ public class WebRedDetailPresenter implements BaseSingleLoadedListener<RedDetail
      * @param id
      */
     public void getData(String token, String id) {
-        webRedDetailMode.getRedData(token, id, this);
+        mWebRedDetailMode.getRedData(token, id, this);
+    }
+
+    /**
+     * 获取分享次数信息
+     * @param token
+     */
+    public void getShareLimit(String token) {
+        mWebRedDetailMode.getShareLimit(token, this);
     }
 
     /**
@@ -56,15 +67,32 @@ public class WebRedDetailPresenter implements BaseSingleLoadedListener<RedDetail
         }).start();
     }
 
-    @Override
-    public void onSuccess(RedDetailEntity entity) {
+    public void getDataSuccess(RedDetailEntity entity) {
         RedDetailEntity.ResultEntity.DetailEntity detail = entity.getResult().getDetail();
-        webRedDetailView.loadUrl(detail);
+        mIWebRedDetailView.loadUrl(detail);
+    }
+
+    @Override
+    public void onSuccess(int event_tag, BaseEntity data) {
+        switch (event_tag){
+            case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL:
+                getDataSuccess((RedDetailEntity) data);
+                break;
+            case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT:
+                ShareLimitEntity entity = (ShareLimitEntity) data;
+                mIWebRedDetailView.getShareLimit(entity.getResult());
+                break;
+        }
     }
 
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
     }
 
     @Override

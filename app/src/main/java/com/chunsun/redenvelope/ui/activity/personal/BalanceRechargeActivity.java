@@ -24,6 +24,9 @@ import com.chunsun.redenvelope.utils.StringUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 余额充值Activity
+ */
 public class BalanceRechargeActivity extends BaseActivity implements IBalanceRechargeView, View.OnClickListener {
 
     @Bind(R.id.et_recharge)

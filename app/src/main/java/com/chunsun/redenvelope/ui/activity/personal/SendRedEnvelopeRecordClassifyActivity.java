@@ -1,25 +1,17 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordClassifyEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.CollectRedEnvelopeListPresenter;
 import com.chunsun.redenvelope.presenter.impl.SendRedEnvelopeRecordClassifyPresenter;
-import com.chunsun.redenvelope.ui.adapter.NotReceivingAndCollectRedListAdapter;
 import com.chunsun.redenvelope.ui.adapter.SendRedEnvelopeRecordClassifyAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordClassifyView;
@@ -33,6 +25,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 发广告记录Activity
+ */
 public class SendRedEnvelopeRecordClassifyActivity extends BaseActivity implements ISendRedEnvelopeRecordClassifyView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

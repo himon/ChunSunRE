@@ -31,6 +31,14 @@ public class RedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
         mRedDetailMode.getRedData(token, id, this);
     }
 
+    /**
+     * 获取分享次数信息
+     * @param token
+     */
+    public void getShareLimit(String token) {
+        mRedDetailMode.getShareLimit(token, this);
+    }
+
     public void getDataSuccess(RedDetailEntity entity) {
         RedDetailEntity.ResultEntity.DetailEntity detail = entity.getResult().getDetail();
 
@@ -77,7 +85,5 @@ public class RedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
         ShowToast.Short(msg);
     }
 
-    public void getShareLimit(String token) {
-        mRedDetailMode.getShareLimit(token, this);
-    }
+
 }

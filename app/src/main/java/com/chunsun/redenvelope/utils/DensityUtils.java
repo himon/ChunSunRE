@@ -16,8 +16,10 @@
 
 package com.chunsun.redenvelope.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 
 public class DensityUtils {
@@ -123,5 +125,17 @@ public class DensityUtils {
      */
     public static boolean isPortrait(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    /**
+     * 获取状态栏的高度
+     *
+     * @param activity
+     * @return
+     */
+    public static int getStatusBarH(Activity activity) {
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        return frame.top;
     }
 }

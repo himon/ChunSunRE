@@ -137,12 +137,12 @@ public class TitlePopup extends PopupWindow {
 
                 if(convertView == null){
                     textView = new TextView(mContext);
-                    textView.setTextColor(mContext.getResources().getColor(android.R.color.white));
-                    textView.setTextSize(14);
+                    textView.setTextColor(mContext.getResources().getColor(android.R.color.black));
+                    textView.setTextSize(16);
                     //设置文本居中
                     textView.setGravity(Gravity.CENTER);
                     //设置文本域的范围
-                    textView.setPadding(0, 10, 0, 10);
+                    textView.setPadding(10, 10, 10, 10);
                     //设置文本在一行内显示（不换行）
                     textView.setSingleLine(true);
                 }else{
@@ -154,7 +154,7 @@ public class TitlePopup extends PopupWindow {
                 //设置文本文字
                 textView.setText(item.mTitle);
                 //设置文字与图标的间隔
-                textView.setCompoundDrawablePadding(10);
+                textView.setCompoundDrawablePadding(5);
                 //设置在文字的左边放一个图标
                 textView.setCompoundDrawablesWithIntrinsicBounds(item.mDrawable, null , null, null);
 

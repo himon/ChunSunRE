@@ -20,7 +20,6 @@ import com.chunsun.redenvelope.presenter.impl.BalancePresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
-import com.nostra13.universalimageloader.core.assist.ContentLengthInputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 余额Activity
+ */
 public class BalanceActivity extends BaseActivity implements IBalanceView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

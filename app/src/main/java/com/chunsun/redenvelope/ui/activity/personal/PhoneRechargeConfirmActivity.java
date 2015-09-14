@@ -17,6 +17,9 @@ import com.chunsun.redenvelope.ui.view.IPhoneRechargeConfirmView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 手机充值确认Activity
+ */
 public class PhoneRechargeConfirmActivity extends BaseActivity implements IPhoneRechargeConfirmView, View.OnClickListener {
 
     @Bind(R.id.tv_phone)

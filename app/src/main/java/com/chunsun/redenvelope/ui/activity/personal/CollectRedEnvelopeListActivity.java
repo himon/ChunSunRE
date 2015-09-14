@@ -26,6 +26,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 收藏Activity
+ */
 public class CollectRedEnvelopeListActivity extends BaseActivity implements ICollectRedEnvelopeListView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

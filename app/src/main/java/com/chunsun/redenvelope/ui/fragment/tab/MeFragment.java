@@ -21,6 +21,7 @@ import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
+import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.adapter.MeFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
 import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
@@ -91,7 +92,7 @@ public class MeFragment extends BaseFragment implements IMeFragmentView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MeFragmentEntity entity = (MeFragmentEntity) parent.getAdapter().getItem(position);
                 if (entity.getType() == 0) {
-
+                    toMeInfomation();
                 } else if (entity.getType() == 1) {
                     switch (entity.getId()) {
                         case Constants.ME_FRAGMENT_TYPE_MINE:
@@ -140,7 +141,8 @@ public class MeFragment extends BaseFragment implements IMeFragmentView {
      */
     @Override
     public void toMeInfomation() {
-
+        Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+        startActivity(intent);
     }
 
     /**

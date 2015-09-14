@@ -166,6 +166,14 @@
             android:name=".ui.activity.InteractivePlatformActivity"
             android:label="@string/title_activity_interactive_platform" >
         </activity>
+        <activity
+            android:name=".ui.activity.red.WebRedDetailCommentActivity"
+            android:label="@string/title_activity_web_red_detail_comment" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.UserInfoActivity"
+            android:label="@string/title_activity_user_info" >
+        </activity>
     </application>
 
 </manifest>

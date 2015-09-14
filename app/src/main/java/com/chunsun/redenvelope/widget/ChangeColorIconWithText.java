@@ -143,7 +143,6 @@ public class ChangeColorIconWithText extends View {
 
     public void setmIcon(Bitmap bitmap, int color) {
 
-
         mIconBitmap = bitmap;
         mColor = color;
         invalidateView();

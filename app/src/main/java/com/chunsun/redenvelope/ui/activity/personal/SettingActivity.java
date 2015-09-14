@@ -1,10 +1,7 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.chunsun.redenvelope.R;
@@ -22,6 +19,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
+/**
+ * 设置Activity
+ */
 public class SettingActivity extends BaseActivity implements ISettingView, View.OnClickListener {
 
     @Bind(R.id.si_about_us)
@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity implements ISettingView, View.
     private View.OnClickListener mExitListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btn_confirm_cancel:
                     mExitDialog.dismiss();
                     break;

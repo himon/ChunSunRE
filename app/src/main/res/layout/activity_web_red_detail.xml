@@ -1,45 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/main"
     tools:context="com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity">
 
-    <include layout="@layout/layout_title_bar" />
+    <include layout="@layout/layout_title_bar"/>
 
-    <WebView
-        android:id="@+id/webView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/view_nav_bar"
-        android:layout_weight="1" />
+        android:layout_weight="1">
 
-    <LinearLayout
-        android:id="@+id/lay_common_webview_load_error"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:visibility="gone" >
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="加载失败，点击重试"
-            android:textColor="@color/font_hint_gray"
-            android:textSize="@dimen/font_size_sp_18" />
+        </android.support.v4.view.ViewPager>
 
-        <Button
-            android:id="@+id/btn_common_webview_load_error"
-            android:layout_width="108dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/selector_button_webview_reload" />
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/ib_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/img_web_red_envelopebutton"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_get_red"
@@ -55,7 +46,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/ll_content"
-            android:src="@drawable/img_icon_gold" />
+            android:src="@drawable/img_icon_gold"/>
 
         <LinearLayout
             android:id="@+id/ll_content"
@@ -69,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="看完领钱"
-                android:textColor="@color/font_yellow" />
+                android:textColor="@color/font_yellow"/>
 
             <TextView
                 android:id="@+id/tv_price"
@@ -79,7 +70,7 @@
                 android:textColor="@color/font_yellow"
                 android:textSize="@dimen/font_size_sp_20"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_yuan"
@@ -89,7 +80,7 @@
                 android:text="元"
                 android:textColor="@color/font_yellow"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </LinearLayout>
     </RelativeLayout>
 

@@ -165,7 +165,6 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mRbCommentRecord = (RadioButton) view.findViewById(R.id.rb_comment_record);
         mRbGetRedRecord = (RadioButton) view.findViewById(R.id.rb_get_red_record);
 
-
         /**
          * ListView
          */

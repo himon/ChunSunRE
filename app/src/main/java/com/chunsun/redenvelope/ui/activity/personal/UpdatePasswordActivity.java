@@ -1,9 +1,6 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,11 +13,13 @@ import com.chunsun.redenvelope.presenter.impl.UpdatePasswordPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUpdatePasswordView;
 import com.chunsun.redenvelope.utils.StringUtil;
-import com.chunsun.redenvelope.widget.TextButtonDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 修改密码Activity
+ */
 public class UpdatePasswordActivity extends BaseActivity implements IUpdatePasswordView, View.OnClickListener {
 
     @Bind(R.id.ll_old_pwd_container)

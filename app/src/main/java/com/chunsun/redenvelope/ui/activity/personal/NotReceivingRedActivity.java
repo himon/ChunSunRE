@@ -27,6 +27,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 未领取红包列表Activity
+ */
 public class NotReceivingRedActivity extends BaseActivity implements INotReceivingRedView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

@@ -26,6 +26,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 发广告记录列表Activity
+ */
 public class SendRedEnvelopeRecordListActivity extends BaseActivity implements ISendRedEnvelopeRecordListView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

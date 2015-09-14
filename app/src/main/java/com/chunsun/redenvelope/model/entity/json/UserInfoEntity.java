@@ -18,17 +18,35 @@ public class UserInfoEntity {
     private String push_device_token;
     private String weixin;
     private String zhifubao;
+    /**
+     * 身份证号
+     */
     private String ID_num;
+    /**
+     * 用户类型 1 普通用户， 2 企业用户
+     */
     private String type;
+    /**
+     * 营业执照
+     */
     private String licence_img_url;
+    /**
+     * 身份证照
+     */
     private String ID_img_url;
     private String company_name;
     private String company_tel;
     private String company_contact;
     private String contact_mobile;
     private String address;
+    /**
+     * 企业的认证状态 0:未认证；1：审核中；2：认证成功；3：认证驳回
+     */
     private String is_v;
     private String v_reason;
+    /**
+     * 签名或企业介绍
+     */
     private String remark;
     private String bank_name;
     private String bank_no;
@@ -46,6 +64,8 @@ public class UserInfoEntity {
     private String is_proxy;
     private String is_danbao;
     private String reward_amount;
+    private String share_host;
+    private String yaoqing_is_display;
 
     public String getId() {
         return id;
@@ -365,5 +385,21 @@ public class UserInfoEntity {
 
     public void setReward_amount(String reward_amount) {
         this.reward_amount = reward_amount;
+    }
+
+    public String getShare_host() {
+        return share_host;
+    }
+
+    public void setShare_host(String share_host) {
+        this.share_host = share_host;
+    }
+
+    public String getYaoqing_is_display() {
+        return yaoqing_is_display;
+    }
+
+    public void setYaoqing_is_display(String yaoqing_is_display) {
+        this.yaoqing_is_display = yaoqing_is_display;
     }
 }

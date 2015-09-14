@@ -30,10 +30,10 @@ public interface Constants {
     /**
      * 服务器地址
      */
-//    String HOST_URL = "http://sv.chunsunkeji.com";
-    String HOST_URL = "https://1.193.162.20:899";// 外网
-    //    String IMG_HOST_URL = "http://admin.chunsunkeji.com";
-    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+    String HOST_URL = "http://cssv.chunsunkeji.com";
+    //    String HOST_URL = "https://1.193.162.20:899";// 外网
+    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+//    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -204,6 +204,11 @@ public interface Constants {
      * 标示登录页点击了返回
      */
     String FROM_LOGIN_BACK = "from_login_back";
+
+    /**
+     * token过期
+     */
+    String USER_INFO_PASS_FROM_ME = "user_info_pass_from_me";
 
     /**
      * WebView的url

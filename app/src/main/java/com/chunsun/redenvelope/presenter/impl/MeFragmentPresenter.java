@@ -8,12 +8,15 @@ import com.chunsun.redenvelope.model.MeFragmentMode;
 import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
+import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.model.impl.MeFragmentModeImpl;
 import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/8/3.
@@ -163,11 +166,14 @@ public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity>
 
     @Override
     public void onError(String msg) {
+        if ("会员信息不存在".equals(msg)) {
+            EventBus.getDefault().post(new MainEvent(Constants.USER_INFO_PASS_FROM_ME));
+        }
         ShowToast.Short(msg);
     }
 
     @Override
     public void onException(String msg) {
-        //ShowToast.Short(msg);
+        ShowToast.Short(msg);
     }
 }

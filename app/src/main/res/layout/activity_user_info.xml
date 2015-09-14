@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity">
+
+    <include layout="@layout/layout_title_bar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/global_gray"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ital_logo_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/selector_balance_list_item"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_logo_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <ImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/img_default_head"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:drawableRight="@drawable/img_arrow"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_chunsun_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_job"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_weixin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_qq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_zhifubao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_identify_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"/>
+
+            <com.chunsun.redenvelope.widget.SettingItem
+                android:id="@+id/ital_authentication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

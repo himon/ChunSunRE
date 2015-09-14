@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
@@ -38,6 +39,8 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseActivity implements IMainView, View.OnClickListener, ViewPager.OnPageChangeListener {
 
+    @Bind(R.id.toolsbar)
+    RelativeLayout mToolsBar;
     @Bind(R.id.indicator_home)
     ChangeColorIconWithText mHome;
     @Bind(R.id.indicator_ad)
@@ -115,7 +118,18 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
         //实例化标题栏弹窗
         mTitlePopup = new TitlePopup(this, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        mTitlePopup.setItemOnClickListener(new TitlePopup.OnItemOnClickListener() {
+            @Override
+            public void onItemClick(TitlePopupItemEntity item, int position) {
+                switch (position) {
+                    case 0:
+                        toInteract();
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });
         initEvent();
     }
 
@@ -151,8 +165,8 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_me_selected));
 
         //给标题栏弹窗添加子类
-        mTitlePopup.addAction(new TitlePopupItemEntity(this, "发起聊天", R.drawable.img_dialog_platform));
-        mTitlePopup.addAction(new TitlePopupItemEntity(this, "听筒模式", R.drawable.img_dialog_scan));
+        mTitlePopup.addAction(new TitlePopupItemEntity(this, "互动平台", R.drawable.img_dialog_platform));
+        mTitlePopup.addAction(new TitlePopupItemEntity(this, "扫一扫", R.drawable.img_dialog_scan));
 
     }
 
@@ -168,10 +182,8 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 MainApplication.getContext().getLocationClient().start();
                 break;
             case R.id.ib_nav_right:
-                mTitlePopup.show(v);
+                mTitlePopup.show(mToolsBar);
                 break;
-            case R.id.iv_toInteractive:
-                toInteract();
             default:
                 clickTab(v);
         }
@@ -259,12 +271,16 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Override
     public boolean isLogin(String from) {
         if (TextUtils.isEmpty(new Preferences(MainApplication.getContext()).getToken())) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra(Constants.EXTRA_KEY, from);
-            startActivity(intent);
+            toLogin(from);
             return false;
         }
         return true;
+    }
+
+    public void toLogin(String from) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, from);
+        startActivity(intent);
     }
 
     @Override
@@ -289,14 +305,16 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mViewPager.setCurrentItem(0, false);
         } else if (Constants.FROM_AD.equals(event.getMsg())) {
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
-            mViewPager.setCurrentItem(0, false);
+            mViewPager.setCurrentItem(1, false);
             //刷新MeFragment页面
             mMeFragment.getData();
         } else if (Constants.FROM_ME.equals(event.getMsg())) {
             mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
-            mViewPager.setCurrentItem(0, false);
+            mViewPager.setCurrentItem(3, false);
             //刷新MeFragment页面
             mMeFragment.getData();
+        } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
+            toLogin(Constants.FROM_ME);
         }
     }
 
