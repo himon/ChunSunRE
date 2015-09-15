@@ -12,6 +12,9 @@ public class UserInfoEntity {
     private String img_url;
     private String telphone;
     private String mobile;
+    /**
+     * 用户状态， 0 正常， 1 待验证， 2 待审核， 3 锁定， 4 禁言， 5 不可发广告
+     */
     private String status;
     private String token;
     private String push_device_type;

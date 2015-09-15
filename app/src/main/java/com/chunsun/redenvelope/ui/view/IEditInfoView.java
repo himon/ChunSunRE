@@ -8,4 +8,6 @@ public interface IEditInfoView {
     void contentIsEmpty();
 
     void complaintRedEnvelopeSuccess(String msg);
+
+    void editSuccess(int type);
 }

@@ -1,9 +1,9 @@
 package com.chunsun.redenvelope.utils;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import android.text.TextUtils;
 
 /**
  * List Utils

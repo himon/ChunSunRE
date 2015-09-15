@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Administrator on 2015/8/20.
  */
-public class RegexUtil {
+public class RegexUtils {
 
     /**
      * 验证Email和手机号码是否正确

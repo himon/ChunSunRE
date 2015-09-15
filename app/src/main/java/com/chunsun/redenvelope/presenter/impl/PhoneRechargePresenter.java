@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter.impl;
 
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeView;
-import com.chunsun.redenvelope.utils.RegexUtil;
+import com.chunsun.redenvelope.utils.RegexUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
@@ -17,7 +17,7 @@ public class PhoneRechargePresenter {
     }
 
     public void validatePhoneNum(BalanceEntity.ResultEntity.CzPoundageEntity entity, String phonenum){
-        if(RegexUtil.matcherPhone(phonenum)){
+        if(RegexUtils.matcherPhone(phonenum)){
             mIPhoneRechargeView.toRechargePhoneConfirm(entity, phonenum);
         }else{
             ShowToast.Short("手机号码格式不正确！");

@@ -35,7 +35,7 @@ public class WebRedDetailCommentAdapter extends BaseAdapter {
         this.mCurrentCheckType = currentCheckType;
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
-        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(20);
+        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {

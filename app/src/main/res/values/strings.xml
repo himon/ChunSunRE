@@ -180,13 +180,20 @@
     <string name="notice_board">系统公告</string>
     <string name="nationwide">全国</string>
 
+    <!-- 互相奖励 -->
+    <string name="reward">奖励：</string>
+    <string name="please_input_amount">请输入金额</string>
+    <string name="leave_message">留言：</string>
+    <string name="please_input_leave_message">请输入留言内容......</string>
+    <string name="confirm_reward">确定奖励</string>
+    <string name="qq">QQ</string>
+    <string name="send_red_envelope">发送红包</string>
+    <string name="account_desc">个性签名</string>
+
 
     <string name="title_activity_interactive_platform">InteractivePlatformActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_web_red_detail_comment">WebRedDetailCommentActivity</string>
-    <string name="title_activity_user_info">UserInfoActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
 
 
 </resources>

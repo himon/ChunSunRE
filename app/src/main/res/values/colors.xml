@@ -13,6 +13,7 @@
     <color name="font_gray">#808080</color>
     <color name="font_gray2">#8E8E93</color>
     <color name="font_gray3">#959595</color>
+    <color name="red_detail_comment_font_gray">#adadae</color>
     <color name="font_gray_red_envelope">#B2B2B2</color>
     <color name="font_web_red_detail">#BCBCBC</color>
     <color name="font_red_detail_gray">#696969</color>

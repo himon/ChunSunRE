@@ -1,0 +1,429 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.chunsun.redenvelope.ui.activity.red.UserRewardActivity">
+
+    <include layout="@layout/layout_title_bar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp">
+
+                <ImageView
+                    android:id="@+id/iv_head_logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/img_default_head"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_reward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reward"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_radius_white"
+                        android:hint="@string/please_input_amount"
+                        android:numeric="decimal"
+                        android:padding="10dip"
+                        android:text="0.03"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/yuan"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:text="@string/leave_message"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <EditText
+                        android:id="@+id/et_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_radius_white"
+                        android:gravity="top"
+                        android:hint="@string/please_input_leave_message"
+                        android:maxLength="100"
+                        android:minLines="3"
+                        android:padding="10dip"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_reward"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/selector_button_red_radius"
+                    android:gravity="center"
+                    android:text="@string/confirm_reward"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_sp_18"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_invitecode_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/invite_code"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_invitecode"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sex_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_sex"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_age_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/age"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_age"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_job_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/occupation"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_job"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+
+            <LinearLayout
+                android:id="@+id/ll_mobile_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phonenum"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+
+            <LinearLayout
+                android:id="@+id/ll_tel_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/telephone"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_tel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wechat"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_weixin"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_qq_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/layout_gray_half_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/qq"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_sp_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_qq"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/black"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/font_size_sp_16"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_red_envelope"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_send_red_total_money"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_desc"
+                    android:textColor="@color/black"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/font_size_sp_16"/>
+
+                <TextView
+                    android:id="@+id/tv_descripe"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_gray_half_line"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

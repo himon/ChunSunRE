@@ -43,7 +43,7 @@
                 android:layout_marginTop="7dp"
                 android:maxLength="300"
                 android:maxLines="20"
-                android:textColor="#adadae"
+                android:textColor="@color/red_detail_comment_font_gray"
                 android:textIsSelectable="true"
                 android:textSize="15sp" />
         </RelativeLayout>

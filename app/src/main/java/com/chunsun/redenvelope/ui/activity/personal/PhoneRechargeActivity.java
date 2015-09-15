@@ -1,11 +1,7 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -19,12 +15,9 @@ import com.chunsun.redenvelope.presenter.impl.PhoneRechargePresenter;
 import com.chunsun.redenvelope.ui.adapter.PhoneRechargeAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeView;
-import com.chunsun.redenvelope.utils.RegexUtil;
-import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

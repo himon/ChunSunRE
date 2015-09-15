@@ -8,7 +8,7 @@ import com.chunsun.redenvelope.R;
 /**
  * Created by Administrator on 2015/8/1.
  */
-public class CountDownUtil {
+public class CountDownUtils {
 
     /**
      * 验证是否激活获取验证码按钮

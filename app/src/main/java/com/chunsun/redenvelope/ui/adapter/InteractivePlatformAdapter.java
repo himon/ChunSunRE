@@ -43,7 +43,7 @@ public class InteractivePlatformAdapter extends BaseAdapter{
         mCurrentCheckType = currentCheckType;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(20);
+        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
     }
 
     @Override

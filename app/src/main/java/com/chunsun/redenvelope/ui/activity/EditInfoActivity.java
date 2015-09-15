@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,14 +13,18 @@ import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.EditInfoPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IEditInfoView;
+import com.chunsun.redenvelope.utils.EditUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 编辑信息Activity
@@ -32,9 +37,19 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     ImageView mIvDeleteContent;
 
     private String mId;
+    /**
+     * toolsbar标题
+     */
     private String mTitle;
+    /**
+     * 回显内容
+     */
     private String mText;
-    private String mType;
+    private int mType;
+    /**
+     * EditText显示的行数
+     */
+    private int mLines;
 
     private EditInfoPresenter mPresenter;
     private String mToken;
@@ -91,12 +106,44 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
             mId = intent.getStringExtra(Constants.EXTRA_KEY_ID);
             mTitle = intent.getStringExtra(Constants.EXTRA_KEY_TITLE);
             mText = intent.getStringExtra(Constants.EXTRA_KEY_TEXT);
-            mType = intent.getStringExtra(Constants.EXTRA_KEY_TYPE);
+            mType = intent.getIntExtra(Constants.EXTRA_KEY_TYPE, 0);
+            mLines = intent.getIntExtra(Constants.EXTRA_KEY_LINES, 1);
         }
-        initTitleBar(mTitle, "", mText, Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar(mTitle, "", "保存", Constants.TITLE_TYPE_SAMPLE);
 
-        if (Constants.EXTRA_KEY_TYPE_COMPLAINT.equals(mType)) {
+        /**
+         * 设置EditText行数
+         */
+        mEtContent.setMinLines(mLines);
+        if (mLines == 1) {
+            mEtContent.setSingleLine(true);
+        }
+        mEtContent.setText(mText);
+
+        if (Constants.EDIT_TYPE_COMPLAINT == mType) {
             mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+        } else if (Constants.EDIT_TYPE_CHUNSUN_ACCOUNT == mType) {
+            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+        } else if (Constants.EDIT_TYPE_NICK_NAME == mType) {
+            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+        } else if (Constants.EDIT_TYPE_PHONE == mType) {
+            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+            mEtContent.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else if (Constants.EDIT_TYPE_TEL == mType) {
+            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
+            mEtContent.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else if (Constants.EDIT_TYPE_WECHAT == mType) {
+            //限制输入字母数字
+            EditUtils.limitCharAndNumber(mEtContent);
+        } else if (Constants.EDIT_TYPE_QQ == mType) {
+            mEtContent.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else if (Constants.EDIT_TYPE_ALIPAY == mType) {
+            // 限制字母数字特殊字符
+            EditUtils.limitNotInputHanzi(mEtContent);
+        } else if (Constants.EDIT_TYPE_ID_CARD == mType) {
+            EditUtils.limitCharAndNumber(mEtContent);
+        } else if (Constants.EDIT_TYPE_DESC == mType) {
+            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(160)});
         }
     }
 
@@ -107,8 +154,17 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
                 back();
                 break;
             case R.id.tv_nav_right:
-                mPresenter.complaintRedEnvelope(mToken, mId, StringUtil.textview2String(mEtContent));
+                submit();
                 break;
+
+        }
+    }
+
+    private void submit() {
+        if (mType == Constants.EDIT_TYPE_COMPLAINT) {
+            mPresenter.complaintRedEnvelope(mToken, mId, StringUtil.textview2String(mEtContent));
+        }else{
+            mPresenter.editUserInfo(mToken, mType, StringUtil.textview2String(mEtContent));
         }
     }
 
@@ -125,6 +181,12 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void complaintRedEnvelopeSuccess(String msg) {
         ShowToast.Short(msg);
+        back();
+    }
+
+    @Override
+    public void editSuccess(int type) {
+        EventBus.getDefault().post(new EditUserInfoEvent(type, StringUtil.textview2String(mEtContent)));
         back();
     }
 }

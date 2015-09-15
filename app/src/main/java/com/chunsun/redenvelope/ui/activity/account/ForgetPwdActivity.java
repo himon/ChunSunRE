@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.model.event.ValiCodeEvent;
 import com.chunsun.redenvelope.presenter.impl.ForgetPwdPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdView;
-import com.chunsun.redenvelope.utils.CountDownUtil;
+import com.chunsun.redenvelope.utils.CountDownUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import butterknife.Bind;
@@ -102,7 +102,7 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, V
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (!countdowning) {
-            CountDownUtil.getCodeIsEnable(StringUtil.textview2String(etPhoneNum), btnGetCode, getResources());
+            CountDownUtils.getCodeIsEnable(StringUtil.textview2String(etPhoneNum), btnGetCode, getResources());
         }
         isNextStep();
     }

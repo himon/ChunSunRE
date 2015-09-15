@@ -3,12 +3,10 @@ package com.chunsun.redenvelope.presenter.impl;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.widget.ListView;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.CreateAdNextPageMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
@@ -18,10 +16,9 @@ import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdNextPageModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdNextPageView;
-import com.chunsun.redenvelope.utils.Base64Util;
+import com.chunsun.redenvelope.utils.Base64Utils;
 import com.chunsun.redenvelope.utils.ListUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
-import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
 import java.util.ArrayList;
@@ -306,31 +303,31 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
 
             switch (i) {
                 case 0:
-                    mAdEntity.setCoverImagePath(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setCoverImagePath(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 1:
-                    mAdEntity.setImagePath(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 2:
-                    mAdEntity.setImagePath2(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath2(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 3:
-                    mAdEntity.setImagePath3(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath3(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 4:
-                    mAdEntity.setImagePath4(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath4(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 5:
-                    mAdEntity.setImagePath5(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath5(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 6:
-                    mAdEntity.setImagePath6(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath6(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 7:
-                    mAdEntity.setImagePath7(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath7(Base64Utils.bitmapToBase64(bitmap));
                     break;
                 case 8:
-                    mAdEntity.setImagePath8(Base64Util.bitmapToBase64(bitmap));
+                    mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
                     break;
             }
         }

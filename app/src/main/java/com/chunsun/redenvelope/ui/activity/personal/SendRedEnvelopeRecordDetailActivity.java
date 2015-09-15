@@ -162,7 +162,11 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType);
+        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {

@@ -34,6 +34,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
+import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
@@ -176,7 +177,18 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType);
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_head_logo:
+                        Object tag = v.getTag();
+                        toUserRewardActivity(tag.toString());
+                        break;
+                }
+            }
+        });
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -318,6 +330,16 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
+    /**
+     * 跳转用户奖励页面
+     */
+    private void toUserRewardActivity(String id) {
+        Intent intent = new Intent(getActivity(), UserRewardActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, mDetail.getId());
+        startActivity(intent);
+    }
+
 
     public void getData() {
         if (mCurrentCheckType == 0) {
@@ -394,7 +416,6 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-
     /**
      * 切换列表
      */
@@ -452,8 +473,9 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         Intent intent = new Intent(getActivity(), EditInfoActivity.class);
         intent.putExtra(Constants.EXTRA_KEY_ID, mDetail.getId());
         intent.putExtra(Constants.EXTRA_KEY_TITLE, "举报");
-        intent.putExtra(Constants.EXTRA_KEY_TEXT, "提交");
-        intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EXTRA_KEY_TYPE_COMPLAINT);
+        intent.putExtra(Constants.EXTRA_KEY_TEXT, "");
+        intent.putExtra(Constants.EXTRA_KEY_LINES, 5);
+        intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EDIT_TYPE_COMPLAINT);
         startActivity(intent);
     }
 

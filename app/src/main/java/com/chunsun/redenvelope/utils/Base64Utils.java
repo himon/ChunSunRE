@@ -7,7 +7,7 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class Base64Util {
+public class Base64Utils {
 
     /**
      * bitmap转Base64

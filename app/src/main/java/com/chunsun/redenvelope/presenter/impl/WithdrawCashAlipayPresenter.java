@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter.impl;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.ui.view.IWithdrawCashAlipayView;
-import com.chunsun.redenvelope.utils.RegexUtil;
+import com.chunsun.redenvelope.utils.RegexUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
@@ -25,7 +25,7 @@ public class WithdrawCashAlipayPresenter {
             ShowToast.Short("姓名不能为空");
             return;
         }
-        if (!RegexUtil.matcherPhoneAndEmail(account)) {
+        if (!RegexUtils.matcherPhoneAndEmail(account)) {
             ShowToast.Short("您输入的支付宝账号不正确");
             return;
         }

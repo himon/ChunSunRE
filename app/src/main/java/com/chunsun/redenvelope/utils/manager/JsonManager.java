@@ -353,11 +353,11 @@ public class JsonManager {
      * @param field_value
      * @return
      */
-    public static String initDataUpdateInfoToJson(String token, String field_value) {
+    public static String initDataUpdateInfoToJson(String token, String field_name, String field_value) {
         JSONObject object = new JSONObject();
         try {
             object.put("token", token);
-            object.put("field_name", "private_json");
+            object.put("field_name", field_name);
             object.put("field_value", field_value);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -488,6 +488,24 @@ public class JsonManager {
             jsonObject.put("content", content);
         } catch (JSONException e1) {
             e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 获取用户公开信息
+     *
+     * @param token
+     * @param user_id
+     * @return
+     */
+    public static String initUserPublicInfoDataToJson(String token, String user_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("user_id", user_id);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return jsonObject.toString();
     }

@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.utils.StringUtil;
 
 /**
  * Created by Administrator on 2015/8/22.
@@ -33,6 +34,14 @@ public class SettingItem extends LinearLayout {
         mTvContent.setText(content);
         mTvData.setText(data);
         mTvData.setVisibility(View.VISIBLE);
+    }
+
+    public String getData() {
+        return StringUtil.textview2String(mTvData);
+    }
+
+    public void setData(String data) {
+        mTvData.setText(data);
     }
 
 }

@@ -31,9 +31,15 @@ public interface Constants {
      * 服务器地址
      */
     String HOST_URL = "http://cssv.chunsunkeji.com";
-    //    String HOST_URL = "https://1.193.162.20:899";// 外网
+    //String HOST_URL = "https://1.193.162.20:899";// 外网
     String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-//    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+    //String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+
+    /**
+     * 系统用户id，用于在互相奖励时做判断
+     */
+    String SYSTEM_USER_ID = "22292";
+    //String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -132,6 +138,10 @@ public interface Constants {
     String INTERACTION_COMMENT_LIST = "interaction_comment_list";
     //互动平台评论
     String INTERACTION_COMMENT_LIST_COMMENT = "interaction_comment_add";
+    //修改用户基本信息
+    String USER_INFO_EDIT_JSON_REQUEST_URL = "user_info_edit_byuser";
+    //获取用户公开信息
+    String USER_PUBLIC_INFO_JSON_REQUEST_URL = "user_get_info_byuserid_cs_v_1_2_3";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -183,12 +193,24 @@ public interface Constants {
     String EXTRA_KEY_TEXT = "extra_key_text";
     String EXTRA_KEY_TYPE = "extra_key_type";
     String EXTRA_LIST_KEY = "extra_list_key";
+    String EXTRA_KEY_LINES = "extra_key_lines";
 
     /**
      * EditInfoActivity显示类型
      */
     //举报
-    String EXTRA_KEY_TYPE_COMPLAINT = "extra_key_type_complaint";
+    int EDIT_TYPE_COMPLAINT = 0x1001;
+    int EDIT_TYPE_CHUNSUN_ACCOUNT = 0x1002;
+    int EDIT_TYPE_NICK_NAME = 0x1003;
+    int EDIT_TYPE_PHONE = 0x1004;
+    int EDIT_TYPE_TEL = 0x1005;
+    int EDIT_TYPE_WECHAT = 0x1006;
+    int EDIT_TYPE_QQ = 0x1007;
+    int EDIT_TYPE_ALIPAY = 0x1008;
+    int EDIT_TYPE_ID_CARD = 0x1009;
+    int EDIT_TYPE_DESC = 0x1010;
+    int EDIT_TYPE_SEX = 0x1011;
+    int EDIT_TYPE_JOB = 0x1012;
 
     /**
      * 标示从发广告跳转到登录
@@ -311,6 +333,8 @@ public interface Constants {
     int LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT = 0x2021;
     int LISTENER_TYPE_GET_INTERACTIVE_COUNTRY = 0x2022;
     int LISTENER_TYPE_GET_INTERACTIVE_LOCAL = 0x2023;
+    int LISTENER_TYPE_COMLAINT_RED_ENVELOPE = 0x2024;
+    int LISTENER_TYPE_EDIT_USER_INFO = 0x2025;
 
     /**
      * 发广告默认数据
@@ -364,6 +388,5 @@ public interface Constants {
      * sd卡路径
      */
     String BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
-
 
 }

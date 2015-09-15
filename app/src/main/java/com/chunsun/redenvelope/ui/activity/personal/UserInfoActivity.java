@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.activity.personal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,18 +13,23 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
+import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.UserInfoPresenter;
+import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
+import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserInfoView;
 import com.chunsun.redenvelope.widget.SettingItem;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class UserInfoActivity extends BaseActivity implements IUserInfoView, View.OnClickListener {
 
@@ -60,19 +66,20 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
     @Bind(R.id.ital_authentication)
     SettingItem mSiAuthentication;
 
-
     private UserInfoEntity mUserEntity;
     private String[] mMoreContentList;
 
     private UserInfoPresenter mPresenter;
-    private SampleEntity mSexEntity;
-    private SampleEntity mJsoEntity;
+    private ArrayList<SampleEntity> mSexList;
+    private ArrayList<SampleEntity> mJsoList;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         mPresenter = new UserInfoPresenter(this);
         initView();
         initData();
@@ -91,7 +98,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
         mIvLogo.setOnClickListener(this);
         mSiName.setOnClickListener(this);
         mSiAccount.setOnClickListener(this);
-        mSiPhone.setOnClickListener(this);
+        //mSiPhone.setOnClickListener(this);
         mSiTel.setOnClickListener(this);
         mSiWechat.setOnClickListener(this);
         mSiAlipay.setOnClickListener(this);
@@ -100,6 +107,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
 
     @Override
     protected void initData() {
+        mToken = new Preferences(this).getToken();
+
         mUserEntity = MainApplication.getContext().getUserEntity();
         if (Constants.REGISTER_TYPE_PERSONAL.equals(mUserEntity.getType())) {
             initTitleBar("个人信息", "", "", Constants.TITLE_TYPE_SAMPLE);
@@ -111,7 +120,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
             mMoreContentList = new String[]{"企业形象", "名称", "春笋号", "手机号",
                     "电话", "微信", "支付宝", "", "企业介绍", "认证", "", "", "", "QQ"};
         }
-
         mPresenter.initData();
     }
 
@@ -122,11 +130,87 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
             case R.id.tv_nav_left:
                 back();
                 break;
+            case R.id.ital_name:
+                toEdit(mMoreContentList[1], mSiName.getData(), "1", Constants.EDIT_TYPE_NICK_NAME);
+                break;
+            case R.id.ital_logo_info://头像设置
+                break;
+            case R.id.iv_logo://头像查看
+                break;
+            case R.id.ital_chunsun_account://春笋号
+                toEdit(mMoreContentList[2], mSiAccount.getData(), "1", Constants.EDIT_TYPE_CHUNSUN_ACCOUNT);
+                break;
+            case R.id.ital_sex:
+                toEditSex();
+                break;
+            case R.id.ital_birthday:
+                toEditBirthday();
+                break;
+            case R.id.ital_job:
+                toEditJob();
+                break;
+            case R.id.ital_phone:
+                toEdit(mMoreContentList[3], mSiPhone.getData(), "1", Constants.EDIT_TYPE_PHONE);
+                break;
+            case R.id.ital_tel:
+                toEdit(mMoreContentList[4], mSiTel.getData(), "1", Constants.EDIT_TYPE_TEL);
+                break;
+            case R.id.ital_weixin:
+                toEdit(mMoreContentList[4], mSiWechat.getData(), "1", Constants.EDIT_TYPE_WECHAT);
+                break;
+            case R.id.ital_qq:
+                toEdit(mMoreContentList[13], mSiQQ.getData(), "1", Constants.EDIT_TYPE_QQ);
+                break;
+            case R.id.ital_zhifubao:
+                toEdit(mMoreContentList[6], mSiAlipay.getData(), "1", Constants.EDIT_TYPE_ALIPAY);
+                break;
+            case R.id.ital_identify_code:
+                toEdit(mMoreContentList[7], mSiId.getData(), "1", Constants.EDIT_TYPE_ID_CARD);
+                break;
+            case R.id.ital_description://个性签名
+                toEdit(mMoreContentList[7], mSiDesc.getData(), "1", Constants.EDIT_TYPE_DESC);
+                break;
+            case R.id.ital_authentication://认证
+                break;
         }
     }
 
+    private void toEditJob() {
+        Intent intent = new Intent(this, SelectListInfoActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_TITLE, mMoreContentList[12]);
+        if (mJsoList != null) {
+            intent.putExtra(Constants.EXTRA_LIST_KEY, mJsoList);
+        }
+        startActivity(intent);
+    }
+
+    private void toEditSex() {
+        Intent intent = new Intent(this, SelectListInfoActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_TITLE, mMoreContentList[10]);
+        if (mSexList != null) {
+            intent.putExtra(Constants.EXTRA_LIST_KEY, mSexList);
+        }
+        startActivity(intent);
+    }
+
+    private void toEditBirthday() {
+        mPresenter.editBirthday(mToken);
+    }
+
+    private void toEdit(String title, String content, String lines, int requestCode) {
+        Intent intent = new Intent(this, EditInfoActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_LINES, lines);
+        intent.putExtra(Constants.EXTRA_KEY_TITLE, title);
+        intent.putExtra(Constants.EXTRA_KEY_TEXT, content);
+        intent.putExtra(Constants.EXTRA_KEY_TYPE, requestCode);
+        startActivity(intent);
+    }
+
     @Override
-    public void setData(List<SampleEntity> sexList, List<SampleEntity> jobList) {
+    public void setData(ArrayList<SampleEntity> sexList, ArrayList<SampleEntity> jobList) {
+        mSexList = sexList;
+        mJsoList = jobList;
+
         //头像
         mTvLogoDesc.setText(mMoreContentList[0]);
         //名称
@@ -179,7 +263,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
 
             for (SampleEntity item : sexList) {
                 if (item.getValue().equals(mUserEntity.getSex())) {
-                    mSexEntity = item;
+                    item.setCheck(true);
                     break;
                 }
             }
@@ -199,27 +283,102 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
             mSiBirthday.setVisibility(View.VISIBLE);
         }
         //职业
-        if(TextUtils.isEmpty(mMoreContentList[12])){
+        if (TextUtils.isEmpty(mMoreContentList[12])) {
             mSiJob.setVisibility(View.GONE);
-        }else{
+        } else {
             mSiJob.setContent(mMoreContentList[12], mUserEntity.getJob());
             mSiJob.setOnClickListener(this);
             mSiJob.setVisibility(View.VISIBLE);
 
-            for(SampleEntity item : jobList){
-                if(item.getValue().equals(mUserEntity.getJob())){
-                    mJsoEntity = item;
+            for (SampleEntity item : jobList) {
+                if (item.getValue().equals(mUserEntity.getJob())) {
+                    item.setCheck(true);
                     break;
                 }
             }
         }
         //QQ
-        if(TextUtils.isEmpty(mMoreContentList[13])){
+        if (TextUtils.isEmpty(mMoreContentList[13])) {
             mSiQQ.setVisibility(View.GONE);
-        }else{
+        } else {
             mSiQQ.setContent(mMoreContentList[13], mUserEntity.getQq());
             mSiQQ.setVisibility(View.VISIBLE);
             mSiQQ.setOnClickListener(this);
         }
+    }
+
+    @Override
+    public void editUserBirthdaySuccess(String birthday) {
+        mSiBirthday.setData(birthday);
+        MainApplication.getContext().getUserEntity().setBirthday(birthday);
+    }
+
+    public void onEvent(EditUserInfoEvent event) {
+        switch (event.getMsg()) {
+            case Constants.EDIT_TYPE_CHUNSUN_ACCOUNT:
+                mSiAccount.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setUser_name(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_NICK_NAME:
+                mSiName.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setNick_name(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_PHONE:
+                mSiPhone.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setMobile(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_TEL:
+                mSiTel.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setTelphone(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_WECHAT:
+                mSiWechat.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setWeixin(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_QQ:
+                mSiQQ.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setQq(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_ALIPAY:
+                mSiAlipay.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setZhifubao(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_ID_CARD:
+                mSiId.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setID_num(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_DESC:
+                mSiDesc.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setRemark(event.getContent());
+                break;
+            case Constants.EDIT_TYPE_SEX:
+                mSiSex.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setSex(event.getContent());
+                for (SampleEntity item : mSexList) {
+                    if (item.getValue().equals(event.getContent())) {
+                        item.setCheck(true);
+                    } else {
+                        item.setCheck(false);
+                    }
+                }
+                break;
+            case Constants.EDIT_TYPE_JOB:
+                mSiJob.setData(event.getContent());
+                MainApplication.getContext().getUserEntity().setJob(event.getContent());
+                for (SampleEntity item : mJsoList) {
+                    if (item.getValue().equals(event.getContent())) {
+                        item.setCheck(true);
+                    } else {
+                        item.setCheck(false);
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

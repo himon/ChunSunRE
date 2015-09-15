@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.utils.ImageLoaderHelper;
@@ -31,14 +32,16 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private DisplayImageOptions mOptions;
+    private View.OnClickListener mOnClickListener;
 
-    public RedDetailFragmentAdapter(Context context, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {
+    public RedDetailFragmentAdapter(Context context, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener) {
         this.mListComment = listComment;
         this.mListRedRecord = listRedRecord;
         this.mCurrentCheckType = currentCheckType;
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
-        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(20);
+        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
+        this.mOnClickListener = onClickListener;
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {
@@ -90,6 +93,17 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 holder.tvContent.setText(comment.getContent());
                 holder.tvTime.setText(comment.getAdd_time());
                 holder.tvFloor.setText(comment.getFloor() + "楼");
+                /**
+                 * 判断是否是系统用户
+                 */
+                if (Constants.SYSTEM_USER_ID.equals(comment.getId())) {
+                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
+                    holder.ivLogo.setOnClickListener(null);
+                } else {
+                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
+                    holder.ivLogo.setOnClickListener(mOnClickListener);
+                    holder.ivLogo.setTag(comment.getId());
+                }
                 ImageLoader.getInstance().displayImage(comment.getThumb_img_url(), holder.ivLogo, mOptions);
                 break;
             case 1:
@@ -104,6 +118,15 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 holder2.tvName.setText(record.getNick_name());
                 holder2.tvPrice.setText(record.getPrice() + "");
                 holder2.tvTime.setText(record.getGrab_time());
+                /**
+                 * 判断是否是系统用户
+                 */
+                if (Constants.SYSTEM_USER_ID.equals(record.getId())) {
+                    holder2.ivLogo.setOnClickListener(null);
+                } else {
+                    holder2.ivLogo.setOnClickListener(mOnClickListener);
+                    holder2.ivLogo.setTag(record.getId());
+                }
                 ImageLoader.getInstance().displayImage(record.getThumb_img_url(), holder2.ivLogo, mOptions);
                 break;
         }

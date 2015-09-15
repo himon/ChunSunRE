@@ -53,7 +53,7 @@ public class UserPrivacyModeImpl implements UserPrivacyMode {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.USER_UPDATE_INFO_JSON_REQUEST_URL);
-                params.put("parames", JsonManager.initDataUpdateInfoToJson(token, field_value));
+                params.put("parames", JsonManager.initDataUpdateInfoToJson(token, "private_json", field_value));
                 return params;
             }
         };

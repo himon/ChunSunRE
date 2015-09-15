@@ -1,11 +1,7 @@
 package com.chunsun.redenvelope.ui.activity;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +11,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
 import com.chunsun.redenvelope.model.event.SelectAdNextPageEvent;
 import com.chunsun.redenvelope.ui.adapter.SelectListInfoAdaper;
@@ -94,19 +91,28 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
     @Override
     public void selectAdDelaySecondsRate(SelectListBase entity) {
 
-        if (entity instanceof AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) {
+        if (entity instanceof AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) {//创建广告，选择延迟时间
             AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity delaySecondsRateEntity = (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity) entity;
             EventBus.getDefault().post(new SelectAdDelaySecondsRateEvent(delaySecondsRateEntity.getId() + ""));
         } else if (entity instanceof SampleEntity) {
-            SampleEntity sampleEntity = (SampleEntity) entity;
-            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
-        } else if (entity instanceof DistrictEntity.AreaEntity) {
+            switch (((SampleEntity) entity).getType()) {
+                case Constants.EDIT_TYPE_SEX://修改用户基本信息性别
+                    EventBus.getDefault().post(new EditUserInfoEvent(Constants.EDIT_TYPE_SEX, ((SampleEntity) entity).getValue()));
+                    break;
+                case Constants.EDIT_TYPE_JOB://修改用户基本信息职业
+                    EventBus.getDefault().post(new EditUserInfoEvent(Constants.EDIT_TYPE_JOB, ((SampleEntity) entity).getValue()));
+                    break;
+                default:
+                    SampleEntity sampleEntity = (SampleEntity) entity;
+                    EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
+            }
+        } else if (entity instanceof DistrictEntity.AreaEntity) {//创建广告选择地区
             DistrictEntity.AreaEntity areaEntity = (DistrictEntity.AreaEntity) entity;
             SampleEntity sampleEntity = new SampleEntity();
             sampleEntity.setType(Constants.AD_SELECT_LIST_PROVINCE);
             sampleEntity.setKey(areaEntity.getP());
             EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
-        } else if (entity instanceof DistrictEntity.AreaEntity.CcEntity) {
+        } else if (entity instanceof DistrictEntity.AreaEntity.CcEntity) {//创建广告选择城市
             DistrictEntity.AreaEntity.CcEntity ccEntity = (DistrictEntity.AreaEntity.CcEntity) entity;
             SampleEntity sampleEntity = new SampleEntity();
             sampleEntity.setType(Constants.AD_SELECT_LIST_CITY);

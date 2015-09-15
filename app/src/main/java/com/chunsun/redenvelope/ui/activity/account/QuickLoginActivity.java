@@ -20,7 +20,7 @@ import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IQuickLoginView;
-import com.chunsun.redenvelope.utils.CountDownUtil;
+import com.chunsun.redenvelope.utils.CountDownUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import butterknife.Bind;
@@ -114,7 +114,7 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (!countdowning) {
-            CountDownUtil.getCodeIsEnable(StringUtil.textview2String(etPhoneNum), btnGetCode, getResources());
+            CountDownUtils.getCodeIsEnable(StringUtil.textview2String(etPhoneNum), btnGetCode, getResources());
         }
         isNextStep();
     }
