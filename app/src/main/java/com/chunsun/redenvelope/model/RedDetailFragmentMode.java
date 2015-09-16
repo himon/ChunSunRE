@@ -42,4 +42,23 @@ public interface RedDetailFragmentMode {
      * @param content
      */
     void sendComment(String token, String hb_id, String content, BaseMultiLoadedListener listener);
+
+    /**
+     * 拆红包
+     *
+     * @param token
+     * @param grab_id
+     * @param shareType
+     * @param listener
+     */
+    void shareOpen(String token, String grab_id, String shareType, BaseMultiLoadedListener listener);
+
+    /**
+     * 直接领钱
+     *
+     * @param token
+     * @param grab_id
+     * @param listener
+     */
+    void justOpen(String token, String grab_id, BaseMultiLoadedListener listener);
 }

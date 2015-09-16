@@ -106,4 +106,13 @@ public class TextButtonDialog extends Dialog {
         }
     }
 
+    public void diyRechargeDialog(boolean flag) {
+        if (btnCancel != null && btnOk != null) {
+            btnCancel.setText("取消");
+            btnCancel.setTextColor(Color.rgb(0, 0, 0));
+            btnOk.setText(flag ? "确定" : "去充值");
+            btnOk.setTextColor(Color.rgb(255, 84, 18));
+        }
+    }
+
 }

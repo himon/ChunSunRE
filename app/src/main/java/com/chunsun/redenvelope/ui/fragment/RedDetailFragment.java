@@ -397,7 +397,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                 changerDataList();
                 break;
             case R.id.btn_open_red://打开红包
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult, Constants.SHARE_FROM_RED);
                 menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_collect_container://收藏
@@ -496,6 +496,12 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
     }
 
+    @Override
+    public void shareSuccess() {
+        //关闭Activity
+        EventBus.getDefault().post(new RedDetailBackEvent(""));
+    }
+
     private void refreshDelaySeconds(int delaySeconds) {
         if (delaySeconds > 0) {
             mTvRedPrice.setText("现金红包");
@@ -508,7 +514,13 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     }
 
     public void onEventMainThread(RedDetailEvent event) {
-        refreshDelaySeconds(event.getMsg());
+        if (TextUtils.isEmpty(event.getMsg())) {//倒计时
+            refreshDelaySeconds(event.getSecond());
+        } else if ("share".equals(event.getMsg())) {
+            mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
+        } else if ("no_share".equals(event.getMsg())) {
+            mPresenter.justOpen(mToken, mDetail.getHg_id());
+        }
     }
 
     @Override

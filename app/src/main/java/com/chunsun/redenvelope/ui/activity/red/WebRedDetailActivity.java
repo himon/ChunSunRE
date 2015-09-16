@@ -224,6 +224,11 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
         mShareLimit = result;
     }
 
+    @Override
+    public void shareSuccess() {
+        back();
+    }
+
     /**
      * 初始化Button移动的范围
      */
@@ -250,7 +255,7 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
             case R.id.rl_get_red:
                 String path = mRed.getContent().split("，")[mCurrentPage];
                 mRed.setContent(path);
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mShareLimit);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mShareLimit, Constants.SHARE_FROM_WEB_RED);
                 menuWindow.showAtLocation(mLLMain, Gravity.BOTTOM
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -358,8 +363,13 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
         if ("".equals(event.getMsg())) {
             mDelaySeconds = mRed.getDelay_seconds();
             refreshDelaySeconds();
-        } else if ("1".equals(event.getMsg())) {
+        } else if ("hideLoading".equals(event.getMsg())) {//第一个page加载完成后hide loading
             hideLoading();
+        } else if ("share".equals(event.getMsg())) {//分享后
+            mPresenter.shareOpen(mToken, mRed.getHg_id(), event.getContent());
+        } else if ("no_share".equals(event.getMsg())) {//不分享，直接领钱
+            mPresenter.justOpen(mToken, mRed.getHg_id());
+
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override

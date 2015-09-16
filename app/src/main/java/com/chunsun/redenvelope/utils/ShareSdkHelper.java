@@ -5,8 +5,11 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
+import com.chunsun.redenvelope.model.event.RedDetailEvent;
+import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 
 import java.util.HashMap;
 
@@ -18,6 +21,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/9/11.
@@ -29,21 +33,32 @@ public class ShareSdkHelper implements PlatformActionListener {
     private RedDetailEntity.ResultEntity.DetailEntity mDetailEntity;
     private ShareLimitEntity.ResultEntity mShareLimitResult;
 
-    public ShareSdkHelper(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult) {
+    private int mFrom;
+    /**
+     * 当前点击的分享类型 wf:微信好友，wc:微信朋友圈，qz:qq空间，sw:新浪微博
+     */
+    private String shareType;
+
+    public ShareSdkHelper(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult, int from) {
         this.mContext = context;
         this.mDetailEntity = detail;
         this.mShareLimitResult = shareLimitResult;
+        this.mFrom = from;
     }
 
     public void share(String which, String url) {
         if (Wechat.NAME.equals(which)) {
             wechatShareParams(url, Wechat.NAME);
+            shareType = "wf";
         } else if (WechatMoments.NAME.equals(which)) {
             wechatShareParams(url, WechatMoments.NAME);
+            shareType = "wc";
         } else if (QZone.NAME.equals(which)) {
             qzoneShareParams(url);
+            shareType = "qz";
         } else if (SinaWeibo.NAME.equals(which)) {
             sinaWeiboShareParams(url);
+            shareType = "sw";
         }
     }
 
@@ -73,7 +88,8 @@ public class ShareSdkHelper implements PlatformActionListener {
         sp.setSiteUrl(url);
 
         Platform qzone = ShareSDK.getPlatform(QZone.NAME);
-        qzone.setPlatformActionListener(this); // 设置分享事件回调
+        // 设置分享事件回调
+        qzone.setPlatformActionListener(this);
         // 执行图文分享
         qzone.share(sp);
     }
@@ -142,7 +158,17 @@ public class ShareSdkHelper implements PlatformActionListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                switch (mFrom) {
+                    case Constants.SHARE_FROM_WEB_RED:
+                        WebRedDetailEvent share = new WebRedDetailEvent("share");
+                        share.setContent(shareType);
+                        EventBus.getDefault().post(share);
+                        break;
+                    case Constants.SHARE_FROM_RED:
+                        RedDetailEvent redShare = new RedDetailEvent("share", shareType);
+                        EventBus.getDefault().post(redShare);
+                        break;
+                }
             }
         });
     }

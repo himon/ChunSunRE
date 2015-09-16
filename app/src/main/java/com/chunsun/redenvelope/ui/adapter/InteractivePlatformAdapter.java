@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
 import com.chunsun.redenvelope.utils.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/9/12.
  */
-public class InteractivePlatformAdapter extends BaseAdapter{
+public class InteractivePlatformAdapter extends BaseAdapter {
 
     private List<InteractiveEntity.ResultEntity.ListEntity> mListCountry;
     private List<InteractiveEntity.ResultEntity.ListEntity> mListLocal;
@@ -30,6 +31,7 @@ public class InteractivePlatformAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mInflater;
     private DisplayImageOptions mOptions;
+    private View.OnClickListener mOnClickListener;
 
     public void setData(List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType) {
         mListCountry = listCountry;
@@ -37,13 +39,14 @@ public class InteractivePlatformAdapter extends BaseAdapter{
         mCurrentCheckType = currentCheckType;
     }
 
-    public InteractivePlatformAdapter(Context context, List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType) {
+    public InteractivePlatformAdapter(Context context, List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType, View.OnClickListener onClickListener) {
         mListCountry = listCountry;
         mListLocal = listLocal;
         mCurrentCheckType = currentCheckType;
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
+        this.mOnClickListener = onClickListener;
     }
 
     @Override
@@ -88,6 +91,17 @@ public class InteractivePlatformAdapter extends BaseAdapter{
                 holder.tvContent.setText(country.getContent());
                 holder.tvTime.setText(country.getAdd_time());
                 holder.tvFloor.setText(country.getFloor() + "楼");
+                /**
+                 * 判断是否是系统用户
+                 */
+                if (Constants.SYSTEM_USER_ID.equals(country.getId() + "")) {
+                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
+                    holder.ivLogo.setOnClickListener(null);
+                } else {
+                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
+                    holder.ivLogo.setOnClickListener(mOnClickListener);
+                    holder.ivLogo.setTag(country.getId() + "");
+                }
                 ImageLoader.getInstance().displayImage(country.getThumb_img_url(), holder.ivLogo, mOptions);
                 break;
             case 1:
@@ -103,6 +117,17 @@ public class InteractivePlatformAdapter extends BaseAdapter{
                 holder2.tvContent.setText(local.getContent());
                 holder2.tvTime.setText(local.getAdd_time());
                 holder2.tvFloor.setText(local.getFloor() + "楼");
+                /**
+                 * 判断是否是系统用户
+                 */
+                if (Constants.SYSTEM_USER_ID.equals(local.getId() + "")) {
+                    holder2.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
+                    holder2.ivLogo.setOnClickListener(null);
+                } else {
+                    holder2.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
+                    holder2.ivLogo.setOnClickListener(mOnClickListener);
+                    holder2.ivLogo.setTag(local.getId() + "");
+                }
                 ImageLoader.getInstance().displayImage(local.getThumb_img_url(), holder2.ivLogo, mOptions);
                 break;
         }

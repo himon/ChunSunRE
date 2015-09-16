@@ -9,7 +9,6 @@ import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.ui.base.CommonAdapter;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
-import com.chunsun.redenvelope.utils.adapter.ViewHolder;
 
 import java.util.List;
 

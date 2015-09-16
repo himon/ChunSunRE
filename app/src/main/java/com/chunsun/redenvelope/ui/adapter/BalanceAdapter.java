@@ -5,7 +5,6 @@ import android.content.Context;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.ui.base.CommonAdapter;
-import com.chunsun.redenvelope.utils.adapter.ViewHolder;
 
 import java.util.List;
 

@@ -31,15 +31,15 @@ public interface Constants {
      * 服务器地址
      */
     String HOST_URL = "http://cssv.chunsunkeji.com";
-    //String HOST_URL = "https://1.193.162.20:899";// 外网
+    //    String HOST_URL = "https://1.193.162.20:899";// 外网
     String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-    //String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+//    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
     String SYSTEM_USER_ID = "22292";
-    //String SYSTEM_USER_ID = "6778";// 测试环境
+//    String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -142,6 +142,12 @@ public interface Constants {
     String USER_INFO_EDIT_JSON_REQUEST_URL = "user_info_edit_byuser";
     //获取用户公开信息
     String USER_PUBLIC_INFO_JSON_REQUEST_URL = "user_get_info_byuserid_cs_v_1_2_3";
+    //用户向他人转账
+    String USER_REWARD_PAY_JSON_REQUEST_URL = "user_trans_to_user";
+    //拆红包
+    String SHARE_OPEN_RED_JSON_REQUEST_URL = "hb_user_open_take_money_v1_1";
+    //直接领钱
+    String JUST_OPEN_RED_JSON_REQUEST_URL = "hb_user_open_take_money";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -335,6 +341,10 @@ public interface Constants {
     int LISTENER_TYPE_GET_INTERACTIVE_LOCAL = 0x2023;
     int LISTENER_TYPE_COMLAINT_RED_ENVELOPE = 0x2024;
     int LISTENER_TYPE_EDIT_USER_INFO = 0x2025;
+    int LISTENER_TYPE_GET_USER_AMOUNT = 0x2026;
+    int LISTENER_TYPE_USER_REWARD_PAY = 0x2027;
+    int LISTENER_TYPE_SHARE_OPEN_RED = 0x2028;
+    int LISTENER_TYPE_JUST_OPEN_RED = 0x2029;
 
     /**
      * 发广告默认数据
@@ -389,4 +399,17 @@ public interface Constants {
      */
     String BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 
+    /**
+     * 互动平台 奖励
+     */
+    //全国
+    String INTERACTIVE_PLATFORM_COUNTRY = "0";
+    //地区
+    String INTERACTIVE_PLATFORM_LOCAL = "1";
+
+    /**
+     * 标示从哪跳转到SharePopupWindow
+     */
+    int SHARE_FROM_WEB_RED = 0x9001;
+    int SHARE_FROM_RED = 0x9002;
 }

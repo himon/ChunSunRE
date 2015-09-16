@@ -66,7 +66,7 @@ public class WebRedDetailFragment extends BaseFragment {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 if(mFlag){
-                    EventBus.getDefault().post(new WebRedDetailEvent("1"));
+                    EventBus.getDefault().post(new WebRedDetailEvent("hideLoading"));
                 }
                 if (mIsSuccessLoad) {
                     mWebView.setVisibility(View.VISIBLE);

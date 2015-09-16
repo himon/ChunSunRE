@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.InteractivePlatformPresenter;
+import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
@@ -114,7 +116,18 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
             }
         });
 
-        mDataAdapter = new InteractivePlatformAdapter(this, mListCountry, mListLocal, mCurrentCheckType);
+        mDataAdapter = new InteractivePlatformAdapter(this, mListCountry, mListLocal, mCurrentCheckType, new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_head_logo:
+                        Object tag = v.getTag();
+                        toUserRewardActivity(tag.toString());
+                        break;
+                }
+            }
+        });
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -191,7 +204,20 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
         }
         mPresenter.getCountryList(mToken, mCurrentCountryPage);
         mPresenter.getLocalList(mToken, mCurrentLocalPage);
+    }
 
+    /**
+     * 跳转用户奖励页面
+     */
+    private void toUserRewardActivity(String id) {
+        Intent intent = new Intent(this, UserRewardActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        if(mCurrentCountryPage == 1) {
+            intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_COUNTRY);
+        }else if(mCurrentCountryPage == 2){
+            intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_LOCAL);
+        }
+        startActivity(intent);
     }
 
     @Override

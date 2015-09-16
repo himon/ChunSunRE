@@ -19,6 +19,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
+import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.utils.ShareSdkHelper;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -28,6 +29,7 @@ import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/9/12.
@@ -53,11 +55,14 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
     private String mShowUrl;
     private ShareSdkHelper mShareSdkHelper;
 
-    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult) {
+    private int mFrom;
+
+    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult, int shareFrom) {
         super(context);
         this.mContext = context;
         this.mDetail = detail;
         this.mShareLimitResult = shareLimitResult;
+        this.mFrom = shareFrom;
 
         initView();
         initShareSDK();
@@ -118,6 +123,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         mLLQzone.setOnClickListener(this);
         mLLSina.setOnClickListener(this);
         mBtnCancel.setOnClickListener(this);
+        mLLGetMoney.setOnClickListener(this);
     }
 
     private void initShareSDK() {
@@ -166,7 +172,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
             // 邀请码分享
             mShowUrl = mShareLimitResult.getShare_host() + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
         }
-        mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, mShareLimitResult);
+        mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, mShareLimitResult, mFrom);
     }
 
     @Override
@@ -203,6 +209,16 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
                     return;
                 }
                 mShareSdkHelper.share(SinaWeibo.NAME, mShowUrl);
+                break;
+            case R.id.ll_get_money:
+                if(mFrom == Constants.SHARE_FROM_WEB_RED) {
+                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
+                }else if(mFrom == Constants.SHARE_FROM_RED){
+                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
+                }
+                break;
+            case R.id.btn_cancel:
+                dismiss();
                 break;
         }
     }

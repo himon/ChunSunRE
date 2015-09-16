@@ -9,7 +9,6 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.ui.base.CommonAdapter;
-import com.chunsun.redenvelope.utils.adapter.ViewHolder;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

@@ -44,4 +44,9 @@ public interface IRedDetailFragmentView {
      * 评论成功
      */
     void commentSuccess();
+
+    /**
+     * 分享成功
+     */
+    void shareSuccess();
 }

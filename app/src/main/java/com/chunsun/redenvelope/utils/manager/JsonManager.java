@@ -510,4 +510,58 @@ public class JsonManager {
         return jsonObject.toString();
     }
 
+    public static String initUserRewardDataToJson(String token, String user_id, String amount, String msg, String hb_id, String province, String city) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("user_id", user_id);
+            jsonObject.put("amount", amount);
+            jsonObject.put("msg", msg);
+            jsonObject.put("hb_id", hb_id);
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 拆红包
+     *
+     * @param token
+     * @param grab_id
+     * @param shareType
+     * @return
+     */
+    public static String initShareOpenDataToJson(String token, String grab_id, String shareType) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("grab_id", grab_id);
+            jsonObject.put("type", shareType);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 直接领钱
+     *
+     * @param token
+     * @param grab_id
+     * @return
+     */
+    public static String initShareOpenDataToJson(String token, String grab_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("grab_id", grab_id);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
 }

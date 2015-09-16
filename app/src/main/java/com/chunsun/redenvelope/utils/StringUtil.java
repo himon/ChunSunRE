@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.utils;
 
-import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -84,6 +83,14 @@ public class StringUtil {
             return false;
         }
         return true;
+    }
+
+    public static String returnAvailAmout(String amount) {
+        amount = backValidAmount(amount);
+        if ("0".equals(amount) || "0.0".equals(amount) || "0.00".equals(amount)) {
+            return "";
+        }
+        return amount;
     }
 
     /**

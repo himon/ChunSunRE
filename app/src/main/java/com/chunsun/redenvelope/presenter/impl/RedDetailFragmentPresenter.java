@@ -153,6 +153,11 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
             case Constants.LISTENER_TYPE_FAVORITE:
                 onSetFavoriteSuccess((SampleResponseEntity) data);
                 break;
+            case Constants.LISTENER_TYPE_JUST_OPEN_RED:
+            case Constants.LISTENER_TYPE_SHARE_OPEN_RED:
+                ShowToast.Short(((SampleResponseEntity)data).getMsg());
+                redDetailFragmentView.shareSuccess();
+                break;
         }
     }
 
@@ -169,5 +174,13 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
     @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
+    }
+
+    public void shareOpen(String token, String grab_id, String shareType) {
+        redDetailFragmentMode.shareOpen(token, grab_id, shareType, this);
+    }
+
+    public void justOpen(String token, String grab_id) {
+        redDetailFragmentMode.justOpen(token, grab_id, this);
     }
 }

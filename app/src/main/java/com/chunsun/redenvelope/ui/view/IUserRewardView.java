@@ -8,4 +8,18 @@ import com.chunsun.redenvelope.model.entity.json.UserPublicInfoEntity;
 public interface IUserRewardView {
 
     void setData(UserPublicInfoEntity.ResultEntity entity);
+
+    /**
+     * 显示确定Dialog
+     *
+     * @param isEnough
+     */
+    void showTextButtonDialog(boolean isEnough);
+
+    /**
+     * 去充值
+     */
+    void toRechargeActivity();
+
+    void paySuccess();
 }

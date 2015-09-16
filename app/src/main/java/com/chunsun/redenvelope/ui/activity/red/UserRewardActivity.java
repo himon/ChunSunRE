@@ -15,9 +15,12 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserPublicInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.UserRewardPresenter;
+import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserRewardView;
 import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.widget.TextButtonDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
@@ -72,10 +75,12 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView,
 
     private UserRewardPresenter mPresenter;
     private String mToken;
+    private TextButtonDialog mTextButtonDialog;
     /**
      * 活跃度是否足够
      */
     private boolean mCanTrans;
+    private UserPublicInfoEntity.ResultEntity mUserEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +101,7 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView,
     private void initEvent() {
         mNavLeft.setOnClickListener(this);
         mNavIcon.setOnClickListener(this);
+        mBtnReward.setOnClickListener(this);
     }
 
     @Override
@@ -117,11 +123,15 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView,
             case R.id.tv_nav_left:
                 back();
                 break;
+            case R.id.btn_reward:
+                mPresenter.reward(mToken, StringUtil.textview2String(mEtAmount), mCanTrans);
+                break;
         }
     }
 
     @Override
     public void setData(UserPublicInfoEntity.ResultEntity entity) {
+        mUserEntity = entity;
         mCanTrans = entity.isCan_trans();
         if (entity.isEnable_reward() || !MainApplication.getContext().getUserEntity().getId().equals(mUserId)) {
             mLLReward.setVisibility(View.VISIBLE);
@@ -130,5 +140,59 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView,
         ImageLoader.getInstance().displayImage(Constants.IMG_HOST_URL + entity.getU_img_url(), mIvHeadLogo, ImageLoaderHelper.getInstance(this).getDisplayOptions(8));
     }
 
+    @Override
+    public void showTextButtonDialog(final boolean isEnough) {
+        mTextButtonDialog = new TextButtonDialog(this, R.style.progress_dialog, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.btn_confirm_ok:
+                        if (isEnough) {//支付
+                            payReward();
+                        } else {//充值
+                            toRechargeActivity();
+                            mTextButtonDialog.dismiss();
+                        }
+                        break;
+                    case R.id.btn_confirm_cancel:
+                        mTextButtonDialog.dismiss();
+                        break;
+                }
+            }
+        });
+        mTextButtonDialog.show();
+        if (isEnough) {
+            mTextButtonDialog.setDialogContent(
+                    "您要奖励 “" + mUserEntity.getNick_name() + "”（"
+                            + mUserEntity.getInvitation_code()
+                            + "） " + StringUtil.textview2String(mEtAmount) + "元", 15);
+        } else {
+            mTextButtonDialog.setDialogContent("您的余额不够支付奖励金额", 15);
+        }
+        mTextButtonDialog.diyRechargeDialog(isEnough);
+    }
 
+    /**
+     * 支付奖励
+     */
+    private void payReward() {
+        if (Constants.INTERACTIVE_PLATFORM_COUNTRY.equals(mRedId)) {
+            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, "全国", "全国");
+        } else if (Constants.INTERACTIVE_PLATFORM_LOCAL.equals(mRedId)) {
+            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity());
+        } else {
+            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, "", "");
+        }
+    }
+
+    @Override
+    public void toRechargeActivity() {
+        Intent intent = new Intent(this, BalanceRechargeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void paySuccess() {
+        back();
+    }
 }

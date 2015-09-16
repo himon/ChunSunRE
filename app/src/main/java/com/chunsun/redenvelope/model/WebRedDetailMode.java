@@ -10,4 +10,8 @@ public interface WebRedDetailMode {
     void getRedData(String token, String id, BaseMultiLoadedListener listener);
 
     void getShareLimit(String token, BaseMultiLoadedListener listener);
+
+    void shareOpen(String token, String grab_id, String shareType, BaseMultiLoadedListener listener);
+
+    void justOpen(String token, String grab_id, BaseMultiLoadedListener listener);
 }

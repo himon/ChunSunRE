@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.chunsun.redenvelope.utils.adapter.ViewHolder;
+import com.chunsun.redenvelope.ui.adapter.ViewHolder;
 
 import java.util.List;
 

@@ -5,6 +5,7 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
+import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.model.impl.WebRedDetailModeImpl;
@@ -39,6 +40,7 @@ public class WebRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity
 
     /**
      * 获取分享次数信息
+     *
      * @param token
      */
     public void getShareLimit(String token) {
@@ -74,13 +76,18 @@ public class WebRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity
 
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
-        switch (event_tag){
+        switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL:
                 getDataSuccess((RedDetailEntity) data);
                 break;
             case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT:
                 ShareLimitEntity entity = (ShareLimitEntity) data;
                 mIWebRedDetailView.getShareLimit(entity.getResult());
+                break;
+            case Constants.LISTENER_TYPE_JUST_OPEN_RED:
+            case Constants.LISTENER_TYPE_SHARE_OPEN_RED:
+                ShowToast.Short(((SampleResponseEntity)data).getMsg());
+                mIWebRedDetailView.shareSuccess();
                 break;
         }
     }
@@ -98,5 +105,26 @@ public class WebRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity
     @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
+    }
+
+    /**
+     * 拆红包
+     *
+     * @param token
+     * @param grab_id
+     * @param shareType
+     */
+    public void shareOpen(String token, String grab_id, String shareType) {
+        mWebRedDetailMode.shareOpen(token, grab_id, shareType, this);
+    }
+
+    /**
+     * 直接领钱
+     *
+     * @param token
+     * @param grab_id
+     */
+    public void justOpen(String token, String grab_id) {
+        mWebRedDetailMode.justOpen(token, grab_id, this);
     }
 }

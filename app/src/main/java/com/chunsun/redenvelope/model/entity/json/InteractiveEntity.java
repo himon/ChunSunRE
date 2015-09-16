@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.model.entity.json;
 
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 
 import java.util.List;
@@ -137,7 +138,7 @@ public class InteractiveEntity extends BaseEntity {
             }
 
             public String getThumb_img_url() {
-                return thumb_img_url;
+                return Constants.IMG_HOST_URL + thumb_img_url;
             }
         }
 

@@ -12,4 +12,6 @@ public interface IWebRedDetailView extends BaseView{
     void loadUrl(RedDetailEntity.ResultEntity.DetailEntity entity);
 
     void getShareLimit(ShareLimitEntity.ResultEntity result);
+
+    void shareSuccess();
 }

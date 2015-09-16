@@ -9,11 +9,14 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.UserRewardMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
+import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
+import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.UserPublicInfoEntity;
 import com.chunsun.redenvelope.model.impl.UserRewardModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.view.IUserRewardView;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.StringUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +28,8 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
 
     private IUserRewardView mIUserRewardView;
     private UserRewardMode mUserRewardMode;
+
+    private double mAmount;
 
     public UserRewardPresenter(IUserRewardView iUserRewardView) {
         mIUserRewardView = iUserRewardView;
@@ -40,6 +45,14 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
         switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_USER_INFO:
                 mIUserRewardView.setData(((UserPublicInfoEntity) data).getResult());
+                break;
+            case Constants.LISTENER_TYPE_GET_USER_AMOUNT:
+                isPay((BalanceEntity) data);
+                break;
+            case Constants.LISTENER_TYPE_USER_REWARD_PAY:
+                SampleResponseEntity entity = (SampleResponseEntity) data;
+                ShowToast.Short(entity.getMsg());
+                mIUserRewardView.paySuccess();
                 break;
         }
     }
@@ -57,6 +70,13 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
     @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
+    }
+
+    private void isPay(BalanceEntity entity) {
+        String s = entity.getResult().getAmount();
+        double total = Double.parseDouble(s);
+        mIUserRewardView.showTextButtonDialog(total >= mAmount);
+
     }
 
     /**
@@ -163,5 +183,39 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
             ageLayout.setVisibility(View.GONE);
             jobLayout.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 奖励
+     *
+     * @param token
+     * @param amount
+     * @param canTrans
+     */
+    public void reward(String token, String amount, boolean canTrans) {
+        if (canTrans) {
+            String price = StringUtil.returnAvailAmout(amount);
+            if (TextUtils.isEmpty(price)) {
+                ShowToast.Short("请输入正确的金额！");
+            } else {
+                mAmount = Double.parseDouble(price);
+                mUserRewardMode.getUserAmount(token, this);
+            }
+        } else {
+            ShowToast.Short("您在平台活跃度不够，无法激活该功能！");
+        }
+    }
+
+    /**
+     * 支付奖励
+     *
+     * @param token
+     * @param user_id
+     * @param amount
+     * @param msg
+     * @param hb_id
+     */
+    public void pay(String token, String user_id, String amount, String msg, String hb_id, String province, String city) {
+        mUserRewardMode.pay(token, user_id, amount, msg, hb_id, province, city, this);
     }
 }

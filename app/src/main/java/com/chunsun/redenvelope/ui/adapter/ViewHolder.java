@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.utils.adapter;
+package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;

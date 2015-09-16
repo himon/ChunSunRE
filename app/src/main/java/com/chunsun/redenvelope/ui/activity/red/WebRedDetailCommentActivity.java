@@ -34,6 +34,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 链接红包评论界面
+ */
 public class WebRedDetailCommentActivity extends BaseActivity implements IWebRedDetailCommentView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)
@@ -99,7 +102,18 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
                 getData();
             }
         });
-        mDataAdapter = new WebRedDetailCommentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType);
+        mDataAdapter = new WebRedDetailCommentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_head_logo:
+                        Object tag = v.getTag();
+                        toUserRewardActivity(tag.toString());
+                        break;
+                }
+            }
+        });
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -199,6 +213,16 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
             }
             mPresenter.getRedRecordList(mRedId, mCurrentCommentPage);
         }
+    }
+
+    /**
+     * 跳转用户奖励页面
+     */
+    private void toUserRewardActivity(String id) {
+        Intent intent = new Intent(this, UserRewardActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, mRedId);
+        startActivity(intent);
     }
 
     @Override

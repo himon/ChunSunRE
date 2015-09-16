@@ -101,9 +101,9 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
             @Override
             public void onResponse(SampleResponseEntity response) {
-                if(response.isSuccess()) {
-                    listener.onSuccess(Constants.LISTENER_TYPE_FAVORITE,response);
-                }else{
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_FAVORITE, response);
+                } else {
                     listener.onError(response.getMsg());
                 }
             }
@@ -133,9 +133,9 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
             @Override
             public void onResponse(SampleResponseEntity response) {
-                if(response.isSuccess()) {
+                if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMMENT, response);
-                }else{
+                } else {
                     listener.onError(response.getMsg());
                 }
             }
@@ -152,6 +152,70 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_COMMENT_JSON_REQUEST_URL);
                 params.put("parames", JsonManager.initDataRedEnvelopeDetailCommentToJson(token, hb_id, content));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, mFragment);
+    }
+
+    @Override
+    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener) {
+        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_SHARE_OPEN_RED, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.SHARE_OPEN_RED_JSON_REQUEST_URL);
+                params.put("parames", JsonManager.initShareOpenDataToJson(token, grab_id, shareType));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, mFragment);
+    }
+
+    @Override
+    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener) {
+        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_JUST_OPEN_RED, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.JUST_OPEN_RED_JSON_REQUEST_URL);
+                params.put("parames", JsonManager.initShareOpenDataToJson(token, grab_id));
                 return params;
             }
         };

@@ -96,13 +96,13 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 /**
                  * 判断是否是系统用户
                  */
-                if (Constants.SYSTEM_USER_ID.equals(comment.getId())) {
+                if (Constants.SYSTEM_USER_ID.equals(comment.getId() + "")) {
                     holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
                     holder.ivLogo.setOnClickListener(null);
                 } else {
                     holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
                     holder.ivLogo.setOnClickListener(mOnClickListener);
-                    holder.ivLogo.setTag(comment.getId());
+                    holder.ivLogo.setTag(comment.getId() + "");
                 }
                 ImageLoader.getInstance().displayImage(comment.getThumb_img_url(), holder.ivLogo, mOptions);
                 break;
@@ -121,11 +121,11 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 /**
                  * 判断是否是系统用户
                  */
-                if (Constants.SYSTEM_USER_ID.equals(record.getId())) {
+                if (Constants.SYSTEM_USER_ID.equals(record.getId() + "")) {
                     holder2.ivLogo.setOnClickListener(null);
                 } else {
                     holder2.ivLogo.setOnClickListener(mOnClickListener);
-                    holder2.ivLogo.setTag(record.getId());
+                    holder2.ivLogo.setTag(record.getId() + "");
                 }
                 ImageLoader.getInstance().displayImage(record.getThumb_img_url(), holder2.ivLogo, mOptions);
                 break;
