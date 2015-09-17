@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.model.entity.TitlePopupItemEntity;
 import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
+import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
@@ -126,12 +127,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                         toInteract();
                         break;
                     case 1:
+                        toScan();
                         break;
                 }
             }
         });
         initEvent();
     }
+
 
     private void initEvent() {
 
@@ -298,6 +301,13 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             startActivity(intent);
         }
     }
+
+    @Override
+    public void toScan() {
+        Intent intent = new Intent(this, CaptureActivity.class);
+        startActivity(intent);
+    }
+
 
     public void onEvent(MainEvent event) {
         if (Constants.FROM_LOGIN_BACK.equals(event.getMsg())) {

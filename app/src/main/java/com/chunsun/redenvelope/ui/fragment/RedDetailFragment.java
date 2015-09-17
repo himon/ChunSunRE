@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
+import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
@@ -121,6 +123,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     private String mToken;
     //分享的限制信息
     private ShareLimitEntity.ResultEntity mShareLimitResult;
+    //图片的路径
+    private ArrayList mUrls;
 
     public RedDetailFragment() {
     }
@@ -249,6 +253,16 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
 
             }
         });
+
+        mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), RedDetailPicShowActivity.class);
+                intent.putExtra(Constants.EXTRA_LIST_KEY, mUrls);
+                intent.putExtra(Constants.EXTRA_KEY, position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -257,7 +271,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
 
         Bundle bundle = getArguments();
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
-        ArrayList urls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
+        mUrls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
         mShareLimitResult = bundle.getParcelable(Constants.EXTRA_KEY3);
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(mDetail.getNick_name());
@@ -280,7 +294,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         /**
          * 轮播图
          */
-        mAdapter = new ImageAdapter(urls, getActivity());
+        mAdapter = new ImageAdapter(mUrls, getActivity());
         mViewPager.setAdapter(mAdapter);
     }
 

@@ -16,4 +16,9 @@ public interface IMainView {
      * 跳转互动平台
      */
     void toInteract();
+
+    /**
+     * 扫描二维码
+     */
+    void toScan();
 }

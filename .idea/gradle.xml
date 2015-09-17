@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/PhotoPicker" />
+            <option value="$PROJECT_DIR$/Scanlibrary" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
