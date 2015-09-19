@@ -9,6 +9,7 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
@@ -99,10 +100,12 @@ public class SendRedEnvelopeRecordDetailPresenter implements BaseMultiLoadedList
             case Constants.LISTENER_TYPE_GET_RECORD_LIST:
                 onGetRedRecordSuccesss((RedDetailGetRedRecordEntity) data);
                 break;
+            case Constants.LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION:
+                mISendRedEnvelopeRecordDetailView.getSuperaddition((RedSuperadditionEntity) data);
+                break;
         }
     }
 
-    @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
     }
@@ -115,5 +118,13 @@ public class SendRedEnvelopeRecordDetailPresenter implements BaseMultiLoadedList
     @Override
     public void onException(String msg) {
         ShowToast.Short(msg);
+    }
+
+    /**
+     * 追加红包
+     * @param hb_id
+     */
+    public void superaddition(String hb_id) {
+        mSendRedEnvelopeRecordDetailMode.superaddition(hb_id, this);
     }
 }

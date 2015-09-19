@@ -31,8 +31,8 @@ public interface Constants {
      * 服务器地址
      */
     String HOST_URL = "http://cssv.chunsunkeji.com";
-//    String HOST_URL = "https://1.193.162.20:899";// 外网
-        String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    //    String HOST_URL = "https://1.193.162.20:899";// 外网
+    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
 //    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
@@ -148,6 +148,8 @@ public interface Constants {
     String SHARE_OPEN_RED_JSON_REQUEST_URL = "hb_user_open_take_money_v1_1";
     //直接领钱
     String JUST_OPEN_RED_JSON_REQUEST_URL = "hb_user_open_take_money";
+    //红包追加
+    String RED_ENVELOPE_SUPERADDITION_JSON_REQUEST_URL = "hb_user_superaddition_new";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -237,6 +239,11 @@ public interface Constants {
      * token过期
      */
     String USER_INFO_PASS_FROM_ME = "user_info_pass_from_me";
+
+    /**
+     * 追加广告
+     */
+    String SUPERADDITION_AD = "superaddition_ad";
 
     /**
      * WebView的url
@@ -345,6 +352,7 @@ public interface Constants {
     int LISTENER_TYPE_USER_REWARD_PAY = 0x2027;
     int LISTENER_TYPE_SHARE_OPEN_RED = 0x2028;
     int LISTENER_TYPE_JUST_OPEN_RED = 0x2029;
+    int LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION = 0x2030;
 
     /**
      * 发广告默认数据

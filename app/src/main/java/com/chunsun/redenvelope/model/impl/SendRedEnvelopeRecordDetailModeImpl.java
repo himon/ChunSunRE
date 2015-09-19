@@ -10,6 +10,7 @@ import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
@@ -120,6 +121,38 @@ public class SendRedEnvelopeRecordDetailModeImpl implements SendRedEnvelopeRecor
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_RED_RECORD_LIST_JSON_REQUEST_URL);
                 params.put("parames", JsonManager.initRecordToJson(hb_id, page_index));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, mActivity);
+    }
+
+    @Override
+    public void superaddition(final String hb_id, final BaseMultiLoadedListener listener) {
+        GsonRequest<RedSuperadditionEntity> request = new GsonRequest<RedSuperadditionEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                RedSuperadditionEntity.class, null, new Response.Listener<RedSuperadditionEntity>() {
+
+            @Override
+            public void onResponse(RedSuperadditionEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.RED_ENVELOPE_SUPERADDITION_JSON_REQUEST_URL);
+                params.put("parames", JsonManager.initSuperadditionDataToJson(hb_id));
                 return params;
             }
         };

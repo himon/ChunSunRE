@@ -32,4 +32,12 @@ public interface SendRedEnvelopeRecordDetailMode {
      * @param listener
      */
     void getRedRecordList(String hb_id, int page_index, BaseMultiLoadedListener listener);
+
+    /**
+     * 追加红包
+     *
+     * @param hb_id
+     * @param listener
+     */
+    void superaddition(String hb_id, BaseMultiLoadedListener listener);
 }

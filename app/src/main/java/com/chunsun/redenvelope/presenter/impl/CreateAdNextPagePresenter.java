@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
@@ -13,6 +16,7 @@ import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdNextPageModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdNextPageView;
@@ -37,14 +41,18 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
     private ArrayList<SampleEntity> mTypeList;
     private ArrayList<SampleEntity> mDistanceList;
     private AdEntity mAdEntity;
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
 
     public CreateAdNextPagePresenter(ICreateAdNextPageView iCreateAdNextPageView) {
         this.mICreateAdNextPageView = iCreateAdNextPageView;
         mCreateAdNextPageMode = new CreateAdNextPageModeImpl((CreateAdNextPageActivity) iCreateAdNextPageView);
     }
 
-    public void initData(AdEntity adEntity) {
+    public void initData(AdEntity adEntity, RedSuperadditionEntity.ResultEntity superadditionEntity) {
         this.mAdEntity = adEntity;
+        if (superadditionEntity != null) {
+            this.mSuperadditionEntity = superadditionEntity;
+        }
 
         mTypeList = new ArrayList<>();
         initType(mTypeList);
@@ -161,13 +169,34 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
 
         setUnlimited(list);
 
-        mTypeList.get(0).setCheck(true);
-        this.mAdEntity.setType(mTypeList.get(0));
-        mDistanceList.get(0).setCheck(true);
-        this.mAdEntity.setDistance(mDistanceList.get(0));
+        String province = "";
+        String city = "";
 
-        String province = MainApplication.getContext().getProvince();
-        String city = MainApplication.getContext().getCity();
+        if (mSuperadditionEntity != null) {
+            for (SampleEntity item : mTypeList) {
+                if (mSuperadditionEntity.getType().equals(item.getKey())) {
+                    item.setCheck(true);
+                    this.mAdEntity.setType(item);
+                }
+            }
+            for (SampleEntity item : mDistanceList) {
+                if (mSuperadditionEntity.getRange().equals(item.getKey())) {
+                    item.setCheck(true);
+                    this.mAdEntity.setDistance(item);
+                }
+            }
+            province = mSuperadditionEntity.getProvince();
+            city = mSuperadditionEntity.getCity();
+        } else {
+            mTypeList.get(0).setCheck(true);
+            this.mAdEntity.setType(mTypeList.get(0));
+            mDistanceList.get(0).setCheck(true);
+            this.mAdEntity.setDistance(mDistanceList.get(0));
+
+            province = MainApplication.getContext().getProvince();
+            city = MainApplication.getContext().getCity();
+        }
+
         if (TextUtils.isEmpty(province)) {
             list.get(0).setCheck(true);
             DistrictEntity.AreaEntity entityProvince = list.get(0);
@@ -255,26 +284,7 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
      */
     public void commit(String token, AdEntity mAdEntity, String title, String content, List<Photo> mPhotos) {
 
-        if (TextUtils.isEmpty(title)) {
-            ShowToast.Short("请输入广告标题！");
-            return;
-        }
-
-        if (TextUtils.isEmpty(mAdEntity.getCoverImagePath())) {
-            ShowToast.Short("请选择要上传的封面图片！");
-            return;
-        }
-
-        if (mAdEntity.getType().getKey().equals(Constants.AD_LINK_TYPE)) {
-            if (TextUtils.isEmpty(content)) {
-                ShowToast.Short("请输入链接网址！");
-                return;
-            }
-            if (!content.startsWith("http") && !content.startsWith("https")) {
-                ShowToast.Short("请输入已http或https开头的网址！");
-                return;
-            }
-        }
+        if (validateBaseInfo(mAdEntity, title, content)) return;
 
         mICreateAdNextPageView.showLoading();
 
@@ -329,6 +339,111 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
                 case 8:
                     mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
                     break;
+            }
+        }
+        mCreateAdNextPageMode.commit(token, mAdEntity, title, content, this);
+    }
+
+    private boolean validateBaseInfo(AdEntity mAdEntity, String title, String content) {
+        if (TextUtils.isEmpty(title)) {
+            ShowToast.Short("请输入广告标题！");
+            return true;
+        }
+
+        if (TextUtils.isEmpty(mAdEntity.getCoverImagePath())) {
+            ShowToast.Short("请选择要上传的封面图片！");
+            return true;
+        }
+
+        if (mAdEntity.getType().getKey().equals(Constants.AD_LINK_TYPE)) {
+            if (TextUtils.isEmpty(content)) {
+                ShowToast.Short("请输入链接网址！");
+                return true;
+            }
+            if (!content.startsWith("http") && !content.startsWith("https")) {
+                ShowToast.Short("请输入已http或https开头的网址！");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private int toBitmapCount = 0;
+    private ArrayList<Bitmap> mBitmapList;
+
+    /**
+     * 追加提交广告
+     *
+     * @param token
+     * @param adEntity
+     * @param title
+     * @param content
+     * @param selectedPhotos
+     */
+    public void commit(final String token, AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos) {
+
+        if (validateBaseInfo(mAdEntity, title, content)) {
+            return;
+        }
+        mICreateAdNextPageView.showLoading();
+
+        mBitmapList = new ArrayList<>();
+        selectedPhotos.add(0, mAdEntity.getCoverImagePath());
+        final int length = selectedPhotos.size() < 8 ? selectedPhotos.size() - 1 : selectedPhotos.size();
+        for (int i = 0; i < length; i++) {
+            String path = selectedPhotos.get(i);
+            Glide.with((CreateAdNextPageActivity) mICreateAdNextPageView)
+                    .load(path)
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(800, 480) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            mBitmapList.add(bitmap);
+                            toBitmapCount++;
+                            if (toBitmapCount == length) {
+                                bitmapToString(token, mAdEntity, title, content);
+                                toBitmapCount = 0;
+                                mBitmapList.clear();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void bitmapToString(String token, AdEntity adEntity, String title, String content) {
+        if (mBitmapList != null && mBitmapList.size() > 0) {
+            for (int i = 0; i < mBitmapList.size(); i++) {
+                Bitmap bitmap = mBitmapList.get(i);
+                switch (i) {
+                    case 0:
+                        mAdEntity.setCoverImagePath(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 1:
+                        mAdEntity.setImagePath(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 2:
+                        mAdEntity.setImagePath2(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 3:
+                        mAdEntity.setImagePath3(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 4:
+                        mAdEntity.setImagePath4(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 5:
+                        mAdEntity.setImagePath5(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 6:
+                        mAdEntity.setImagePath6(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 7:
+                        mAdEntity.setImagePath7(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                    case 8:
+                        mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
+                        break;
+                }
             }
         }
         mCreateAdNextPageMode.commit(token, mAdEntity, title, content, this);

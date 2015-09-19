@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.event.SelectAdNextPageEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.CreateAdNextPagePresenter;
@@ -83,6 +84,10 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
     private boolean mIsCover;
     private List<Photo> mPhotos = new ArrayList<>();
 
+    //
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +116,7 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mNavRight.setOnClickListener(this);
         mLLTypeContainer.setOnClickListener(this);
         mLLProvince.setOnClickListener(this);
         mLLCity.setOnClickListener(this);
@@ -125,8 +131,64 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
         Intent intent = getIntent();
         if (intent != null) {
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
+            mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
+
+            if (mSuperadditionEntity != null) {
+                initSuperaddition();
+            }
         }
-        mPresenter.initData(mAdEntity);
+        mPresenter.initData(mAdEntity, mSuperadditionEntity);
+    }
+
+    /**
+     * 初始化追加
+     */
+    private void initSuperaddition() {
+        mEtTitle.setText(mSuperadditionEntity.getTitle());
+        mEtContent.setText(mSuperadditionEntity.getContent());
+        setCoverImage(mSuperadditionEntity.getCover_img_url());
+        mAdEntity.setCoverImagePath(mSuperadditionEntity.getCover_img_url());
+
+        selectedPhotos.clear();
+        String[] split = mSuperadditionEntity.getImg_url().split(",");
+
+        if (split != null && split.length > 0) {
+            for (int i = 0; i < split.length; i++) {
+                selectedPhotos.add(Constants.IMG_HOST_URL + split[i]);
+                switch (i) {
+                    case 0:
+                        mAdEntity.setImagePath(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 1:
+                        mAdEntity.setImagePath2(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 2:
+                        mAdEntity.setImagePath3(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 3:
+                        mAdEntity.setImagePath4(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 4:
+                        mAdEntity.setImagePath5(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 5:
+                        mAdEntity.setImagePath6(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 6:
+                        mAdEntity.setImagePath7(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                    case 7:
+                        mAdEntity.setImagePath8(Constants.IMG_HOST_URL + split[i]);
+                        break;
+                }
+
+            }
+        }
+        if (selectedPhotos.size() < 8) {
+            selectedPhotos.add("");
+        }
+        photoAdapter.setPhotos(mPhotos);
+        photoAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -135,6 +197,9 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
             case R.id.tv_nav_left:
             case R.id.iv_nav_icon:
                 back();
+                break;
+            case R.id.tv_nav_right:
+
                 break;
             case R.id.ll_type_container:
                 toSelectType();
@@ -148,11 +213,15 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
             case R.id.ll_province_container:
                 toSelectProvince();
                 break;
-            case R.id.iv_add_title_img:
+            case R.id.iv_add_title_img://添加封面图片
                 selectCoverImage();
                 break;
-            case R.id.btn_next_step:
-                mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+            case R.id.btn_next_step://提交
+                if (mSuperadditionEntity != null) {
+                    mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
+                } else {
+                    mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                }
                 break;
         }
     }

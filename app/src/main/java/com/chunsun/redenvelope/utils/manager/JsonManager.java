@@ -564,4 +564,20 @@ public class JsonManager {
         return jsonObject.toString();
     }
 
+    /**
+     * 红包追加
+     *
+     * @param hb_id
+     * @return
+     */
+    public static String initSuperadditionDataToJson(String hb_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("hb_id", hb_id);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
 }

@@ -15,8 +15,6 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     @Override
     public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
 
-        if (TextUtils.isEmpty(photoPaths.get(position))) {
+        if (TextUtils.isEmpty(photoPaths.get(position))) {//加号
 
             holder.ivPhoto.setImageResource(R.drawable.img_add_img);
 
@@ -73,7 +71,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
             });
 
         } else {
-            Uri uri = Uri.fromFile(new File(photoPaths.get(position)));
+
+            Uri uri;
+
+            if(!photoPaths.get(position).startsWith("http")){
+                uri = Uri.fromFile(new File(photoPaths.get(position)));
+            }else{
+                uri = Uri.parse(photoPaths.get(position));
+            }
 
             Glide.with(mContext)
                     .load(uri)

@@ -23,12 +23,15 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
@@ -39,6 +42,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -298,6 +302,11 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
                 back();
                 break;
             case R.id.btn_pay_red:
+                if (Constants.RED_DETAIL_STATUS_DZF.equals(mClassify)) {
+                    mPresenter.onException("");
+                } else if (Constants.RED_DETAIL_STATUS_YFB.equals(mClassify) || Constants.RED_DETAIL_STATUS_YQW.equals(mClassify)) {//已发布、已抢完
+                    mPresenter.superaddition(mRedEnvelopeId);
+                }
                 break;
         }
     }
@@ -358,6 +367,17 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mDataAdapter.notifyDataSetChanged();
         //加载更多完成
         mListView.getMoreComplete();
+    }
+
+    @Override
+    public void getSuperaddition(RedSuperadditionEntity entity) {
+        RedSuperadditionEntity.ResultEntity result = entity.getResult();
+        MainEvent mainEvent = new MainEvent(Constants.SUPERADDITION_AD);
+        mainEvent.setEntity(result);
+        EventBus.getDefault().post(mainEvent);
+        back();
+        AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordListActivity.class);
+        AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordClassifyActivity.class);
     }
 
     @Override

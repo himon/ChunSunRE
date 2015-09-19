@@ -23,6 +23,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
 import com.chunsun.redenvelope.presenter.impl.AdFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
@@ -84,6 +85,8 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
     private AdEntity mAdEntity;
 
     private List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> mDelaySecondsRate;
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
 
     public AdFragment() {
         // Required empty public constructor
@@ -264,6 +267,7 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
     public void toNextStep() {
         Intent intent = new Intent(getActivity(), CreateAdNextPageActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
 
@@ -311,6 +315,31 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
         mAdEntity.setAdPrice(total);
     }
 
+    /**
+     * 追加广告
+     *
+     * @param entity
+     */
+    public void setSuperaddition(RedSuperadditionEntity.ResultEntity entity) {
+
+        mSuperadditionEntity = entity;
+
+        mEtPrice.setText(entity.getPrice());
+        mEtNum.setText(entity.getEveryday_count());
+        mEtDays.setText(entity.getDay_count());
+        mTvShowTime.setText(entity.getDelay_seconds() + "秒");
+        mTvTime.setText(entity.getTime());
+        calcAdTotalPrice(entity.getPrice(), entity.getEveryday_count(), entity.getDay_count());
+
+        if ("1".equals(entity.getType())) {
+            mLLSendDays.setVisibility(View.GONE);
+            mLLTime.setVisibility(View.GONE);
+        } else if ("2".equals(entity.getType())) {
+            mLLSendDays.setVisibility(View.VISIBLE);
+            mLLTime.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -332,7 +361,7 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
             if (item.getId() == id) {
                 item.setCheck(true);
                 mTvShowTime.setText(item.getDelay_seconds() + "秒");
-            }else{
+            } else {
                 item.setCheck(false);
             }
         }

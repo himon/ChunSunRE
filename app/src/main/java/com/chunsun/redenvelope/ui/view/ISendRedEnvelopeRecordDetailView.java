@@ -3,6 +3,7 @@ package com.chunsun.redenvelope.ui.view;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 
 import java.util.ArrayList;
 
@@ -32,4 +33,11 @@ public interface ISendRedEnvelopeRecordDetailView {
      * @param result
      */
     void setGetRedRecord(RedDetailGetRedRecordEntity.ResultEntity result);
+
+    /**
+     * 获取追加数据
+     *
+     * @param entity
+     */
+    void getSuperaddition(RedSuperadditionEntity entity);
 }

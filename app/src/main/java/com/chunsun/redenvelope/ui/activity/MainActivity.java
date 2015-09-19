@@ -325,6 +325,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
         } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
+        }else if(Constants.SUPERADDITION_AD.equals(event.getMsg())){
+            mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
+            mViewPager.setCurrentItem(1, false);
+           mAdFragment.setSuperaddition(event.getEntity());
         }
     }
 
