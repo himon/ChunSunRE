@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.clip.PicClipActivity;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
+import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -20,16 +22,23 @@ import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserInfoView;
+import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.widget.SettingItem;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.entity.Photo;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 public class UserInfoActivity extends BaseActivity implements IUserInfoView, View.OnClickListener {
 
@@ -121,6 +130,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
                     "电话", "微信", "支付宝", "", "企业介绍", "认证", "", "", "", "QQ"};
         }
         mPresenter.initData();
+
+
     }
 
     @Override
@@ -134,6 +145,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
                 toEdit(mMoreContentList[1], mSiName.getData(), "1", Constants.EDIT_TYPE_NICK_NAME);
                 break;
             case R.id.ital_logo_info://头像设置
+                selectHeadImage();
                 break;
             case R.id.iv_logo://头像查看
                 break;
@@ -175,6 +187,16 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
         }
     }
 
+    /**
+     * 设置头像
+     */
+    private void selectHeadImage() {
+        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+        intent.setPhotoCount(1);
+        intent.setShowCamera(true);
+        startActivityForResult(intent, Constants.REQUEST_CODE);
+    }
+
     private void toEditJob() {
         Intent intent = new Intent(this, SelectListInfoActivity.class);
         intent.putExtra(Constants.EXTRA_KEY_TITLE, mMoreContentList[12]);
@@ -211,6 +233,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
         mSexList = sexList;
         mJsoList = jobList;
 
+        setHeadImage(mUserEntity.getImg_url());
         //头像
         mTvLogoDesc.setText(mMoreContentList[0]);
         //名称
@@ -313,6 +336,28 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
         MainApplication.getContext().getUserEntity().setBirthday(birthday);
     }
 
+    @Override
+    public void editUserHeadLogoSuccess(SampleResponseEntity entity) {
+        ShowToast.Short(entity.getMsg());
+        String result = entity.getResult();
+        //注意split
+        String[] split = result.split("\\|");
+        MainApplication.getContext().getUserEntity().setImg_url(split[0]);
+        MainApplication.getContext().getUserEntity().setThumb_img_url(split[1]);
+        setHeadImage(Constants.IMG_HOST_URL + split[1]);
+    }
+
+    /**
+     * 设置头像图片
+     *
+     * @param path
+     */
+    private void setHeadImage(String path) {
+        if (!TextUtils.isEmpty(path)) {
+            ImageLoader.getInstance().displayImage(path, mIvLogo, ImageLoaderHelper.getInstance(this).getDisplayOptions(8));
+        }
+    }
+
     public void onEvent(EditUserInfoEvent event) {
         switch (event.getMsg()) {
             case Constants.EDIT_TYPE_CHUNSUN_ACCOUNT:
@@ -377,8 +422,47 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == Constants.REQUEST_CODE) {
+            if (data != null) {
+                List<Photo> photos = data.getParcelableArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                toImageCutActivity(photos.get(0).getPath());
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_IMAGE_CUT) {
+            mPresenter.saveHeadLogo(mToken, data);
+        }
+    }
+
+
+    /**
+     * 跳转到剪切图片Activity
+     *
+     * @param path
+     */
+    private void toImageCutActivity(String path) {
+        Intent intent = new Intent(this, PicClipActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, path);
+        intent.putExtra(Constants.EXTRA_KEY2, false);
+        startActivityForResult(intent, Constants.REQUEST_CODE_IMAGE_CUT);
+    }
+
+    @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void showLoading() {
+        mDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

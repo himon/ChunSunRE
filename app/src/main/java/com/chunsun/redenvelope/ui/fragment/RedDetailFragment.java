@@ -60,6 +60,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * A simple {@link Fragment} subclass.
+ * 红包详情Fragment
  */
 public class RedDetailFragment extends BaseFragment implements View.OnClickListener, IRedDetailFragmentView {
 

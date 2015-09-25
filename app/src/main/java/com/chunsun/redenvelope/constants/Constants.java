@@ -17,29 +17,31 @@ public interface Constants {
      * 红包类型
      */
     //生活、企业
-    String RED_DETIAL_TYLE_SAMPLE = "-1";
+    String RED_DETAIL_TYLE_SAMPLE = "-1";
     //生活
-    String RED_DETIAL_TYPE_LEFT = "1";
+    int RED_DETAIL_TYPE_LEFT = 1;
     //企业
-    String RED_DETIAL_TYPE_COMPANY = "2";
+    int RED_DETAIL_TYPE_COMPANY = 2;
     //附近
-    String RED_DETIAL_TYLE_NEAR = "3";
+    int RED_DETAIL_TYPE_NEAR = 3;
     //链接
-    String RED_DETAIL_TYPE_LINK = "4";
+    int RED_DETAIL_TYPE_LINK = 4;
+    //链接
+    int RED_DETAIL_TYPE_REPEAT = 5;
 
     /**
      * 服务器地址
      */
-    String HOST_URL = "http://cssv.chunsunkeji.com";
-    //    String HOST_URL = "https://1.193.162.20:899";// 外网
-    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-//    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+    //String HOST_URL = "http://cssv.chunsunkeji.com";
+    String HOST_URL = "https://1.193.162.20:899";// 外网
+    //String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
-//    String SYSTEM_USER_ID = "22292";
-    String SYSTEM_USER_ID = "6778";// 测试环境
+    String SYSTEM_USER_ID = "22292";
+    //String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -420,4 +422,9 @@ public interface Constants {
      */
     int SHARE_FROM_WEB_RED = 0x9001;
     int SHARE_FROM_RED = 0x9002;
+
+    /**
+     * startActivityForResult
+     */
+    int REQUEST_CODE_IMAGE_CUT = 0x9001;
 }

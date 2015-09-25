@@ -1,23 +1,18 @@
 package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
+import com.chunsun.redenvelope.utils.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -37,13 +32,7 @@ public class MeFragmentAdapter extends BaseAdapter {
         this.mList = list;
         mContext = context;
         mInflater = LayoutInflater.from(context);
-
-        mOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default_capture)
-                .showImageForEmptyUri(R.drawable.img_default_head)
-                .showImageOnFail(R.drawable.img_default_head)
-                .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).displayer(new RoundedBitmapDisplayer(20))
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
     }
 
     /**

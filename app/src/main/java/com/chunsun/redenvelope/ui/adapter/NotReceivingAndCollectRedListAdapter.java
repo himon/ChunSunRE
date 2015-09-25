@@ -32,20 +32,22 @@ public class NotReceivingAndCollectRedListAdapter extends CommonAdapter<RedDetai
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         String datetime;
-        if(TextUtils.isEmpty(resultEntity.getGrab_time())){
+        if (TextUtils.isEmpty(resultEntity.getGrab_time())) {
             datetime = resultEntity.getSend_time();
-        }else{
+        } else {
             datetime = resultEntity.getGrab_time();
         }
         Date date = new Date(datetime);
         String time = timeFormat.format(date);
 
-        if (Constants.RED_DETAIL_TYPE_LINK.equals(resultEntity.getType())) {
+        if (Constants.RED_DETAIL_TYPE_LINK == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
-        } else if (Constants.RED_DETIAL_TYPE_LEFT.equals(resultEntity.getType()) || Constants.RED_DETIAL_TYPE_LEFT.equals(resultEntity.getType())) {
+        } else if (Constants.RED_DETAIL_TYPE_LEFT == resultEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
-        } else if (Constants.RED_DETIAL_TYPE_COMPANY.equals(resultEntity.getType())) {
+        } else if (Constants.RED_DETAIL_TYPE_NEAR == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_range);
+        } else if (Constants.RED_DETAIL_TYPE_REPEAT == resultEntity.getType()) {
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
         }
 
         //判断总金额是否大于500

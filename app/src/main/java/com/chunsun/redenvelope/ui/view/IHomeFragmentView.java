@@ -29,6 +29,13 @@ public interface IHomeFragmentView {
     void toWebRedDetail(String id);
 
     /**
+     * 跳转转发红包
+     *
+     * @param id
+     */
+    void toRepeatRedDetail(String id);
+
+    /**
      * 跳转轮播图广告
      *
      * @param title

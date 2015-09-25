@@ -288,16 +288,10 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
 
         mICreateAdNextPageView.showLoading();
 
-        for (int i = 0; i < mPhotos.size() + 1; i++) {
+        for (int i = 0; i < mPhotos.size(); i++) {
 
-            Photo item = null;
+            Photo item = mPhotos.get(i);
 
-            if (i == 0) {
-                item = new Photo();
-                item.setPath(mAdEntity.getCoverImagePath());
-            } else {
-                item = mPhotos.get(i - 1);
-            }
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -313,30 +307,27 @@ public class CreateAdNextPagePresenter implements BaseMultiLoadedListener<BaseEn
 
             switch (i) {
                 case 0:
-                    mAdEntity.setCoverImagePath(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 1:
                     mAdEntity.setImagePath(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 2:
+                case 1:
                     mAdEntity.setImagePath2(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 3:
+                case 2:
                     mAdEntity.setImagePath3(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 4:
+                case 3:
                     mAdEntity.setImagePath4(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 5:
+                case 4:
                     mAdEntity.setImagePath5(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 6:
+                case 5:
                     mAdEntity.setImagePath6(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 7:
+                case 6:
                     mAdEntity.setImagePath7(Base64Utils.bitmapToBase64(bitmap));
                     break;
-                case 8:
+                case 7:
                     mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
                     break;
             }

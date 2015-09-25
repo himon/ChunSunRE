@@ -1,6 +1,10 @@
 package com.chunsun.redenvelope.presenter.impl;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.widget.DatePicker;
 
 import com.chunsun.redenvelope.constants.Constants;
@@ -8,9 +12,12 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.UserInfoMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
+import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.UserInfoModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.view.IUserInfoView;
+import com.chunsun.redenvelope.utils.Base64Utils;
+import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,10 +37,57 @@ public class UserInfoPresenter implements BaseMultiLoadedListener<BaseEntity> {
         mUserInfoMode = new UserInfoModeImpl((UserInfoActivity) iUserInfoView);
     }
 
+    /**
+     * 上传头像
+     *
+     * @param token
+     * @param data
+     */
+    public void saveHeadLogo(String token, Intent data) {
+        mIUserInfoView.showLoading();
+        if (data != null) {
+            byte[] bis = data.getByteArrayExtra(Constants.EXTRA_KEY2);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);
+            String base64 = Base64Utils.bitmapToBase64(bitmap);
+            mUserInfoMode.editUserInfo(token, "img_url", base64, this);
+        }
+    }
+
     public void initData() {
         ArrayList<SampleEntity> sexList = initSexList();
         ArrayList<SampleEntity> jobList = initJobList();
         mIUserInfoView.setData(sexList, jobList);
+    }
+
+    @Override
+    public void onSuccess(int event_tag, BaseEntity data) {
+        switch (event_tag) {
+            case Constants.LISTENER_TYPE_EDIT_USER_INFO:
+                if (TextUtils.isEmpty(mBirthday)) {
+                    mIUserInfoView.editUserHeadLogoSuccess((SampleResponseEntity) data);
+                    mIUserInfoView.hideLoading();
+                } else {
+                    mIUserInfoView.editUserBirthdaySuccess(mBirthday);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onError(String msg) {
+        mIUserInfoView.showLoading();
+        ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
+    }
+
+    @Override
+    public void onException(String msg) {
+        mIUserInfoView.showLoading();
+        ShowToast.Short(msg);
     }
 
     private ArrayList<SampleEntity> initSexList() {
@@ -162,29 +216,5 @@ public class UserInfoPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 }, calendar.get(Calendar.YEAR), calendar
                 .get(Calendar.MONTH), calendar
                 .get(Calendar.DAY_OF_MONTH)).show();
-    }
-
-    @Override
-    public void onSuccess(int event_tag, BaseEntity data) {
-        switch (event_tag) {
-            case Constants.LISTENER_TYPE_EDIT_USER_INFO:
-                mIUserInfoView.editUserBirthdaySuccess(mBirthday);
-                break;
-        }
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-
     }
 }

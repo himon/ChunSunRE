@@ -108,7 +108,7 @@ public class NotReceivingRedActivity extends BaseActivity implements INotReceivi
 
     @Override
     public void grabRedEnvelopeSuccess(RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
-        if (Constants.RED_DETAIL_TYPE_LINK.equals(entity.getType())) {
+        if (Constants.RED_DETAIL_TYPE_LINK == entity.getType()) {
             toWebRedDetail(entity.getId() + "");
         } else {
             toRedDetail(entity.getId() + "");

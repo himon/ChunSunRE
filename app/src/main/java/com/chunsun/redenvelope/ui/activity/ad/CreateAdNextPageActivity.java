@@ -1,6 +1,8 @@
 package com.chunsun.redenvelope.ui.activity.ad;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.clip.PicClipActivity;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
@@ -28,6 +31,7 @@ import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
 import com.chunsun.redenvelope.ui.adapter.PhotoAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdNextPageView;
+import com.chunsun.redenvelope.utils.Base64Utils;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -374,7 +378,7 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
             if (mIsCover) {
                 if (data != null) {
                     List<Photo> photos = data.getParcelableArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
-                    setCoverImage(photos.get(0).getPath());
+                    toImageCutActivity(photos.get(0).getPath());
                     mIsCover = false;
                 }
 
@@ -422,7 +426,27 @@ public class CreateAdNextPageActivity extends BaseActivity implements ICreateAdN
                 photoAdapter.setPhotos(mPhotos);
                 photoAdapter.notifyDataSetChanged();
             }
+        } else if (requestCode == Constants.REQUEST_CODE_IMAGE_CUT) {
+            if (data != null) {
+                byte[] bis = data.getByteArrayExtra(Constants.EXTRA_KEY2);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);
+                String base64 = Base64Utils.bitmapToBase64(bitmap);
+                mAdEntity.setCoverImagePath(base64);
+                mIvCover.setImageBitmap(bitmap);
+            }
         }
+    }
+
+    /**
+     * 跳转到剪切图片Activity
+     *
+     * @param path
+     */
+    private void toImageCutActivity(String path) {
+        Intent intent = new Intent(this, PicClipActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, path);
+        intent.putExtra(Constants.EXTRA_KEY2, true);
+        startActivityForResult(intent, Constants.REQUEST_CODE_IMAGE_CUT);
     }
 
     /**

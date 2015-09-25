@@ -29,6 +29,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/8/10.
+ * 红包详情
  */
 public class RedDetailActivity extends BaseActivity implements IRedDetailView {
 

@@ -45,7 +45,9 @@ public class UserInfoModeImpl implements UserInfoMode {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onException(error.getMessage());
+                byte[] data = error.networkResponse.data;
+                String string = new String(data);
+                listener.onException(string);
             }
         }) {
             @Override

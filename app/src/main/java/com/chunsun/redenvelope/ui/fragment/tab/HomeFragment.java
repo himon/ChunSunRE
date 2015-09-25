@@ -18,6 +18,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
@@ -26,7 +27,6 @@ import com.chunsun.redenvelope.utils.DensityUtils;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.AdImageAdapter;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,9 +136,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(Constants.RED_DETIAL_TYPE_LEFT);
+            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_LEFT + "");
         }
-        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETIAL_TYLE_SAMPLE, mCurrentPage);
+        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYLE_SAMPLE, mCurrentPage);
     }
 
     @Override
@@ -193,6 +193,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     @Override
+    public void toRepeatRedDetail(String id) {
+        Intent intent = new Intent(getActivity(), RepeatRedDetailActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        startActivity(intent);
+    }
+
+    @Override
     public void toAdWebView(String title, String url) {
         Intent intent = new Intent(getActivity(), CommonWebActivity.class);
         intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, url);
@@ -202,8 +209,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @Override
     public void grabRedEnvelopeSuccess(RedListDetailEntity.ResultEntity.PoolEntity entity) {
-        if ("链接".equals(entity.getRange())) {
+        if (Constants.RED_DETAIL_TYPE_LINK == entity.getType()) {
             toWebRedDetail(entity.getId());
+        } else if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
+            toRepeatRedDetail(entity.getId());
         } else {
             toRedDetail(entity.getId());
         }

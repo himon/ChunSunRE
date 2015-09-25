@@ -45,7 +45,7 @@ public class RedDetailUnReceiveAndCollectEntity extends BaseEntity {
         private String cover_img_url;
         private String range;
         private int status;
-        private String type;
+        private int type;
         private int id;
         private String content;
         private String nick_name;
@@ -73,9 +73,6 @@ public class RedDetailUnReceiveAndCollectEntity extends BaseEntity {
             this.status = status;
         }
 
-        public void setType(String type) {
-            this.type = type;
-        }
 
         public void setId(int id) {
             this.id = id;
@@ -125,9 +122,6 @@ public class RedDetailUnReceiveAndCollectEntity extends BaseEntity {
             return status;
         }
 
-        public String getType() {
-            return type;
-        }
 
         public int getId() {
             return id;
@@ -167,6 +161,14 @@ public class RedDetailUnReceiveAndCollectEntity extends BaseEntity {
 
         public void setSend_time(String send_time) {
             this.send_time = send_time;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
     }
 }

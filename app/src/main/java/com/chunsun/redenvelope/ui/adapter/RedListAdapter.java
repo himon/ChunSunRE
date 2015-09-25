@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.ui.base.CommonAdapter;
 
@@ -44,12 +45,14 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             time = dateStr;
         }
 
-        if ("链接".equals(poolEntity.getRange())) {
+        if (Constants.RED_DETAIL_TYPE_LINK == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
-        } else if ("生活".equals(poolEntity.getRange()) || "企业".equals(poolEntity.getRange())) {
+        } else if (Constants.RED_DETAIL_TYPE_LEFT == poolEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
-        } else if ("附近".equals(poolEntity.getRange())) {
+        } else if (Constants.RED_DETAIL_TYPE_NEAR == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_range);
+        } else if (Constants.RED_DETAIL_TYPE_REPEAT == poolEntity.getType()) {
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
         }
 
         //判断总金额是否大于500
@@ -66,7 +69,7 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             e.printStackTrace();
         }
 
-        if (poolEntity.getHb_status()) {
+        if (poolEntity.isHb_status()) {
             TextView textView = holder.getView(R.id.tv_title);
             textView.setTextColor(mContext.getResources().getColor(R.color.font_black));
         } else {

@@ -190,6 +190,8 @@ public class RedDetailEntity extends BaseEntity {
              */
             private boolean enable_reward;
 
+            private String total_left_count;
+
 
             public String getImg_url() {
                 return img_url;
@@ -591,6 +593,14 @@ public class RedDetailEntity extends BaseEntity {
                 this.enable_reward = enable_reward;
             }
 
+            public String getTotal_left_count() {
+                return total_left_count;
+            }
+
+            public void setTotal_left_count(String total_left_count) {
+                this.total_left_count = total_left_count;
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -648,6 +658,7 @@ public class RedDetailEntity extends BaseEntity {
                 dest.writeString(this.total_count);
                 dest.writeString(this.private_json);
                 dest.writeByte(enable_reward ? (byte) 1 : (byte) 0);
+                dest.writeString(this.total_left_count);
             }
 
             public DetailEntity() {
@@ -704,6 +715,7 @@ public class RedDetailEntity extends BaseEntity {
                 this.total_count = in.readString();
                 this.private_json = in.readString();
                 this.enable_reward = in.readByte() != 0;
+                this.total_left_count = in.readString();
             }
 
             public static final Parcelable.Creator<DetailEntity> CREATOR = new Parcelable.Creator<DetailEntity>() {

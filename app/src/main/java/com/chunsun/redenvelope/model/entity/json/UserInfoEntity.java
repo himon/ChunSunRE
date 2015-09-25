@@ -1,5 +1,7 @@
 package com.chunsun.redenvelope.model.entity.json;
 
+import com.chunsun.redenvelope.constants.Constants;
+
 /**
  * 用户信息实体
  */
@@ -69,6 +71,8 @@ public class UserInfoEntity {
     private String reward_amount;
     private String share_host;
     private String yaoqing_is_display;
+    private String cumulative_gain;
+    private String enable_unionpay;
 
     public String getId() {
         return id;
@@ -95,7 +99,7 @@ public class UserInfoEntity {
     }
 
     public String getImg_url() {
-        return img_url;
+        return Constants.IMG_HOST_URL + img_url;
     }
 
     public void setImg_url(String img_url) {
@@ -404,5 +408,21 @@ public class UserInfoEntity {
 
     public void setYaoqing_is_display(String yaoqing_is_display) {
         this.yaoqing_is_display = yaoqing_is_display;
+    }
+
+    public String getCumulative_gain() {
+        return cumulative_gain;
+    }
+
+    public void setCumulative_gain(String cumulative_gain) {
+        this.cumulative_gain = cumulative_gain;
+    }
+
+    public String getEnable_unionpay() {
+        return enable_unionpay;
+    }
+
+    public void setEnable_unionpay(String enable_unionpay) {
+        this.enable_unionpay = enable_unionpay;
     }
 }

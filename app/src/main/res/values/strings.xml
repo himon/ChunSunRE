@@ -52,6 +52,7 @@
     <string name="red_envelope">现金红包</string>
     <string name="comment">评论</string>
     <string name="red_envelope_collect_list">红包领取记录</string>
+    <string name="repeat_red_envelope_confirm">点击转发，开始收益</string>
 
     <!-- 发广告记录 -->
     <string name="range">范  围：</string>
@@ -190,14 +191,8 @@
     <string name="send_red_envelope">发送红包</string>
     <string name="account_desc">个性签名</string>
 
-
-    <string name="title_activity_interactive_platform">InteractivePlatformActivity</string>
-    <string name="title_activity_red_detail_pic_show">RedDetailPicShowActivity</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- 截图图片 -->
+    <string name="selected">选取</string>
 
 
 </resources>

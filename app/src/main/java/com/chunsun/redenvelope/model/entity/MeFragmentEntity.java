@@ -1,7 +1,5 @@
 package com.chunsun.redenvelope.model.entity;
 
-import com.chunsun.redenvelope.constants.Constants;
-
 /**
  * MeFragment页面显示数据的实体
  */
@@ -31,7 +29,7 @@ public class MeFragmentEntity {
     }
 
     public String getImg() {
-        return Constants.IMG_HOST_URL + img;
+        return img;
     }
 
     public void setImg(String img) {

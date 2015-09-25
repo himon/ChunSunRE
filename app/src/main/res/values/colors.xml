@@ -44,9 +44,11 @@
     <color name="bg_yellow">#FFF5C4</color>
     <color name="bg_rice_yellow">#FFFEF9</color>
     <color name="bg_yellow_deep">#FFEF6B</color>
+    <color name="clip_picture_gray">#905A5A5A</color>
 
 
     <color name="white">#FFFFFF</color>
+
 
 
 </resources>
