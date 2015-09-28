@@ -1,8 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
-
-import java.util.ArrayList;
+import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 
 /**
  * Created by Administrator on 2015/8/3.
@@ -35,6 +33,11 @@ public interface IMeFragmentView {
     void toNotReceivingRed();
 
     /**
+     * 充值
+     */
+    void toRecharge();
+
+    /**
      * 收藏
      */
     void toCollect();
@@ -47,7 +50,7 @@ public interface IMeFragmentView {
     /**
      * 刷新
      */
-    void refresh(ArrayList<MeFragmentEntity> list);
+    void refresh(UserInfoEntity entity);
 
     /**
      * 跳转登录界面

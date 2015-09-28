@@ -10,9 +10,9 @@ import com.chunsun.redenvelope.model.MeFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
-import com.chunsun.redenvelope.utils.manager.JsonManager;
+import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +22,9 @@ import java.util.Map;
  */
 public class MeFragmentModeImpl implements MeFragmentMode {
 
-    private MeFragment meFragment;
+    private NewMeFragment meFragment;
 
-    public MeFragmentModeImpl(MeFragment meFragment) {
+    public MeFragmentModeImpl(NewMeFragment meFragment) {
         this.meFragment = meFragment;
     }
 

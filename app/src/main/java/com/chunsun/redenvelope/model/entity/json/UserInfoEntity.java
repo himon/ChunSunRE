@@ -66,13 +66,13 @@ public class UserInfoEntity {
     private String job;
     private String thumb_img_url;
     private String invitation_code;
-    private String is_proxy;
+    private boolean is_proxy;
     private String is_danbao;
     private String reward_amount;
     private String share_host;
     private String yaoqing_is_display;
-    private String cumulative_gain;
-    private String enable_unionpay;
+    private double cumulative_gain;
+    private boolean enable_unionpay;
 
     public String getId() {
         return id;
@@ -370,11 +370,11 @@ public class UserInfoEntity {
         this.invitation_code = invitation_code;
     }
 
-    public String getIs_proxy() {
+    public boolean is_proxy() {
         return is_proxy;
     }
 
-    public void setIs_proxy(String is_proxy) {
+    public void setIs_proxy(boolean is_proxy) {
         this.is_proxy = is_proxy;
     }
 
@@ -410,19 +410,19 @@ public class UserInfoEntity {
         this.yaoqing_is_display = yaoqing_is_display;
     }
 
-    public String getCumulative_gain() {
+    public double getCumulative_gain() {
         return cumulative_gain;
     }
 
-    public void setCumulative_gain(String cumulative_gain) {
+    public void setCumulative_gain(double cumulative_gain) {
         this.cumulative_gain = cumulative_gain;
     }
 
-    public String getEnable_unionpay() {
+    public boolean isEnable_unionpay() {
         return enable_unionpay;
     }
 
-    public void setEnable_unionpay(String enable_unionpay) {
+    public void setEnable_unionpay(boolean enable_unionpay) {
         this.enable_unionpay = enable_unionpay;
     }
 }

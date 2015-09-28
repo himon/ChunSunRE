@@ -10,15 +10,28 @@ import java.util.List;
  */
 public interface IBalanceView {
 
+    /**
+     * 获取余额数据
+     *
+     * @param result
+     * @param list
+     */
     void setData(BalanceEntity.ResultEntity result, List<SampleEntity> list);
 
+    /**
+     * 明细详情
+     *
+     * @param entity
+     */
     void toBalanceDetail(SampleEntity entity);
 
-    void toWithdrawCashByBank();
-
-    void toWithdrawCashByAlipay();
-
-    void toPhoneRecharge();
-
+    /**
+     * 充值
+     */
     void toBalanceRecharge();
+
+    /**
+     * 提现
+     */
+    void toWithdrawCash();
 }

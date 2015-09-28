@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/global_red"
+        android:padding="15dp" >
+
+        <TextView
+            android:id="@+id/tv_cumulative_gain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cumulative_gain"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/accumulated_income"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/invite_accumulated_income"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_invite_cumulative_gain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_sp_20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_balance"
+            android:layout_marginTop="3dp"
+            android:text="@string/available_balance"
+            android:textColor="@color/font_gray2"
+            android:textSize="@dimen/font_size_sp_12" />
+
+        <Button
+            android:id="@+id/btn_recharge"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/btn_withdraw_cash"
+            android:background="@drawable/shape_radius_stroke_red"
+            android:text="@string/recharge"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_14"
+            android:width="30dp" />
+
+        <Button
+            android:id="@+id/btn_withdraw_cash"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_radius_red"
+            android:text="@string/withdraw_cash"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_14"
+            android:width="30dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_record_title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="#e1e1e1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:drawableLeft="@drawable/img_record_icon"
+            android:drawablePadding="4dp"
+            android:text="@string/account_details"
+            android:textColor="@color/font_gray2"
+            android:textSize="@dimen/font_size_sp_14" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="#e1e1e1" />
+    </LinearLayout>
+</LinearLayout>

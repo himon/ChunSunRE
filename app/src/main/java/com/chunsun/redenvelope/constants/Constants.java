@@ -152,6 +152,8 @@ public interface Constants {
     String JUST_OPEN_RED_JSON_REQUEST_URL = "hb_user_open_take_money";
     //红包追加
     String RED_ENVELOPE_SUPERADDITION_JSON_REQUEST_URL = "hb_user_superaddition_new";
+    //转发类分享host
+    String REPEAT_HB_DETAIL_GET_HOST_JSON_REQUEST_URL = "hb_forward_by_user";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -267,17 +269,6 @@ public interface Constants {
     String SHARE_RED_ENVELOPE_URL = "pages/share/index.aspx?grab_id=";
 
     /**
-     * MeFragment item type
-     */
-    int ME_FRAGMENT_TYPE_MINE = 1;
-    int ME_FRAGMENT_TYPE_INVITE_CODE = 2;
-    int ME_FRAGMENT_TYPE_BALANCE = 3;
-    int ME_FRAGMENT_TYPE_RECORD = 4;
-    int ME_FRAGMENT_TYPE_NOT_RECEIVING_RED = 5;
-    int ME_FRAGMENT_TYPE_COLLECT = 6;
-    int ME_FRAGMENT_TYPE_SETTING = 7;
-
-    /**
      * 红包发布后状态
      */
     //待支付
@@ -306,6 +297,8 @@ public interface Constants {
     String BALANCE_TYPE_CZ_AMOUNT = "cz_amount";
     //其他
     String BALANCE_TYPE_OTHER = "other_amount";
+    //转发红包收入
+    String BALANCE_TYPE_FORWARD = "forward_amount";
 
     /**
      * 用户余额充值方式
@@ -355,6 +348,7 @@ public interface Constants {
     int LISTENER_TYPE_SHARE_OPEN_RED = 0x2028;
     int LISTENER_TYPE_JUST_OPEN_RED = 0x2029;
     int LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION = 0x2030;
+    int LISTENER_TYPE_REPEAT_GET_HOST = 0x2031;
 
     /**
      * 发广告默认数据

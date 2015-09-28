@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.RedDetailEvent;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 
@@ -31,19 +30,24 @@ public class ShareSdkHelper implements PlatformActionListener {
 
     private Activity mContext;
     private RedDetailEntity.ResultEntity.DetailEntity mDetailEntity;
-    private ShareLimitEntity.ResultEntity mShareLimitResult;
+    private String mShareHost;
 
     private int mFrom;
     /**
      * 当前点击的分享类型 wf:微信好友，wc:微信朋友圈，qz:qq空间，sw:新浪微博
      */
     private String shareType;
+    /**
+     * 标示是否有奖励 true 有， false 没有
+     */
+    private boolean mFlag;
 
-    public ShareSdkHelper(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult, int from) {
+    public ShareSdkHelper(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, String shareHost, int from, boolean b) {
         this.mContext = context;
         this.mDetailEntity = detail;
-        this.mShareLimitResult = shareLimitResult;
+        this.mShareHost = shareHost;
         this.mFrom = from;
+        mFlag = b;
     }
 
     public void share(String which, String url) {
@@ -81,7 +85,7 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(mDetailEntity.getContent());
         }
         //图片网络地址
-        sp.setImageUrl(mShareLimitResult.getShare_host() + mDetailEntity.getCover_img_url());
+        sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
         //发布分享的网站名称
         sp.setSite(mContext.getString(R.string.app_name));
         //发布分享网站的地址
@@ -158,16 +162,20 @@ public class ShareSdkHelper implements PlatformActionListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (mFrom) {
-                    case Constants.SHARE_FROM_WEB_RED:
-                        WebRedDetailEvent share = new WebRedDetailEvent("share");
-                        share.setContent(shareType);
-                        EventBus.getDefault().post(share);
-                        break;
-                    case Constants.SHARE_FROM_RED:
-                        RedDetailEvent redShare = new RedDetailEvent("share", shareType);
-                        EventBus.getDefault().post(redShare);
-                        break;
+                if(mFlag) {
+                    switch (mFrom) {
+                        case Constants.SHARE_FROM_WEB_RED:
+                            WebRedDetailEvent share = new WebRedDetailEvent("share");
+                            share.setContent(shareType);
+                            EventBus.getDefault().post(share);
+                            break;
+                        case Constants.SHARE_FROM_RED:
+                            RedDetailEvent redShare = new RedDetailEvent("share", shareType);
+                            EventBus.getDefault().post(redShare);
+                            break;
+                    }
+                }else{
+
                 }
             }
         });

@@ -580,4 +580,24 @@ public class JsonManager {
         return jsonObject.toString();
     }
 
+    /**
+     * 获取转发类分享host
+     * @param token
+     * @param hb_id
+     * @param platform
+     * @param is_valid
+     * @return
+     */
+    public static String initDataRepeatRedEnvelopeDetailGetHostToJson(String token, String hb_id, String platform, boolean is_valid){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("hb_id", hb_id);
+            jsonObject.put("platform", platform);
+            jsonObject.put("is_valid", is_valid);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 }

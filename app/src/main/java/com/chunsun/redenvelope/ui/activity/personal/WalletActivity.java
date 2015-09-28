@@ -3,12 +3,10 @@ package com.chunsun.redenvelope.ui.activity.personal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
@@ -20,6 +18,7 @@ import com.chunsun.redenvelope.presenter.impl.BalancePresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
+import com.chunsun.redenvelope.widget.GetMoreListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,33 +30,32 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
- * 余额Activity
+ * 钱包Activity
  */
-public class BalanceActivity extends BaseActivity implements IBalanceView, View.OnClickListener {
+public class WalletActivity extends BaseActivity implements IBalanceView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
-    @Bind(R.id.lv_main)
-    ListView mListView;
+    @Bind(R.id.gmlv_main)
+    GetMoreListView mListView;
 
-    private TextView mTvTotalBalance;
-    private TextView mTvRecharge;
-    private RelativeLayout mRlBank;
-    private RelativeLayout mRlAlipay;
-    private RelativeLayout mRlTelephoneFare;
+    TextView mTvCumulativeGain;
+    TextView mTvInviteCumulativeGain;
+    TextView mTvBalance;
+    Button mBtnRecharge;
+    Button mBtnWithdrawCash;
+
 
     private BalanceAdapter mAdapter;
     private BalancePresenter mPresenter;
     private List<SampleEntity> mList = new ArrayList<SampleEntity>();
-
     private String mToken;
-
     private BalanceEntity.ResultEntity mResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balance);
+        setContentView(R.layout.activity_wallet);
         ButterKnife.bind(this);
         mPresenter = new BalancePresenter(this);
         initView();
@@ -66,13 +64,13 @@ public class BalanceActivity extends BaseActivity implements IBalanceView, View.
 
     @Override
     protected void initView() {
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_wallet_top_item, null);
+        mTvCumulativeGain = (TextView) view.findViewById(R.id.tv_cumulative_gain);
+        mTvInviteCumulativeGain = (TextView) view.findViewById(R.id.tv_invite_cumulative_gain);
+        mTvBalance = (TextView) view.findViewById(R.id.tv_balance);
+        mBtnRecharge = (Button) view.findViewById(R.id.btn_recharge);
+        mBtnWithdrawCash = (Button) view.findViewById(R.id.btn_withdraw_cash);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_balance_top_item, null);
-        mTvTotalBalance = (TextView) view.findViewById(R.id.tv_total_balance);
-        mTvRecharge = (TextView) view.findViewById(R.id.tv_recharge);
-        mRlBank = (RelativeLayout) view.findViewById(R.id.ital_withdrawal_bankcard);
-        mRlAlipay = (RelativeLayout) view.findViewById(R.id.ital_withdrawal_zhifubao);
-        mRlTelephoneFare = (RelativeLayout) view.findViewById(R.id.ital_withdrawal_huafei);
 
         //设置listView headerView不可点击
         mListView.addHeaderView(view, null, false);
@@ -101,17 +99,13 @@ public class BalanceActivity extends BaseActivity implements IBalanceView, View.
         }, 100);
 
         //设置titleBar
-        initTitleBar("余额", "", "", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("钱包", "", "", Constants.TITLE_TYPE_SAMPLE);
         initEvent();
     }
 
     private void initEvent() {
-        mNavLeft.setOnClickListener(this);
-        mNavIcon.setOnClickListener(this);
-        mRlBank.setOnClickListener(this);
-        mRlAlipay.setOnClickListener(this);
-        mRlTelephoneFare.setOnClickListener(this);
-        mTvRecharge.setOnClickListener(this);
+        mBtnRecharge.setOnClickListener(this);
+        mBtnWithdrawCash.setOnClickListener(this);
     }
 
     @Override
@@ -125,31 +119,11 @@ public class BalanceActivity extends BaseActivity implements IBalanceView, View.
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-            case R.id.ital_withdrawal_bankcard:
-                toWithdrawCashByBank();
-                break;
-            case R.id.ital_withdrawal_zhifubao:
-                toWithdrawCashByAlipay();
-                break;
-            case R.id.ital_withdrawal_huafei:
-                toPhoneRecharge();
-                break;
-            case R.id.tv_recharge:
-                toBalanceRecharge();
-                break;
-        }
-    }
-
-    @Override
     public void setData(BalanceEntity.ResultEntity result, List<SampleEntity> list) {
         mResult = result;
-        mTvTotalBalance.setText("￥" + result.getAmount());
+        mTvCumulativeGain.setText(result.getCumulative_gain());
+        mTvInviteCumulativeGain.setText(result.getInvite_cumulative_gain());
+        mTvBalance.setText(result.getAmount());
         mList.addAll(list);
         mAdapter.notifyDataSetChanged();
         mPtr.refreshComplete();
@@ -164,34 +138,31 @@ public class BalanceActivity extends BaseActivity implements IBalanceView, View.
     }
 
     @Override
-    public void toWithdrawCashByBank() {
-
-    }
-
-    @Override
-    public void toWithdrawCashByAlipay() {
-        Intent intent = new Intent(this, WithdrawCashAlipayActivity.class);
-        List<BalanceEntity.ResultEntity.ZfbPoundageEntity> zfb_poundage = mResult.getZfb_poundage();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(Constants.EXTRA_KEY, (ArrayList<? extends Parcelable>) zfb_poundage);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    @Override
-    public void toPhoneRecharge() {
-        Intent intent = new Intent(this, PhoneRechargeActivity.class);
-        List<BalanceEntity.ResultEntity.CzPoundageEntity> cz_poundage = mResult.getCz_poundage();
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(Constants.EXTRA_KEY, (ArrayList<? extends Parcelable>) cz_poundage);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    @Override
     public void toBalanceRecharge() {
         Intent intent = new Intent(this, BalanceRechargeActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mResult.getEnable_unionpay());
         startActivity(intent);
+    }
+
+    @Override
+    public void toWithdrawCash() {
+        Intent intent = new Intent(this, WithdrawCashActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, mResult.getCz_poundage());
+        intent.putExtra(Constants.EXTRA_KEY2, mResult.getZfb_poundage());
+        intent.putExtra(Constants.EXTRA_KEY3, mResult.getCash_poundage_rate());
+        intent.putExtra(Constants.EXTRA_KEY4, mResult.getAmount());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_recharge:
+                toBalanceRecharge();
+                break;
+            case R.id.btn_withdraw_cash:
+                toWithdrawCash();
+                break;
+        }
     }
 }

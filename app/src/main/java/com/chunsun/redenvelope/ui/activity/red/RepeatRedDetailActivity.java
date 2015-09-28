@@ -3,9 +3,13 @@ package com.chunsun.redenvelope.ui.activity.red;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,17 +19,24 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
+import com.chunsun.redenvelope.model.entity.json.RepeatRedEnvelopeGetHostEntity;
+import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.impl.RepeatRedDetailPresenter;
+import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IRepeatRedDetailView;
+import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
+import com.chunsun.redenvelope.widget.popupwindow.ShareRedEnvelopePopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -42,6 +53,8 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedDetailView, View.OnClickListener {
 
+    @Bind(R.id.main)
+    LinearLayout mMain;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
@@ -84,6 +97,8 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
 
     private RepeatRedDetailPresenter mPresenter;
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
+    private ArrayList<String> mUrls;
+    private ShareRedEnvelopePopupWindow mMenuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +141,13 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
                 //getData();
             }
         });
-        mDataAdapter = new RepeatRedDetailAdapter(this, mListComment, R.layout.adapter_red_detail_comment_item);
+        mDataAdapter = new RepeatRedDetailAdapter(this, mListComment, R.layout.adapter_red_detail_comment_item, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Object tag = v.getTag();
+                toUserRewardActivity(tag.toString());
+            }
+        });
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -151,6 +172,52 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mIvHead.setOnClickListener(this);
+        mLLCollect.setOnClickListener(this);
+        mLLComplaint.setOnClickListener(this);
+        mBtnSendComment.setOnClickListener(this);
+        mLLRepeat.setOnClickListener(this);
+
+        //设置发送按钮不可点击
+        mBtnSendComment.setEnabled(false);
+
+        mEtComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(StringUtil.textview2String(mEtComment))) {
+                    mBtnSendComment.setTextColor(getResources().getColor(
+                            R.color.font_hint_gray));
+                    mBtnSendComment
+                            .setBackgroundResource(R.drawable.shape_radius_gray);
+                    mBtnSendComment.setEnabled(false);
+                } else {
+                    mBtnSendComment.setTextColor(getResources()
+                            .getColor(R.color.white));
+                    mBtnSendComment.setBackgroundResource(R.drawable.shape_radius_red);
+                    mBtnSendComment.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(RepeatRedDetailActivity.this, RedDetailPicShowActivity.class);
+                intent.putExtra(Constants.EXTRA_LIST_KEY, mUrls);
+                intent.putExtra(Constants.EXTRA_KEY, position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -172,12 +239,44 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
 
     }
 
+    /**
+     * 跳转用户奖励页面
+     */
+    private void toUserRewardActivity(String id) {
+        Intent intent = new Intent(this, UserRewardActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, mDetail.getId());
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_nav_icon:
             case R.id.tv_nav_left:
                 back();
+                break;
+            case R.id.ll_collect_container://收藏
+                mPresenter.favorite(mToken, mDetail.getId());
+                break;
+            case R.id.ll_red_complaint://举报
+                toComplaintActivity();
+                break;
+            case R.id.btn_send_comment://评论
+                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                break;
+            case R.id.iv_head_logo:
+                toUserRewardActivity(mDetail.getUser_id());
+                break;
+            case R.id.ll_repeat://转发
+                mMenuWindow = new ShareRedEnvelopePopupWindow(this, mDetail, new GetRepeatHostCallback(){
+
+                    @Override
+                    public void getHost(String platform) {
+                        mPresenter.getHost(mToken, mDetail.getId(), platform, true);
+                    }
+                });
+                mMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
         }
 
@@ -187,6 +286,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     public void getRedDetailSuccess(RedDetailEntity.ResultEntity.DetailEntity entity) {
 
         mDetail = entity;
+
 
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
 
@@ -224,6 +324,8 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
             }
         }
 
+        mUrls = list;
+
         /**
          * 轮播图
          */
@@ -246,5 +348,44 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         //加载更多完成
         mListView.getMoreComplete();
         mPtr.refreshComplete();
+    }
+
+    /**
+     * 跳转举报页面
+     */
+    @Override
+    public void toComplaintActivity() {
+        Intent intent = new Intent(this, EditInfoActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_ID, mDetail.getId());
+        intent.putExtra(Constants.EXTRA_KEY_TITLE, "举报");
+        intent.putExtra(Constants.EXTRA_KEY_TEXT, "");
+        intent.putExtra(Constants.EXTRA_KEY_LINES, 5);
+        intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EDIT_TYPE_COMPLAINT);
+        startActivity(intent);
+    }
+
+    @Override
+    public void setFavoriteSuccess(SampleResponseEntity entity) {
+        if (entity.getResult().equalsIgnoreCase("true")) {
+            mIvCollect.setImageResource(R.drawable.img_collect_select);
+        } else {
+            mIvCollect.setImageResource(R.drawable.img_collect_normal);
+        }
+        ShowToast.Short(entity.getMsg());
+    }
+
+    @Override
+    public void commentSuccess() {
+        mEtComment.setText("");
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+    }
+
+    @Override
+    public void setShareHost(RepeatRedEnvelopeGetHostEntity entity) {
+        if(mMenuWindow != null){
+            mMenuWindow.repeatShare(entity.getResult().getShare_url());
+        }
     }
 }

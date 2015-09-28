@@ -97,6 +97,8 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
     @Override
     protected void initView() {
         initTitleBar("春笋红包", "", "", Constants.TITLE_TYPE_SAMPLE);
+        mNavRightIcon.setBackgroundResource(R.drawable.img_share_icon);
+        mNavRightIcon.setVisibility(View.VISIBLE);
 
         mFragments = new ArrayList<Fragment>();
 
@@ -118,6 +120,7 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
     private void initEvent() {
         mNavLeft.setOnClickListener(this);
         mNavIcon.setOnClickListener(this);
+        mNavRightIcon.setOnClickListener(this);
         mIbInfo.setOnClickListener(this);
         mRlGetRed.setOnClickListener(this);
 
@@ -251,6 +254,10 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
             case R.id.tv_nav_left:
             case R.id.iv_nav_icon:
                 back();
+                break;
+            case R.id.ib_nav_right:
+                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed);
+                noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.rl_get_red:
                 String path = mRed.getContent().split("，")[mCurrentPage];

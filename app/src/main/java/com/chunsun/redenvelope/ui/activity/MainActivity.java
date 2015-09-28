@@ -25,8 +25,8 @@ import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
-import com.chunsun.redenvelope.ui.fragment.tab.MeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 import com.chunsun.redenvelope.widget.popupwindow.TitlePopup;
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
     private HomeFragment mHomeFragment;
     private AdFragment mAdFragment;
-    private MeFragment mMeFragment;
+    private NewMeFragment mMeFragment;
     private NearFragment mNearFragment;
     //选中Tab页图标的颜色
     private int mSelectedColor;
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mHomeFragment = new HomeFragment();
         mAdFragment = new AdFragment();
         mNearFragment = new NearFragment();
-        mMeFragment = new MeFragment();
+        mMeFragment = new NewMeFragment();
 
         mTabs.add(mHomeFragment);
         mTabs.add(mAdFragment);

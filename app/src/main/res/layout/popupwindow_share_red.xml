@@ -115,7 +115,8 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dip">
+        android:padding="10dip"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"

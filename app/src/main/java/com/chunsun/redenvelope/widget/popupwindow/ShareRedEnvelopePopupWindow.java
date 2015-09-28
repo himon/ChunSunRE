@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.PopupWindow;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
@@ -54,9 +56,20 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
     private String mShowUrl;
     private ShareSdkHelper mShareSdkHelper;
+    private GetRepeatHostCallback mCallback;
 
     private int mFrom;
+    private String mPlatform;
+    private String mWhich;
 
+    /**
+     * 有奖励分享，有ShareLimit值
+     *
+     * @param context
+     * @param detail
+     * @param shareLimitResult
+     * @param shareFrom        标示从哪跳转过来的
+     */
     public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult, int shareFrom) {
         super(context);
         this.mContext = context;
@@ -66,7 +79,41 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
         initView();
         initShareSDK();
-        initData();
+        initData(mShareLimitResult.getShare_host());
+    }
+
+    /**
+     * 无奖励分享
+     *
+     * @param context
+     * @param detail
+     */
+    public ShareRedEnvelopePopupWindow(FragmentActivity context, RedDetailEntity.ResultEntity.DetailEntity detail) {
+        super(context);
+        this.mContext = context;
+        this.mDetail = detail;
+
+        initView();
+        initShareSDK();
+        initData(mDetail.getShare_host());
+    }
+
+    /**
+     * 转发分享
+     *
+     * @param context
+     * @param detail
+     * @param getRepeatHostCallback
+     */
+    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, GetRepeatHostCallback getRepeatHostCallback) {
+        super(context);
+        this.mContext = context;
+        this.mDetail = detail;
+        this.mCallback = getRepeatHostCallback;
+
+        initView();
+        initShareSDK();
+        initData(mDetail.getShare_host());
     }
 
     private void initView() {
@@ -87,6 +134,17 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         mIvQzone = (ImageView) mMenuView.findViewById(R.id.iv_qzone);
         mIvSina = (ImageView) mMenuView.findViewById(R.id.iv_sinaweibo);
 
+        if (mShareLimitResult != null) {
+            validateIsCanOnceGet();
+        }
+
+        initEvent();
+    }
+
+    /**
+     * 验证是否显示直接领取
+     */
+    private void validateIsCanOnceGet() {
         double min = Double.parseDouble(mShareLimitResult.getShare_min_amount());
         double price = Double.parseDouble(mDetail.getPrice());
 
@@ -113,8 +171,6 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         if (!mShareLimitResult.isWf()) {
             mIvWechat.setImageResource(R.drawable.logo_wechat_disable);
         }
-
-        initEvent();
     }
 
     private void initEvent() {
@@ -160,24 +216,69 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
     }
 
 
-    private void initData() {
+    private void initData(String shareHost) {
         if (mDetail != null) {
             if ("4".equals(mDetail.getHb_type())) {
                 mShowUrl = mDetail.getContent();
                 mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
             } else {
-                mShowUrl = (mShareLimitResult.getShare_host() + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
+                mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
             }
         } else {
             // 邀请码分享
             mShowUrl = mShareLimitResult.getShare_host() + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
         }
-        mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, mShareLimitResult, mFrom);
+        mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, shareHost, mFrom, mShareLimitResult != null);
+    }
+
+    public void repeatShare(String share_url) {
+        initData(share_url);
+        mShareSdkHelper.share(mWhich, mShowUrl);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_qzone:
+            case R.id.ll_wechat:
+            case R.id.ll_wechatmoments:
+            case R.id.ll_sinaweibo:
+                if (mShareLimitResult != null) {
+                    shareOnClick(v);
+                } else {
+                    noRewardShareOnClick(v);
+                }
+                dismiss();
+                break;
+            case R.id.ll_get_money:
+                if (mFrom == Constants.SHARE_FROM_WEB_RED) {
+                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
+                } else if (mFrom == Constants.SHARE_FROM_RED) {
+                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
+                }
+                break;
+            case R.id.btn_cancel:
+                dismiss();
+                break;
+        }
+    }
+
+    @Override
+    public void showAtLocation(View parent, int gravity, int x, int y) {
+        WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+        mContext.getWindow().setAttributes(lp);
+        super.showAtLocation(parent, gravity, x, y);
+    }
+
+    private void clear() {
+        WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
+        lp.alpha = 1.0f;
+        mContext.getWindow().setAttributes(lp);
+    }
+
+    private void shareOnClick(View view) {
+        switch (view.getId()) {
             case R.id.ll_qzone:
                 if (!isValid(mContext)) {
                     ShowToast.Short("用户没有QQ客户端或者版本过低，请下载或者更新至QQ4.6以上！");
@@ -210,31 +311,38 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
                 }
                 mShareSdkHelper.share(SinaWeibo.NAME, mShowUrl);
                 break;
-            case R.id.ll_get_money:
-                if(mFrom == Constants.SHARE_FROM_WEB_RED) {
-                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
-                }else if(mFrom == Constants.SHARE_FROM_RED){
-                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
-                }
-                break;
-            case R.id.btn_cancel:
-                dismiss();
-                break;
         }
     }
 
-    @Override
-    public void showAtLocation(View parent, int gravity, int x, int y) {
-        WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
-        lp.alpha = 0.7f;
-        mContext.getWindow().setAttributes(lp);
-        super.showAtLocation(parent, gravity, x, y);
-    }
-
-    private void clear() {
-        WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
-        lp.alpha = 1.0f;
-        mContext.getWindow().setAttributes(lp);
+    private void noRewardShareOnClick(View view) {
+        mWhich = "";
+        switch (view.getId()) {
+            case R.id.ll_qzone:
+                if (!isValid(mContext)) {
+                    ShowToast.Short("用户没有QQ客户端或者版本过低，请下载或者更新至QQ4.6以上！");
+                    return;
+                }
+                mWhich = QZone.NAME;
+                mPlatform = "qz";
+                break;
+            case R.id.ll_wechat:
+                mWhich = Wechat.NAME;
+                mPlatform = "wf";
+                break;
+            case R.id.ll_wechatmoments:
+                mWhich = WechatMoments.NAME;
+                mPlatform = "wc";
+                break;
+            case R.id.ll_sinaweibo:
+                mWhich = SinaWeibo.NAME;
+                mPlatform = "sw";
+                break;
+        }
+        if (mCallback != null) {
+            mCallback.getHost(mPlatform);
+        } else {
+            mShareSdkHelper.share(mWhich, mShowUrl);
+        }
     }
 
     private boolean isValid(Context context) {
@@ -263,4 +371,6 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         return ((verCode.length > 0 && verCode[0] >= 5) || (verCode.length > 1
                 && verCode[0] >= 4 && verCode[1] >= 6));
     }
+
+
 }

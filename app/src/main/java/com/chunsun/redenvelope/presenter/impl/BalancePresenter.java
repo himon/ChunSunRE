@@ -6,7 +6,7 @@ import com.chunsun.redenvelope.model.BalanceMode;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.impl.BalanceModeImpl;
-import com.chunsun.redenvelope.ui.activity.personal.BalanceActivity;
+import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -23,7 +23,7 @@ public class BalancePresenter implements BaseSingleLoadedListener<BalanceEntity>
 
     public BalancePresenter(IBalanceView iBalanceView) {
         this.mIBalanceView = iBalanceView;
-        mBalanceMode = new BalanceModeImpl((BalanceActivity) iBalanceView);
+        mBalanceMode = new BalanceModeImpl((WalletActivity) iBalanceView);
     }
 
     public void loadData(String token) {
@@ -47,6 +47,12 @@ public class BalancePresenter implements BaseSingleLoadedListener<BalanceEntity>
         send.setValue("￥" + result.getSendhb_amount());
         send.setCount(Constants.BALANCE_TYPE_SEND_HB);
         list.add(send);
+
+        SampleEntity repeat = new SampleEntity();
+        repeat.setKey("转发收益");
+        repeat.setValue("￥" + result.getForward_amount());
+        repeat.setCount(Constants.BALANCE_TYPE_FORWARD);
+        list.add(repeat);
 
         SampleEntity cash = new SampleEntity();
         cash.setKey("已提现");

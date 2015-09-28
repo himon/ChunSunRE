@@ -54,6 +54,12 @@
     <string name="red_envelope_collect_list">红包领取记录</string>
     <string name="repeat_red_envelope_confirm">点击转发，开始收益</string>
 
+    <!-- 个人中心 -->
+    <string name="send_ad_record">发广告记录</string>
+    <string name="wallet">钱包</string>
+    <string name="not_receiving_red">未领取红包</string>
+    <string name="setting">设置</string>
+
     <!-- 发广告记录 -->
     <string name="range">范  围：</string>
     <string name="type">类  型：</string>
@@ -61,6 +67,7 @@
     <string name="aggregate_amount">总金额：</string>
     <string name="not_receiving">未领取：</string>
     <string name="have_received">已领取：</string>
+
 
     <!-- 余额 -->
     <string name="withdrawal_money_tips">提示：每天只能成功提现或者充值一次。</string>
@@ -98,7 +105,10 @@
     <string name="alipay_pay">支付宝付款</string>
     <string name="bank_pay">银行卡付款</string>
     <string name="bank_pay_remind">（支持15元以上）</string>
-    <string name="title_activity_mine_invite_code">MineInviteCodeActivity</string>
+    <string name="accumulated_income">累计收益（元）</string>
+    <string name="invite_accumulated_income">邀请累计收益（元）</string>
+    <string name="available_balance">可用余额（元）</string>
+    <string name="withdraw_cash">提现</string>
 
     <!-- 我的邀请码 -->
     <string name="my_invite">我的邀请码</string>
@@ -193,6 +203,12 @@
 
     <!-- 截图图片 -->
     <string name="selected">选取</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_wallet">WalletActivity</string>
+    <string name="title_activity_withdraw_cash">WithdrawCashActivity</string>
 
 
 </resources>

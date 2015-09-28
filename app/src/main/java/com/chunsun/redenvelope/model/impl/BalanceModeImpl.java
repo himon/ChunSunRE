@@ -10,9 +10,9 @@ import com.chunsun.redenvelope.model.BalanceMode;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.activity.personal.BalanceActivity;
-import com.chunsun.redenvelope.utils.manager.JsonManager;
+import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +22,9 @@ import java.util.Map;
  */
 public class BalanceModeImpl implements BalanceMode {
 
-    private BalanceActivity mActivity;
+    private WalletActivity mActivity;
 
-    public BalanceModeImpl(BalanceActivity balanceActivity) {
+    public BalanceModeImpl(WalletActivity balanceActivity) {
         this.mActivity = balanceActivity;
     }
 

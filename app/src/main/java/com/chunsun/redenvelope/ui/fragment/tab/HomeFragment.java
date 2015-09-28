@@ -103,7 +103,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RedListDetailEntity.ResultEntity.PoolEntity entity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
+                if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
+                    toRepeatRedDetail(entity.getId());
+                } else {
+                    mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
+                }
             }
         });
 

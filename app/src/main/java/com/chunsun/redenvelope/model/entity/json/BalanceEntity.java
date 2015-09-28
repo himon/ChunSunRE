@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/8/18.
@@ -63,13 +63,30 @@ public class BalanceEntity extends BaseEntity {
          * 已提现
          */
         private String cash_amount;
+
+        /**
+         * 累计收益
+         */
+        private String cumulative_gain;
+
+        /**
+         * 邀请累计收益
+         */
+        private String invite_cumulative_gain;
+
+        /**
+         * 转发收益
+         */
+        private String forward_amount;
+
+
         /**
          * 是否开启银联支付，用于控制，是否可以使用银联充值
          */
         private boolean enable_unionpay;
-        private List<CzPoundageEntity> cz_poundage;
-        private List<CashPoundageRateEntity> cash_poundage_rate;
-        private List<ZfbPoundageEntity> zfb_poundage;
+        private ArrayList<CzPoundageEntity> cz_poundage;
+        private ArrayList<CashPoundageRateEntity> cash_poundage_rate;
+        private ArrayList<ZfbPoundageEntity> zfb_poundage;
         /**
          * 领红包收入
          */
@@ -87,7 +104,7 @@ public class BalanceEntity extends BaseEntity {
             this.amount = amount;
         }
 
-        public void setCz_poundage(List<CzPoundageEntity> cz_poundage) {
+        public void setCz_poundage(ArrayList<CzPoundageEntity> cz_poundage) {
             this.cz_poundage = cz_poundage;
         }
 
@@ -107,11 +124,11 @@ public class BalanceEntity extends BaseEntity {
             this.enable_unionpay = enable_unionpay;
         }
 
-        public void setCash_poundage_rate(List<CashPoundageRateEntity> cash_poundage_rate) {
+        public void setCash_poundage_rate(ArrayList<CashPoundageRateEntity> cash_poundage_rate) {
             this.cash_poundage_rate = cash_poundage_rate;
         }
 
-        public void setZfb_poundage(List<ZfbPoundageEntity> zfb_poundage) {
+        public void setZfb_poundage(ArrayList<ZfbPoundageEntity> zfb_poundage) {
             this.zfb_poundage = zfb_poundage;
         }
 
@@ -131,7 +148,7 @@ public class BalanceEntity extends BaseEntity {
             return amount;
         }
 
-        public List<CzPoundageEntity> getCz_poundage() {
+        public ArrayList<CzPoundageEntity> getCz_poundage() {
             return cz_poundage;
         }
 
@@ -151,16 +168,40 @@ public class BalanceEntity extends BaseEntity {
             return enable_unionpay;
         }
 
-        public List<CashPoundageRateEntity> getCash_poundage_rate() {
+        public ArrayList<CashPoundageRateEntity> getCash_poundage_rate() {
             return cash_poundage_rate;
         }
 
-        public List<ZfbPoundageEntity> getZfb_poundage() {
+        public ArrayList<ZfbPoundageEntity> getZfb_poundage() {
             return zfb_poundage;
         }
 
         public String getOpenhb_amount() {
             return openhb_amount;
+        }
+
+        public String getCumulative_gain() {
+            return cumulative_gain;
+        }
+
+        public void setCumulative_gain(String cumulative_gain) {
+            this.cumulative_gain = cumulative_gain;
+        }
+
+        public String getInvite_cumulative_gain() {
+            return invite_cumulative_gain;
+        }
+
+        public void setInvite_cumulative_gain(String invite_cumulative_gain) {
+            this.invite_cumulative_gain = invite_cumulative_gain;
+        }
+
+        public String getForward_amount() {
+            return forward_amount;
+        }
+
+        public void setForward_amount(String forward_amount) {
+            this.forward_amount = forward_amount;
         }
 
         /**

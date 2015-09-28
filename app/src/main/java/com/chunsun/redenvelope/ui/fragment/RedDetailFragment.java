@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -72,6 +73,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     TextView mNavLeft;
     @Bind(R.id.tv_nav_mid)
     TextView mNavTitle;
+    @Bind(R.id.ib_nav_right)
+    ImageButton mIbRepeat;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
@@ -148,6 +151,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mNavLeft.setText("返回");
         mNavLeft.setVisibility(View.VISIBLE);
         mNavTitle.setText("春笋红包");
+        mIbRepeat.setVisibility(View.VISIBLE);
+        mIbRepeat.setBackgroundResource(R.drawable.img_share_icon);
     }
 
     @Override
@@ -218,6 +223,8 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mIbRepeat.setOnClickListener(this);
+        mIvHead.setOnClickListener(this);
         mRbCommentRecord.setOnClickListener(this);
         mRbGetRedRecord.setOnClickListener(this);
         mLLCollect.setOnClickListener(this);
@@ -400,6 +407,13 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
             case R.id.iv_nav_icon:
             case R.id.tv_nav_left:
                 EventBus.getDefault().post(new RedDetailBackEvent(""));
+                break;
+            case R.id.ib_nav_right:
+                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail);
+                noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                break;
+            case R.id.iv_head_logo:
+                toUserRewardActivity(mDetail.getUser_id());
                 break;
             case R.id.rb_comment_record:
                 mCurrentCheckType = 0;
