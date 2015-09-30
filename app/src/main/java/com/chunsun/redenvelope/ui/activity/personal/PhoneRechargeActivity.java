@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity.ResultEntity.CzPoundageEntity;
-import com.chunsun.redenvelope.presenter.impl.PhoneRechargePresenter;
+import com.chunsun.redenvelope.presenter.PhoneRechargePresenter;
 import com.chunsun.redenvelope.ui.adapter.PhoneRechargeAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeView;

@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
-import com.chunsun.redenvelope.presenter.impl.QuickLoginPresenter;
+import com.chunsun.redenvelope.presenter.QuickLoginPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;

@@ -349,6 +349,7 @@ public interface Constants {
     int LISTENER_TYPE_JUST_OPEN_RED = 0x2029;
     int LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION = 0x2030;
     int LISTENER_TYPE_REPEAT_GET_HOST = 0x2031;
+    int LISTENER_TYPE_GET_CREATE_AD_DELAY_SECONDS = 0x2032;
 
     /**
      * 发广告默认数据
@@ -364,6 +365,7 @@ public interface Constants {
     String AD_COMPANY_TYPE = "2";
     String AD_NEAR_TYPE = "3";
     String AD_LINK_TYPE = "4";
+    String AD_REPEAT_TYPE = "5";
 
     /**
      * 发广告 选择列表类型

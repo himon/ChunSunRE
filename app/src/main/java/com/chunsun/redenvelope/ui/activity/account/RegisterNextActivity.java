@@ -1,11 +1,8 @@
 package com.chunsun.redenvelope.ui.activity.account;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +10,7 @@ import android.widget.EditText;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.presenter.impl.RegisterNextPresenter;
+import com.chunsun.redenvelope.presenter.RegisterNextPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IRegisterNextView;

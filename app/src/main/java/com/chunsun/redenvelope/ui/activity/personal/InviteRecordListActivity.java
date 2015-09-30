@@ -2,21 +2,15 @@ package com.chunsun.redenvelope.ui.activity.personal;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
-import com.chunsun.redenvelope.presenter.impl.InviteRecordListPresenter;
+import com.chunsun.redenvelope.presenter.InviteRecordListPresenter;
 import com.chunsun.redenvelope.ui.adapter.InviteRecordListAdapter;
-import com.chunsun.redenvelope.ui.adapter.NotReceivingAndCollectRedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IInviteRecordListView;
 

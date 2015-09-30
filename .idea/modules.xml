@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/PhotoPicker/PhotoPicker.iml" filepath="$PROJECT_DIR$/PhotoPicker/PhotoPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/Scanlibrary/Scanlibrary.iml" filepath="$PROJECT_DIR$/Scanlibrary/Scanlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pickerui/pickerui.iml" filepath="$PROJECT_DIR$/pickerui/pickerui.iml" />
     </modules>
   </component>
 </project>

@@ -13,7 +13,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.UserPrivacyPresenter;
+import com.chunsun.redenvelope.presenter.UserPrivacyPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserPrivacyView;
 

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.MineInviteCodePresenter;
+import com.chunsun.redenvelope.presenter.MineInviteCodePresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IMineInviteCodeView;
 

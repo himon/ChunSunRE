@@ -17,7 +17,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.UserInfoPresenter;
+import com.chunsun.redenvelope.presenter.UserInfoPresenter;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;

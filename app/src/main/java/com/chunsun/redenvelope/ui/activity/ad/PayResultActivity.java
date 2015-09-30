@@ -1,10 +1,7 @@
 package com.chunsun.redenvelope.ui.activity.ad;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -83,7 +80,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
             case R.id.btn_complete_success:
                 AppManager appManager = AppManager.getAppManager();
                 appManager.finishActivity(AdPayActivity.class);
-                appManager.finishActivity(CreateAdNextPageActivity.class);
+                appManager.finishActivity(CreateAdContentActivity.class);
                 back();
                 break;
         }

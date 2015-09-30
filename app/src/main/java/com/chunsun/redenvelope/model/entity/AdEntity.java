@@ -12,6 +12,11 @@ import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 public class AdEntity implements Parcelable {
 
     /**
+     * 广告类型
+     */
+    private String adType;
+
+    /**
      * 单价
      */
     private String price;
@@ -81,6 +86,20 @@ public class AdEntity implements Parcelable {
     private String imagePath7 = "";
 
     private String imagePath8 = "";
+
+    /**
+     * 套餐的倍数
+     */
+    private String formula_multiple;
+
+    /**
+     * 选择的套餐
+     */
+    private String forwarding_packages_id;
+
+
+    /** 企业账号 */
+
 
     public String getPrice() {
         return price;

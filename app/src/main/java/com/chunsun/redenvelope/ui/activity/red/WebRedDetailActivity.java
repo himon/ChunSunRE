@@ -21,7 +21,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.WebRedDetailPresenter;
+import com.chunsun.redenvelope.presenter.WebRedDetailPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;

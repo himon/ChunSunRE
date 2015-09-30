@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.clip.widget.ClipLayout;
 import com.chunsun.redenvelope.clip.widget.ClipRectLayout;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.utils.ImageUtils;
@@ -134,7 +134,7 @@ public class PicClipActivity extends BaseActivity implements View.OnClickListene
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] bitmapByte = baos.toByteArray();
         if(flag) {
-            intent = new Intent(this, CreateAdNextPageActivity.class);
+            intent = new Intent(this, CreateAdContentActivity.class);
         }else{
             intent = new Intent(this, UserInfoActivity.class);
         }

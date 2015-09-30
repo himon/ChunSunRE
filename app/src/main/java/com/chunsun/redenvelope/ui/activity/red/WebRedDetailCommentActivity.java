@@ -18,7 +18,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.WebRedDetailCommentPresenter;
+import com.chunsun.redenvelope.presenter.WebRedDetailCommentPresenter;
 import com.chunsun.redenvelope.ui.adapter.WebRedDetailCommentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailCommentView;

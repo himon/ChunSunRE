@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                     intent.setPhotoCount(8);
                     intent.setShowCamera(true);
                     intent.setSelectedPhotos((ArrayList<Photo>) mPhotos);
-                    ((CreateAdNextPageActivity) mContext).startActivityForResult(intent, Constants.REQUEST_CODE);
+                    ((CreateAdContentActivity) mContext).startActivityForResult(intent, Constants.REQUEST_CODE);
                 }
             });
 
@@ -97,8 +97,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                         photoPaths.remove(photoPaths.size() - 1);
                     }
                     intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, photoPaths);
-                    if (mContext instanceof CreateAdNextPageActivity) {
-                        ((CreateAdNextPageActivity) mContext).previewPhoto(intent);
+                    if (mContext instanceof CreateAdContentActivity) {
+                        ((CreateAdContentActivity) mContext).previewPhoto(intent);
                     }
                 }
             });

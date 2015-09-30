@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
-import com.chunsun.redenvelope.presenter.impl.ForgetPwdPresenter;
+import com.chunsun.redenvelope.presenter.ForgetPwdPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdView;
 import com.chunsun.redenvelope.utils.CountDownUtils;

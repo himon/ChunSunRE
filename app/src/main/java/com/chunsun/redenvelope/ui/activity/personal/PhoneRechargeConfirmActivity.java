@@ -10,7 +10,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.PhoneRechargeConfirmPresenter;
+import com.chunsun.redenvelope.presenter.PhoneRechargeConfirmPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeConfirmView;
 

@@ -9,7 +9,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.SettingPresenter;
+import com.chunsun.redenvelope.presenter.SettingPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISettingView;
 import com.chunsun.redenvelope.widget.SettingItem;

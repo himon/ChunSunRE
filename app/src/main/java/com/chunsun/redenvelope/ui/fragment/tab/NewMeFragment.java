@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.MeFragmentPresenter;
+import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.constants.Constants;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.model.event.WelcomeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.WelcomePresenter;
+import com.chunsun.redenvelope.presenter.WelcomePresenter;
 import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;

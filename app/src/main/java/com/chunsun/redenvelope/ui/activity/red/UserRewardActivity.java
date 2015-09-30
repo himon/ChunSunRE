@@ -14,7 +14,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserPublicInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.UserRewardPresenter;
+import com.chunsun.redenvelope.presenter.UserRewardPresenter;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserRewardView;

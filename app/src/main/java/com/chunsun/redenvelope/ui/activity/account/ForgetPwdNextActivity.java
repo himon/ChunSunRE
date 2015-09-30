@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.presenter.impl.ForgetPwdNextPresenter;
+import com.chunsun.redenvelope.presenter.ForgetPwdNextPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdNextView;
 import com.chunsun.redenvelope.utils.manager.AppManager;

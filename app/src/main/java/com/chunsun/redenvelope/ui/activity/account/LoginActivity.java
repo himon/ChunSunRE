@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
-import com.chunsun.redenvelope.presenter.impl.LoginPresenter;
+import com.chunsun.redenvelope.presenter.LoginPresenter;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.StringUtil;
 

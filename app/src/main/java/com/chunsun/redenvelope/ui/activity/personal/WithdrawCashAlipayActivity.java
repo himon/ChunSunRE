@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity.ResultEntity.ZfbPoundageEntity;
-import com.chunsun.redenvelope.presenter.impl.WithdrawCashAlipayPresenter;
+import com.chunsun.redenvelope.presenter.WithdrawCashAlipayPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawCashAlipayView;
 import com.chunsun.redenvelope.utils.DensityUtils;

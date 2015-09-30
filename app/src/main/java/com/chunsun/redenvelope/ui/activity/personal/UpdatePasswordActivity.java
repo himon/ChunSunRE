@@ -9,7 +9,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.UpdatePasswordPresenter;
+import com.chunsun.redenvelope.presenter.UpdatePasswordPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUpdatePasswordView;
 import com.chunsun.redenvelope.utils.StringUtil;

@@ -26,7 +26,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.SendRedEnvelopeRecordDetailPresenter;
+import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;

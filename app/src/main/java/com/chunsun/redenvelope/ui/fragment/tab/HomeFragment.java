@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.HomeFragmentPresenter;
+import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;

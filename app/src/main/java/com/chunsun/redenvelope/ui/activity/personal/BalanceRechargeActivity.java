@@ -14,7 +14,7 @@ import com.alipay.sdk.pay.demo.PayPresenter;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.BalanceRechargePresenter;
+import com.chunsun.redenvelope.presenter.BalanceRechargePresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceRechargeView;

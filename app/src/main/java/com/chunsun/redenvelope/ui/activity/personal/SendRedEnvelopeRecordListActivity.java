@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.SendRedEnvelopeRecordListPresenter;
+import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordListPresenter;
 import com.chunsun.redenvelope.ui.adapter.SendRedEnvelopeRecordListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;

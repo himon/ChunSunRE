@@ -180,6 +180,12 @@
     <string name="finish">完成</string>
     <string name="need_pay_prompt">需要支付金额：</string>
     <string name="pay_error_prompt">支付失败原因未知，麻烦大侠返回发广告，重新支付！</string>
+    <string name="send_range">选择投放范围</string>
+    <string name="life">生活</string>
+    <string name="link">链接</string>
+    <string name="repeat">转发</string>
+    <string name="company">企业</string>
+    <string name="ad_confirm">定制你的专属广告</string>
 
     <!-- 分享 -->
     <string name="wecharmoments">朋友圈</string>
@@ -201,14 +207,10 @@
     <string name="send_red_envelope">发送红包</string>
     <string name="account_desc">个性签名</string>
 
+
     <!-- 截图图片 -->
     <string name="selected">选取</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_wallet">WalletActivity</string>
-    <string name="title_activity_withdraw_cash">WithdrawCashActivity</string>
-
+    <string name="title_activity_create_ad_next_step">CreateAdNextStepActivity</string>
+    <string name="title_activity_create_ad_repeat_next_step">CreateAdRepeatNextStepActivity</string>
 
 </resources>

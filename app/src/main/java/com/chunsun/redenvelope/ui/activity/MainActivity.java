@@ -22,6 +22,7 @@ import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
@@ -203,9 +204,12 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 break;
             case R.id.indicator_ad:
                 if (isLogin(Constants.FROM_AD)) {
-                    mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
-                    mViewPager.setCurrentItem(1, false);
-                    showTitleBar(v.getId());
+                    //mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
+                    //mViewPager.setCurrentItem(1, false);
+                    //showTitleBar(v.getId());
+
+                    Intent intent = new Intent(this, CreateAdActivity.class);
+                    startActivity(intent);
                 }
                 break;
             case R.id.indicator_near:
@@ -325,10 +329,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
         } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
-        }else if(Constants.SUPERADDITION_AD.equals(event.getMsg())){
+        } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
-           mAdFragment.setSuperaddition(event.getEntity());
+            mAdFragment.setSuperaddition(event.getEntity());
         }
     }
 

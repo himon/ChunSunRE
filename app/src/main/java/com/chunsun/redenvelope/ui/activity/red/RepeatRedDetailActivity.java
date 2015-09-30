@@ -26,7 +26,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RepeatRedEnvelopeGetHostEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.RepeatRedDetailPresenter;
+import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;

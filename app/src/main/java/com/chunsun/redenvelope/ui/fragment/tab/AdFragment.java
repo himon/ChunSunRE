@@ -25,12 +25,12 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
-import com.chunsun.redenvelope.presenter.impl.AdFragmentPresenter;
+import com.chunsun.redenvelope.presenter.CreateAdNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
-import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextPageActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
-import com.chunsun.redenvelope.ui.view.IAdFragment;
+import com.chunsun.redenvelope.ui.view.ICreateAdNextStepView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.text.DecimalFormat;
@@ -46,7 +46,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 发广告Fragment
  */
-public class AdFragment extends BaseFragment implements IAdFragment, View.OnClickListener {
+public class AdFragment extends BaseFragment implements ICreateAdNextStepView, View.OnClickListener {
 
     @Bind(R.id.rg_send_type)
     RadioGroup mRgSendType;
@@ -81,7 +81,7 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
     @Bind(R.id.ll_invoice_container)
     LinearLayout mLLInvoice;
 
-    private AdFragmentPresenter mPresenter;
+    private CreateAdNextStepPresenter mPresenter;
     private AdEntity mAdEntity;
 
     private List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> mDelaySecondsRate;
@@ -98,7 +98,7 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ad, container, false);
         ButterKnife.bind(this, view);
-        mPresenter = new AdFragmentPresenter(this);
+//        mPresenter = new CreateAdNextStepPresenter(this);
         EventBus.getDefault().register(this);
         initView();
         initData();
@@ -223,7 +223,7 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
                 mLLInvoice.setVisibility(View.GONE);
             }
         }
-        mPresenter.getAdDelaySecondsRate();
+        //mPresenter.getAdDelaySecondsRate();
     }
 
 
@@ -264,8 +264,13 @@ public class AdFragment extends BaseFragment implements IAdFragment, View.OnClic
     }
 
     @Override
+    public void toIllustrate() {
+
+    }
+
+    @Override
     public void toNextStep() {
-        Intent intent = new Intent(getActivity(), CreateAdNextPageActivity.class);
+        Intent intent = new Intent(getActivity(), CreateAdContentActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
         intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);

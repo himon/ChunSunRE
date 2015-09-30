@@ -33,7 +33,7 @@ import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.model.event.RedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.RedDetailFragmentPresenter;
+import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;

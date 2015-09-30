@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.EditInfoPresenter;
+import com.chunsun.redenvelope.presenter.EditInfoPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IEditInfoView;
 import com.chunsun.redenvelope.utils.EditUtils;

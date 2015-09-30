@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:pickerui="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_create_ad_bg">
+
+    <include
+        android:id="@+id/tools_bar"
+        layout="@layout/layout_title_bar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tools_bar"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ad_confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_30"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/choose_type"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_14"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dip"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btn_company"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_white_to_trans"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/company"
+                android:textColor="@color/selector_text_white_red"/>
+
+            <RadioButton
+                android:id="@+id/btn_repeat"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_white_to_trans"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/repeat"
+                android:textColor="@color/selector_text_white_red"/>
+
+            <RadioButton
+                android:id="@+id/btn_link"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_white_to_trans"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/link"
+                android:textColor="@color/selector_text_white_red"/>
+
+            <RadioButton
+                android:id="@+id/btn_lift"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_white_to_trans"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/life"
+                android:textColor="@color/selector_text_white_red"/>
+
+            <RadioButton
+                android:id="@+id/btn_near"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn_white_to_trans"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/near"
+                android:textColor="@color/selector_text_white_red"/>
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/send_range"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_14"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_province"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_radius_white"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="不限"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_pull_down_triangle"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_city"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_radius_white"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="不限"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_pull_down_triangle"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_range"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_radius_white"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="50千米"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_pull_down_triangle"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_next_step"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/selector_button_red_radius"
+            android:gravity="center"
+            android:text="@string/next_step"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_18"/>
+    </LinearLayout>
+
+    <com.dpizarro.uipicker.library.picker.PickerUI
+        android:id="@+id/picker_ui_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        pickerui:autoDismiss="true"
+        pickerui:backgroundColor="#4cffa5"
+        pickerui:blur="true"
+        pickerui:blur_FilterColor="#ff5e48"
+        pickerui:blur_downScaleFactor="@integer/blur_downscale_min"
+        pickerui:blur_radius="@integer/blur_radius_min"
+        pickerui:blur_use_renderscript="true"
+        pickerui:entries="@array/months"
+        pickerui:itemsClickables="true"
+        pickerui:linesCenterColor="#3941ff"
+        pickerui:textCenterColor="#000000"
+        pickerui:textNoCenterColor="#737373"/>
+
+</RelativeLayout>

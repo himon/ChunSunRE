@@ -10,10 +10,8 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
-import com.chunsun.redenvelope.model.event.SelectAdNextPageEvent;
 import com.chunsun.redenvelope.ui.adapter.SelectListInfoAdaper;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
@@ -103,21 +101,7 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
                     EventBus.getDefault().post(new EditUserInfoEvent(Constants.EDIT_TYPE_JOB, ((SampleEntity) entity).getValue()));
                     break;
                 default:
-                    SampleEntity sampleEntity = (SampleEntity) entity;
-                    EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
             }
-        } else if (entity instanceof DistrictEntity.AreaEntity) {//创建广告选择地区
-            DistrictEntity.AreaEntity areaEntity = (DistrictEntity.AreaEntity) entity;
-            SampleEntity sampleEntity = new SampleEntity();
-            sampleEntity.setType(Constants.AD_SELECT_LIST_PROVINCE);
-            sampleEntity.setKey(areaEntity.getP());
-            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
-        } else if (entity instanceof DistrictEntity.AreaEntity.CcEntity) {//创建广告选择城市
-            DistrictEntity.AreaEntity.CcEntity ccEntity = (DistrictEntity.AreaEntity.CcEntity) entity;
-            SampleEntity sampleEntity = new SampleEntity();
-            sampleEntity.setType(Constants.AD_SELECT_LIST_CITY);
-            sampleEntity.setKey(ccEntity.getC());
-            EventBus.getDefault().post(new SelectAdNextPageEvent(sampleEntity));
         }
 
         for (SelectListBase item : mList) {

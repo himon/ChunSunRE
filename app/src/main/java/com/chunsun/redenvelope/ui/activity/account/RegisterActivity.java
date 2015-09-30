@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.model.event.ValiCodeEvent;
-import com.chunsun.redenvelope.presenter.impl.RegisterPresenter;
+import com.chunsun.redenvelope.presenter.RegisterPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.constants.Constants;

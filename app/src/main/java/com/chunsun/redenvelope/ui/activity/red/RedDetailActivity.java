@@ -14,7 +14,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.RedDetailPresenter;
+import com.chunsun.redenvelope.presenter.RedDetailPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicPreviewFragment;

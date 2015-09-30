@@ -20,7 +20,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.InteractivePlatformPresenter;
+import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;

@@ -11,7 +11,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.impl.NotReceivingRedPresenter;
+import com.chunsun.redenvelope.presenter.NotReceivingRedPresenter;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.NotReceivingAndCollectRedListAdapter;
