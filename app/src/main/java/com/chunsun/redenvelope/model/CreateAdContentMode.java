@@ -8,7 +8,5 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
  */
 public interface CreateAdContentMode {
 
-    void initProvinceAndCity(BaseMultiLoadedListener listener);
-
     void commit(String token, AdEntity mAdEntity, String title, String content, BaseMultiLoadedListener listener);
 }

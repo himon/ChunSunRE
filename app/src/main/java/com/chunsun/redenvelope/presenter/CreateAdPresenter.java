@@ -95,63 +95,63 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
         SampleEntity distance = new SampleEntity();
         distance.setKey("0");
         distance.setValue("100米");
-        distance.setCount("0.1");
+        distance.setCount("0.10");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("1");
         distance.setValue("200米");
-        distance.setCount("0.2");
+        distance.setCount("0.20");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("2");
         distance.setValue("500米");
-        distance.setCount("0.5");
+        distance.setCount("0.50");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("3");
         distance.setValue("1千米");
-        distance.setCount("1");
+        distance.setCount("1.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("4");
         distance.setValue("2千米");
-        distance.setCount("2");
+        distance.setCount("2.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("5");
         distance.setValue("5千米");
-        distance.setCount("5");
+        distance.setCount("5.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("6");
         distance.setValue("10千米");
-        distance.setCount("10");
+        distance.setCount("10.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("7");
         distance.setValue("20千米");
-        distance.setCount("20");
+        distance.setCount("20.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("8");
         distance.setValue("50千米");
-        distance.setCount("50");
+        distance.setCount("50.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
     }
@@ -163,31 +163,31 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
      */
     private void initType(List<SampleEntity> list) {
         SampleEntity item = new SampleEntity();
-        item.setKey(Constants.AD_LEFT_TYPE);
+        item.setKey(Constants.RED_DETAIL_TYPE_LEFT + "");
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("生活类");
         list.add(item);
 
         item = new SampleEntity();
-        item.setKey(Constants.AD_COMPANY_TYPE);
+        item.setKey(Constants.RED_DETAIL_TYPE_COMPANY + "");
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("企业类");
         list.add(item);
 
         item = new SampleEntity();
-        item.setKey(Constants.AD_NEAR_TYPE);
+        item.setKey(Constants.RED_DETAIL_TYPE_NEAR + "");
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("附近类");
         list.add(item);
 
         item = new SampleEntity();
-        item.setKey(Constants.AD_LINK_TYPE);
+        item.setKey(Constants.RED_DETAIL_TYPE_LINK + "");
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("链接类");
         list.add(item);
 
         item = new SampleEntity();
-        item.setKey(Constants.AD_REPEAT_TYPE);
+        item.setKey(Constants.RED_DETAIL_TYPE_REPEAT + "");
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("转发类");
         list.add(item);
@@ -202,23 +202,31 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
         String city = "";
 
         if (mSuperadditionEntity != null) {
+            //红包类型
             for (SampleEntity item : mTypeList) {
                 if (mSuperadditionEntity.getType().equals(item.getKey())) {
                     item.setCheck(true);
                     this.mAdEntity.setType(item);
                 }
             }
-            for (SampleEntity item : mDistanceList) {
-                if (mSuperadditionEntity.getRange().equals(item.getKey())) {
-                    item.setCheck(true);
-                    this.mAdEntity.setDistance(item);
+            if (mSuperadditionEntity.getType().equals(Constants.RED_DETAIL_TYPE_NEAR)) {
+                //范围
+                for (SampleEntity item : mDistanceList) {
+                    if (mSuperadditionEntity.getRange().equals(item.getCount())) {
+                        item.setCheck(true);
+                        this.mAdEntity.setDistance(item);
+                    }
                 }
+            } else {
+                mDistanceList.get(0).setCheck(true);
+                this.mAdEntity.setDistance(mDistanceList.get(0));
             }
+            //省市
             province = mSuperadditionEntity.getProvince();
             city = mSuperadditionEntity.getCity();
         } else {
             mTypeList.get(0).setCheck(true);
-            this.mAdEntity.setType(mTypeList.get(0));
+            this.mAdEntity.setType(mTypeList.get(3));
             mDistanceList.get(0).setCheck(true);
             this.mAdEntity.setDistance(mDistanceList.get(0));
 
@@ -252,11 +260,12 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 }
             }
         }
-        mICreateAdView.setInitData(mTypeList, mDistanceList, list, mAdEntity);
+        mICreateAdView.setInitData(mDistanceList, mTypeList, list, mAdEntity);
     }
 
     /**
      * 添加不限选项
+     *
      * @param list
      */
     private void setUnlimited(ArrayList<DistrictEntity.AreaEntity> list) {

@@ -61,7 +61,7 @@
                 android:padding="5dp"
                 louis:tab_color="@color/font_gray"
                 louis:tab_icon="@drawable/img_icon_near"
-                louis:tab_text="@string/near"
+                louis:tab_text="@string/get_red_envelope"
                 louis:tab_text_size="@dimen/font_size_sp_12"/>
 
             <com.chunsun.redenvelope.widget.ChangeColorIconWithText

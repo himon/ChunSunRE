@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.ui.base.SampleBaseAdapter;
 
@@ -87,7 +88,7 @@ public class SendRedEnvelopeRecordListAdapter extends SampleBaseAdapter<RedDetai
                 holder.date.setText(entity.getAdd_time());
                 break;
             case 1:
-                if ("yfb_count".equals(mType)) {
+                if (Constants.RED_DETAIL_STATUS_YFB.equals(mType)) {
                     holder2.status.setText(entity.getTotal_left_count() + "/" + entity.getTotal_count());
                 } else {
                     holder2.status.setText(entity.getStatus_title());

@@ -2,19 +2,16 @@ package com.chunsun.redenvelope.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.model.entity.json.RepeatMealEntity;
 
 /**
  * Created by Administrator on 2015/9/1.
  */
 public class AdEntity implements Parcelable {
-
-    /**
-     * 广告类型
-     */
-    private String adType;
 
     /**
      * 单价
@@ -50,6 +47,11 @@ public class AdEntity implements Parcelable {
      * 广告类型
      */
     private SampleEntity type;
+
+    /**
+     * 是否要发票
+     */
+    private String isReceipt;
 
     /**
      * 距离
@@ -90,15 +92,12 @@ public class AdEntity implements Parcelable {
     /**
      * 套餐的倍数
      */
-    private String formula_multiple;
+    private String formula_multiple = "";
 
     /**
-     * 选择的套餐
+     * 套餐
      */
-    private String forwarding_packages_id;
-
-
-    /** 企业账号 */
+    private RepeatMealEntity.ResultEntity meal;
 
 
     public String getPrice() {
@@ -253,6 +252,41 @@ public class AdEntity implements Parcelable {
         this.imagePath8 = imagePath8;
     }
 
+    public String getFormula_multiple() {
+        if (TextUtils.isEmpty(formula_multiple)) {
+            return "0";
+        }
+        return formula_multiple;
+    }
+
+    public void setFormula_multiple(String formula_multiple) {
+        this.formula_multiple = formula_multiple;
+    }
+
+    public RepeatMealEntity.ResultEntity getMeal() {
+        if (meal == null) {
+            RepeatMealEntity.ResultEntity entity = new RepeatMealEntity.ResultEntity();
+            entity.setId(4);
+            return entity;
+        }
+        return meal;
+    }
+
+    public void setMeal(RepeatMealEntity.ResultEntity meal) {
+        this.meal = meal;
+    }
+
+    public String getIsReceipt() {
+        if (isReceipt == null) {
+            return "false";
+        }
+        return isReceipt;
+    }
+
+    public void setIsReceipt(String isReceipt) {
+        this.isReceipt = isReceipt;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -267,6 +301,7 @@ public class AdEntity implements Parcelable {
         dest.writeString(this.startTime);
         dest.writeString(this.adPrice);
         dest.writeParcelable(this.type, 0);
+        dest.writeString(this.isReceipt);
         dest.writeParcelable(this.distance, 0);
         dest.writeParcelable(this.province, 0);
         dest.writeParcelable(this.city, 0);
@@ -279,6 +314,8 @@ public class AdEntity implements Parcelable {
         dest.writeString(this.imagePath6);
         dest.writeString(this.imagePath7);
         dest.writeString(this.imagePath8);
+        dest.writeString(this.formula_multiple);
+        dest.writeParcelable(this.meal, 0);
     }
 
     public AdEntity() {
@@ -292,6 +329,7 @@ public class AdEntity implements Parcelable {
         this.startTime = in.readString();
         this.adPrice = in.readString();
         this.type = in.readParcelable(SampleEntity.class.getClassLoader());
+        this.isReceipt = in.readString();
         this.distance = in.readParcelable(SampleEntity.class.getClassLoader());
         this.province = in.readParcelable(DistrictEntity.AreaEntity.class.getClassLoader());
         this.city = in.readParcelable(DistrictEntity.AreaEntity.CcEntity.class.getClassLoader());
@@ -304,6 +342,8 @@ public class AdEntity implements Parcelable {
         this.imagePath6 = in.readString();
         this.imagePath7 = in.readString();
         this.imagePath8 = in.readString();
+        this.formula_multiple = in.readString();
+        this.meal = in.readParcelable(RepeatMealEntity.ResultEntity.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<AdEntity> CREATOR = new Parcelable.Creator<AdEntity>() {

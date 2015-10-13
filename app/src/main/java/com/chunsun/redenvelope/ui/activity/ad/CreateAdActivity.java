@@ -14,6 +14,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.presenter.CreateAdPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdView;
@@ -88,6 +89,9 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
      */
     private List<String> options;
 
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,7 +157,12 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
     @Override
     protected void initData() {
 
-        mPresenter.getData(mAdEntity, null);
+        Intent intent = getIntent();
+        if (intent != null) {
+            mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
+        }
+
+        mPresenter.getData(mAdEntity, mSuperadditionEntity);
     }
 
     @Override
@@ -278,17 +287,19 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         mDistrictList = districtList;
         this.mAdEntity = adEntity;
 
+        setStatus();
     }
 
     @Override
     public void nextCreateActivity() {
         Intent intent = null;
-        if (Constants.AD_REPEAT_TYPE.equals(mAdEntity.getType().getKey())) {
+        if ((Constants.RED_DETAIL_TYPE_REPEAT + "").equals(mAdEntity.getType().getKey())) {
             intent = new Intent(this, CreateAdRepeatNextStepActivity.class);
-        }else{
+        } else {
             intent = new Intent(this, CreateAdNextStepActivity.class);
         }
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
 
@@ -315,5 +326,30 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
             list.add(item.getP());
         }
         return list;
+    }
+
+
+    /**
+     * 设置页面控件显示数据
+     */
+    public void setStatus() {
+
+        if (("" + Constants.RED_DETAIL_TYPE_LEFT).equals(mAdEntity.getType().getKey())) {
+            mRbLift.setChecked(true);
+        } else if (("" + Constants.RED_DETAIL_TYPE_COMPANY).equals(mAdEntity.getType().getKey())) {
+            mRbCompany.setChecked(true);
+        } else if (("" + Constants.RED_DETAIL_TYPE_NEAR).equals(mAdEntity.getType().getKey())) {
+            mRbNear.setChecked(true);
+            mTvRange.setText(mAdEntity.getDistance().getValue());
+            initSelected(false);
+        } else if (("" + Constants.RED_DETAIL_TYPE_LINK).equals(mAdEntity.getType().getKey())) {
+            mRbLink.setChecked(true);
+        } else if (("" + Constants.RED_DETAIL_TYPE_REPEAT).equals(mAdEntity.getType().getKey())) {
+            mRbRepeat.setChecked(true);
+        }
+
+        mTvProvince.setText(mAdEntity.getProvince().getP());
+        mTvCity.setText(mAdEntity.getCity().getC());
+
     }
 }

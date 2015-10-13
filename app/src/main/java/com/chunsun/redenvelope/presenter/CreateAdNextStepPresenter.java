@@ -112,14 +112,6 @@ public class CreateAdNextStepPresenter implements BaseMultiLoadedListener<BaseEn
             return;
         }
 
-        //        mAdEntity.setCompanyName("");
-        //        mAdEntity.setBankName("");
-        //        mAdEntity.setBankNo("");
-        //        mAdEntity.setTaxNo("");
-        //        mAdEntity.setIsReceipt(String.valueOf(tb_need_invoice.isChecked()));
-        //        mAdEntity.setFormula_multiple("0");
-        //        mAdEntity.setForwarding_packages_id("0");
-
         mICreateAdNextStepView.toNextStep();
     }
 }

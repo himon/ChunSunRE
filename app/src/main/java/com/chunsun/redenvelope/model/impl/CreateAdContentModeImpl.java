@@ -9,13 +9,10 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.CreateAdContentMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
-import com.chunsun.redenvelope.utils.AssetsUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
-import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,18 +26,6 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
 
     public CreateAdContentModeImpl(CreateAdContentActivity createAdNextPageActivity) {
         this.mActivity = createAdNextPageActivity;
-    }
-
-    @Override
-    public void initProvinceAndCity(BaseMultiLoadedListener listener) {
-        String json = AssetsUtils.getFromAssets("address_data_json.txt", mActivity);
-        Gson gson = new Gson();
-        DistrictEntity districtEntity = gson.fromJson(json, DistrictEntity.class);
-        if (districtEntity == null) {
-            listener.onError("省、市信息获取失败！");
-        } else {
-            listener.onSuccess(Constants.LISTENER_TYPE_GET_PROVINCE_AND_CITY, districtEntity);
-        }
     }
 
     @Override
@@ -61,13 +46,15 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onError(error.getMessage());
+                byte[] data = error.networkResponse.data;
+                String msg = new String(data);
+                listener.onError(msg);
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("token", token);
                 params.put("type", adEntity.getType().getKey());
                 params.put("title", title);
@@ -91,11 +78,13 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
                 params.put("day_count", adEntity.getDays());
                 params.put("delay_seconds_rate_id", adEntity.getDelaySeconds().getId() + "");
                 params.put("time", adEntity.getStartTime());
-                params.put("is_need_receipt", "false");
+                params.put("is_need_receipt", adEntity.getIsReceipt());
                 params.put("receipt_title", "");
                 params.put("bank_name", "");
                 params.put("bank_no", "");
                 params.put("tax_no", "");
+                params.put("forwarding_packages_id", adEntity.getMeal().getId() + "");
+                params.put("formula_multiple", adEntity.getFormula_multiple());
                 return params;
             }
         };

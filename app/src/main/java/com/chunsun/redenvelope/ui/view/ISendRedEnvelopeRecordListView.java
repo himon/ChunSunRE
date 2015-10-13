@@ -10,4 +10,6 @@ public interface ISendRedEnvelopeRecordListView {
     void setData(RedDetailSendRecordListEntity.ResultEntity result);
 
     void toClassifyListDetail(String id);
+
+    void delSuccess();
 }

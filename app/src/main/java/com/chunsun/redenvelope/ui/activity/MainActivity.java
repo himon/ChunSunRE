@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
@@ -31,6 +34,11 @@ import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 import com.chunsun.redenvelope.widget.popupwindow.TitlePopup;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.service.XGPushService;
 
 import java.util.ArrayList;
 
@@ -81,6 +89,51 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         EventBus.getDefault().register(this);
         initView();
         initData();
+        initXinGe();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
+        if (click != null) { // 判断是否来自信鸽的打开方式
+            Toast.makeText(this, "通知被点击:" + click.toString(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        XGPushManager.onActivityStoped(this);
+    }
+
+    /**
+     * 初始化信鸽推送
+     */
+    private void initXinGe() {
+        // 开启logcat输出，方便debug，发布时请关闭
+        XGPushConfig.enableDebug(this, true);
+        // 如果需要知道注册是否成功，请使用registerPush(getApplicationContext(), XGIOperateCallback)带callback版本
+        // 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
+        // 具体可参考详细的开发指南
+        // 传递的参数为ApplicationContext
+        Context context = getApplicationContext();
+        XGPushManager.registerPush(context, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int i) {
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+
+        // 2.36（不包括）之前的版本需要调用以下2行代码
+        Intent service = new Intent(context, XGPushService.class);
+        context.startService(service);
     }
 
     @Override
@@ -329,7 +382,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
         } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
-        } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {
+        } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//老版本追加
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
             mAdFragment.setSuperaddition(event.getEntity());

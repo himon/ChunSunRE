@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="不限"/>
+                />
 
             <ImageView
                 android:layout_width="10dp"
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="不限"/>
+                />
 
             <ImageView
                 android:layout_width="10dp"
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="50千米"/>
+                />
 
             <ImageView
                 android:layout_width="10dp"

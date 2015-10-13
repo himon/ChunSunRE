@@ -43,6 +43,7 @@ public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 mIAdPayView.setData(result);
                 break;
             case Constants.LISTENER_TYPE_PAY_BY_BANLANCE:
+                mIAdPayView.hideLoading();
                 SampleResponseEntity entity1 = (SampleResponseEntity) data;
                 mIAdPayView.paySuccess(entity1.getMsg());
                 break;
@@ -51,11 +52,13 @@ public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
     @Override
     public void onError(String msg) {
+        mIAdPayView.hideLoading();
         ShowToast.Short(msg);
     }
 
     @Override
     public void onError(int event_tag, String msg) {
+        mIAdPayView.hideLoading();
         switch (event_tag) {
             case Constants.LISTENER_TYPE_PAY_BY_BANLANCE:
                 mIAdPayView.payError(msg);
@@ -65,6 +68,7 @@ public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
     @Override
     public void onException(String msg) {
+        mIAdPayView.hideLoading();
         ShowToast.Short(msg);
     }
 
@@ -75,6 +79,7 @@ public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
      * @param hb_id
      */
     public void payByBalance(String token, String hb_id) {
+        mIAdPayView.showLoading();
         mAdPayMode.payByBalance(token, hb_id, this);
     }
 }

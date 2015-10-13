@@ -21,6 +21,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.presenter.CreateAdNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
@@ -92,6 +93,8 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
 
     private CreateAdNextStepPresenter mPresenter;
     private AdEntity mAdEntity;
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
     /**
      * 费率
      */
@@ -235,6 +238,7 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         Intent intent = getIntent();
         if (intent != null) {
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
+            mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
         }
     }
 
@@ -280,6 +284,7 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     public void toNextStep() {
         Intent intent = new Intent(this, CreateAdContentActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
 
@@ -329,15 +334,33 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String time = sdf.format(date);
 
-        mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
-        mAdEntity.setStartTime(time);
+        if (mSuperadditionEntity != null) {//追加
 
-        calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
+            for (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity item : mDelaySecondsRate) {
+                if (("" + item.getId()).equals(mSuperadditionEntity.getDelay_seconds())) {
+                    mAdEntity.setDelaySeconds(item);
+                }
+            }
+            mAdEntity.setStartTime(mSuperadditionEntity.getTime());
 
-        mEtPrice.setText(Constants.AD_DEFAULT_PRICE);
-        mEtNum.setText(Constants.AD_DEFAULT_NUM);
-        mEtDays.setText(Constants.AD_DEFAULT_DAYS);
-        mTvTime.setText(time);
+            calcAdTotalPrice(mSuperadditionEntity.getPrice(), mSuperadditionEntity.getEveryday_count(), mSuperadditionEntity.getDay_count());
+
+            mEtPrice.setText(mSuperadditionEntity.getPrice());
+            mEtNum.setText(mSuperadditionEntity.getEveryday_count());
+            mEtDays.setText(mSuperadditionEntity.getDay_count());
+            mTvTime.setText(mSuperadditionEntity.getTime());
+        } else {
+
+            mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
+            mAdEntity.setStartTime(time);
+
+            calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
+
+            mEtPrice.setText(Constants.AD_DEFAULT_PRICE);
+            mEtNum.setText(Constants.AD_DEFAULT_NUM);
+            mEtDays.setText(Constants.AD_DEFAULT_DAYS);
+            mTvTime.setText(time);
+        }
     }
 
     /**

@@ -1,16 +1,311 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateAdRepeatNextStepActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/img_create_ad_bg"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar"/>
 
     <TextView
-        android:text="@string/hello_world"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/choose_meal"
+        android:textColor="@color/white"/>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_first"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_radius_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_first_total"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/font_gray3">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_first_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <ImageView
+            android:id="@+id/iv_first"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/img_selected_meal"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_second"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_radius_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_second_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/font_gray3">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_second_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <ImageView
+            android:id="@+id/iv_second"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/img_selected_meal"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_third"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_radius_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_third_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/font_gray3">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_third_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <ImageView
+            android:id="@+id/iv_third"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/img_selected_meal"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_fourth"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_radius_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_fourth_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/font_gray3">
+        </View>
+
+        <TextView
+            android:id="@+id/tv_fourth_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_sp_16"/>
+
+        <ImageView
+            android:id="@+id/iv_fourth"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/img_selected_meal"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/buy_multiple"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_radius_white"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_selected_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60.00元"
+                android:textSize="@dimen/font_size_sp_16"/>
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/img_multiple_sign"/>
+
+            <ImageView
+                android:id="@+id/iv_subtraction"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/shape_rect_white_bg"
+                android:padding="4dp"
+                android:src="@drawable/selector_num_subtraction"/>
+
+            <EditText
+                android:id="@+id/et_multiple"
+                android:layout_width="60dp"
+                android:layout_height="26dp"
+                android:background="@drawable/shape_rect_gray_bg"
+                android:gravity="center"
+                android:numeric="decimal"
+                android:singleLine="true"
+                android:text="1.5"
+                android:textColor="@color/global_red"/>
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/shape_rect_white_bg"
+                android:padding="4dp"
+                android:src="@drawable/selector_num_add"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/multiple"
+                android:textSize="@dimen/font_size_sp_16"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/font_gray3"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="@string/ad_total_price"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="90.00元"
+                android:textColor="@color/global_red"
+                android:textSize="@dimen/font_size_sp_20"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_next_step"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/selector_button_red_radius"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_sp_18"/>
+
+</LinearLayout>

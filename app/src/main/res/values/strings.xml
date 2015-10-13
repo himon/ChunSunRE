@@ -4,9 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="home">首页</string>
+    <string name="home">任务</string>
     <string name="ad">发广告</string>
-    <string name="near">附近</string>
+    <string name="get_red_envelope">领红包</string>
     <string name="me">我</string>
 
     <!-- 登录 -->
@@ -186,6 +186,10 @@
     <string name="repeat">转发</string>
     <string name="company">企业</string>
     <string name="ad_confirm">定制你的专属广告</string>
+    <string name="multiple">倍套餐</string>
+    <string name="buy_multiple">购买套餐倍数</string>
+    <string name="choose_meal">选择套餐</string>
+    <string name="near">附近</string>
 
     <!-- 分享 -->
     <string name="wecharmoments">朋友圈</string>
@@ -212,5 +216,6 @@
     <string name="selected">选取</string>
     <string name="title_activity_create_ad_next_step">CreateAdNextStepActivity</string>
     <string name="title_activity_create_ad_repeat_next_step">CreateAdRepeatNextStepActivity</string>
+    <string name="title_activity_push_notice_show">PushNoticeShowActivity</string>
 
 </resources>

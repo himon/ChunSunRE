@@ -77,6 +77,15 @@ public class RedListDetailEntity extends BaseEntity {
             private String title;
             private String payable_amount;
             private int type;
+            /**
+             * 红包类型名称
+             */
+            private String TypeName;
+            /**
+             * 附近类红包距离
+             */
+            private String RangeString;
+
 
             public String getImg_url() {
                 return img_url;
@@ -188,6 +197,22 @@ public class RedListDetailEntity extends BaseEntity {
 
             public void setType(int type) {
                 this.type = type;
+            }
+
+            public String getTypeName() {
+                return TypeName;
+            }
+
+            public void setTypeName(String typeName) {
+                TypeName = typeName;
+            }
+
+            public String getRangeString() {
+                return RangeString;
+            }
+
+            public void setRangeString(String rangeString) {
+                RangeString = rangeString;
             }
         }
     }

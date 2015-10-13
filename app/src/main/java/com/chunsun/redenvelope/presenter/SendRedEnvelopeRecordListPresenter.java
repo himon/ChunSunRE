@@ -1,7 +1,9 @@
 package com.chunsun.redenvelope.presenter;
 
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
+import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordListMode;
+import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordListModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordListActivity;
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/17.
  */
-public class SendRedEnvelopeRecordListPresenter implements BaseSingleLoadedListener<RedDetailSendRecordListEntity> {
+public class SendRedEnvelopeRecordListPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
     private ISendRedEnvelopeRecordListView mISendRedEnvelopeRecordListView;
     private SendRedEnvelopeRecordListMode mSendRedEnvelopeRecordListMode;
@@ -65,8 +67,16 @@ public class SendRedEnvelopeRecordListPresenter implements BaseSingleLoadedListe
         }
     }
 
-    @Override
-    public void onSuccess(RedDetailSendRecordListEntity entity) {
+    /**
+     * 删除记录
+     * @param token
+     * @param hb_id
+     */
+    public void delRecord(String token, int hb_id) {
+        mSendRedEnvelopeRecordListMode.delRedEnvelope(token, hb_id, this);
+    }
+
+    public void setData(RedDetailSendRecordListEntity entity) {
         RedDetailSendRecordListEntity.ResultEntity result = entity.getResult();
         List<RedDetailSendRecordListEntity.ResultEntity.LogsEntity> list = entity.getResult().getLogs();
         initData(list);
@@ -74,8 +84,25 @@ public class SendRedEnvelopeRecordListPresenter implements BaseSingleLoadedListe
     }
 
     @Override
+    public void onSuccess(int event_tag, BaseEntity data) {
+        switch (event_tag){
+            case Constants.LISTENER_TYPE_GET_SEND_RED_ENVELOPE_RECORD:
+                setData((RedDetailSendRecordListEntity) data);
+                break;
+            case Constants.LISTENER_TYPE_DETAIL_SEND_RED_ENVELOPE_RECORD:
+                mISendRedEnvelopeRecordListView.delSuccess();
+                break;
+        }
+    }
+
+    @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
     }
 
     @Override

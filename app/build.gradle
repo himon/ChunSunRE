@@ -47,4 +47,8 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
     compile project(':Scanlibrary')
     compile project(':pickerui')
+    compile files('libs/Xg_sdk_v2.39_20150915_1121.jar')
+    compile files('libs/wup-1.0.0-SNAPSHOT.jar')
+    compile files('libs/jg_filter_sdk_1.1.jar')
+    compile files('libs/mid-sdk-2.20.jar')
 }

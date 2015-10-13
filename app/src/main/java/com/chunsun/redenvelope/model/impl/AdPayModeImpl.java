@@ -78,7 +78,9 @@ public class AdPayModeImpl implements AdPayMode {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                listener.onException(error.getMessage());
+                byte[] data = error.networkResponse.data;
+                String msg = new String(data);
+                listener.onException(msg);
             }
         }) {
             @Override

@@ -1,137 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.chunsun.redenvelope"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chunsun.redenvelope" >
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- ShareSDK -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- 蓝牙分享所需的权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于读取手机当前的状态 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!-- 【必须】 信鸽SDK所需权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 【可选】 信鸽SDK所需权限 -->
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
 
     <application
         android:name=".app.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <!-- meta-data需要写在application中 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="c6xynw42gFPGoqRXvf3WNgcG"/>
+            android:value="c6xynw42gFPGoqRXvf3WNgcG" />
+
+        <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
+        <meta-data
+            android:name="XG_V2_ACCESS_ID"
+            android:value="2100104015" />
+        <!-- 【必须】 请修改为APP的AccessKey，“A”开头的12位字符串，中间没空格 -->
+        <meta-data
+            android:name="XG_V2_ACCESS_KEY"
+            android:value="AV46A6ZX7T3G" />
 
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.WelcomeActivity">
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.WelcomeActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.account.RegisterActivity"/>
-        <activity android:name=".ui.activity.account.LoginActivity"/>
-        <activity android:name=".ui.activity.account.QuickLoginActivity"/>
-        <activity android:name=".ui.activity.account.ForgetPwdActivity"/>
-        <activity android:name=".ui.activity.account.RegisterNextActivity"/>
-        <activity android:name=".ui.activity.CommonWebActivity"/>
-        <activity android:name=".ui.activity.account.ForgetPwdNextActivity"/>
-        <activity android:name=".ui.activity.red.RedDetailActivity"/>
-        <activity android:name=".ui.activity.red.WebRedDetailActivity"/>
-        <activity android:name=".ui.activity.EditInfoActivity"/>
-        <activity android:name=".ui.activity.personal.NotReceivingRedActivity"/>
-        <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity"/>
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordClassifyActivity"/>
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordListActivity"/>
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordDetailActivity"/>
-        <activity android:name=".ui.activity.personal.BalanceDetailListActivity"/>
-        <activity android:name=".ui.activity.personal.WithdrawCashAlipayActivity"/>
-        <activity android:name=".ui.activity.personal.WithdrawCashBankActivity"/>
-        <activity android:name=".ui.activity.personal.WithdrawcashAlipayConfirmActivity"/>
-        <activity android:name=".ui.activity.personal.PhoneRechargeActivity"/>
-        <activity android:name=".ui.activity.personal.PhoneRechargeConfirmActivity"/>
-        <activity android:name=".ui.activity.personal.BalanceRechargeActivity"/>
-        <activity android:name=".ui.activity.personal.MineInviteCodeActivity"/>
-        <activity android:name=".ui.activity.personal.InviteRecordListActivity"/>
-        <activity android:name=".ui.activity.personal.SettingActivity"/>
-        <activity android:name=".ui.activity.personal.AboutUsActivity"/>
-        <activity android:name=".ui.activity.personal.UpdatePasswordActivity"/>
-        <activity android:name=".ui.activity.personal.UserPrivacyActivity"/>
-        <activity android:name=".ui.activity.SelectListInfoActivity"/>
-        <activity android:name=".ui.activity.ad.CreateAdContentActivity"/>
-        <activity android:name=".ui.activity.ad.AdPayActivity"/>
-        <activity android:name=".ui.activity.ad.PayResultActivity"/>
-        <activity android:name=".ui.activity.InteractivePlatformActivity">
-        </activity>
-        <activity android:name=".ui.activity.red.WebRedDetailCommentActivity">
-        </activity>
-        <activity android:name=".ui.activity.personal.UserInfoActivity">
-        </activity>
-        <activity android:name=".ui.activity.red.UserRewardActivity">
-        </activity>
-        <activity android:name=".ui.activity.red.RedDetailPicShowActivity">
-        </activity>
-        <activity android:name=".clip.PicClipActivity">
-        </activity>
-        <activity android:name=".ui.activity.red.RepeatRedDetailActivity">
-        </activity>
-        <activity android:name=".ui.activity.personal.WalletActivity">
-        </activity>
-        <activity android:name=".ui.activity.personal.WithdrawCashActivity">
-        </activity>
-        <activity android:name=".ui.activity.ad.CreateAdActivity">
-        </activity>
-        <activity
-            android:name=".ui.activity.ad.CreateAdNextStepActivity">
-        </activity>
-        <activity
-            android:name=".ui.activity.ad.CreateAdRepeatNextStepActivity">
-        </activity>
+        <activity android:name=".ui.activity.account.RegisterActivity" />
+        <activity android:name=".ui.activity.account.LoginActivity" />
+        <activity android:name=".ui.activity.account.QuickLoginActivity" />
+        <activity android:name=".ui.activity.account.ForgetPwdActivity" />
+        <activity android:name=".ui.activity.account.RegisterNextActivity" />
+        <activity android:name=".ui.activity.CommonWebActivity" />
+        <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
+        <activity android:name=".ui.activity.red.RedDetailActivity" />
+        <activity android:name=".ui.activity.red.WebRedDetailActivity" />
+        <activity android:name=".ui.activity.EditInfoActivity" />
+        <activity android:name=".ui.activity.personal.NotReceivingRedActivity" />
+        <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordClassifyActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordListActivity" />
+        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordDetailActivity" />
+        <activity android:name=".ui.activity.personal.BalanceDetailListActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawCashAlipayActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawCashBankActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawcashAlipayConfirmActivity" />
+        <activity android:name=".ui.activity.personal.PhoneRechargeActivity" />
+        <activity android:name=".ui.activity.personal.PhoneRechargeConfirmActivity" />
+        <activity android:name=".ui.activity.personal.BalanceRechargeActivity" />
+        <activity android:name=".ui.activity.personal.MineInviteCodeActivity" />
+        <activity android:name=".ui.activity.personal.InviteRecordListActivity" />
+        <activity android:name=".ui.activity.personal.SettingActivity" />
+        <activity android:name=".ui.activity.personal.AboutUsActivity" />
+        <activity android:name=".ui.activity.personal.UpdatePasswordActivity" />
+        <activity android:name=".ui.activity.personal.UserPrivacyActivity" />
+        <activity android:name=".ui.activity.SelectListInfoActivity" />
+        <activity android:name=".ui.activity.ad.CreateAdContentActivity" />
+        <activity android:name=".ui.activity.ad.AdPayActivity" />
+        <activity android:name=".ui.activity.ad.PayResultActivity" />
+        <activity android:name=".ui.activity.InteractivePlatformActivity" />
+        <activity android:name=".ui.activity.red.WebRedDetailCommentActivity" />
+        <activity android:name=".ui.activity.personal.UserInfoActivity" />
+        <activity android:name=".ui.activity.red.UserRewardActivity" />
+        <activity android:name=".ui.activity.red.RedDetailPicShowActivity" />
+        <activity android:name=".clip.PicClipActivity" />
+        <activity android:name=".ui.activity.red.RepeatRedDetailActivity" />
+        <activity android:name=".ui.activity.personal.WalletActivity" />
+        <activity android:name=".ui.activity.personal.WithdrawCashActivity" />
+        <activity android:name=".ui.activity.ad.CreateAdActivity" />
+        <activity android:name=".ui.activity.ad.CreateAdNextStepActivity" />
+        <activity android:name=".ui.activity.ad.CreateAdRepeatNextStepActivity" />
 
         <!-- 图片选择 -->
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/myTheme"/>
+            android:theme="@style/myTheme" />
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".scanlibrary.CaptureActivity"/>
-        <activity android:name=".scanlibrary.ScanResultActivity"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".scanlibrary.CaptureActivity" />
+        <activity android:name=".scanlibrary.ScanResultActivity" />
 
         <!-- alipay sdk begin -->
         <activity
@@ -139,13 +138,13 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind">
+            android:screenOrientation="behind" >
         </activity>
 
         <!-- alipay sdk end -->
@@ -158,14 +157,14 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
-                <data android:scheme="tencent1104499875"/>
+                <data android:scheme="tencent1104499875" />
 
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -175,20 +174,110 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- Share sdk end -->
+
+
+        <!-- 百度地图 begin -->
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
+            android:process=":remote" >
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"/>
+                <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
 
+        <!-- 百度地图 end -->
 
+
+        <!-- 信鸽 begin -->
+
+
+        <!-- 【必须】 (2.30及以上版新增)展示通知的activity -->
+        <!-- 【必须】 exported设置为true -->
+        <activity
+            android:name="com.tencent.android.tpush.XGPushActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent" >
+            <intent-filter>
+
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
+                <action android:name="android.intent.action" />
+            </intent-filter>
+        </activity>
+
+        <!-- 【必须】 信鸽receiver广播接收 -->
+        <receiver
+            android:name="com.tencent.android.tpush.XGPushReceiver"
+            android:process=":xg_service_v2" >
+            <intent-filter android:priority="0x7fffffff" >
+
+                <!-- 【必须】 信鸽SDK的内部广播 -->
+                <action android:name="com.tencent.android.tpush.action.SDK" />
+                <action android:name="com.tencent.android.tpush.action.INTERNAL_PUSH_MESSAGE" />
+                <!-- 【必须】 系统广播：开屏和网络切换 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <!-- 【可选】 一些常用的系统广播，增强信鸽service的复活机会，请根据需要选择。当然，你也可以添加APP自定义的一些广播让启动service -->
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+            <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_CHECKING" />
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 【必须】 信鸽service -->
+        <service
+            android:name="com.tencent.android.tpush.service.XGPushService"
+            android:exported="true"
+            android:persistent="true"
+            android:process=":xg_service_v2" />
+
+        <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
+        <service
+            android:name="com.tencent.android.tpush.rpc.XGRemoteService"
+            android:exported="true" >
+            <intent-filter>
+
+                <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
+                <action android:name="com.chunsun.redenvelope.PUSH_ACTION" />
+            </intent-filter>
+        </service>
+
+        <!-- 【可选】信鸽拉起其他APP应用，若应用在本地找不到可以自动下载 -->
+        <!--
+              <service
+            android:name="com.tencent.android.tpush.XGDownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        -->
+        <!-- 【可选】APP实现的Receiver，用于接收消息透传和操作结果的回调，请根据需要添加 -->
+        <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
+        <receiver android:name=".receiver.MessageReceiver" >
+            <intent-filter>
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 信鸽 end -->
+
+        <activity
+            android:name=".ui.activity.red.PushNoticeShowActivity"
+            android:label="@string/title_activity_push_notice_show" >
+        </activity>
     </application>
 
 </manifest>

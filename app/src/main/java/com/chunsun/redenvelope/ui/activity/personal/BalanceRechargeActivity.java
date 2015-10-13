@@ -176,4 +176,16 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
             ShowToast.Short(msg);
         }
     }
+
+    @Override
+    public void showLoading() {
+        mDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.cancel();
+        }
+    }
 }

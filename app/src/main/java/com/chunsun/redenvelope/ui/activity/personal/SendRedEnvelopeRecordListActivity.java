@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.ui.adapter.SendRedEnvelopeRecordListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;
 import com.chunsun.redenvelope.widget.GetMoreListView;
+import com.chunsun.redenvelope.widget.swipe.SwipeListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,10 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
 
     private SendRedEnvelopeRecordListPresenter mPresenter;
     private SendRedEnvelopeRecordListAdapter mAdapter;
+    /**
+     * 可删除Item的adapter
+     */
+    private SwipeListAdapter mSwipeListAdapter;
     //当前显示页数
     private int mCurrentPage = 1;
     private List<RedDetailSendRecordListEntity.ResultEntity.LogsEntity> mList = new ArrayList<RedDetailSendRecordListEntity.ResultEntity.LogsEntity>();
@@ -69,13 +74,35 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
             }
         });
 
-        mAdapter = new SendRedEnvelopeRecordListAdapter(this, mList);
-        mListView.setAdapter(mAdapter);
+        Intent intent = getIntent();
+        if (intent != null) {
+            mClassify = intent.getParcelableExtra(Constants.EXTRA_KEY);
+        }
+
+        if (Constants.RED_DETAIL_STATUS_DZF.equals(mClassify.getKey()) || Constants.RED_DETAIL_STATUS_WTG.equals(mClassify.getKey())) {
+            mSwipeListAdapter = new SwipeListAdapter(this, mList, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Integer p = (Integer) v.getTag();
+                    int id = v.getId();
+                    if (id == R.id.bt_delete) {
+                        mPresenter.delRecord(mToken, p);
+                    }
+                }
+            });
+            mListView.setAdapter(mSwipeListAdapter);
+        } else {
+            mAdapter = new SendRedEnvelopeRecordListAdapter(this, mList);
+            mListView.setAdapter(mAdapter);
+        }
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RedDetailSendRecordListEntity.ResultEntity.LogsEntity entity = (RedDetailSendRecordListEntity.ResultEntity.LogsEntity) parent.getAdapter().getItem(position);
-                toClassifyListDetail(entity.getId() + "");
+                if (1 == entity.getType()) {
+                    toClassifyListDetail(entity.getId() + "");
+                }
             }
         });
 
@@ -105,12 +132,10 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
     @Override
     protected void initData() {
         mToken = new Preferences(this).getToken();
-        Intent intent = getIntent();
-        if (intent != null) {
-            mClassify = intent.getParcelableExtra(Constants.EXTRA_KEY);
-        }
         initTitleBar(mClassify.getValue() + "广告", "", "", Constants.TITLE_TYPE_SAMPLE);
-        mAdapter.setClassifyType(mClassify.getKey());
+        if (mAdapter != null) {
+            mAdapter.setClassifyType(mClassify.getKey());
+        }
     }
 
     public void getData() {
@@ -144,8 +169,11 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
 
         mList.addAll(list);
 
-        mAdapter.notifyDataSetChanged();
-
+        if (Constants.RED_DETAIL_STATUS_DZF.equals(mClassify.getKey()) || Constants.RED_DETAIL_STATUS_WTG.equals(mClassify.getKey())) {
+            mSwipeListAdapter.notifyDataSetChanged();
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
         mListView.getMoreComplete();
 
         mPtr.refreshComplete();
@@ -158,5 +186,11 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
         intent.putExtra(Constants.EXTRA_KEY2, mClassify.getKey());
         intent.putExtra(Constants.EXTRA_KEY3, mClassify.getValue());
         startActivity(intent);
+    }
+
+    @Override
+    public void delSuccess() {
+        mCurrentPage = 1;
+        mPtr.autoRefresh();
     }
 }

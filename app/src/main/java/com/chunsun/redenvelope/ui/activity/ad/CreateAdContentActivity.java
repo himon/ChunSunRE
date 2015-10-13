@@ -12,15 +12,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.clip.PicClipActivity;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdContentPresenter;
@@ -41,19 +42,24 @@ import me.iwf.photopicker.utils.PhotoPickerIntent;
 
 public class CreateAdContentActivity extends BaseActivity implements ICreateAdContentView, View.OnClickListener {
 
+    @Bind(R.id.main_nav)
+    RelativeLayout mToolsBar;
     @Bind(R.id.et_title)
     EditText mEtTitle;
     @Bind(R.id.iv_add_title_img)
     ImageView mIvCover;
+    @Bind(R.id.tv_content_pic)
+    TextView mTvContentPic;
+    @Bind(R.id.ll_image_container)
+    LinearLayout mLLImages;
     @Bind(R.id.et_content)
     EditText mEtContent;
+    @Bind(R.id.recycler_view)
+    RecyclerView mRvPic;
     @Bind(R.id.btn_next_step)
     Button mBtnNextStep;
 
     private CreateAdContentPresenter mPresenter;
-    private ArrayList<SampleEntity> mDistanceList;
-    private ArrayList<SampleEntity> mTypeList;
-    private ArrayList<DistrictEntity.AreaEntity> mDistrictList;
     private AdEntity mAdEntity;
     private String mToken;
 
@@ -62,7 +68,6 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
      */
     private ArrayList<String> selectedPhotos = new ArrayList<>();
     private PhotoAdapter photoAdapter;
-    private RecyclerView recyclerView;
     //标示是否是上传封面图片
     private boolean mIsCover;
     private List<Photo> mPhotos = new ArrayList<>();
@@ -84,13 +89,12 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     @Override
     protected void initView() {
         initTitleBar("发广告", "", "", Constants.TITLE_TYPE_SAMPLE);
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
         selectedPhotos.add("");
         photoAdapter = new PhotoAdapter(this, selectedPhotos, mPhotos);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        recyclerView.setAdapter(photoAdapter);
+        mRvPic.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
+        mRvPic.setAdapter(photoAdapter);
 
         initEvent();
     }
@@ -111,11 +115,17 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
             mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
 
+            if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(mAdEntity.getType().getKey())) {
+                mTvContentPic.setVisibility(View.GONE);
+                mLLImages.setVisibility(View.GONE);
+                mEtContent
+                        .setHint("请输入您的链接：http:// \n只能输入有效网址，以http开头，输入格式不合法广告将出错！自己承担填写错误影响广告效果责任。 \n多个网址请使用中文逗号“，”分割 \n本平台将备案发广告的信息和发广告人的信息，如有违法、虚假等广告，将依法追究法律责任。");
+            }
+
             if (mSuperadditionEntity != null) {
                 initSuperaddition();
             }
         }
-        mPresenter.initData(mAdEntity, mSuperadditionEntity);
     }
 
     /**
@@ -124,8 +134,8 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     private void initSuperaddition() {
         mEtTitle.setText(mSuperadditionEntity.getTitle());
         mEtContent.setText(mSuperadditionEntity.getContent());
-        setCoverImage(mSuperadditionEntity.getCover_img_url());
-        mAdEntity.setCoverImagePath(mSuperadditionEntity.getCover_img_url());
+        setCoverImage(Constants.IMG_HOST_URL + mSuperadditionEntity.getCover_img_url());
+        mAdEntity.setCoverImagePath(Constants.IMG_HOST_URL + mSuperadditionEntity.getCover_img_url());
 
         selectedPhotos.clear();
         String[] split = mSuperadditionEntity.getImg_url().split(",");
@@ -202,16 +212,6 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
         intent.setPhotoCount(1);
         intent.setShowCamera(true);
         startActivityForResult(intent, Constants.REQUEST_CODE);
-    }
-
-    @Override
-    public void setInitData(ArrayList<SampleEntity> typeList, ArrayList<SampleEntity> distanceList, ArrayList<DistrictEntity.AreaEntity> districtList, AdEntity adEntity) {
-        this.mTypeList = typeList;
-        this.mDistanceList = distanceList;
-        this.mDistrictList = districtList;
-        this.mAdEntity = adEntity;
-
-
     }
 
     @Override

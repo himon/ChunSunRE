@@ -104,6 +104,8 @@ public class WalletActivity extends BaseActivity implements IBalanceView, View.O
     }
 
     private void initEvent() {
+        mNavIcon.setOnClickListener(this);
+        mNavLeft.setOnClickListener(this);
         mBtnRecharge.setOnClickListener(this);
         mBtnWithdrawCash.setOnClickListener(this);
     }
@@ -157,6 +159,10 @@ public class WalletActivity extends BaseActivity implements IBalanceView, View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_nav_icon:
+            case R.id.tv_nav_left:
+                back();
+                break;
             case R.id.btn_recharge:
                 toBalanceRecharge();
                 break;

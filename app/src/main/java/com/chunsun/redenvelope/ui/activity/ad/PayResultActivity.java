@@ -81,6 +81,9 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 AppManager appManager = AppManager.getAppManager();
                 appManager.finishActivity(AdPayActivity.class);
                 appManager.finishActivity(CreateAdContentActivity.class);
+                appManager.finishActivity(CreateAdRepeatNextStepActivity.class);
+                appManager.finishActivity(CreateAdNextStepActivity.class);
+                appManager.finishActivity(CreateAdActivity.class);
                 back();
                 break;
         }

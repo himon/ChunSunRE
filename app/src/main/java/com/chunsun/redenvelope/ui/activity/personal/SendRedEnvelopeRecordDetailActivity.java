@@ -24,9 +24,9 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
-import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
@@ -42,7 +42,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -112,6 +111,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
     private String mClassifyValue;
 
     private SendRedEnvelopeRecordDetailPresenter mPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,15 +369,24 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mListView.getMoreComplete();
     }
 
+    /**
+     * 追加
+     *
+     * @param entity
+     */
     @Override
     public void getSuperaddition(RedSuperadditionEntity entity) {
         RedSuperadditionEntity.ResultEntity result = entity.getResult();
-        MainEvent mainEvent = new MainEvent(Constants.SUPERADDITION_AD);
-        mainEvent.setEntity(result);
-        EventBus.getDefault().post(mainEvent);
+
+        Intent intent = new Intent(this, CreateAdActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, result);
+        startActivity(intent);
+
         back();
         AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordListActivity.class);
         AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordClassifyActivity.class);
+
+
     }
 
     @Override
@@ -391,4 +400,5 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         super.onResume();
         mViewPager.startAutoScroll();
     }
+
 }

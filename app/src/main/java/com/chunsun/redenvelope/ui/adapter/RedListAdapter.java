@@ -45,12 +45,16 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             time = dateStr;
         }
 
+        TextView type = holder.getView(R.id.tv_range);
+        type.setText(poolEntity.getTypeName());
+
         if (Constants.RED_DETAIL_TYPE_LINK == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
         } else if (Constants.RED_DETAIL_TYPE_LEFT == poolEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
         } else if (Constants.RED_DETAIL_TYPE_NEAR == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_range);
+            type.setText(poolEntity.getRangeString());
         } else if (Constants.RED_DETAIL_TYPE_REPEAT == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
         }
@@ -77,7 +81,7 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             textView.setTextColor(mContext.getResources().getColor(R.color.font_gray2));
         }
 
-        holder.setText(R.id.tv_title, poolEntity.getTitle()).setText(R.id.tv_time, time).setText(R.id.tv_author, poolEntity.getNick_name()).setText(R.id.tv_range, poolEntity.getRange()).setText(R.id.tv_reply, poolEntity.getComment_count() + "").setText(R.id.tv_price, "￥" + poolEntity.getPayable_amount());
+        holder.setText(R.id.tv_title, poolEntity.getTitle()).setText(R.id.tv_time, time).setText(R.id.tv_author, poolEntity.getNick_name()).setText(R.id.tv_reply, poolEntity.getComment_count() + "").setText(R.id.tv_price, "￥" + poolEntity.getPayable_amount());
         holder.setImageResource(R.id.iv_icon, poolEntity.getCover_img_url());
     }
 }

@@ -11,7 +11,7 @@ public interface Constants {
     /**
      * 每页显示的数据条数
      */
-    int PAGE_NUM = 15;
+    int PAGE_NUM = 30;
 
     /**
      * 红包类型
@@ -26,22 +26,24 @@ public interface Constants {
     int RED_DETAIL_TYPE_NEAR = 3;
     //链接
     int RED_DETAIL_TYPE_LINK = 4;
-    //链接
+    //转发
     int RED_DETAIL_TYPE_REPEAT = 5;
+
 
     /**
      * 服务器地址
      */
     //String HOST_URL = "http://cssv.chunsunkeji.com";
-    String HOST_URL = "https://1.193.162.20:899";// 外网
+    String HOST_URL = "http://1.193.162.20:9101";// 外网
+
     //String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-    String IMG_HOST_URL = "http://1.193.162.20:9200";//外网
+    String IMG_HOST_URL = "http://1.193.162.20:9101";//外网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
-    String SYSTEM_USER_ID = "22292";
-    //String SYSTEM_USER_ID = "6778";// 测试环境
+    //    String SYSTEM_USER_ID = "22292";
+    String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -81,7 +83,7 @@ public interface Constants {
     //找回密码
     String FIND_PWD_JSON_REQUEST_URL = "user_find_password_bymobile";
     //获取红包列表数据
-    String HB_POOL_JSON_REQUEST_URL = "hb_get_pool_list_v1_2";
+    String HB_POOL_JSON_REQUEST_URL = "hb_get_pool_list_v1_7";
     //获取红包列表广告
     String HB_AD_JSON_REQUEST_URL = "advert_index_by_province_city_type";
     //获取红包详情
@@ -129,7 +131,7 @@ public interface Constants {
     //获取广告延时时间
     String GET_AD_DELAY_SECONDS_RATE_JSON_REQUEST_URL = "send_delay_seconds_to_rate";
     //创建广告
-    String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2";
+    String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_7";
     //获取红包支付明细
     String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
     //余额支付广告费用
@@ -154,11 +156,21 @@ public interface Constants {
     String RED_ENVELOPE_SUPERADDITION_JSON_REQUEST_URL = "hb_user_superaddition_new";
     //转发类分享host
     String REPEAT_HB_DETAIL_GET_HOST_JSON_REQUEST_URL = "hb_forward_by_user";
+    //获取转发类套餐
+    String CEATE_AD_GET_REPEAT_MEAL_JSON_REQUEST_URL = "get_hb_forwarding_packages";
+    //红包记录列表删除
+    String HB_RECORD_LIST_DETAIL_JSON_REQUEST_URL = "user_hongbao_delete";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
      */
     String CHANNEL_PACKAGE_NAME = "test";
+
+    /**
+     * 推送通知的url
+     */
+    String SYSTEM_NOTICE_URL = Constants.HOST_URL
+            + "/pages/notice/index.aspx?id=";
 
     /**
      * 传递打开WebView的URL
@@ -170,6 +182,10 @@ public interface Constants {
      */
     String INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE = "intent_bundle_key_common_web_view_title";
 
+    /**
+     * 推送通知的内容
+     */
+    String INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_CONTENT = "intent_bundle_key_common_web_view_content";
 
     /**
      * 注册协议
@@ -260,6 +276,8 @@ public interface Constants {
     String BACK_PAY_URL = HOST_URL + "/api/payment/unionpay/index.aspx?order_no=";
     // 发广告的说明WebView
     String SEND_RED_INSTRUCTION_URL = "http://chunsunkeji.com/hbexplain/hbshuoming.html";
+    // 转发类发广告的说明WebView
+    String REPEAT_SEND_RED_INSTRUCTION_URL = "http://www.chunsunkeji.com/hbexplain/forwardshuoming.html";
     // 发广告的价格说明WebView
     String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/help/price/dj.html";
 
@@ -282,7 +300,7 @@ public interface Constants {
     //未通过
     String RED_DETAIL_STATUS_WTG = "wtg_count";
     //已冻结
-    String RED_DETAIL_STATUS_YDJ = "YDJ_count";
+    String RED_DETAIL_STATUS_YDJ = "ydj_count";
 
     /**
      * 余额账户明细分类类型
@@ -350,6 +368,9 @@ public interface Constants {
     int LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION = 0x2030;
     int LISTENER_TYPE_REPEAT_GET_HOST = 0x2031;
     int LISTENER_TYPE_GET_CREATE_AD_DELAY_SECONDS = 0x2032;
+    int LISTENER_TYPE_GET_REPEATE_MEAL = 0x2033;
+    int LISTENER_TYPE_GET_SEND_RED_ENVELOPE_RECORD = 0x2034;
+    int LISTENER_TYPE_DETAIL_SEND_RED_ENVELOPE_RECORD = 0x2035;
 
     /**
      * 发广告默认数据
@@ -357,15 +378,6 @@ public interface Constants {
     String AD_DEFAULT_PRICE = "0.03";
     String AD_DEFAULT_NUM = "2000";
     String AD_DEFAULT_DAYS = "1";
-
-    /**
-     * 广告类型 1 生活 ， 2 企业 ， 3 附近 ， 4 链接
-     */
-    String AD_LEFT_TYPE = "1";
-    String AD_COMPANY_TYPE = "2";
-    String AD_NEAR_TYPE = "3";
-    String AD_LINK_TYPE = "4";
-    String AD_REPEAT_TYPE = "5";
 
     /**
      * 发广告 选择列表类型
