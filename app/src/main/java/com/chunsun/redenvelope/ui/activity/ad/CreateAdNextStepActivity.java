@@ -280,6 +280,9 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         startActivity(intent);
     }
 
+    /**
+     * 下一步
+     */
     @Override
     public void toNextStep() {
         Intent intent = new Intent(this, CreateAdContentActivity.class);

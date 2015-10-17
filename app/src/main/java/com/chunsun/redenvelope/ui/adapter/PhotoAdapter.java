@@ -74,9 +74,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
 
             Uri uri;
 
-            if(!photoPaths.get(position).startsWith("http")){
+            if (!photoPaths.get(position).startsWith("http")) {
                 uri = Uri.fromFile(new File(photoPaths.get(position)));
-            }else{
+            } else {
                 uri = Uri.parse(photoPaths.get(position));
             }
 

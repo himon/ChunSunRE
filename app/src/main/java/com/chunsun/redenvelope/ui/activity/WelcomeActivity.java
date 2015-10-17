@@ -1,11 +1,15 @@
 package com.chunsun.redenvelope.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
@@ -23,14 +27,19 @@ import de.greenrobot.event.EventBus;
 /**
  * 启动页+引导页
  */
-public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.OnClickListener {
+public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.OnClickListener, ViewPager.OnPageChangeListener {
 
     ViewPager mViewPager;
+    LinearLayout mLLPoints;
 
     private ArrayList<View> mViews = null;
-    private int[] imgs = {R.drawable.img_welcom_page1, R.drawable.img_welcom_page2, R.drawable.img_welcom_page3};
+    private ArrayList<View> mPoints = null;
+    private int[] imgs = {R.drawable.img_welcom_page1, R.drawable.img_welcom_page2, R.drawable.img_welcom_page3, R.drawable.img_welcom_page4};
     private WelcomePresenter mPresenter;
     private WelcomeAdapter mAdapter;
+
+    // 记录当前选中位置
+    private int currentIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,8 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     @Override
     protected void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp_welcome);
+        mLLPoints = (LinearLayout) findViewById(R.id.view_indicator);
+        mViewPager.setOnPageChangeListener(this);
     }
 
     @Override
@@ -55,7 +66,8 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
 
     @Override
     public void initPager() {
-        mViews = new ArrayList<View>();
+        mViews = new ArrayList<>();
+        mPoints = new ArrayList<>();
 
         for (int i = 0; i < imgs.length; i++) {
             View contentView = LayoutInflater.from(this).inflate(
@@ -72,11 +84,39 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
             mViews.add(contentView);
         }
 
+        initIndicator();
+
         mAdapter = new WelcomeAdapter(mViews);
         mViewPager.setVisibility(View.VISIBLE);
         mViewPager.setAdapter(mAdapter);
+        mLLPoints.setVisibility(View.VISIBLE);
 
         new Preferences(MainApplication.getContext()).setFirstOpen("2");
+    }
+
+    private void initIndicator() {
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(dm);
+
+        int w = (int) (10 * dm.density);
+        int h = (int) (10 * dm.density);
+
+        for (int i = 0; i < imgs.length; i++) {
+            View view = new View(this);
+            if (i == 0) {
+                view.setBackgroundResource(R.drawable.shape_dot_focused_white);
+            } else {
+                view.setBackgroundResource(R.drawable.shape_dot_normal);
+            }
+
+            // Set the size and margin of the dot.
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(w, h);
+            lp.setMargins((int) (2 * dm.density), 0, (int) (2 * dm.density), 0);
+            view.setLayoutParams(lp);
+            mLLPoints.addView(view);
+            mPoints.add(view);
+        }
     }
 
     @Override
@@ -107,5 +147,28 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        currentIndex = position + 1;
+        for (int i = 0; i < mPoints.size(); i++) {
+            View view = mPoints.get(i);
+            if (i == position) {
+                view.setBackgroundResource(R.drawable.shape_dot_focused_white);
+            } else {
+                view.setBackgroundResource(R.drawable.shape_dot_normal);
+            }
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

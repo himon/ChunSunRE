@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:background="#e6000000">
+    </View>
+
+    <ImageView
+        android:id="@+id/iv_click"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginTop="115dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_mengban_send_ad"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_click"
+        android:background="#e6000000">
+    </View>
+
+</RelativeLayout>

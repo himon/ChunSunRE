@@ -82,4 +82,6 @@ public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
         mIAdPayView.showLoading();
         mAdPayMode.payByBalance(token, hb_id, this);
     }
+
+
 }

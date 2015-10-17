@@ -15,8 +15,10 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengBanCreateAdFragment;
 import com.chunsun.redenvelope.ui.view.ICreateAdView;
 import com.dpizarro.uipicker.library.picker.PickerUI;
 import com.dpizarro.uipicker.library.picker.PickerUISettings;
@@ -91,6 +93,7 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
 
     //追加的广告信息
     private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
+    private MengBanCreateAdFragment mMengBanCreateAdFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,16 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
     protected void initView() {
         initTitle();
         initEvent();
+        isFirstSendAd();
+    }
+
+    private void isFirstSendAd() {
+        Preferences preferences = new Preferences(this);
+        if (preferences.getFirstSendAd()) {
+            preferences.setFirstSendAd(false);
+            mMengBanCreateAdFragment = new MengBanCreateAdFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.root, mMengBanCreateAdFragment).commit();
+        }
     }
 
     private void initTitle() {
@@ -350,6 +363,14 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
 
         mTvProvince.setText(mAdEntity.getProvince().getP());
         mTvCity.setText(mAdEntity.getCity().getC());
+    }
 
+    /**
+     * 蒙版被点击
+     */
+    public void mengBanClick() {
+        getSupportFragmentManager().beginTransaction()
+                .remove(mMengBanCreateAdFragment).commit();
+        mMengBanCreateAdFragment = null;
     }
 }

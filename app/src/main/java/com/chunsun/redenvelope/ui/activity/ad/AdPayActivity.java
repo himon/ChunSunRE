@@ -171,6 +171,8 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
         intent.putExtra(Constants.EXTRA_KEY, false);
         intent.putExtra(Constants.EXTRA_KEY2, mResult.getTotal_amount());
         startActivity(intent);
+
+        back();
     }
 
     @Override
@@ -192,5 +194,11 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.cancel();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter = null;
+        super.onDestroy();
     }
 }

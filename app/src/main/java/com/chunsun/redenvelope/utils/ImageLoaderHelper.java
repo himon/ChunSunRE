@@ -32,7 +32,9 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
 
-
+/**
+ * ImageLoader工具类
+ */
 public class ImageLoaderHelper {
 
     private Context mContext = null;
@@ -53,6 +55,11 @@ public class ImageLoaderHelper {
         return instance;
     }
 
+    /**
+     * Simple Options
+     *
+     * @return
+     */
     public DisplayImageOptions getDisplayOptions() {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.img_default_capture)
@@ -66,6 +73,12 @@ public class ImageLoaderHelper {
                 .build();
     }
 
+    /**
+     * 指定错误图片的Options
+     *
+     * @param drawable
+     * @return
+     */
     public DisplayImageOptions getDisplayOptions(Drawable drawable) {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(drawable)
@@ -79,6 +92,12 @@ public class ImageLoaderHelper {
                 .build();
     }
 
+    /**
+     * 指定图片圆角弧度
+     *
+     * @param round
+     * @return
+     */
     public DisplayImageOptions getDisplayOptions(int round) {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.img_default_capture)
@@ -93,6 +112,13 @@ public class ImageLoaderHelper {
                 .build();
     }
 
+    /**
+     * 同时指定默认图片和设置图片圆角弧度
+     *
+     * @param round
+     * @param drawable
+     * @return
+     */
     public DisplayImageOptions getDisplayOptions(int round, Drawable drawable) {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(drawable)
@@ -107,6 +133,12 @@ public class ImageLoaderHelper {
                 .build();
     }
 
+    /**
+     * 设置是否保存Disk
+     *
+     * @param isCacheOnDisk
+     * @return
+     */
     public DisplayImageOptions getDisplayOptions(boolean isCacheOnDisk) {
         return new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.img_default_capture)

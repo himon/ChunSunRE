@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="258dp"
+        android:background="#e6000000" >
+    </View>
+
+    <ImageView
+        android:id="@+id/iv_repeat"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="258dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_mengban_personal_2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_repeat"
+        android:background="#e6000000" >
+
+        <ImageButton
+            android:id="@+id/ib_know"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/img_mengban_button" />
+    </RelativeLayout>
+
+</RelativeLayout>

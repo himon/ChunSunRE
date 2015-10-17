@@ -203,4 +203,12 @@ public class NearFragment extends BaseFragment implements INearFragmentView {
         super.onResume();
         mViewPager.startAutoScroll();
     }
+
+    /**
+     * 从蒙版点击进入第一个Item广告详情
+     */
+    public void mengBanClick() {
+        RedListDetailEntity.ResultEntity.PoolEntity entity = mList.get(0);
+        mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId());
+    }
 }

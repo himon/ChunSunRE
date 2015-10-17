@@ -79,12 +79,13 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.btn_complete_success:
                 AppManager appManager = AppManager.getAppManager();
+                appManager.finishActivity(PayResultActivity.class);
                 appManager.finishActivity(AdPayActivity.class);
                 appManager.finishActivity(CreateAdContentActivity.class);
                 appManager.finishActivity(CreateAdRepeatNextStepActivity.class);
                 appManager.finishActivity(CreateAdNextStepActivity.class);
                 appManager.finishActivity(CreateAdActivity.class);
-                back();
+
                 break;
         }
     }

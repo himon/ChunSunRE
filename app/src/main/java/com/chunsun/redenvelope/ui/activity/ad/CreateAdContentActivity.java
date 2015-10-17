@@ -214,6 +214,11 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
         startActivityForResult(intent, Constants.REQUEST_CODE);
     }
 
+    /**
+     * 跳转支付界面
+     *
+     * @param result
+     */
     @Override
     public void toAdPayActivity(CreateAdResultEntity.ResultEntity result) {
         Intent intent = new Intent(this, AdPayActivity.class);

@@ -38,7 +38,9 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         AppManager.getAppManager().addActivity(this);
-        mDialog = new CustomProgressDialog(this, "努力加载ing");
+        if(mDialog == null) {
+            mDialog = new CustomProgressDialog(this, "努力加载ing");
+        }
     }
 
     protected abstract void initView();

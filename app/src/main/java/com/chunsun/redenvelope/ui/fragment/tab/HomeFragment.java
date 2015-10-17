@@ -233,4 +233,16 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         super.onResume();
         mViewPager.startAutoScroll();
     }
+
+    /**
+     * 从蒙版点击进入第一个Item
+     */
+    public void mengBanClick() {
+        RedListDetailEntity.ResultEntity.PoolEntity entity = mList.get(0);
+        if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
+            toRepeatRedDetail(entity.getId());
+        } else {
+            mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
+        }
+    }
 }

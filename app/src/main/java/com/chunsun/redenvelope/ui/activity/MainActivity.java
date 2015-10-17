@@ -22,12 +22,18 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.TitlePopupItemEntity;
 import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.model.event.MainEvent;
+import com.chunsun.redenvelope.model.event.MainMengBanEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
-import com.chunsun.redenvelope.ui.fragment.tab.AdFragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab3Fragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab4Fragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab4StepTwoFragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1Fragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1StepThreeFragment;
+import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1StepTwoFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
@@ -49,6 +55,8 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseActivity implements IMainView, View.OnClickListener, ViewPager.OnPageChangeListener {
 
+    @Bind(R.id.root)
+    RelativeLayout mRoot;
     @Bind(R.id.toolsbar)
     RelativeLayout mToolsBar;
     @Bind(R.id.indicator_home)
@@ -71,7 +79,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     private FragmentPagerAdapter mAdapter;
 
     private HomeFragment mHomeFragment;
-    private AdFragment mAdFragment;
+    //private AdFragment mAdFragment;
     private NewMeFragment mMeFragment;
     private NearFragment mNearFragment;
     //选中Tab页图标的颜色
@@ -80,6 +88,17 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
     //定义标题栏弹窗按钮
     private TitlePopup mTitlePopup;
+    private Preferences mPreferences;
+
+    /**
+     * 蒙版Fragment
+     */
+    private MengbanTab1Fragment mTab1Fragment;
+    private MengbanTab1StepTwoFragment mTab1StepTwoFragment;
+    private MengbanTab1StepThreeFragment mTab1StepThreeFragment;
+    private MengBanTab3Fragment mTab3Fragment;
+    private MengBanTab4Fragment mTab4Fragment;
+    private MengBanTab4StepTwoFragment mTab4StepTwoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,12 +166,12 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mTabIndicators.add(mMe);
 
         mHomeFragment = new HomeFragment();
-        mAdFragment = new AdFragment();
+        //mAdFragment = new AdFragment();
         mNearFragment = new NearFragment();
         mMeFragment = new NewMeFragment();
 
         mTabs.add(mHomeFragment);
-        mTabs.add(mAdFragment);
+        //mTabs.add(mAdFragment);
         mTabs.add(mNearFragment);
         mTabs.add(mMeFragment);
 
@@ -186,7 +205,45 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 }
             }
         });
+
+
+        isMengBanShow();
+
         initEvent();
+    }
+
+    /**
+     * 显示蒙版
+     */
+    private void isMengBanShow() {
+        mPreferences = new Preferences(this);
+        if (mPreferences.getFirstShowTab1()) {
+            mPreferences.setFirstShowTab1(false);
+            mTab1Fragment = new MengbanTab1Fragment();
+            mTab1StepTwoFragment = new MengbanTab1StepTwoFragment();
+            mTab1StepThreeFragment = new MengbanTab1StepThreeFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.root, mTab1Fragment).commit();
+        }
+    }
+
+    /**
+     * tab3的蒙版是否显示
+     */
+    private void isMengBanShowOfTab3() {
+        if (mPreferences.getFirstShowTab3()) {
+            mPreferences.setFirstShowTab3(false);
+            mTab3Fragment = new MengBanTab3Fragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.root, mTab3Fragment).commit();
+        }
+    }
+
+    private void isMengBanShowOfTab4() {
+        if (mPreferences.getFirstShowPersonal()) {
+            mPreferences.setFirstShowPersonal(false);
+            mTab4Fragment = new MengBanTab4Fragment();
+            mTab4StepTwoFragment = new MengBanTab4StepTwoFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.root, mTab4Fragment).commit();
+        }
     }
 
 
@@ -211,7 +268,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mSelectedColor = getResources().getColor(R.color.global_red);
         mUnSelectedColor = getResources().getColor(R.color.font_gray);
 
-        bitmaps = new ArrayList<Bitmap>();
+        bitmaps = new ArrayList<>();
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_home));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_ad));
         bitmaps.add(BitmapFactory.decodeResource(getResources(), R.drawable.img_icon_near));
@@ -247,7 +304,6 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     }
 
     private void clickTab(View v) {
-        resetOtherTabs();
 
         switch (v.getId()) {
             case R.id.indicator_home:
@@ -266,14 +322,18 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 }
                 break;
             case R.id.indicator_near:
+                //判断是否显示蒙版
+                isMengBanShowOfTab3();
                 mTabIndicators.get(2).setmIcon(bitmaps.get(6), mSelectedColor);
-                mViewPager.setCurrentItem(2, false);
+                mViewPager.setCurrentItem(1, false);
                 showTitleBar(v.getId());
                 break;
             case R.id.indicator_me:
+                //判断是否显示蒙版
+                isMengBanShowOfTab4();
                 if (isLogin(Constants.FROM_ME)) {
                     mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
-                    mViewPager.setCurrentItem(3, false);
+                    mViewPager.setCurrentItem(2, false);
                     showTitleBar(v.getId());
                 }
                 break;
@@ -315,6 +375,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         resetOtherTabs();
+        if (position != 0) {
+            position = position + 1;
+        }
         mTabIndicators.get(position).setmIcon(bitmaps.get(position + 4), mSelectedColor);
     }
 
@@ -365,7 +428,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         startActivity(intent);
     }
 
-
+    /**
+     * 页面跳转Event
+     *
+     * @param event
+     */
     public void onEvent(MainEvent event) {
         if (Constants.FROM_LOGIN_BACK.equals(event.getMsg())) {
             mTabIndicators.get(0).setmIcon(bitmaps.get(4), mSelectedColor);
@@ -385,12 +452,56 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//老版本追加
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
-            mAdFragment.setSuperaddition(event.getEntity());
+            //mAdFragment.setSuperaddition(event.getEntity());
         }
     }
 
+    /**
+     * 地图Event
+     *
+     * @param event
+     */
     public void onEvent(BaiduMapLocationEvent event) {
         mNavLeft.setText(MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity());
+    }
+
+    /**
+     * 蒙版Event
+     *
+     * @param event
+     */
+    public void onEvent(MainMengBanEvent event) {
+        switch (event.getMsg()) {
+            case 0:
+                getSupportFragmentManager().beginTransaction().replace(R.id.root, mTab1StepTwoFragment).commit();
+                break;
+            case 1:
+                getSupportFragmentManager().beginTransaction().replace(R.id.root, mTab1StepThreeFragment).commit();
+                break;
+            case 2:
+                getSupportFragmentManager().beginTransaction().remove(mTab1StepThreeFragment)
+                        .commit();
+                //进入第一个Item详情
+                mHomeFragment.mengBanClick();
+                mTab1Fragment = null;
+                mTab1StepTwoFragment = null;
+                mTab1StepThreeFragment = null;
+                break;
+            case 3://tab3
+                getSupportFragmentManager().beginTransaction().remove(mTab3Fragment).commit();
+                //进入tab3的第一个Item详情
+                mNearFragment.mengBanClick();
+                mTab3Fragment = null;
+                break;
+            case 4://tab4
+                getSupportFragmentManager().beginTransaction().replace(R.id.root, mTab4StepTwoFragment).commit();
+                break;
+            case 5:
+                getSupportFragmentManager().beginTransaction().remove(mTab4StepTwoFragment).commit();
+                mTab4Fragment = null;
+                mTab4StepTwoFragment = null;
+                break;
+        }
     }
 
 
