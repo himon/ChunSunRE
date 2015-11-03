@@ -34,8 +34,8 @@ import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab4StepTwoFragment;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1Fragment;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1StepThreeFragment;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengbanTab1StepTwoFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.ForwardFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
-import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Bind(R.id.indicator_ad)
     ChangeColorIconWithText mAd;
     @Bind(R.id.indicator_near)
-    ChangeColorIconWithText mNear;
+    ChangeColorIconWithText mForward;
     @Bind(R.id.indicator_me)
     ChangeColorIconWithText mMe;
     @Bind(R.id.vp_viewpager)
@@ -78,10 +78,10 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     private ArrayList<Fragment> mTabs = new ArrayList<Fragment>();
     private FragmentPagerAdapter mAdapter;
 
-    private HomeFragment mHomeFragment;
+    private ForwardFragment mForwardFragment;
     //private AdFragment mAdFragment;
     private NewMeFragment mMeFragment;
-    private NearFragment mNearFragment;
+    private HomeFragment mHomeFragment;
     //选中Tab页图标的颜色
     private int mSelectedColor;
     private int mUnSelectedColor;
@@ -162,17 +162,17 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
         mTabIndicators.add(mHome);
         mTabIndicators.add(mAd);
-        mTabIndicators.add(mNear);
+        mTabIndicators.add(mForward);
         mTabIndicators.add(mMe);
 
         mHomeFragment = new HomeFragment();
         //mAdFragment = new AdFragment();
-        mNearFragment = new NearFragment();
+        mForwardFragment = new ForwardFragment();
         mMeFragment = new NewMeFragment();
 
         mTabs.add(mHomeFragment);
         //mTabs.add(mAdFragment);
-        mTabs.add(mNearFragment);
+        mTabs.add(mForwardFragment);
         mTabs.add(mMeFragment);
 
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -256,7 +256,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
         mHome.setOnClickListener(this);
         mAd.setOnClickListener(this);
-        mNear.setOnClickListener(this);
+        mForward.setOnClickListener(this);
         mMe.setOnClickListener(this);
         mViewPager.setOnPageChangeListener(this);
         mIvInteractive.setOnClickListener(this);
@@ -482,7 +482,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 getSupportFragmentManager().beginTransaction().remove(mTab1StepThreeFragment)
                         .commit();
                 //进入第一个Item详情
-                mHomeFragment.mengBanClick();
+                mForwardFragment.mengBanClick();
                 mTab1Fragment = null;
                 mTab1StepTwoFragment = null;
                 mTab1StepThreeFragment = null;
@@ -490,7 +490,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             case 3://tab3
                 getSupportFragmentManager().beginTransaction().remove(mTab3Fragment).commit();
                 //进入tab3的第一个Item详情
-                mNearFragment.mengBanClick();
+                mHomeFragment.mengBanClick();
                 mTab3Fragment = null;
                 break;
             case 4://tab4

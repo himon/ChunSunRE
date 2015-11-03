@@ -11,8 +11,8 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.account.QuickLoginActivity;
-import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,38 +60,40 @@ public class QuickLoginModeImpl implements QuickLoginMode {
         RequestManager.addRequest(request, mActivity);
     }
 
-    @Override
-    public void login(final String phone, final String code,
-                      final String phoneInfo, final String pushDeviceToken, final BaseMultiLoadedListener listener) {
-        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+        @Override
+        public void login(final String phone, final String code,
+                          final String phoneInfo, final String pushDeviceToken, final BaseMultiLoadedListener listener) {
+            GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                    SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
-            @Override
-            public void onResponse(SampleResponseEntity response) {
-                if(response.isSuccess()) {
-                    listener.onSuccess(Constants.LISTENER_TYPE_LOGIN,response);
-                }else{
-                    listener.onError(response.getMsg());
+                @Override
+                public void onResponse(SampleResponseEntity response) {
+                    if (response.isSuccess()) {
+                        listener.onSuccess(Constants.LISTENER_TYPE_LOGIN, response);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
-            }
-        }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //byte[] htmlBodyBytes = error.networkResponse.data;
-                //Log.e("LOGIN - ERROR", new String(htmlBodyBytes), error);
-                listener.onError(error.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //byte[] htmlBodyBytes = error.networkResponse.data;
+                    //Log.e("LOGIN - ERROR", new String(htmlBodyBytes), error);
+                    listener.onError(error.getMessage());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("methodName", Constants.QUICK_LOGIN_CODE_JSON_REQUEST_URL);
-                params.put("parames", JsonManager.initDataQuickLoginToJson(phone, code, phoneInfo, pushDeviceToken));
-                return params;
-            }
-        };
-        RequestManager.addRequest(request, mActivity);
-    }
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("methodName", Constants.QUICK_LOGIN_CODE_JSON_REQUEST_URL);
+                    params.put("parames", JsonManager.initDataQuickLoginToJson(phone, code, phoneInfo, pushDeviceToken));
+                    return params;
+                }
+            };
+            RequestManager.addRequest(request, mActivity);
+        }
+
+
 }

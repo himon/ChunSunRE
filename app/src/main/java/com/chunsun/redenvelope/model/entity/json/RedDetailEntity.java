@@ -106,6 +106,9 @@ public class RedDetailEntity extends BaseEntity {
              * 该红包是否被收藏
              */
             private boolean favorite_status;
+            /**
+             * 账号类型
+             */
             private String type;
             private String telphone;
             private String nick_name;
@@ -114,6 +117,9 @@ public class RedDetailEntity extends BaseEntity {
             private String age;
             private String type_title;
             private String current_u_amount;
+            /**
+             * 红包类型
+             */
             private String hb_type;
             private String total_amount;
             private String u_img_url;

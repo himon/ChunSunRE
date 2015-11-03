@@ -600,4 +600,15 @@ public class JsonManager {
         }
         return jsonObject.toString();
     }
+
+    public static String initDataCouponDetailToJson(String sellerToken, String code){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("sellerToken", sellerToken);
+            jsonObject.put("code", code);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 }

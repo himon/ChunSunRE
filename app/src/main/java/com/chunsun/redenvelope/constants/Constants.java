@@ -28,6 +28,8 @@ public interface Constants {
     int RED_DETAIL_TYPE_LINK = 4;
     //转发
     int RED_DETAIL_TYPE_REPEAT = 5;
+    //券
+    int RED_DETAIL_TYPE_COUPON = 6;
 
 
     /**
@@ -42,7 +44,7 @@ public interface Constants {
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
-    //    String SYSTEM_USER_ID = "22292";
+    //String SYSTEM_USER_ID = "22292";
     String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**

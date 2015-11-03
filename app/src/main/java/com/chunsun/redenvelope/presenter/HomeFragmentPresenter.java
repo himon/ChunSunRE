@@ -6,56 +6,36 @@ import com.chunsun.redenvelope.model.HomeFragmentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.HomeFragmentModeImpl;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
- * Created by Administrator on 2015/8/5.
+ * Created by Administrator on 2015/8/10.
  */
 public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity> {
 
     private IHomeFragmentView mHomeFragmentView;
     private HomeFragmentMode mHomeFragmentMode;
-
-    private RedListDetailEntity.ResultEntity.PoolEntity currentEntity;
+    private String mCurrentRedId;
 
     public HomeFragmentPresenter(IHomeFragmentView homeFragmentView) {
         this.mHomeFragmentView = homeFragmentView;
         mHomeFragmentMode = new HomeFragmentModeImpl((HomeFragment) homeFragmentView);
     }
 
-    /**
-     * 获取红包列表
-     *
-     * @param token
-     * @param type
-     * @param page_index
-     */
     public void loadData(String token, String type, int page_index) {
         mHomeFragmentMode.loadData(token, type, page_index, this);
     }
 
-    /**
-     * 获取轮播图广告
-     *
-     * @param type
-     */
     public void getAdData(String type) {
         mHomeFragmentMode.getAdData(type, this);
     }
 
-    /**
-     * 抢红包
-     *
-     * @param token
-     * @param id
-     */
-    public void grabRedEnvelope(String token, String id, RedListDetailEntity.ResultEntity.PoolEntity entity) {
-        currentEntity = entity;
-        mHomeFragmentMode.grabRedEnvelope(token, id, this);
+    public void grabRedEnvelope(String mToken, String id) {
+        mCurrentRedId = id;
+        mHomeFragmentMode.grabRedEnvelope(mToken, id, this);
     }
 
     @Override
@@ -70,8 +50,7 @@ public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
                 mHomeFragmentView.setAdData(entity2.getResult().getAdvert());
                 break;
             case Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE:
-                SampleResponseEntity entity3 = (SampleResponseEntity) data;
-                mHomeFragmentView.grabRedEnvelopeSuccess(currentEntity);
+                mHomeFragmentView.gradRedEnvelopeSuccess(mCurrentRedId);
                 break;
         }
     }

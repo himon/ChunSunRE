@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.ui.fragment.tab;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +17,6 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
-import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
@@ -38,7 +36,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
- * 首页广告Fragment
+ * 附近广告Fragment
  */
 public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
@@ -47,9 +45,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
 
-    private GuideGallery mViewPager;
     private HomeFragmentPresenter mPresenter;
     private RedListAdapter mAdapter;
+    private GuideGallery mViewPager;
     private AdImageAdapter imageAdapter;
 
     //当前显示页数
@@ -59,14 +57,14 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     private boolean isRefresh;
     //红包列表总数
     private int mTotal = 0;
+    //选中的Item的详情
+    private RedListDetailEntity.ResultEntity.PoolEntity mEntity;
 
-    public HomeFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_near, container, false);
         ButterKnife.bind(this, view);
         mPresenter = new HomeFragmentPresenter(this);
         initView();
@@ -102,12 +100,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedListDetailEntity.ResultEntity.PoolEntity entity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
-                    toRepeatRedDetail(entity.getId());
-                } else {
-                    mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
-                }
+                mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
+                mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
             }
         });
 
@@ -135,6 +129,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     public void getData() {
         if (mCurrentPage * Constants.PAGE_NUM > mTotal + Constants.PAGE_NUM) {
+            mPtr.refreshComplete();
             return;
         }
         if (isRefresh) {
@@ -142,12 +137,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             mList.clear();
             mPresenter.getAdData(Constants.RED_DETAIL_TYPE_LEFT + "");
         }
-        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYPE_REPEAT + "", mCurrentPage);
+        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYLE_SAMPLE + "", mCurrentPage);
     }
 
     @Override
     public void setData(RedListDetailEntity.ResultEntity entity) {
-
         List<RedListDetailEntity.ResultEntity.PoolEntity> list = entity.getPool();
 
         mTotal = Integer.parseInt(entity.getTotal_count());
@@ -165,7 +159,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         mListView.getMoreComplete();
 
         mPtr.refreshComplete();
-
     }
 
     @Override
@@ -186,6 +179,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     public void toRedDetail(String id) {
         Intent intent = new Intent(getActivity(), RedDetailActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_LEFT);
         startActivity(intent);
     }
 
@@ -197,9 +191,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     @Override
-    public void toRepeatRedDetail(String id) {
-        Intent intent = new Intent(getActivity(), RepeatRedDetailActivity.class);
+    public void toForwardRedDetail(String id) {
+        Intent intent = new Intent(getActivity(), RedDetailActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_COUPON);
         startActivity(intent);
     }
 
@@ -212,15 +207,24 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     @Override
-    public void grabRedEnvelopeSuccess(RedListDetailEntity.ResultEntity.PoolEntity entity) {
-        if (Constants.RED_DETAIL_TYPE_LINK == entity.getType()) {
-            toWebRedDetail(entity.getId());
-        } else if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
-            toRepeatRedDetail(entity.getId());
-        } else {
-            toRedDetail(entity.getId());
+    public void gradRedEnvelopeSuccess(String id) {
+        if (mEntity != null) {
+            switch (mEntity.getType()) {
+                case 1:
+                case 2:
+                case 3:
+                    toRedDetail(id);
+                    break;
+                case 4:
+                    toWebRedDetail(id);
+                case 6:
+                    toForwardRedDetail(id);
+                    break;
+            }
+
         }
     }
+
 
     @Override
     public void onPause() {
@@ -235,14 +239,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     }
 
     /**
-     * 从蒙版点击进入第一个Item
+     * 从蒙版点击进入第一个Item广告详情
      */
     public void mengBanClick() {
         RedListDetailEntity.ResultEntity.PoolEntity entity = mList.get(0);
-        if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
-            toRepeatRedDetail(entity.getId());
-        } else {
-            mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
-        }
+        mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId());
     }
 }

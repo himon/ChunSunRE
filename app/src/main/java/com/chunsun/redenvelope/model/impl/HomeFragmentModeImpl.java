@@ -21,16 +21,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2015/8/5.
+ * Created by Administrator on 2015/8/10.
  */
 public class HomeFragmentModeImpl implements HomeFragmentMode {
+    private HomeFragment mNearFragment;
 
-    private HomeFragment homeFragment;
-
-    public HomeFragmentModeImpl(HomeFragment homeFragment) {
-        this.homeFragment = homeFragment;
+    public HomeFragmentModeImpl(HomeFragment nearFragment) {
+        this.mNearFragment = nearFragment;
     }
 
+    /**
+     * 获取列表数据
+     *
+     * @param token
+     * @param type       -1（生活、企业），3（附近）
+     * @param page_index
+     * @param listener
+     */
     @Override
     public void loadData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener) {
         GsonRequest<RedListDetailEntity> request = new GsonRequest<RedListDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
@@ -60,7 +67,7 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, homeFragment);
+        RequestManager.addRequest(request, mNearFragment);
     }
 
     @Override
@@ -92,7 +99,7 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, homeFragment);
+        RequestManager.addRequest(request, mNearFragment);
     }
 
     @Override
@@ -124,6 +131,6 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, homeFragment);
+        RequestManager.addRequest(request, mNearFragment);
     }
 }

@@ -57,6 +57,9 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             type.setText(poolEntity.getRangeString());
         } else if (Constants.RED_DETAIL_TYPE_REPEAT == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
+        } else if (Constants.RED_DETAIL_TYPE_COUPON == poolEntity.getType()) {
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_juan);
+            type.setText(poolEntity.getRangeString());
         }
 
         //判断总金额是否大于500

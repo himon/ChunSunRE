@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
+import com.chunsun.redenvelope.model.event.CouponRedDetailEvent;
 import com.chunsun.redenvelope.model.event.RedDetailEvent;
 import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 
@@ -162,7 +163,7 @@ public class ShareSdkHelper implements PlatformActionListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mFlag) {
+                if (mFlag) {
                     switch (mFrom) {
                         case Constants.SHARE_FROM_WEB_RED:
                             WebRedDetailEvent share = new WebRedDetailEvent("share");
@@ -170,11 +171,16 @@ public class ShareSdkHelper implements PlatformActionListener {
                             EventBus.getDefault().post(share);
                             break;
                         case Constants.SHARE_FROM_RED:
-                            RedDetailEvent redShare = new RedDetailEvent("share", shareType);
-                            EventBus.getDefault().post(redShare);
+                            if ((Constants.RED_DETAIL_TYPE_COUPON + "").equals(mDetailEntity.getHb_type())) {
+                                CouponRedDetailEvent couponRedShare = new CouponRedDetailEvent("share", shareType);
+                                EventBus.getDefault().post(couponRedShare);
+                            } else {
+                                RedDetailEvent redShare = new RedDetailEvent("share", shareType);
+                                EventBus.getDefault().post(redShare);
+                            }
                             break;
                     }
-                }else{
+                } else {
 
                 }
             }

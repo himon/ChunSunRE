@@ -7,13 +7,13 @@ import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
-import com.chunsun.redenvelope.model.NearFragmentMode;
+import com.chunsun.redenvelope.model.ForwardFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.ui.fragment.tab.NearFragment;
+import com.chunsun.redenvelope.ui.fragment.tab.ForwardFragment;
 import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -21,13 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2015/8/10.
+ * Created by Administrator on 2015/8/5.
  */
-public class NearFragmentModeImpl implements NearFragmentMode {
-    private NearFragment mNearFragment;
+public class ForwardFragmentModeImpl implements ForwardFragmentMode {
 
-    public NearFragmentModeImpl(NearFragment nearFragment) {
-        this.mNearFragment = nearFragment;
+    private ForwardFragment homeFragment;
+
+    public ForwardFragmentModeImpl(ForwardFragment homeFragment) {
+        this.homeFragment = homeFragment;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class NearFragmentModeImpl implements NearFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, mNearFragment);
+        RequestManager.addRequest(request, homeFragment);
     }
 
     @Override
@@ -91,7 +92,7 @@ public class NearFragmentModeImpl implements NearFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, mNearFragment);
+        RequestManager.addRequest(request, homeFragment);
     }
 
     @Override
@@ -123,6 +124,6 @@ public class NearFragmentModeImpl implements NearFragmentMode {
                 return params;
             }
         };
-        RequestManager.addRequest(request, mNearFragment);
+        RequestManager.addRequest(request, homeFragment);
     }
 }

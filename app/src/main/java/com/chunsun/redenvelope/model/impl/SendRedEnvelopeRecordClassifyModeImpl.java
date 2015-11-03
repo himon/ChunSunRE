@@ -11,8 +11,8 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordClassifyEnti
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
-import com.chunsun.redenvelope.utils.manager.JsonManager;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.JsonManager;
 
 import java.util.HashMap;
 import java.util.Map;

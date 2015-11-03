@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailPresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.fragment.CouponRedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicPreviewFragment;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
@@ -44,9 +45,14 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
 
     //红包id
     private String mRedDetailId;
+    //生活类红包Fragment
     private RedDetailFragment mRedDetailFragment;
+    //券类红包Fragment
+    private CouponRedDetailFragment mCouponRedDetailFragment;
     private String mToken;
     private ShareLimitEntity.ResultEntity mShareLimit;
+    //红包类型
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     protected void initView() {
         mMainNav.setVisibility(View.GONE);
 
-        mFragments = new ArrayList<Fragment>();
+        mFragments = new ArrayList<>();
 
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -87,9 +93,17 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             @Override
             public void onPageSelected(int position) {
                 if (position == mFragments.size() - 1) {
-                    mRedDetailFragment.startAutoScroll();
+                    if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+                        mRedDetailFragment.startAutoScroll();
+                    } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
+                        mCouponRedDetailFragment.startAutoScroll();
+                    }
                 } else {
-                    mRedDetailFragment.stopAutoScroll();
+                    if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+                        mRedDetailFragment.stopAutoScroll();
+                    } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
+                        mCouponRedDetailFragment.stopAutoScroll();
+                    }
                 }
             }
 
@@ -108,8 +122,9 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
         Intent intent = getIntent();
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
+            mType = intent.getIntExtra(Constants.EXTRA_KEY2, -1);
         }
-        mFragments = new ArrayList<Fragment>();
+        mFragments = new ArrayList<>();
         mPresenter.getShareLimit(mToken);
 
     }
@@ -122,13 +137,23 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             mFragments.add(fragment);
         }
 
-        mRedDetailFragment = new RedDetailFragment();
-        Bundle data = new Bundle();
-        data.putParcelable(Constants.EXTRA_KEY, detail);
-        data.putStringArrayList(Constants.EXTRA_KEY2, urls);
-        data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
-        mRedDetailFragment.setArguments(data);
-        mFragments.add(mRedDetailFragment);
+        if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+            mRedDetailFragment = new RedDetailFragment();
+            Bundle data = new Bundle();
+            data.putParcelable(Constants.EXTRA_KEY, detail);
+            data.putStringArrayList(Constants.EXTRA_KEY2, urls);
+            data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
+            mRedDetailFragment.setArguments(data);
+            mFragments.add(mRedDetailFragment);
+        } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
+            mCouponRedDetailFragment = new CouponRedDetailFragment();
+            Bundle data = new Bundle();
+            data.putParcelable(Constants.EXTRA_KEY, detail);
+            data.putStringArrayList(Constants.EXTRA_KEY2, urls);
+            data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
+            mCouponRedDetailFragment.setArguments(data);
+            mFragments.add(mCouponRedDetailFragment);
+        }
 
         mViewPager.setAdapter(mAdapter);
         //设置预加载数

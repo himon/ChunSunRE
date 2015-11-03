@@ -3,9 +3,9 @@ package com.chunsun.redenvelope.model;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 
 /**
- * Created by Administrator on 2015/8/10.
+ * Created by Administrator on 2015/8/5.
  */
-public interface NearFragmentMode {
+public interface ForwardFragmentMode {
 
     /**
      * 红包列表
@@ -28,9 +28,9 @@ public interface NearFragmentMode {
     /**
      * 抢红包
      *
-     * @param mToken
-     * @param id
+     * @param token
+     * @param hb_id
      * @param listener
      */
-    void grabRedEnvelope(String mToken, String id, BaseMultiLoadedListener listener);
+    void grabRedEnvelope(String token, String hb_id, BaseMultiLoadedListener listener);
 }

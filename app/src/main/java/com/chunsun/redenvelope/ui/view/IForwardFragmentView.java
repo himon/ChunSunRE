@@ -6,42 +6,47 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/8/10.
+ * Created by Administrator on 2015/8/5.
  */
-public interface IHomeFragmentView {
+public interface IForwardFragmentView {
 
     void setData(RedListDetailEntity.ResultEntity entity);
 
     void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert);
 
     /**
-     * 跳转红包详情
+     * 跳转广告详情
      *
      * @param id
      */
     void toRedDetail(String id);
 
     /**
-     * 跳转链接红包
+     * 跳转web广告详情
      *
      * @param id
      */
     void toWebRedDetail(String id);
 
     /**
-     * 跳转券类红包
+     * 跳转转发红包
      *
      * @param id
      */
-    void toForwardRedDetail(String id);
+    void toRepeatRedDetail(String id);
 
     /**
-     * 跳转web广告页面
+     * 跳转轮播图广告
      *
      * @param title
      * @param url
      */
     void toAdWebView(String title, String url);
 
-    void gradRedEnvelopeSuccess(String id);
+    /**
+     * 抢红包成功
+     *
+     * @param entity
+     */
+    void grabRedEnvelopeSuccess(RedListDetailEntity.ResultEntity.PoolEntity entity);
 }

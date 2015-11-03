@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chunsun.redenvelope.ui.fragment.tab.HomeFragment">
+    tools:context="com.chunsun.redenvelope.ui.fragment.tab.ForwardFragment">
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_main"

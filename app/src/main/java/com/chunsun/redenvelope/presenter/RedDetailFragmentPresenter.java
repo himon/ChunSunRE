@@ -138,6 +138,27 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
         }
     }
 
+    /**
+     * 分享
+     *
+     * @param token
+     * @param grab_id
+     * @param shareType
+     */
+    public void shareOpen(String token, String grab_id, String shareType) {
+        redDetailFragmentMode.shareOpen(token, grab_id, shareType, this);
+    }
+
+    /**
+     * 直接领钱
+     *
+     * @param token
+     * @param grab_id
+     */
+    public void justOpen(String token, String grab_id) {
+        redDetailFragmentMode.justOpen(token, grab_id, this);
+    }
+
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
@@ -155,7 +176,7 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
                 break;
             case Constants.LISTENER_TYPE_JUST_OPEN_RED:
             case Constants.LISTENER_TYPE_SHARE_OPEN_RED:
-                ShowToast.Short(((SampleResponseEntity)data).getMsg());
+                ShowToast.Short(((SampleResponseEntity) data).getMsg());
                 redDetailFragmentView.shareSuccess();
                 break;
         }
@@ -176,11 +197,5 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
         ShowToast.Short(msg);
     }
 
-    public void shareOpen(String token, String grab_id, String shareType) {
-        redDetailFragmentMode.shareOpen(token, grab_id, shareType, this);
-    }
 
-    public void justOpen(String token, String grab_id) {
-        redDetailFragmentMode.justOpen(token, grab_id, this);
-    }
 }
