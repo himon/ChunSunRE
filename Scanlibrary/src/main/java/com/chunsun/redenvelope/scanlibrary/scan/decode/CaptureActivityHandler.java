@@ -41,6 +41,7 @@ import com.google.zxing.Result;
 import java.util.Collection;
 import java.util.Map;
 
+
 /**
  * This class handles all the messaging which comprises the state machine for
  * capture.

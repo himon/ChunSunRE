@@ -99,6 +99,16 @@ public class AdEntity implements Parcelable {
      */
     private RepeatMealEntity.ResultEntity meal;
 
+    /**
+     * 券类开始时间
+     */
+    private String couponStartTime;
+
+    /**
+     * 券类结束时间
+     */
+    private String couponEndTime;
+
 
     public String getPrice() {
         return price;
@@ -117,6 +127,9 @@ public class AdEntity implements Parcelable {
     }
 
     public String getDays() {
+        if (TextUtils.isEmpty(days)) {
+            return "1";
+        }
         return days;
     }
 
@@ -287,6 +300,28 @@ public class AdEntity implements Parcelable {
         this.isReceipt = isReceipt;
     }
 
+    public String getCouponStartTime() {
+        if (TextUtils.isEmpty(couponStartTime)) {
+            return "";
+        }
+        return couponStartTime;
+    }
+
+    public void setCouponStartTime(String couponStartTime) {
+        this.couponStartTime = couponStartTime;
+    }
+
+    public String getCouponEndTime() {
+        if (TextUtils.isEmpty(couponEndTime)) {
+            return "";
+        }
+        return couponEndTime;
+    }
+
+    public void setCouponEndTime(String couponEndTime) {
+        this.couponEndTime = couponEndTime;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -316,6 +351,8 @@ public class AdEntity implements Parcelable {
         dest.writeString(this.imagePath8);
         dest.writeString(this.formula_multiple);
         dest.writeParcelable(this.meal, 0);
+        dest.writeString(this.couponStartTime);
+        dest.writeString(this.couponEndTime);
     }
 
     public AdEntity() {
@@ -344,6 +381,8 @@ public class AdEntity implements Parcelable {
         this.imagePath8 = in.readString();
         this.formula_multiple = in.readString();
         this.meal = in.readParcelable(RepeatMealEntity.ResultEntity.class.getClassLoader());
+        this.couponStartTime = in.readString();
+        this.couponEndTime = in.readString();
     }
 
     public static final Parcelable.Creator<AdEntity> CREATOR = new Parcelable.Creator<AdEntity>() {

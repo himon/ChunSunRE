@@ -71,8 +71,8 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dip"
+            android:layout_height="80dip"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@drawable/selector_red_detail_button_red_envelope">
@@ -102,7 +102,6 @@
                 android:text="@string/coupon_envelope"
                 android:textColor="#ffd914"
                 android:textSize="@dimen/font_size_sp_16"/>
-
 
         </RelativeLayout>
     </LinearLayout>

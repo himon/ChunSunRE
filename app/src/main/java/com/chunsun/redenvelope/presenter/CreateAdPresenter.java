@@ -94,62 +94,69 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
     private void initDistance(List<SampleEntity> list) {
         SampleEntity distance = new SampleEntity();
         distance.setKey("0");
+        distance.setValue("不限");
+        distance.setCount("0");
+        distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
+        list.add(distance);
+
+        distance = new SampleEntity();
+        distance.setKey("1");
         distance.setValue("100米");
         distance.setCount("0.10");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("1");
+        distance.setKey("2");
         distance.setValue("200米");
         distance.setCount("0.20");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("2");
+        distance.setKey("3");
         distance.setValue("500米");
         distance.setCount("0.50");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("3");
+        distance.setKey("4");
         distance.setValue("1千米");
         distance.setCount("1.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("4");
+        distance.setKey("5");
         distance.setValue("2千米");
         distance.setCount("2.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("5");
+        distance.setKey("6");
         distance.setValue("5千米");
         distance.setCount("5.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("6");
+        distance.setKey("7");
         distance.setValue("10千米");
         distance.setCount("10.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("7");
+        distance.setKey("8");
         distance.setValue("20千米");
         distance.setCount("20.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
-        distance.setKey("8");
+        distance.setKey("9");
         distance.setValue("50千米");
         distance.setCount("50.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
@@ -191,6 +198,12 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("转发类");
         list.add(item);
+
+        item = new SampleEntity();
+        item.setKey(Constants.RED_DETAIL_TYPE_COUPON + "");
+        item.setType(Constants.AD_SELECT_LIST_TYPE);
+        item.setValue("券类");
+        list.add(item);
     }
 
     public void setProAndCity(DistrictEntity data) {
@@ -226,41 +239,60 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
             city = mSuperadditionEntity.getCity();
         } else {
             mTypeList.get(0).setCheck(true);
-            this.mAdEntity.setType(mTypeList.get(3));
-            mDistanceList.get(0).setCheck(true);
-            this.mAdEntity.setDistance(mDistanceList.get(0));
+            this.mAdEntity.setType(mTypeList.get(0));
+            mDistanceList.get(9).setCheck(true);
+            this.mAdEntity.setDistance(mDistanceList.get(9));
 
             province = MainApplication.getContext().getProvince();
             city = MainApplication.getContext().getCity();
         }
 
-        if (TextUtils.isEmpty(province)) {
-            list.get(0).setCheck(true);
-            DistrictEntity.AreaEntity entityProvince = list.get(0);
-            this.mAdEntity.setProvince(entityProvince);
-            entityProvince.getCc().get(0).setCheck(true);
-            this.mAdEntity.setCity(entityProvince.getCc().get(0));
-            this.mAdEntity.getCity().setCt(null);
-            this.mAdEntity.getProvince().setCc(null);
-        } else {
+        DistrictEntity.AreaEntity currentProvince = null;
+        DistrictEntity.AreaEntity.CcEntity currentCity = null;
+        DistrictEntity.AreaEntity defaultProvince = null;
+        DistrictEntity.AreaEntity.CcEntity defaultCity = null;
+
+        if (!TextUtils.isEmpty(province)) {
             List<DistrictEntity.AreaEntity.CcEntity> cc = null;
             for (DistrictEntity.AreaEntity item : list) {
                 if (province.equals(item.getP())) {
-                    this.mAdEntity.setProvince(item);
-                    cc = this.mAdEntity.getProvince().getCc();
+                    currentProvince = item;
+                    cc = item.getCc();
                     break;
                 }
             }
             if (!ListUtils.isEmpty(cc)) {
                 for (DistrictEntity.AreaEntity.CcEntity item : cc) {
                     if (city.equals(item.getC())) {
-                        this.mAdEntity.setCity(item);
+                        currentCity = item;
                         break;
                     }
                 }
             }
         }
-        mICreateAdView.setInitData(mDistanceList, mTypeList, list, mAdEntity);
+        list.get(0).setCheck(true);
+        defaultProvince = list.get(0);
+        defaultProvince.getCc().get(0).setCheck(true);
+        defaultCity = defaultProvince.getCc().get(0);
+
+        if (currentProvince == null) {
+            currentProvince = defaultProvince;
+        }
+        if (currentCity == null) {
+            currentCity = defaultCity;
+        }
+
+        if (mSuperadditionEntity != null) {
+            this.mAdEntity.setProvince(currentProvince);
+            this.mAdEntity.setCity(currentCity);
+        } else {
+            this.mAdEntity.setProvince(defaultProvince);
+            this.mAdEntity.setCity(defaultCity);
+        }
+        this.mAdEntity.getCity().setCt(null);
+        this.mAdEntity.getProvince().setCc(null);
+
+        mICreateAdView.setInitData(mDistanceList, mTypeList, list, currentProvince, currentCity, defaultProvince, defaultCity, mAdEntity);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
@@ -47,19 +48,25 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
 
         TextView type = holder.getView(R.id.tv_range);
         type.setText(poolEntity.getTypeName());
+        ImageView icon = holder.getView(R.id.iv_quan_icon);
 
         if (Constants.RED_DETAIL_TYPE_LINK == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
+            icon.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_TYPE_LEFT == poolEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
+            icon.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_TYPE_NEAR == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_range);
             type.setText(poolEntity.getRangeString());
+            icon.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_TYPE_REPEAT == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
+            icon.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_TYPE_COUPON == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_juan);
             type.setText(poolEntity.getRangeString());
+            icon.setVisibility(View.VISIBLE);
         }
 
         //判断总金额是否大于500

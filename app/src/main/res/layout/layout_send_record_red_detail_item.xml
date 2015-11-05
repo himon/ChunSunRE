@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/global_gray"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/global_gray"
+              android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:background="@color/bg_beige" />
+        android:background="@color/bg_beige"/>
 
     <RelativeLayout
         android:id="@+id/rl_classify_status"
@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/tv_classify_status"
-            android:src="@drawable/img_not_pay" />
+            android:src="@drawable/img_not_pay"/>
 
         <TextView
             android:id="@+id/tv_classify_status"
@@ -31,13 +31,46 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/font_blue2"
-            android:textSize="@dimen/font_size_sp_20" />
+            android:textSize="@dimen/font_size_sp_20"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="统计"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_sp_18"/>
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:src="@drawable/img_arrow"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/bg_gray"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_beige"
+        android:background="@color/white"
         android:padding="15dp">
 
         <TextView
@@ -46,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="@string/range"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_range"
@@ -55,7 +88,7 @@
             android:layout_toRightOf="@+id/tv_range_title"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_type_title"
@@ -64,7 +97,7 @@
             android:layout_below="@+id/tv_range_title"
             android:text="@string/type"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_type"
@@ -72,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_range"
             android:layout_toRightOf="@+id/tv_type_title"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_total_num_title"
@@ -81,7 +114,7 @@
             android:layout_below="@+id/tv_type_title"
             android:text="@string/total_quantity"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_total_num"
@@ -90,7 +123,7 @@
             android:layout_below="@+id/tv_type"
             android:layout_toRightOf="@+id/tv_total_num_title"
             android:textColor="@color/global_red"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_total_money_title"
@@ -99,7 +132,7 @@
             android:layout_below="@+id/tv_total_num_title"
             android:text="@string/aggregate_amount"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_total_money"
@@ -108,7 +141,7 @@
             android:layout_below="@+id/tv_total_num"
             android:layout_toRightOf="@+id/tv_total_money_title"
             android:textColor="@color/global_red"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_not_receive_num_title"
@@ -117,7 +150,7 @@
             android:layout_below="@+id/tv_total_money_title"
             android:text="@string/not_receiving"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_not_receive_num"
@@ -126,7 +159,7 @@
             android:layout_below="@+id/tv_total_money"
             android:layout_toRightOf="@+id/tv_not_receive_num_title"
             android:textColor="@color/global_red"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_receive_num_title"
@@ -135,7 +168,7 @@
             android:layout_below="@+id/tv_not_receive_num_title"
             android:text="@string/have_received"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <TextView
             android:id="@+id/tv_receive_num"
@@ -144,9 +177,14 @@
             android:layout_below="@id/tv_not_receive_num"
             android:layout_toRightOf="@+id/tv_receive_num_title"
             android:textColor="@color/global_red"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/bg_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -158,7 +196,7 @@
         android:paddingRight="15dp"
         android:paddingTop="15dp">
 
-        <include layout="@layout/layout_red_detail_top_item" />
+        <include layout="@layout/layout_red_detail_top_item"/>
 
     </LinearLayout>
 
@@ -180,7 +218,7 @@
             android:background="@drawable/selector_button_red_radius"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_size_sp_18" />
+            android:textSize="@dimen/font_size_sp_18"/>
     </LinearLayout>
 
     <RadioGroup
@@ -205,7 +243,7 @@
             android:paddingTop="5dp"
             android:text="@string/comment"
             android:textColor="@drawable/selector_red_detail_radio_button_text"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <RadioButton
             android:id="@+id/rb_get_red_record"
@@ -219,13 +257,13 @@
             android:paddingTop="5dp"
             android:text="@string/red_envelope_collect_list"
             android:textColor="@drawable/selector_red_detail_radio_button_text"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
     </RadioGroup>
 
     <View
         android:id="@+id/red_line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/global_red" />
+        android:background="@color/global_red"/>
 
 </LinearLayout>

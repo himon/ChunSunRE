@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,8 +49,12 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
     RadioButton mRbNear;
     @Bind(R.id.rl_province)
     RelativeLayout mRlProvince;
+    @Bind(R.id.iv_province)
+    ImageView mIvProvince;
     @Bind(R.id.rl_city)
     RelativeLayout mRlCity;
+    @Bind(R.id.iv_city)
+    ImageView mIvCity;
     @Bind(R.id.rl_range)
     RelativeLayout mRlRange;
     @Bind(R.id.tv_province)
@@ -94,6 +99,22 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
     //追加的广告信息
     private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
     private MengBanCreateAdFragment mMengBanCreateAdFragment;
+    /**
+     * 当前省信息
+     */
+    private DistrictEntity.AreaEntity mCurrentProvince;
+    /**
+     * 当前市信息
+     */
+    private DistrictEntity.AreaEntity.CcEntity mCurrentCity;
+    /**
+     * 默认省信息
+     */
+    private DistrictEntity.AreaEntity mDefaultProvince;
+    /**
+     * 默认市信息
+     */
+    private DistrictEntity.AreaEntity.CcEntity mDefaultCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +180,21 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
+
+                        if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_COUPON + "") && mCurrentSelectType == "range") {
+                            if (position != 2) {
+                                mRlProvince.setEnabled(false);
+                                mRlCity.setEnabled(false);
+                                mIvProvince.setVisibility(View.INVISIBLE);
+                                mIvCity.setVisibility(View.INVISIBLE);
+                            } else {
+                                mRlProvince.setEnabled(true);
+                                mRlCity.setEnabled(true);
+                                mIvProvince.setVisibility(View.VISIBLE);
+                                mIvCity.setVisibility(View.VISIBLE);
+                            }
+                        }
+
                         String item = (String) parent.getAdapter().getItem(
                                 position - 2);
                         chooseFinish(position - 2);
@@ -185,25 +221,25 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
             case R.id.tv_nav_left:
                 back();
                 break;
-            case R.id.btn_company:
-                mAdEntity.setType(mTypeList.get(1));
-                initSelected(true);
+            case R.id.btn_company://券类
+                mAdEntity.setType(mTypeList.get(5));
+                initSelected(2, true);
                 break;
             case R.id.btn_repeat:
                 mAdEntity.setType(mTypeList.get(4));
-                initSelected(true);
+                initSelected(0, true);
                 break;
             case R.id.btn_link:
                 mAdEntity.setType(mTypeList.get(3));
-                initSelected(true);
+                initSelected(0, true);
                 break;
             case R.id.btn_lift:
                 mAdEntity.setType(mTypeList.get(0));
-                initSelected(true);
+                initSelected(0, true);
                 break;
             case R.id.btn_near:
                 mAdEntity.setType(mTypeList.get(2));
-                initSelected(false);
+                initSelected(1, true);
                 break;
             case R.id.rl_province:
                 mCurrentSelectType = "province";
@@ -244,17 +280,58 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
      * 切换页面显示
      *
      * @param flag
+     * @param isReset 是否重置
      */
-    private void initSelected(boolean flag) {
-        if (flag) {
-            mRlProvince.setVisibility(View.VISIBLE);
-            mRlCity.setVisibility(View.VISIBLE);
-            mRlRange.setVisibility(View.GONE);
-        } else {
-            mRlProvince.setVisibility(View.GONE);
-            mRlCity.setVisibility(View.GONE);
-            mRlRange.setVisibility(View.VISIBLE);
+    private void initSelected(int flag, boolean isReset) {
+        //设置省市可选
+        mRlProvince.setEnabled(true);
+        mRlCity.setEnabled(true);
+        mIvProvince.setVisibility(View.VISIBLE);
+        mIvCity.setVisibility(View.VISIBLE);
+
+        switch (flag) {
+            case 0:
+                mRlProvince.setVisibility(View.VISIBLE);
+                mRlCity.setVisibility(View.VISIBLE);
+                mRlRange.setVisibility(View.GONE);
+                //赋值
+                if (isReset) {
+                    mAdEntity.setProvince(mDefaultProvince);
+                    mAdEntity.setCity(mDefaultCity);
+                    mAdEntity.setDistance(mDistanceList.get(1));
+                }
+                break;
+            case 1:
+                mRlProvince.setVisibility(View.GONE);
+                mRlCity.setVisibility(View.GONE);
+                mRlRange.setVisibility(View.VISIBLE);
+                //赋值
+                if (isReset) {
+                    mAdEntity.setProvince(mDefaultProvince);
+                    mAdEntity.setCity(mDefaultCity);
+                    mAdEntity.setDistance(mDistanceList.get(9));
+                }
+                break;
+            case 2:
+                mRlProvince.setVisibility(View.VISIBLE);
+                mRlCity.setVisibility(View.VISIBLE);
+                mRlRange.setVisibility(View.VISIBLE);
+                //赋值
+                if (isReset) {
+                    if (mCurrentProvince != null && mCurrentCity != null) {
+                        mAdEntity.setProvince(mCurrentProvince);
+                        mAdEntity.setCity(mCurrentCity);
+                    } else {
+                        mAdEntity.setProvince(mDefaultProvince);
+                        mAdEntity.setCity(mDefaultCity);
+                    }
+                    mAdEntity.setDistance(mDistanceList.get(0));
+                }
         }
+
+        mTvProvince.setText(mAdEntity.getProvince().getP());
+        mTvCity.setText(mAdEntity.getCity().getC());
+        mTvRange.setText(mAdEntity.getDistance().getValue());
     }
 
     private void chooseFinish(int currentPosition) {
@@ -293,12 +370,17 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         }
     }
 
+
     @Override
-    public void setInitData(ArrayList<SampleEntity> distanceList, ArrayList<SampleEntity> typeList, ArrayList<DistrictEntity.AreaEntity> districtList, AdEntity adEntity) {
-        mDistanceList = distanceList;
-        mTypeList = typeList;
-        mDistrictList = districtList;
+    public void setInitData(ArrayList<SampleEntity> distanceList, ArrayList<SampleEntity> typeList, ArrayList<DistrictEntity.AreaEntity> districtList, DistrictEntity.AreaEntity currentProvince, DistrictEntity.AreaEntity.CcEntity currentCity, DistrictEntity.AreaEntity defaultProvince, DistrictEntity.AreaEntity.CcEntity defaultCity, AdEntity adEntity) {
+        this.mDistanceList = distanceList;
+        this.mTypeList = typeList;
+        this.mDistrictList = districtList;
         this.mAdEntity = adEntity;
+        this.mCurrentProvince = currentProvince;
+        this.mCurrentCity = currentCity;
+        this.mDefaultProvince = defaultProvince;
+        this.mDefaultCity = defaultCity;
 
         setStatus();
     }
@@ -308,6 +390,8 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         Intent intent = null;
         if ((Constants.RED_DETAIL_TYPE_REPEAT + "").equals(mAdEntity.getType().getKey())) {
             intent = new Intent(this, CreateAdRepeatNextStepActivity.class);
+        } else if ((Constants.RED_DETAIL_TYPE_COUPON + "").equals(mAdEntity.getType().getKey())) {
+            intent = new Intent(this, CreateAdCouponNextStepActivity.class);
         } else {
             intent = new Intent(this, CreateAdNextStepActivity.class);
         }
@@ -349,20 +433,21 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
 
         if (("" + Constants.RED_DETAIL_TYPE_LEFT).equals(mAdEntity.getType().getKey())) {
             mRbLift.setChecked(true);
-        } else if (("" + Constants.RED_DETAIL_TYPE_COMPANY).equals(mAdEntity.getType().getKey())) {
+        } else if (("" + Constants.RED_DETAIL_TYPE_COUPON).equals(mAdEntity.getType().getKey())) {
             mRbCompany.setChecked(true);
+            initSelected(2, false);
         } else if (("" + Constants.RED_DETAIL_TYPE_NEAR).equals(mAdEntity.getType().getKey())) {
             mRbNear.setChecked(true);
-            mTvRange.setText(mAdEntity.getDistance().getValue());
-            initSelected(false);
+            initSelected(1, false);
         } else if (("" + Constants.RED_DETAIL_TYPE_LINK).equals(mAdEntity.getType().getKey())) {
             mRbLink.setChecked(true);
         } else if (("" + Constants.RED_DETAIL_TYPE_REPEAT).equals(mAdEntity.getType().getKey())) {
             mRbRepeat.setChecked(true);
         }
-
         mTvProvince.setText(mAdEntity.getProvince().getP());
         mTvCity.setText(mAdEntity.getCity().getC());
+        mTvRange.setText(mAdEntity.getDistance().getValue());
+
     }
 
     /**

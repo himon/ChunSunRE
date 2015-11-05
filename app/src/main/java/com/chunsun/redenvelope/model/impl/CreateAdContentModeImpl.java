@@ -85,6 +85,8 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
                 params.put("tax_no", "");
                 params.put("forwarding_packages_id", adEntity.getMeal().getId() + "");
                 params.put("formula_multiple", adEntity.getFormula_multiple());
+                params.put("start_time", adEntity.getCouponStartTime());
+                params.put("end_time", adEntity.getCouponEndTime());
                 return params;
             }
         };

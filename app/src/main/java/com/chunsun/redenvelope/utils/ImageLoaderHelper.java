@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
@@ -49,6 +50,8 @@ public class ImageLoaderHelper {
             synchronized (ImageLoaderHelper.class) {
                 if (null == instance) {
                     instance = new ImageLoaderHelper(context);
+                    //关闭log
+                    L.disableLogging();
                 }
             }
         }

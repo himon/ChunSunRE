@@ -529,6 +529,11 @@ public final class CaptureActivity extends Activity implements
             Uri uri = Uri.parse(result);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
+        } else if (ScanUtil.chunsunCodeValidate(result)) {
+            Intent intent = new Intent(this,
+                    ScanChunsunCodeResultActivity.class);
+            intent.putExtra(Constants.MESSAGE_EXTRA, result);
+            startActivity(intent);
         } else {
             Intent intent = new Intent(this, ScanResultActivity.class);
             intent.putExtra(Constants.MESSAGE_EXTRA, result);

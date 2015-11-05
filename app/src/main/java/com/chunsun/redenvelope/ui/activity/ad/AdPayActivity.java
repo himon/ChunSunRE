@@ -21,6 +21,9 @@ import com.chunsun.redenvelope.utils.ShowToast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 广告支付
+ */
 public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnClickListener {
 
     @Bind(R.id.tv_price)

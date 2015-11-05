@@ -12,4 +12,9 @@ public class ScanUtil {
 		String regExp = "((http|ftp|https):\\/\\/)?[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?";
 		return result.matches(regExp);
 	}
+
+	public static boolean chunsunCodeValidate(String result) {
+		String regExp = "[0-9]{8}";
+		return result.matches(regExp);
+	}
 }

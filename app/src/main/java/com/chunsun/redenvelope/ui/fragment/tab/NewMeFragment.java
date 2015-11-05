@@ -14,10 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
-import com.chunsun.redenvelope.scanlibrary.constants.Constants;
+import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
+import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeActivity;
@@ -73,7 +75,12 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     ImageButton mIbCollect;
     @Bind(R.id.ib_setting)
     ImageButton mIbSetting;
-
+    @Bind(R.id.ib_scan_quan)
+    ImageButton mIbScanCoupon;
+    @Bind(R.id.ib_chunsun_quan)
+    ImageButton mIbChunsunCoupon;
+    @Bind(R.id.ib_novice_guidelines)
+    ImageButton mIbNoviceGuidelines;
 
     private MeFragmentPresenter mPresenter;
     private DisplayImageOptions mDisplayOptions;
@@ -124,7 +131,9 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         mIbRecharge.setOnClickListener(this);
         mIbCollect.setOnClickListener(this);
         mIbSetting.setOnClickListener(this);
-
+        mIbScanCoupon.setOnClickListener(this);
+        mIbChunsunCoupon.setOnClickListener(this);
+        mIbNoviceGuidelines.setOnClickListener(this);
     }
 
     @Override
@@ -210,7 +219,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     public void toRecharge() {
         Intent intentRecharge = new Intent(getActivity(),
                 BalanceRechargeActivity.class);
-        intentRecharge.putExtra(Constants.MESSAGE_EXTRA,
+        intentRecharge.putExtra(Constants.EXTRA_KEY,
                 mUserInfoEntity.isEnable_unionpay());
         startActivity(intentRecharge);
     }
@@ -244,6 +253,28 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
 
     }
 
+    /**
+     * 新手指引
+     */
+    @Override
+    public void noviceGuidelines() {
+        Intent intent = new Intent(getActivity(), CommonWebActivity.class);
+        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
+                Constants.NOVICE_GUIDELINES_URL);
+        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE,
+                "新手指引");
+        startActivity(intent);
+    }
+
+    /**
+     * 扫描春笋券
+     */
+    @Override
+    public void scanCoupon() {
+        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -271,6 +302,14 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                 break;
             case R.id.ib_setting:
                 toSetting();
+                break;
+            case R.id.ib_scan_quan:
+                scanCoupon();
+                break;
+            case R.id.ib_chunsun_quan:
+                break;
+            case R.id.ib_novice_guidelines:
+                noviceGuidelines();
                 break;
         }
     }

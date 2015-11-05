@@ -63,6 +63,8 @@ public class RedSuperadditionEntity extends BaseEntity {
         private String province;
         private String RangeString;
         private String delay_seconds_poundage_id;
+        private String start_time;
+        private String end_time;
 
         public void setCover_img_url(String cover_img_url) {
             this.cover_img_url = cover_img_url;
@@ -208,6 +210,22 @@ public class RedSuperadditionEntity extends BaseEntity {
             return delay_seconds_poundage_id;
         }
 
+        public String getStart_time() {
+            return start_time;
+        }
+
+        public void setStart_time(String start_time) {
+            this.start_time = start_time;
+        }
+
+        public String getEnd_time() {
+            return end_time;
+        }
+
+        public void setEnd_time(String end_time) {
+            this.end_time = end_time;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -233,6 +251,8 @@ public class RedSuperadditionEntity extends BaseEntity {
             dest.writeString(this.province);
             dest.writeString(this.RangeString);
             dest.writeString(this.delay_seconds_poundage_id);
+            dest.writeString(this.start_time);
+            dest.writeString(this.end_time);
         }
 
         public ResultEntity() {
@@ -257,6 +277,8 @@ public class RedSuperadditionEntity extends BaseEntity {
             this.province = in.readString();
             this.RangeString = in.readString();
             this.delay_seconds_poundage_id = in.readString();
+            this.start_time = in.readString();
+            this.end_time = in.readString();
         }
 
         public static final Parcelable.Creator<ResultEntity> CREATOR = new Parcelable.Creator<ResultEntity>() {

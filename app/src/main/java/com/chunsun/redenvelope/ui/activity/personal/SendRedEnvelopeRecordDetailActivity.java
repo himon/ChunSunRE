@@ -26,6 +26,7 @@ import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
+import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
@@ -83,6 +84,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
     private View mRedLine;
     private RelativeLayout mRlClassifyStatus;
     private TextView mTvClassifyStatus;
+    private LinearLayout mLLStatistics;
 
     private RedDetailFragmentAdapter mDataAdapter;
     //轮播图adapter
@@ -157,6 +159,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mRedLine = view.findViewById(R.id.red_line);
         mRlClassifyStatus = (RelativeLayout) view.findViewById(R.id.rl_classify_status);
         mTvClassifyStatus = (TextView) view.findViewById(R.id.tv_classify_status);
+        mLLStatistics = (LinearLayout) view.findViewById(R.id.ll_statistics);
 
         mListView.addHeaderView(view);
         mListView.setOnGetMoreListener(new GetMoreListView.OnGetMoreListener() {
@@ -198,9 +201,12 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mRbCommentRecord.setOnClickListener(this);
         mRbGetRedRecord.setOnClickListener(this);
         mBtnSendComment.setOnClickListener(this);
+        //统计
+        mLLStatistics.setOnClickListener(this);
         mBtnPay.setOnClickListener(this);
         //设置发送按钮不可点击
         mBtnSendComment.setEnabled(false);
+
 
         mEtComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -308,7 +314,29 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
                     mPresenter.superaddition(mRedEnvelopeId);
                 }
                 break;
+            case R.id.ll_statistics:
+                toStatistics();
+                break;
         }
+    }
+
+    /**
+     * 跳转统计
+     */
+    private void toStatistics() {
+        Intent intent = new Intent(this, CommonWebActivity.class);
+        intent.putExtra(
+                Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
+                MainApplication.getContext().getUserEntity()
+                        .getShare_host()
+                        + Constants.RED_AGREEMENT_STATISTICS_URL
+                        + "hbId="
+                        + mRedEnvelopeId
+                        + "&token="
+                        + new Preferences(this).getToken());
+        intent.putExtra(
+                Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, "统计");
+        startActivity(intent);
     }
 
     @Override
@@ -318,13 +346,16 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mTvTime.setText(detail.getSend_time());
         mTvContent.setText(detail.getContent());
         ImageLoader.getInstance().displayImage(detail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
-
         /**
          * 轮播图
          */
         mAdapter = new ImageAdapter(list, this);
         mViewPager.setAdapter(mAdapter);
         mViewPager.startAutoScroll();
+
+        if (detail.getHb_type().equals(Constants.RED_DETAIL_TYPE_COUPON + "")) {
+            mLLStatistics.setVisibility(View.VISIBLE);
+        }
 
         mTvRange.setText(detail.getRange());
         mTvType.setText(detail.getType_title());

@@ -56,4 +56,14 @@ public interface IMeFragmentView {
      * 跳转登录界面
      */
     void toLogin();
+
+    /**
+     * 显示新手引导
+     */
+    void noviceGuidelines();
+
+    /**
+     * 扫描春笋券
+     */
+    void scanCoupon();
 }

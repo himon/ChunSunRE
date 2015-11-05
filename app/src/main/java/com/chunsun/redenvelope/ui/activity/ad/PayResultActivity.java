@@ -15,6 +15,9 @@ import com.chunsun.redenvelope.utils.manager.AppManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 支付结果
+ */
 public class PayResultActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.ll_success_container)
@@ -83,6 +86,7 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 appManager.finishActivity(AdPayActivity.class);
                 appManager.finishActivity(CreateAdContentActivity.class);
                 appManager.finishActivity(CreateAdRepeatNextStepActivity.class);
+                appManager.finishActivity(CreateAdCouponNextStepActivity.class);
                 appManager.finishActivity(CreateAdNextStepActivity.class);
                 appManager.finishActivity(CreateAdActivity.class);
 

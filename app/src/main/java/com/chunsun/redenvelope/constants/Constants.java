@@ -133,7 +133,7 @@ public interface Constants {
     //获取广告延时时间
     String GET_AD_DELAY_SECONDS_RATE_JSON_REQUEST_URL = "send_delay_seconds_to_rate";
     //创建广告
-    String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_7";
+    String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_9";
     //获取红包支付明细
     String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
     //余额支付广告费用
@@ -193,6 +193,16 @@ public interface Constants {
      * 注册协议
      */
     String REGISTER_SERVICE_PROTOCOL = "http://www.chunsunkeji.com/registe/RegistrationAgreement.html";
+
+    /**
+     * 券类广告统计链接
+     */
+    String RED_AGREEMENT_STATISTICS_URL = "pages/ticket/dateCount.html?";
+
+    /**
+     * 新手指引WebView
+     */
+    String NOVICE_GUIDELINES_URL = "http://www.chunsunkeji.com/Help/Nav";
 
     /**
      * 注册类型

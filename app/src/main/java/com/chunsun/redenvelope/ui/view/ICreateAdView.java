@@ -23,9 +23,13 @@ public interface ICreateAdView {
      * @param distanceList
      * @param typeList
      * @param districtList
+     * @param province
+     * @param city
+     * @param currentProvince
+     * @param currentCity
      * @param adEntity
      */
-    void setInitData(ArrayList<SampleEntity> distanceList, ArrayList<SampleEntity> typeList, ArrayList<DistrictEntity.AreaEntity> districtList, AdEntity adEntity);
+    void setInitData(ArrayList<SampleEntity> distanceList, ArrayList<SampleEntity> typeList, ArrayList<DistrictEntity.AreaEntity> districtList, DistrictEntity.AreaEntity currentProvince, DistrictEntity.AreaEntity.CcEntity currentCity, DistrictEntity.AreaEntity defaultProvince, DistrictEntity.AreaEntity.CcEntity defaultCity, AdEntity adEntity);
 
     void nextCreateActivity();
 }

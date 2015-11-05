@@ -422,6 +422,9 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         }
     }
 
+    /**
+     * 二维码扫描
+     */
     @Override
     public void toScan() {
         Intent intent = new Intent(this, CaptureActivity.class);
@@ -482,7 +485,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 getSupportFragmentManager().beginTransaction().remove(mTab1StepThreeFragment)
                         .commit();
                 //进入第一个Item详情
-                mForwardFragment.mengBanClick();
+                mHomeFragment.mengBanClick();
                 mTab1Fragment = null;
                 mTab1StepTwoFragment = null;
                 mTab1StepThreeFragment = null;
@@ -490,7 +493,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             case 3://tab3
                 getSupportFragmentManager().beginTransaction().remove(mTab3Fragment).commit();
                 //进入tab3的第一个Item详情
-                mHomeFragment.mengBanClick();
+                mForwardFragment.mengBanClick();
                 mTab3Fragment = null;
                 break;
             case 4://tab4

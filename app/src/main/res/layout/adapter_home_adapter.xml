@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="104dp"
-    android:background="@color/white"
-    android:orientation="horizontal"
-    android:paddingBottom="2dp"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
-    android:paddingTop="2dp">
+              android:layout_width="match_parent"
+              android:layout_height="104dp"
+              android:background="@color/white"
+              android:orientation="horizontal"
+              android:paddingBottom="2dp"
+              android:paddingLeft="3dp"
+              android:paddingRight="3dp"
+              android:paddingTop="2dp">
 
-    <ImageView
-        android:id="@+id/iv_icon"
+    <RelativeLayout
         android:layout_width="150dip"
-        android:layout_height="100dip"
-        android:layout_gravity="center_vertical"
-        android:padding="3dip"
-        android:scaleType="fitXY" />
+        android:layout_height="100dip">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="150dip"
+            android:layout_height="100dip"
+            android:layout_gravity="center_vertical"
+            android:padding="3dip"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:id="@+id/iv_quan_icon"
+            android:visibility="gone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="3dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/img_quan_icon"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +47,7 @@
             android:lineSpacingExtra="4dip"
             android:lines="2"
             android:textColor="@color/font_gray2"
-            android:textSize="@dimen/font_size_sp_16" />
+            android:textSize="@dimen/font_size_sp_16"/>
 
         <LinearLayout
             android:id="@+id/ll_mid"
@@ -47,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dip"
                 android:textColor="@color/font_gray2"
-                android:textSize="@dimen/font_size_sp_12" />
+                android:textSize="@dimen/font_size_sp_12"/>
 
             <TextView
                 android:id="@+id/tv_author"
@@ -56,7 +72,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/font_gray2"
-                android:textSize="@dimen/font_size_sp_12" />
+                android:textSize="@dimen/font_size_sp_12"/>
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +89,7 @@
                 android:layout_width="15dip"
                 android:layout_height="15dip"
                 android:layout_marginRight="5dip"
-                android:src="@drawable/img_icon_range" />
+                android:src="@drawable/img_icon_range"/>
 
             <TextView
                 android:id="@+id/tv_range"
@@ -81,13 +97,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dip"
                 android:textColor="@color/font_gray2"
-                android:textSize="@dimen/font_size_sp_12" />
+                android:textSize="@dimen/font_size_sp_12"/>
 
             <ImageView
                 android:layout_width="15dip"
                 android:layout_height="15dip"
                 android:layout_marginRight="5dip"
-                android:src="@drawable/img_icon_comment" />
+                android:src="@drawable/img_icon_comment"/>
 
             <TextView
                 android:id="@+id/tv_reply"
@@ -95,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dip"
                 android:textColor="@color/font_gray2"
-                android:textSize="@dimen/font_size_sp_12" />
+                android:textSize="@dimen/font_size_sp_12"/>
         </LinearLayout>
 
         <TextView
@@ -107,7 +123,7 @@
             android:layout_marginBottom="3dip"
             android:layout_marginRight="10dip"
             android:textColor="@color/global_red"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>
 

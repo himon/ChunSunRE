@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.activity.ad;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,10 +24,10 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
-import com.chunsun.redenvelope.presenter.CreateAdNextStepPresenter;
+import com.chunsun.redenvelope.presenter.CreateAdCouponNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
-import com.chunsun.redenvelope.ui.view.ICreateAdNextStepView;
+import com.chunsun.redenvelope.ui.view.ICreateAdCouponNextStepView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.text.DecimalFormat;
@@ -37,42 +39,29 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdNextStepView, View.OnClickListener {
+public class CreateAdCouponNextStepActivity extends BaseActivity implements ICreateAdCouponNextStepView, View.OnClickListener {
 
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
     @Bind(R.id.et_price)
     EditText mEtPrice;
+    @Bind(R.id.iv_explain)
+    ImageView mIvExplain;
     @Bind(R.id.et_num)
     EditText mEtNum;
-    @Bind(R.id.et_days)
-    EditText mEtDays;
     /**
      * 显示时间
      */
     @Bind(R.id.ll_show_time_container)
     LinearLayout mLLShowTimeContainer;
-    /**
-     * 定时
-     */
-    @Bind(R.id.ll_time_container)
-    LinearLayout mLLTime;
-    @Bind(R.id.ll_send_days_container)
-    LinearLayout mLLSendDays;
     @Bind(R.id.ll_invoice_container)
     LinearLayout mLLInvoice;
-    @Bind(R.id.tv_time)
-    TextView mTvTime;
+    @Bind(R.id.tb_need_invoice)
+    ToggleButton mTbNeedInvoice;
     @Bind(R.id.tv_total_price)
     TextView mTvTotalPrice;
     @Bind(R.id.btn_next_step)
     Button mBtnNextStep;
-    @Bind(R.id.iv_explain)
-    ImageView mIvExplain;
-    @Bind(R.id.tb_need_invoice)
-    ToggleButton mTbNeedInvoice;
-    @Bind(R.id.rg_send_type)
-    RadioGroup mRgSendType;
     @Bind(R.id.rg_delayed)
     RadioGroup mRgDelayed;
     @Bind(R.id.rb_delayed_5s)
@@ -91,22 +80,39 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     RadioButton mRbDelayed35;
     @Bind(R.id.rb_delayed_40s)
     RadioButton mRbDelayed40;
+    @Bind(R.id.ll_start_time)
+    LinearLayout mLLStartTime;
+    @Bind(R.id.ll_end_time)
+    LinearLayout mLLEndTime;
+    @Bind(R.id.tv_start_time)
+    TextView mTvStartTime;
+    @Bind(R.id.tv_end_time)
+    TextView mTvEndTime;
 
-    private CreateAdNextStepPresenter mPresenter;
+    private CreateAdCouponNextStepPresenter mPresenter;
     private AdEntity mAdEntity;
     //追加的广告信息
     private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
     /**
-     * 费率
+     * 延时列表
      */
     private List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> mDelaySecondsRate;
+    /**
+     * 结束时间
+     */
+    private String mEndTime;
+    /**
+     * 开始时间
+     */
+    private String mStartTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_ad_next_step);
+        setContentView(R.layout.activity_create_ad_coupon_next_step);
         ButterKnife.bind(this);
-        mPresenter = new CreateAdNextStepPresenter(this);
+        mPresenter = new CreateAdCouponNextStepPresenter(this);
         initView();
         initData();
     }
@@ -123,9 +129,38 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
                 mLLInvoice.setVisibility(View.GONE);
             }
         }
-
         initEvent();
     }
+
+    private void initTime() {
+        Calendar calendar = Calendar.getInstance();
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        mStartTime = year + "年" + (month + 1) + "月" + day + "日";
+        mTvStartTime.setText("开始日期：" + mStartTime);
+
+        if (month == 9) {
+            month = 0;
+            year++;
+        } else if (month == 10) {
+            month = 1;
+            year++;
+        } else if (month == 11) {
+            month = 2;
+            year++;
+        } else {
+            year++;
+        }
+
+        mEndTime = year + "年" + (month + 1) + "月" + day + "日";
+        mTvEndTime.setText("结束日期：" + mEndTime);
+        mAdEntity.setCouponStartTime(mStartTime);
+        mAdEntity.setCouponEndTime(mEndTime);
+    }
+
 
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
@@ -133,23 +168,16 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         mNavRight.setOnClickListener(this);
         mIvExplain.setOnClickListener(this);
         mBtnNextStep.setOnClickListener(this);
-
-
-        mRgSendType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rb_immediate_send:
-                        mLLSendDays.setVisibility(View.GONE);
-                        mLLTime.setVisibility(View.GONE);
-                        break;
-                    case R.id.rb_time_send:
-                        mLLSendDays.setVisibility(View.VISIBLE);
-                        mLLTime.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }
-        });
+        mLLStartTime.setOnClickListener(this);
+        mLLEndTime.setOnClickListener(this);
+        mRbDelayed5.setOnClickListener(this);
+        mRbDelayed10.setOnClickListener(this);
+        mRbDelayed15.setOnClickListener(this);
+        mRbDelayed20.setOnClickListener(this);
+        mRbDelayed25.setOnClickListener(this);
+        mRbDelayed30.setOnClickListener(this);
+        mRbDelayed35.setOnClickListener(this);
+        mRbDelayed40.setOnClickListener(this);
 
         mEtNum.addTextChangedListener(new TextWatcher() {
             @Override
@@ -160,25 +188,7 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String num = s.toString();
-                calcAdTotalPrice(StringUtil.textview2String(mEtPrice), num, StringUtil.textview2String(mEtDays));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        mEtDays.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String days = s.toString();
-                calcAdTotalPrice(StringUtil.textview2String(mEtPrice), StringUtil.textview2String(mEtNum), days);
+                calcAdTotalPrice(StringUtil.textview2String(mEtPrice), num);
             }
 
             @Override
@@ -215,7 +225,7 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
                         showDelayedTimeList(0);
                         mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
                     }
-                    calcAdTotalPrice(price, StringUtil.textview2String(mEtNum), StringUtil.textview2String(mEtDays));
+                    calcAdTotalPrice(price, StringUtil.textview2String(mEtNum));
                     showSelectDelayedTime();
                 }
             }
@@ -244,33 +254,9 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-            case R.id.tv_nav_right:
-                toIllustrate();
-                break;
-            case R.id.iv_explain:
-                toAdPriceExplain();
-                break;
-            case R.id.btn_next_step:
-                mPresenter.toValidatePrice(mAdEntity);
-                break;
-        }
-    }
-
-    @Override
     public void setDelaySecondsRateData(List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> result) {
         mDelaySecondsRate = result;
         initDefaultData();
-    }
-
-    @Override
-    public void toSelectDelaySeconds() {
-
     }
 
     /**
@@ -285,22 +271,11 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     /**
-     * 下一步
-     */
-    @Override
-    public void toNextStep() {
-        Intent intent = new Intent(this, CreateAdContentActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
-        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
-        startActivity(intent);
-    }
-
-    /**
      * 跳转说明Activity
      */
     @Override
     public void toIllustrate() {
-        Intent intentWeb = new Intent(CreateAdNextStepActivity.this,
+        Intent intentWeb = new Intent(this,
                 CommonWebActivity.class);
         intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
                 Constants.SEND_RED_INSTRUCTION_URL);
@@ -310,26 +285,14 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     /**
-     * 计算总价
-     *
-     * @param priceStr
-     * @param numStr
-     * @param daysStr
-     * @return
+     * 下一步
      */
-    private void calcAdTotalPrice(String priceStr, String numStr, String daysStr) {
-        float price = Float.valueOf(priceStr);
-        int num = Integer.valueOf(numStr);
-        int days = Integer.valueOf(daysStr);
-
-        DecimalFormat format = new DecimalFormat("0.00");
-        String total = format.format(price * num * days);
-        mTvTotalPrice.setText("￥" + total + "元");
-
-        mAdEntity.setPrice(priceStr);
-        mAdEntity.setDays(daysStr);
-        mAdEntity.setNum(numStr);
-        mAdEntity.setAdPrice(total);
+    @Override
+    public void toNextStep() {
+        Intent intent = new Intent(this, CreateAdContentActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
+        startActivity(intent);
     }
 
     /**
@@ -348,31 +311,89 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
                     mAdEntity.setDelaySeconds(item);
                 }
             }
+            mAdEntity.setStartTime(mSuperadditionEntity.getTime());
 
-            if (TextUtils.isEmpty(mSuperadditionEntity.getTime())) {
-                Calendar calendar = Calendar.getInstance();
-                mAdEntity.setStartTime(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
-            } else {
-                mAdEntity.setStartTime(mSuperadditionEntity.getTime());
-            }
-
-            calcAdTotalPrice(mSuperadditionEntity.getPrice(), mSuperadditionEntity.getEveryday_count(), mSuperadditionEntity.getDay_count());
+            calcAdTotalPrice(mSuperadditionEntity.getPrice(), mSuperadditionEntity.getEveryday_count());
 
             mEtPrice.setText(mSuperadditionEntity.getPrice());
             mEtNum.setText(mSuperadditionEntity.getEveryday_count());
-            mEtDays.setText(mSuperadditionEntity.getDay_count());
-            mTvTime.setText(mAdEntity.getStartTime());
+
+            mTvStartTime.setText("开始时间：" + mSuperadditionEntity.getStart_time());
+            mTvEndTime.setText("结束时间：" + mSuperadditionEntity.getEnd_time());
+
         } else {
 
             mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
             mAdEntity.setStartTime(time);
 
-            calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
+            calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM);
 
             mEtPrice.setText(Constants.AD_DEFAULT_PRICE);
             mEtNum.setText(Constants.AD_DEFAULT_NUM);
-            mEtDays.setText(Constants.AD_DEFAULT_DAYS);
-            mTvTime.setText(time);
+
+            initTime();
+        }
+    }
+
+    /**
+     * 计算总价
+     *
+     * @param priceStr
+     * @param numStr
+     * @return
+     */
+    private void calcAdTotalPrice(String priceStr, String numStr) {
+        float price = 0;
+        if (!TextUtils.isEmpty(priceStr)) {
+            price = Float.valueOf(priceStr);
+        }
+
+        int num = Integer.valueOf(numStr);
+
+        DecimalFormat format = new DecimalFormat("0.00");
+        String total = format.format(price * num);
+        mTvTotalPrice.setText("￥" + total + "元");
+
+        mAdEntity.setPrice(priceStr);
+        mAdEntity.setNum(numStr);
+        mAdEntity.setAdPrice(total);
+    }
+
+    /**
+     * 设置选中的延时时间
+     */
+    private void showSelectDelayedTime() {
+        if (mAdEntity.getDelaySeconds() != null) {
+            int key = mAdEntity.getDelaySeconds().getId();
+            switch (key) {
+                case 4:
+                    mRgDelayed.check(R.id.rb_delayed_5s);
+                    break;
+                case 5:
+                    mRgDelayed.check(R.id.rb_delayed_10s);
+                    break;
+                case 6:
+                    mRgDelayed.check(R.id.rb_delayed_15s);
+                    break;
+                case 7:
+                    mRgDelayed.check(R.id.rb_delayed_20s);
+                    break;
+                case 8:
+                    mRgDelayed.check(R.id.rb_delayed_25s);
+                    break;
+                case 9:
+                    mRgDelayed.check(R.id.rb_delayed_30s);
+                    break;
+                case 10:
+                    mRgDelayed.check(R.id.rb_delayed_35s);
+                    break;
+                case 11:
+                    mRgDelayed.check(R.id.rb_delayed_40s);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
@@ -414,40 +435,100 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     /**
-     * 设置选中的延时时间
+     * 设置定时
      */
-    private void showSelectDelayedTime() {
-        if (mAdEntity.getDelaySeconds() != null) {
-            int key = mAdEntity.getDelaySeconds().getId();
-            switch (key) {
-                case 4:
-                    mRgDelayed.check(R.id.rb_delayed_5s);
-                    break;
-                case 5:
-                    mRgDelayed.check(R.id.rb_delayed_10s);
-                    break;
-                case 6:
-                    mRgDelayed.check(R.id.rb_delayed_15s);
-                    break;
-                case 7:
-                    mRgDelayed.check(R.id.rb_delayed_20s);
-                    break;
-                case 8:
-                    mRgDelayed.check(R.id.rb_delayed_25s);
-                    break;
-                case 9:
-                    mRgDelayed.check(R.id.rb_delayed_30s);
-                    break;
-                case 10:
-                    mRgDelayed.check(R.id.rb_delayed_35s);
-                    break;
-                case 11:
-                    mRgDelayed.check(R.id.rb_delayed_40s);
-                    break;
+    private void setTime(final boolean flag) {
+        Calendar calendar = Calendar.getInstance();
 
-                default:
-                    break;
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        if (!flag) {
+            if (month == 9) {
+                month = 0;
+                year++;
+            } else if (month == 10) {
+                month = 1;
+                year++;
+            } else if (month == 11) {
+                month = 2;
+                year++;
+            } else {
+                year++;
             }
+        }
+
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+
+                if (flag) {
+                    mStartTime = year + "年" + (monthOfYear + 1) + "月"
+                            + dayOfMonth + "日";
+                    mTvStartTime.setText("开始时间：" + mStartTime);
+                    mAdEntity.setCouponStartTime(mStartTime);
+                } else {
+                    mEndTime = year + "年" + (monthOfYear + 1) + "月"
+                            + dayOfMonth + "日";
+                    mTvEndTime.setText("结束时间：" + mEndTime);
+                    mAdEntity.setCouponEndTime(mEndTime);
+                }
+            }
+        }, year, month, day).show();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_nav_icon:
+            case R.id.tv_nav_left:
+                back();
+                break;
+            case R.id.tv_nav_right:
+                toIllustrate();
+                break;
+            case R.id.iv_explain:
+                toAdPriceExplain();
+                break;
+            case R.id.btn_next_step:
+                mPresenter.toValidatePrice(mAdEntity);
+                break;
+            case R.id.ll_start_time:
+                setTime(true);
+                break;
+            case R.id.ll_end_time:
+                setTime(false);
+                break;
+            case R.id.rb_delayed_5s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(0));
+                break;
+            case R.id.rb_delayed_10s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(1));
+                break;
+            case R.id.rb_delayed_15s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
+                break;
+            case R.id.rb_delayed_20s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(3));
+                break;
+            case R.id.rb_delayed_25s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(4));
+                break;
+            case R.id.rb_delayed_30s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(5));
+                break;
+            case R.id.rb_delayed_35s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(6));
+                break;
+            case R.id.rb_delayed_40s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(7));
+                break;
+
+
         }
     }
 }
