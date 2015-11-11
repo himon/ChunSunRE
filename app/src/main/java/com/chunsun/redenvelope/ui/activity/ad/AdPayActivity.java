@@ -189,14 +189,12 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.cancel();
-        }
+        super.hideLoading();
     }
 
     @Override

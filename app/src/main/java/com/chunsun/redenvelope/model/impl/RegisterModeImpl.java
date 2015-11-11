@@ -90,6 +90,8 @@ public class RegisterModeImpl implements RegisterMode {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                byte[] data = error.networkResponse.data;
+                String str = new String(data);
                 listener.onException(error.getMessage());
             }
         }) {

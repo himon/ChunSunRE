@@ -355,7 +355,7 @@ public class UserInfoEntity {
     }
 
     public String getThumb_img_url() {
-        return thumb_img_url;
+        return Constants.IMG_HOST_URL + thumb_img_url;
     }
 
     public void setThumb_img_url(String thumb_img_url) {

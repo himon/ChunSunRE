@@ -258,8 +258,8 @@ public class JsonManager {
     public static String initDataVerifyToJson(String mobile, String verify_code) {
         JSONObject object = new JSONObject();
         try {
-            object.put("token", mobile);
-            object.put("type", verify_code);
+            object.put("mobile", mobile);
+            object.put("verify_code", verify_code);
         } catch (JSONException e) {
             e.printStackTrace();
         }

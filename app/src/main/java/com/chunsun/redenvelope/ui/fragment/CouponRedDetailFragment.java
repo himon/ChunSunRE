@@ -96,6 +96,7 @@ public class CouponRedDetailFragment extends BaseFragment implements ICouponRedD
     TextView mTvRedPrice;
     RadioButton mRbCommentRecord;
     RadioButton mRbGetRedRecord;
+    TextView mTvEffectiveDate;
 
     //轮播图adapter
     private ImageAdapter mAdapter;
@@ -162,6 +163,7 @@ public class CouponRedDetailFragment extends BaseFragment implements ICouponRedD
         mTvRedPrice = (TextView) view.findViewById(R.id.tv_red_price);
         mRbCommentRecord = (RadioButton) view.findViewById(R.id.rb_comment_record);
         mRbGetRedRecord = (RadioButton) view.findViewById(R.id.rb_get_red_record);
+        mTvEffectiveDate = (TextView) view.findViewById(R.id.tv_effective_date);
 
         /**
          * ListView
@@ -368,6 +370,10 @@ public class CouponRedDetailFragment extends BaseFragment implements ICouponRedD
         } else {
             mIvCollect.setImageResource(R.drawable.img_collect_normal);
         }
+
+        mTvEffectiveDate.setVisibility(View.VISIBLE);
+        mTvEffectiveDate.setText("有效期：" + mDetail.getStart_time() + " -- "
+                + mDetail.getEnd_time());
     }
 
     /**

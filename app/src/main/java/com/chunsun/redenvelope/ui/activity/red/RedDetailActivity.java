@@ -124,7 +124,6 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
             mType = intent.getIntExtra(Constants.EXTRA_KEY2, -1);
         }
-        mFragments = new ArrayList<>();
         mPresenter.getShareLimit(mToken);
 
     }

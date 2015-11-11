@@ -66,4 +66,9 @@ public interface IMeFragmentView {
      * 扫描春笋券
      */
     void scanCoupon();
+
+    /**
+     * 春笋券列表
+     */
+    void chunsunCoupon();
 }

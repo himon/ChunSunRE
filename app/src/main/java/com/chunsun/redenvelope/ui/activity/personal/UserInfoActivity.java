@@ -456,13 +456,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        super.hideLoading();
     }
 }

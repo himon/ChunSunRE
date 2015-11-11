@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
@@ -21,8 +23,9 @@ import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
+import com.chunsun.redenvelope.ui.activity.personal.ChunsunCouponWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
-import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeActivity;
+import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
@@ -30,9 +33,7 @@ import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.chunsun.redenvelope.widget.CircleTransform;
 
 import java.text.DecimalFormat;
 
@@ -83,7 +84,6 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     ImageButton mIbNoviceGuidelines;
 
     private MeFragmentPresenter mPresenter;
-    private DisplayImageOptions mDisplayOptions;
     private DecimalFormat mFormat;
     private UserInfoEntity mUserInfoEntity;
 
@@ -138,12 +138,17 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
 
     @Override
     protected void initData() {
-        mDisplayOptions = ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions(8);
+
     }
 
     public void getData() {
         mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken());
         setData();
+    }
+
+    @Override
+    public void onOptionsMenuClosed(Menu menu) {
+        super.onOptionsMenuClosed(menu);
     }
 
     /**
@@ -161,14 +166,14 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             if (mUserInfoEntity.is_proxy()) {
                 mIvProxyIcon.setVisibility(View.VISIBLE);
             }
-            ImageLoader.getInstance().displayImage(mUserInfoEntity.getThumb_img_url(), mIvHeadLogo, mDisplayOptions);
+            Glide.with(this).load(mUserInfoEntity.getThumb_img_url()).transform(new CircleTransform(getActivity())).into(mIvHeadLogo);
             mPtr.refreshComplete();
         }
     }
 
 
     /**
-     * 跳转个人中心
+     * 跳转个人中
      */
     @Override
     public void toMeInfomation() {
@@ -181,7 +186,10 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
      */
     @Override
     public void toMineInviteCode() {
-        Intent intent = new Intent(getActivity(), MineInviteCodeActivity.class);
+        //Intent intent = new Intent(getActivity(), MineInviteCodeActivity.class);
+        //startActivity(intent);
+
+        Intent intent = new Intent(getActivity(), MineInviteCodeWebActivity.class);
         startActivity(intent);
     }
 
@@ -272,6 +280,15 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     @Override
     public void scanCoupon() {
         Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        startActivityForResult(intent, 77);
+    }
+
+    @Override
+    public void chunsunCoupon() {
+        Intent intent = new Intent(getActivity(), ChunsunCouponWebActivity.class);
+        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
+                mUserInfoEntity.getShare_host() + "pages/ticket/list.html?token="
+                        + new Preferences(getActivity()).getToken());
         startActivity(intent);
     }
 
@@ -307,6 +324,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                 scanCoupon();
                 break;
             case R.id.ib_chunsun_quan:
+                chunsunCoupon();
                 break;
             case R.id.ib_novice_guidelines:
                 noviceGuidelines();

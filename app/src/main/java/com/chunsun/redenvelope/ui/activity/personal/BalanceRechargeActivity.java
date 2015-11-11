@@ -179,13 +179,11 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.cancel();
-        }
+        super.hideLoading();
     }
 }

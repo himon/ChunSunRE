@@ -181,7 +181,7 @@ public class ShareSdkHelper implements PlatformActionListener {
                             break;
                     }
                 } else {
-
+                    ShowToast.Short("分享成功！");
                 }
             }
         });

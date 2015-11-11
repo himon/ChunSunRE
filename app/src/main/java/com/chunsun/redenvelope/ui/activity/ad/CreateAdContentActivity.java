@@ -25,6 +25,7 @@ import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdContentPresenter;
+import com.chunsun.redenvelope.ui.activity.red.PreviewRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.PhotoAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
@@ -40,6 +41,9 @@ import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.entity.Photo;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
+/**
+ * 广告添加图片、文本Activity
+ */
 public class CreateAdContentActivity extends BaseActivity implements ICreateAdContentView, View.OnClickListener {
 
     @Bind(R.id.main_nav)
@@ -70,11 +74,13 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     private PhotoAdapter photoAdapter;
     //标示是否是上传封面图片
     private boolean mIsCover;
-    private List<Photo> mPhotos = new ArrayList<>();
+    private ArrayList<Photo> mPhotos = new ArrayList<>();
 
     //
     //追加的广告信息
     private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
+    //封面图片url
+    private String mCoverPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +94,14 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
 
     @Override
     protected void initView() {
-        initTitleBar("发广告", "", "", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("发广告", "", "预览", Constants.TITLE_TYPE_SAMPLE);
         mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
         selectedPhotos.add("");
         photoAdapter = new PhotoAdapter(this, selectedPhotos, mPhotos);
         mRvPic.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
         mRvPic.setAdapter(photoAdapter);
+        mNavRight.setVisibility(View.VISIBLE);
 
         initEvent();
     }
@@ -187,7 +194,7 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
                 back();
                 break;
             case R.id.tv_nav_right:
-
+                toPreview();
                 break;
             case R.id.iv_add_title_img://添加封面图片
                 selectCoverImage();
@@ -227,15 +234,33 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     }
 
     @Override
+    public void toPreview() {
+        mAdEntity.setTitle(mEtTitle.getText().toString().trim());
+        mAdEntity.setContent(mEtContent.getText().toString().trim());
+        mAdEntity.setCoverImagePath(mCoverPath);
+
+        Intent intent = null;
+        String type = mAdEntity.getType().getKey();
+        if ((Constants.RED_DETAIL_TYPE_LEFT + "").equals(type) || (Constants.RED_DETAIL_TYPE_NEAR + "").equals(type) || (Constants.RED_DETAIL_TYPE_COUPON + "").equals(type)) {
+            intent = new Intent(this, PreviewRedDetailActivity.class);
+        } else if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(type)) {
+
+        } else if ((Constants.RED_DETAIL_TYPE_REPEAT + "").equals(type)) {
+
+        }
+        intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putParcelableArrayListExtra(Constants.EXTRA_KEY2, mPhotos);
+        startActivity(intent);
+    }
+
+    @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        super.hideLoading();
     }
 
     public void previewPhoto(Intent intent) {
@@ -250,7 +275,8 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
             if (mIsCover) {
                 if (data != null) {
                     List<Photo> photos = data.getParcelableArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
-                    toImageCutActivity(photos.get(0).getPath());
+                    mCoverPath = photos.get(0).getPath();
+                    toImageCutActivity(mCoverPath);
                     mIsCover = false;
                 }
 

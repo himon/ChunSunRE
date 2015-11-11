@@ -11,8 +11,8 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.event.MainEvent;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.presenter.LoginPresenter;
+import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -123,18 +123,22 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
             EventBus.getDefault().post(new MainEvent(Constants.FROM_AD));
         } else if (mFrom.equals(Constants.FROM_ME)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_ME));
+        } else if (mFrom.equals(Constants.FROM_TAB1)) {
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB1));
+        } else if (mFrom.equals(Constants.FROM_TAB3)) {
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB3));
         }
         back();
     }
 
     @Override
     public void showLoading() {
-        mDialog.show();
+       super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        mDialog.dismiss();
+        super.hideLoading();
     }
 
 }

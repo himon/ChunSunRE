@@ -149,12 +149,12 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Vie
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        mDialog.dismiss();
+        super.hideLoading();
     }
 
     @Override

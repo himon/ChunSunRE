@@ -1,15 +1,13 @@
 package com.chunsun.redenvelope.ui.view;
 
+import com.chunsun.redenvelope.ui.base.BaseView;
+
 /**
  * Created by Administrator on 2015/7/30.
  */
-public interface IRegisterNextView {
+public interface IRegisterNextView extends BaseView{
 
     void success();
-
-    void showLoading();
-
-    void hideLoading();
 
     /**
      * 注册成功显示的Dialog

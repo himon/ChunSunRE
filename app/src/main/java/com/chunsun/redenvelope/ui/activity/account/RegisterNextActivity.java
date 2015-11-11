@@ -85,16 +85,12 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
 
     @Override
     public void showLoading() {
-        if (mDialog != null) {
-            mDialog.show();
-        }
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+       super.showLoading();
     }
 
     @Override

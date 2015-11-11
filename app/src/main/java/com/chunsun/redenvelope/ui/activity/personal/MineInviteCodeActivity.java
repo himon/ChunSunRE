@@ -10,6 +10,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
+import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MineInviteCodePresenter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
@@ -92,5 +93,10 @@ public class MineInviteCodeActivity extends BaseActivity implements IMineInviteC
         Intent intent = new Intent(this, InviteRecordListActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mResult);
         startActivity(intent);
+    }
+
+    @Override
+    public void getShareUrlSuccess(UserEntity entity) {
+
     }
 }

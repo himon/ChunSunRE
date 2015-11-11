@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <RelativeLayout
+        android:id="@+id/rl_not_chunsun_quan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_not_chunsun_quan"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_not_chunsun_quan"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_not_chunsun_quan"
+            android:layout_centerHorizontal="true"
+            android:text="您扫的不是春笋券"
+            android:textColor="@color/font_grag4"
+            android:textSize="@dimen/font_size_sp_22"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_not_permission"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_not_permission"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_not_permission_chunsun_quan"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_not_permission"
+            android:layout_centerHorizontal="true"
+            android:text="对不起您无权消费该春笋券"
+            android:textColor="@color/font_grag4"
+            android:textSize="@dimen/font_size_sp_22"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_chunsun_quan_expired"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_chunsun_quan_expired"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_chunsun_quan_expired"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_chunsun_quan_expired"
+            android:layout_centerHorizontal="true"
+            android:text="对不起该春笋券已过期"
+            android:textColor="@color/font_grag4"
+            android:textSize="@dimen/font_size_sp_22"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_chunsun_quan_lose_efficacy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_chunsun_quan_lose_efficacy"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_chunsun_quan_lose_efficacy"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_chunsun_quan_lose_efficacy"
+            android:layout_centerHorizontal="true"
+            android:text="对不起该春笋券已失效"
+            android:textColor="@color/font_grag4"
+            android:textSize="@dimen/font_size_sp_22"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_chunsun_quan_used"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_chunsun_quan_used"
+            android:layout_width="240dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/img_chunsun_quan_used"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_chunsun_quan_used"
+            android:layout_centerHorizontal="true"
+            android:text="对不起该春笋券已使用"
+            android:textColor="@color/font_grag4"
+            android:textSize="@dimen/font_size_sp_22"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/sv_scan_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp">
+
+            <LinearLayout
+                android:id="@+id/ll_not_using"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/img_scan_quan_result"
+                android:orientation="vertical"
+                android:padding="22dp">
+
+                <TextView
+                    android:id="@+id/tv_get_quan_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="领券日期：2015年10月20日"/>
+
+                <TextView
+                    android:id="@+id/tv_quan_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="消费码：22221152121"/>
+
+                <TextView
+                    android:id="@+id/tv_get_quan_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="领券人：听风者"/>
+
+                <Button
+                    android:id="@+id/btn_validate_quan"
+                    android:layout_width="190dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/selector_button_red_radius"
+                    android:text="验  证"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_used"
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/img_scan_quan_result"
+                android:orientation="vertical"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:gravity="center"
+                    android:text="恭喜您，该春笋券已成功使用"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_sp_20"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp">
+
+                    <TextView
+                        android:id="@+id/tv_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="12dp"
+                        android:singleLine="true"
+                        android:text="流水号：CS3325645111122221152121"
+                        android:textSize="@dimen/font_size_sp_14"/>
+
+                    <TextView
+                        android:id="@+id/tv_quan_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_no"
+                        android:layout_marginBottom="15dp"
+                        android:text="使用人：听风者"
+                        android:textSize="@dimen/font_size_sp_14"/>
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/img_quan_used"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/layout_red_detail_top_item"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

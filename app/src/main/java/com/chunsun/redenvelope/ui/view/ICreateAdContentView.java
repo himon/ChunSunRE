@@ -6,12 +6,18 @@ import com.chunsun.redenvelope.ui.base.BaseView;
 /**
  * Created by Administrator on 2015/9/2.
  */
-public interface ICreateAdContentView extends BaseView{
+public interface ICreateAdContentView extends BaseView {
 
     /**
      * 跳转付款Activity
+     *
      * @param result
      */
     void toAdPayActivity(CreateAdResultEntity.ResultEntity result);
+
+    /**
+     * 跳转预览界面
+     */
+    void toPreview();
 
 }

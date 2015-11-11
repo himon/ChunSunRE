@@ -44,4 +44,9 @@ public interface IHomeFragmentView {
     void toAdWebView(String title, String url);
 
     void gradRedEnvelopeSuccess(String id);
+
+    /**
+     * 跳转登录
+     */
+    void toLogin();
 }

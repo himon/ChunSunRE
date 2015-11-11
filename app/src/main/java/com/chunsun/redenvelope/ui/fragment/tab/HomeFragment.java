@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
@@ -223,6 +224,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
             }
 
         }
+    }
+
+    @Override
+    public void toLogin() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB1);
+        startActivity(intent);
     }
 
 

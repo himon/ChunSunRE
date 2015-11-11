@@ -86,11 +86,11 @@ public class ForgetPwdNextActivity extends BaseActivity implements IForgetPwdNex
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        mDialog.hide();
+        super.hideLoading();
     }
 }

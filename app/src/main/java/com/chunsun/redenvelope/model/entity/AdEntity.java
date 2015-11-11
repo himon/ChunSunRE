@@ -109,6 +109,16 @@ public class AdEntity implements Parcelable {
      */
     private String couponEndTime;
 
+    /**
+     * 标题
+     */
+    private String title;
+
+    /**
+     * 内容
+     */
+    private String content;
+
 
     public String getPrice() {
         return price;
@@ -322,6 +332,23 @@ public class AdEntity implements Parcelable {
         this.couponEndTime = couponEndTime;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -353,6 +380,8 @@ public class AdEntity implements Parcelable {
         dest.writeParcelable(this.meal, 0);
         dest.writeString(this.couponStartTime);
         dest.writeString(this.couponEndTime);
+        dest.writeString(this.title);
+        dest.writeString(this.content);
     }
 
     public AdEntity() {
@@ -383,6 +412,8 @@ public class AdEntity implements Parcelable {
         this.meal = in.readParcelable(RepeatMealEntity.ResultEntity.class.getClassLoader());
         this.couponStartTime = in.readString();
         this.couponEndTime = in.readString();
+        this.title = in.readString();
+        this.content = in.readString();
     }
 
     public static final Parcelable.Creator<AdEntity> CREATOR = new Parcelable.Creator<AdEntity>() {

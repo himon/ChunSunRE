@@ -134,12 +134,12 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, V
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        mDialog.dismiss();
+        super.hideLoading();
     }
 
     public void onEventMainThread(ValiCodeEvent event) {

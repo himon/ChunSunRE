@@ -1,9 +1,10 @@
 package com.chunsun.redenvelope.ui.base;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.net.RequestManager;
+import com.chunsun.redenvelope.utils.DensityUtils;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.CustomProgressDialog;
 
@@ -38,7 +40,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         AppManager.getAppManager().addActivity(this);
-        if(mDialog == null) {
+        if (mDialog == null) {
             mDialog = new CustomProgressDialog(this, "努力加载ing");
         }
     }
@@ -47,9 +49,9 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     protected abstract void initData();
 
-    protected void initTitleBar(String title, String left, String right, int type){
+    protected void initTitleBar(String title, String left, String right, int type) {
 
-        switch (type){
+        switch (type) {
             case Constants.TITLE_TYPE_SAMPLE:
                 mNavIcon.setVisibility(View.VISIBLE);
                 mNavIcon.setImageResource(R.drawable.img_back);
@@ -90,7 +92,24 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     }
 
-    protected void back(){
+    protected void showLoading() {
+        if (mDialog != null) {
+            mDialog.show();
+            Window dialogWindow = mDialog.getWindow();
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.width = DensityUtils.dip2px(this, 180);
+            lp.height = DensityUtils.dip2px(this, 180);
+            dialogWindow.setAttributes(lp);
+        }
+    }
+
+    protected void hideLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
+
+    protected void back() {
         hideKeyboard();
         finish();
     }

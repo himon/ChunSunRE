@@ -27,6 +27,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
+import com.chunsun.redenvelope.ui.activity.scan.ScanChunsunCodeResultActivity;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab3Fragment;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengBanTab4Fragment;
@@ -445,6 +446,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mViewPager.setCurrentItem(1, false);
             //刷新MeFragment页面
             mMeFragment.getData();
+        } else if (Constants.FROM_TAB3.equals(event.getMsg())) {
+            mTabIndicators.get(2).setmIcon(bitmaps.get(6), mSelectedColor);
+            mViewPager.setCurrentItem(1, false);
+            //刷新MeFragment页面
+            mMeFragment.getData();
         } else if (Constants.FROM_ME.equals(event.getMsg())) {
             mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
             mViewPager.setCurrentItem(3, false);
@@ -507,6 +513,15 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 88) {
+            Intent intent = new Intent(this, ScanChunsunCodeResultActivity.class);
+            String result = data.getStringExtra("message_extra");
+            intent.putExtra(Constants.EXTRA_KEY, result);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onDestroy() {

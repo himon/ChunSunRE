@@ -49,4 +49,9 @@ public interface IForwardFragmentView {
      * @param entity
      */
     void grabRedEnvelopeSuccess(RedListDetailEntity.ResultEntity.PoolEntity entity);
+
+    /**
+     * 跳转登录
+     */
+    void toLogin();
 }

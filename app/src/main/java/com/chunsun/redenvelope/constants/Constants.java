@@ -35,17 +35,19 @@ public interface Constants {
     /**
      * 服务器地址
      */
-    //String HOST_URL = "http://cssv.chunsunkeji.com";
-    String HOST_URL = "http://1.193.162.20:9101";// 外网
+    String HOST_URL = "http://cssv.chunsunkeji.com";
+    //    String HOST_URL = "http://1.193.162.20:9101";// 外网
+    //    String HOST_URL = "http://192.168.1.195:9000";//内网
 
-    //String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-    String IMG_HOST_URL = "http://1.193.162.20:9101";//外网
+    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    //    String IMG_HOST_URL = "http://1.193.162.20:9101";//外网
+    //    String IMG_HOST_URL = "http://192.168.1.195:9000";//内网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
-    //String SYSTEM_USER_ID = "22292";
-    String SYSTEM_USER_ID = "6778";// 测试环境
+    String SYSTEM_USER_ID = "22292";
+    //    String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -75,7 +77,7 @@ public interface Constants {
     //注册时验证邀请码
     String REGISTER_VALIDATA_INVITE_CODE_JSON_REQUEST_URL = "user_register_check_invitation_code_is_exist";
     //注册
-    String REGISTER_JSON_REQUEST_URL = "user_register_v_1_2";
+    String REGISTER_JSON_REQUEST_URL = "user_register_bymobile_v_1_2_3";
     //获取用户信息
     String GET_USERINFO_JSON_REQUEST_URL = "user_info_get_bytoken";
     //快捷登录获取验证码
@@ -162,6 +164,10 @@ public interface Constants {
     String CEATE_AD_GET_REPEAT_MEAL_JSON_REQUEST_URL = "get_hb_forwarding_packages";
     //红包记录列表删除
     String HB_RECORD_LIST_DETAIL_JSON_REQUEST_URL = "user_hongbao_delete";
+    //获取春笋券信息
+    String GET_CHUNSUN_COUPON_INFO = "get_ticket_info_for_seller";
+    //使用春笋券
+    String USE_CHUNSUN_COUPON = "use_chunsun_ticket";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -261,6 +267,16 @@ public interface Constants {
      * 标示从我跳转到登录
      */
     String FROM_ME = "from_me";
+
+    /**
+     * 标示从tab1的fragment跳转到登录
+     */
+    String FROM_TAB1 = "from_tab1";
+
+    /**
+     * 标示从tab3的fragment跳转到登录
+     */
+    String FROM_TAB3 = "from_tab3";
 
     /**
      * 标示登录页点击了返回
@@ -383,6 +399,9 @@ public interface Constants {
     int LISTENER_TYPE_GET_REPEATE_MEAL = 0x2033;
     int LISTENER_TYPE_GET_SEND_RED_ENVELOPE_RECORD = 0x2034;
     int LISTENER_TYPE_DETAIL_SEND_RED_ENVELOPE_RECORD = 0x2035;
+    int LISTENER_GET_CHUNSUN_COUPON_INFO = 0x2036;
+    int LISTENER_USE_CHUNSUN_COUPON = 0x2037;
+    int LISTENER_TYPE_GET_USER_INVITE_INFO = 0x2038;
 
     /**
      * 发广告默认数据

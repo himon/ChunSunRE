@@ -80,6 +80,17 @@
         android:layout_marginTop="8dp" />
 
     <TextView
+        android:id="@+id/tv_effective_date"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dip"
+        android:background="@drawable/img_effective_date_bg"
+        android:gravity="center"
+        android:textColor="@color/global_red"
+        android:visibility="gone" >
+    </TextView>
+
+    <TextView
         android:id="@+id/tv_red_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

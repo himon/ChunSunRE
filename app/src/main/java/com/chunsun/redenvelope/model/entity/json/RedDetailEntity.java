@@ -197,6 +197,14 @@ public class RedDetailEntity extends BaseEntity {
             private boolean enable_reward;
 
             private String total_left_count;
+            /**
+             * 券类开始时间
+             */
+            private String start_time;
+            /**
+             * 券类结束时间
+             */
+            private String end_time;
 
 
             public String getImg_url() {
@@ -607,6 +615,23 @@ public class RedDetailEntity extends BaseEntity {
                 this.total_left_count = total_left_count;
             }
 
+            public String getStart_time() {
+                return start_time;
+            }
+
+            public void setStart_time(String start_time) {
+                this.start_time = start_time;
+            }
+
+            public String getEnd_time() {
+                return end_time;
+            }
+
+            public void setEnd_time(String end_time) {
+                this.end_time = end_time;
+            }
+
+
             @Override
             public int describeContents() {
                 return 0;
@@ -665,6 +690,8 @@ public class RedDetailEntity extends BaseEntity {
                 dest.writeString(this.private_json);
                 dest.writeByte(enable_reward ? (byte) 1 : (byte) 0);
                 dest.writeString(this.total_left_count);
+                dest.writeString(this.start_time);
+                dest.writeString(this.end_time);
             }
 
             public DetailEntity() {
@@ -722,6 +749,8 @@ public class RedDetailEntity extends BaseEntity {
                 this.private_json = in.readString();
                 this.enable_reward = in.readByte() != 0;
                 this.total_left_count = in.readString();
+                this.start_time = in.readString();
+                this.end_time = in.readString();
             }
 
             public static final Parcelable.Creator<DetailEntity> CREATOR = new Parcelable.Creator<DetailEntity>() {

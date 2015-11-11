@@ -79,6 +79,7 @@ public class ForwardFragmentPresenter implements BaseMultiLoadedListener<BaseEnt
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+        mForwardFragmentView.toLogin();
     }
 
     @Override

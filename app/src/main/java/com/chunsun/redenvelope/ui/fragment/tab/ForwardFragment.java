@@ -4,6 +4,7 @@ package com.chunsun.redenvelope.ui.fragment.tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.ForwardFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
@@ -198,9 +200,13 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
 
     @Override
     public void toRepeatRedDetail(String id) {
-        Intent intent = new Intent(getActivity(), RepeatRedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        startActivity(intent);
+        if (TextUtils.isEmpty(new Preferences(getActivity()).getToken())) {
+            toLogin();
+        } else {
+            Intent intent = new Intent(getActivity(), RepeatRedDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY, id);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -220,6 +226,13 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         } else {
             toRedDetail(entity.getId());
         }
+    }
+
+    @Override
+    public void toLogin() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB3);
+        startActivity(intent);
     }
 
     @Override

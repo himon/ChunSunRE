@@ -149,12 +149,12 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        mDialog.dismiss();
+        super.hideLoading();
     }
 
     @Override

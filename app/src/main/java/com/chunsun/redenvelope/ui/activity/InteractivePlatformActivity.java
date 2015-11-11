@@ -212,9 +212,9 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
     private void toUserRewardActivity(String id) {
         Intent intent = new Intent(this, UserRewardActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, id);
-        if(mCurrentCountryPage == 1) {
+        if (mCurrentCountryPage == 1) {
             intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_COUNTRY);
-        }else if(mCurrentCountryPage == 2){
+        } else if (mCurrentCountryPage == 2) {
             intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_LOCAL);
         }
         startActivity(intent);
@@ -298,7 +298,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
 
     @Override
     public void commentSuccess() {
-        switch (mCurrentCheckType){
+        switch (mCurrentCheckType) {
             case 0:
                 mCurrentCountryPage = 1;
                 mListCountry.clear();
@@ -340,13 +340,11 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
 
     @Override
     public void showLoading() {
-        mDialog.show();
+        super.showLoading();
     }
 
     @Override
     public void hideLoading() {
-        if (mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        super.hideLoading();
     }
 }

@@ -116,6 +116,22 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         initData(mDetail.getShare_host());
     }
 
+    /**
+     * 邀请分享
+     *
+     * @param context
+     * @param detail
+     */
+    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail) {
+        this.mContext = context;
+        this.mDetail = detail;
+
+        initView();
+        initShareSDK();
+        initData(mDetail.getShare_host());
+    }
+
+
     private void initView() {
         LayoutInflater inflater = (LayoutInflater) mContext
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -221,12 +237,11 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
             if ("4".equals(mDetail.getHb_type())) {
                 mShowUrl = mDetail.getContent();
                 mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
+            } else if ("-1".equals(mDetail.getHb_type())) {// 邀请码分享
+                mShowUrl = shareHost + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
             } else {
                 mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
             }
-        } else {
-            // 邀请码分享
-            mShowUrl = mShareLimitResult.getShare_host() + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
         }
         mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, shareHost, mFrom, mShareLimitResult != null);
     }

@@ -58,6 +58,7 @@ public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+        mHomeFragmentView.toLogin();
     }
 
     @Override
