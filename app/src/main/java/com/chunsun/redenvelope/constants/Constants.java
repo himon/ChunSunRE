@@ -36,18 +36,18 @@ public interface Constants {
      * 服务器地址
      */
     String HOST_URL = "http://cssv.chunsunkeji.com";
-    //    String HOST_URL = "http://1.193.162.20:9101";// 外网
+//    String HOST_URL = "http://192.168.1.109:9101";// 外网
     //    String HOST_URL = "http://192.168.1.195:9000";//内网
 
     String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-    //    String IMG_HOST_URL = "http://1.193.162.20:9101";//外网
+//    String IMG_HOST_URL = "http://192.168.1.109:9101";//外网
     //    String IMG_HOST_URL = "http://192.168.1.195:9000";//内网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
     String SYSTEM_USER_ID = "22292";
-    //    String SYSTEM_USER_ID = "6778";// 测试环境
+//    String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址

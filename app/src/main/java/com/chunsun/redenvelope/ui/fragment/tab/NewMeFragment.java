@@ -22,6 +22,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.ChunsunCouponWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
@@ -86,6 +87,16 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     private MeFragmentPresenter mPresenter;
     private DecimalFormat mFormat;
     private UserInfoEntity mUserInfoEntity;
+    private boolean showMengban;
+    /**
+     * 第一次加载是否登录成功
+     * true 登录成功， false 失败
+     */
+    private boolean isLogin = true;
+
+    public boolean isLogin() {
+        return isLogin;
+    }
 
     public NewMeFragment() {
         // Required empty public constructor
@@ -142,7 +153,12 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     }
 
     public void getData() {
-        mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken());
+        mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken(), false);
+        setData();
+    }
+
+    public void getDataFromClick() {
+        mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken(), true);
         setData();
     }
 
@@ -254,11 +270,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     public void refresh(UserInfoEntity entity) {
         mUserInfoEntity = entity;
         setData();
-    }
-
-    @Override
-    public void toLogin() {
-
+        isShowMengban();
     }
 
     /**
@@ -292,6 +304,16 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         startActivity(intent);
     }
 
+    @Override
+    public void loginError() {
+        isLogin = false;
+        mPtr.refreshComplete();
+    }
+
+    @Override
+    public void setLoginStatus() {
+        isLogin = true;
+    }
 
     @Override
     public void onClick(View v) {
@@ -329,6 +351,15 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             case R.id.ib_novice_guidelines:
                 noviceGuidelines();
                 break;
+        }
+    }
+
+    /**
+     * 是否显示蒙版
+     */
+    public void isShowMengban() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).isMengBanShowOfTab4();
         }
     }
 }

@@ -149,7 +149,7 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(mDetailEntity.getContent());
         }
         //图片网络地址
-        sp.setImageUrl(mDetailEntity.getCover_img_url());
+        sp.setImageUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
 
         Platform qzone = ShareSDK.getPlatform(which);
         qzone.setPlatformActionListener(this); // 设置分享事件回调

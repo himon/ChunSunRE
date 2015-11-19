@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
@@ -101,6 +102,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!((MainActivity) getActivity()).isLogin()) {
+                    ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB1);
+                    return;
+                }
                 mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                 mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
             }
@@ -165,6 +170,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     @Override
     public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
         imageAdapter = new AdImageAdapter(advert, getActivity());
+        mViewPager.setSize(advert.size());
         mViewPager.setAdapter(imageAdapter);
         mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

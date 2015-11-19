@@ -18,6 +18,7 @@ import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.ForwardFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
@@ -104,6 +105,10 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!((MainActivity) getActivity()).isLogin()) {
+                    ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB3);
+                    return;
+                }
                 RedListDetailEntity.ResultEntity.PoolEntity entity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                 if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
                     toRepeatRedDetail(entity.getId());
@@ -142,7 +147,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_LEFT + "");
+            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_NEAR + "");
         }
         mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYPE_REPEAT + "", mCurrentPage);
     }
@@ -173,6 +178,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
     @Override
     public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
         imageAdapter = new AdImageAdapter(advert, getActivity());
+        mViewPager.setSize(advert.size());
         mViewPager.setAdapter(imageAdapter);
         mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

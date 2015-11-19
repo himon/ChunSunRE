@@ -26,6 +26,8 @@ import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdContentPresenter;
 import com.chunsun.redenvelope.ui.activity.red.PreviewRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.PreviewRepeatRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.PreviewWebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.PhotoAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
@@ -244,9 +246,9 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
         if ((Constants.RED_DETAIL_TYPE_LEFT + "").equals(type) || (Constants.RED_DETAIL_TYPE_NEAR + "").equals(type) || (Constants.RED_DETAIL_TYPE_COUPON + "").equals(type)) {
             intent = new Intent(this, PreviewRedDetailActivity.class);
         } else if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(type)) {
-
+            intent = new Intent(this, PreviewWebRedDetailActivity.class);
         } else if ((Constants.RED_DETAIL_TYPE_REPEAT + "").equals(type)) {
-
+            intent = new Intent(this, PreviewRepeatRedDetailActivity.class);
         }
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
         intent.putParcelableArrayListExtra(Constants.EXTRA_KEY2, mPhotos);

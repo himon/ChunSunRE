@@ -150,7 +150,7 @@ public class PreviewRedDetailActivity extends BaseActivity implements View.OnCli
         ArrayList<String> urls = new ArrayList<>();
 
         if (TextUtils.isEmpty(mAdEntity.getCoverImagePath())) {
-            return urls;
+
         } else {
             urls.add("file://" + mAdEntity.getCoverImagePath());
         }

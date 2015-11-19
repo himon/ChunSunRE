@@ -39,6 +39,7 @@ import com.chunsun.redenvelope.ui.fragment.tab.ForwardFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 import com.chunsun.redenvelope.widget.popupwindow.TitlePopup;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -238,15 +239,30 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         }
     }
 
-    private void isMengBanShowOfTab4() {
-        if (mPreferences.getFirstShowPersonal()) {
+    /**
+     * 个人中心是否显示蒙版
+     */
+    public boolean isMengBanShowOfTab4() {
+        if (mPreferences.getFirstShowPersonal() && mViewPager.getCurrentItem() == 2) {
             mPreferences.setFirstShowPersonal(false);
             mTab4Fragment = new MengBanTab4Fragment();
             mTab4StepTwoFragment = new MengBanTab4StepTwoFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.root, mTab4Fragment).commit();
+            return true;
         }
+        return false;
     }
 
+    /**
+     * 用户判断MeFragment是否成功获取用户信息
+     * <p/>
+     * 如果有token，但是没有获取用户信息，说明当前账号在别处登录
+     *
+     * @return
+     */
+    public boolean isLogin() {
+        return mMeFragment.isLogin();
+    }
 
     private void initEvent() {
 
@@ -295,6 +311,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             case R.id.tv_nav_left:
             case R.id.iv_nav_icon:
                 MainApplication.getContext().getLocationClient().start();
+                ShowToast.Short("重新获取位置");
                 break;
             case R.id.ib_nav_right:
                 mTitlePopup.show(mToolsBar);
@@ -314,12 +331,16 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 break;
             case R.id.indicator_ad:
                 if (isLogin(Constants.FROM_AD)) {
-                    //mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
-                    //mViewPager.setCurrentItem(1, false);
-                    //showTitleBar(v.getId());
+                    if (mMeFragment.isLogin()) {
+                        //mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
+                        //mViewPager.setCurrentItem(1, false);
+                        //showTitleBar(v.getId());
 
-                    Intent intent = new Intent(this, CreateAdActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(this, CreateAdActivity.class);
+                        startActivity(intent);
+                    }else{
+                        toLogin(Constants.FROM_AD);
+                    }
                 }
                 break;
             case R.id.indicator_near:
@@ -331,15 +352,23 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 break;
             case R.id.indicator_me:
                 //判断是否显示蒙版
-                isMengBanShowOfTab4();
                 if (isLogin(Constants.FROM_ME)) {
+                    if (isMengBanShowOfTab4() || TextUtils.isEmpty(new Preferences(this).getToken())) {
+                        mMeFragment.getData();
+                    } else if (!mMeFragment.isLogin()) {
+                        mMeFragment.getDataFromClick();
+                    }
                     mTabIndicators.get(3).setmIcon(bitmaps.get(7), mSelectedColor);
                     mViewPager.setCurrentItem(2, false);
                     showTitleBar(v.getId());
                 }
                 break;
             case R.id.iv_toInteractive:
-                toInteract();
+                if (mMeFragment.isLogin()) {
+                    toInteract();
+                } else {
+                    toLogin(Constants.FROM_TAB1);
+                }
                 break;
         }
     }
@@ -441,11 +470,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         if (Constants.FROM_LOGIN_BACK.equals(event.getMsg())) {
             mTabIndicators.get(0).setmIcon(bitmaps.get(4), mSelectedColor);
             mViewPager.setCurrentItem(0, false);
+        } else if (Constants.FROM_TAB1.equals(event.getMsg())) {
+            mTabIndicators.get(0).setmIcon(bitmaps.get(4), mSelectedColor);
+            mViewPager.setCurrentItem(0, false);
+            //刷新MeFragment页面
+            mMeFragment.getData();
         } else if (Constants.FROM_AD.equals(event.getMsg())) {
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
-            //刷新MeFragment页面
-            mMeFragment.getData();
         } else if (Constants.FROM_TAB3.equals(event.getMsg())) {
             mTabIndicators.get(2).setmIcon(bitmaps.get(6), mSelectedColor);
             mViewPager.setCurrentItem(1, false);

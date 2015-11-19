@@ -93,6 +93,7 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             @Override
             public void onPageSelected(int position) {
                 if (position == mFragments.size() - 1) {
+                    mViewPager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                     if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
                         mRedDetailFragment.startAutoScroll();
                     } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {

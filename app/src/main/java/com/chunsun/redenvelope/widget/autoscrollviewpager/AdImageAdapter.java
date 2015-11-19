@@ -19,12 +19,12 @@ public class AdImageAdapter extends BaseAdapter {
     public List<RedAutoAdEntity.ResultEntity.AdvertEntity> imageUrls; // 图片地址list
     private Context context;
     private DisplayImageOptions mOptions;
-    public static int size;
+    public int size;
     private int height;
 
     public AdImageAdapter(List<RedAutoAdEntity.ResultEntity.AdvertEntity> imageUrls, Context context) {
         this.imageUrls = imageUrls;
-        size = imageUrls.size();
+        this.size = imageUrls.size();
         this.context = context;
         height = (int) (DensityUtils.getDensity(context) * 120);
         mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions();

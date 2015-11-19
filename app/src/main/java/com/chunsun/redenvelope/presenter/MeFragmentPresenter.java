@@ -21,18 +21,28 @@ public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity>
 
     private IMeFragmentView meFragmentView;
     private MeFragmentMode meFragmentMode;
+    private boolean mFlag;
 
     public MeFragmentPresenter(IMeFragmentView meFragmentView) {
         this.meFragmentView = meFragmentView;
         meFragmentMode = new MeFragmentModeImpl((NewMeFragment) meFragmentView);
     }
 
-    public UserInfoEntity getData(String token) {
+    /**
+     * 获取用户信息
+     *
+     * @param token
+     * @param b     是否是点击click tab请求的
+     * @return
+     */
+    public UserInfoEntity getData(String token, boolean b) {
+        this.mFlag = b;
         UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
         if (userEntity == null) {
             meFragmentMode.getUserInfomation(token, this);
             return null;
         } else {
+            meFragmentView.setLoginStatus();
             return userEntity;
         }
     }
@@ -41,12 +51,15 @@ public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity>
     public void onSuccess(UserEntity entity) {
         MainApplication.getContext().setmUserEntity(entity.getResult());
         meFragmentView.refresh(entity.getResult());
+        meFragmentView.setLoginStatus();
     }
 
     @Override
     public void onError(String msg) {
-        if ("会员信息不存在".equals(msg)) {
+        if (mFlag) {
             EventBus.getDefault().post(new MainEvent(Constants.USER_INFO_PASS_FROM_ME));
+        }else{
+            meFragmentView.loginError();
         }
         ShowToast.Short(msg);
     }

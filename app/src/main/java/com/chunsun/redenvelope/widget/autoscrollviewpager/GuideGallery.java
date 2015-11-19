@@ -23,6 +23,19 @@ public class GuideGallery extends Gallery {
     private MyHandler handler;
     public static final int SCROLL_WHAT = 0;
 
+    /**
+     * item的数量
+     */
+    private int size = 0;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     private class MyHandler extends Handler {
 
         @Override
@@ -72,7 +85,8 @@ public class GuideGallery extends Gallery {
         }
         onKeyDown(kEvent, null);
         if (this.getSelectedItemPosition() == 0)
-            this.setSelection(AdImageAdapter.size);
+            //this.setSelection(AdImageAdapter.size);
+            this.setSelection(size);
 
         System.out.println("DDD" + this.getSelectedItemPosition());
         return true;

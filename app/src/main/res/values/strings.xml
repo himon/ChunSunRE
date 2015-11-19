@@ -232,5 +232,7 @@
     <string name="title_activity_preview_coupon_red_detail_fragment">
         PreviewCouponRedDetailFragment
     </string>
+    <string name="title_activity_preview_web_red_detail">PreviewWebRedDetailActivity</string>
+    <string name="title_activity_preview_repeat_red_detail">PreviewRepeatRedDetailActivity</string>
 
 </resources>

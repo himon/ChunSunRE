@@ -53,11 +53,6 @@ public interface IMeFragmentView {
     void refresh(UserInfoEntity entity);
 
     /**
-     * 跳转登录界面
-     */
-    void toLogin();
-
-    /**
      * 显示新手引导
      */
     void noviceGuidelines();
@@ -71,4 +66,14 @@ public interface IMeFragmentView {
      * 春笋券列表
      */
     void chunsunCoupon();
+
+    /**
+     * 账号登陆不成功
+     */
+    void loginError();
+
+    /**
+     * 设置获取用户信息成功
+     */
+    void setLoginStatus();
 }

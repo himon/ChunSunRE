@@ -46,9 +46,9 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                byte[] data = error.networkResponse.data;
-                String msg = new String(data);
-                listener.onError(msg);
+                //byte[] data = error.networkResponse.data;
+                //String msg = new String(data);
+                listener.onError(error.getMessage());
             }
         }) {
             @Override

@@ -109,7 +109,7 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
 
             @Override
             public void onResponse(SampleResponseEntity response) {
-                if (response.isSuccess()) {
+                if (response.isSuccess() || "-8".equals(response.getCode())) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE, response);
                 } else {
                     listener.onError(response.getMsg());

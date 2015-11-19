@@ -289,7 +289,6 @@ public class CreateAdRepeatNextStepActivity extends BaseActivity implements ICre
             return;
         }
 
-
         mAdEntity.setPrice("0.03");
         mAdEntity.setDays("1");
         mAdEntity.setNum("2000");

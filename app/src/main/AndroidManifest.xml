@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chunsun.redenvelope" >
+    package="com.chunsun.redenvelope">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
@@ -51,7 +51,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- meta-data需要写在application中 -->
         <meta-data
@@ -70,7 +70,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.WelcomeActivity" >
+        <activity android:name=".ui.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -84,8 +84,12 @@
         <activity android:name=".ui.activity.account.RegisterNextActivity" />
         <activity android:name=".ui.activity.CommonWebActivity" />
         <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
-        <activity android:name=".ui.activity.red.RedDetailActivity" />
-        <activity android:name=".ui.activity.red.WebRedDetailActivity" />
+        <activity
+            android:name=".ui.activity.red.RedDetailActivity"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".ui.activity.red.WebRedDetailActivity"
+            android:theme="@style/ActivityTheme" />
         <activity android:name=".ui.activity.EditInfoActivity" />
         <activity android:name=".ui.activity.personal.NotReceivingRedActivity" />
         <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity" />
@@ -115,13 +119,24 @@
         <activity android:name=".ui.activity.red.UserRewardActivity" />
         <activity android:name=".ui.activity.red.RedDetailPicShowActivity" />
         <activity android:name=".clip.PicClipActivity" />
-        <activity android:name=".ui.activity.red.RepeatRedDetailActivity" />
+        <activity
+            android:name=".ui.activity.red.RepeatRedDetailActivity"
+            android:theme="@style/ActivityTheme" />
         <activity android:name=".ui.activity.personal.WalletActivity" />
         <activity android:name=".ui.activity.personal.WithdrawCashActivity" />
         <activity android:name=".ui.activity.ad.CreateAdActivity" />
         <activity android:name=".ui.activity.ad.CreateAdNextStepActivity" />
         <activity android:name=".ui.activity.ad.CreateAdRepeatNextStepActivity" />
         <activity android:name=".ui.activity.scan.ScanChunsunCodeResultActivity" />
+        <activity android:name=".ui.activity.red.PushNoticeShowActivity"></activity>
+        <activity android:name=".ui.activity.ad.CreateAdCouponNextStepActivity"></activity>
+        <activity android:name=".ui.activity.personal.ChunsunCouponWebActivity"></activity>
+        <activity
+            android:name=".ui.activity.personal.MineInviteCodeWebActivity"
+            android:theme="@style/ActivityTheme"></activity>
+        <activity android:name=".ui.activity.red.PreviewRedDetailActivity"></activity>
+        <activity android:name=".ui.activity.red.PreviewWebRedDetailActivity"></activity>
+        <activity android:name=".ui.activity.red.PreviewRepeatRedDetailActivity"></activity>
 
         <!-- 图片选择 -->
         <activity
@@ -140,14 +155,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
 
         <!-- alipay sdk end -->
 
@@ -159,7 +172,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent1104499875" />
 
@@ -186,7 +199,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
@@ -203,7 +216,7 @@
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
 
                 <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
@@ -214,8 +227,8 @@
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
-            android:process=":xg_service_v2" >
-            <intent-filter android:priority="0x7fffffff" >
+            android:process=":xg_service_v2">
+            <intent-filter android:priority="0x7fffffff">
 
                 <!-- 【必须】 信鸽SDK的内部广播 -->
                 <action android:name="com.tencent.android.tpush.action.SDK" />
@@ -230,7 +243,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
             <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
-            <intent-filter android:priority="0x7fffffff" >
+            <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
@@ -250,7 +263,7 @@
         <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
         <service
             android:name="com.tencent.android.tpush.rpc.XGRemoteService"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
 
                 <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
@@ -267,7 +280,7 @@
         -->
         <!-- 【可选】APP实现的Receiver，用于接收消息透传和操作结果的回调，请根据需要添加 -->
         <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
-        <receiver android:name=".receiver.MessageReceiver" >
+        <receiver android:name=".receiver.MessageReceiver">
             <intent-filter>
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
@@ -276,26 +289,7 @@
 
         <!-- 信鸽 end -->
 
-        <activity
-            android:name=".ui.activity.red.PushNoticeShowActivity"
-            android:label="@string/title_activity_push_notice_show" >
-        </activity>
-        <activity
-            android:name=".ui.activity.ad.CreateAdCouponNextStepActivity"
-            android:label="@string/title_activity_create_ad_coupon_next_step" >
-        </activity>
-        <activity
-            android:name=".ui.activity.personal.ChunsunCouponWebActivity"
-            android:label="@string/title_activity_chunsun_coupon_web" >
-        </activity>
-        <activity
-            android:name=".ui.activity.personal.MineInviteCodeWebActivity"
-            android:label="@string/title_activity_mine_invite_code_web" >
-        </activity>
-        <activity
-            android:name=".ui.activity.red.PreviewRedDetailActivity"
-            android:label="@string/title_activity_preview_red_detail" >
-        </activity>
+
     </application>
 
 </manifest>

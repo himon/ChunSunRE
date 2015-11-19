@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
-import uk.co.senab.photoview.PhotoView;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +37,7 @@ import uk.co.senab.photoview.PhotoView;
 public class RedDetailPicShowFragment extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.iv_pic)
-    PhotoView mIvPicture;
+    ImageView mIvPicture;
     @Bind(R.id.ll_exit)
     LinearLayout mLLExit;
     @Bind(R.id.tv_exit)
@@ -50,6 +51,7 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
 
     private String mUrl;
     private boolean mIsShow;
+    private PhotoViewAttacher mAttacher;
 
     public RedDetailPicShowFragment() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
 
     @Override
     protected void initView() {
+
         initEvent();
     }
 
@@ -89,6 +92,13 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
         Bundle bundle = getArguments();
         mUrl = bundle.getString(Constants.EXTRA_KEY);
         ImageLoader.getInstance().displayImage(mUrl, mIvPicture, ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions());
+        mAttacher = new PhotoViewAttacher(mIvPicture);
+        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float x, float y) {
+                EventBus.getDefault().post(new RedDetailShowPicBackEvent(""));
+            }
+        });
     }
 
 
