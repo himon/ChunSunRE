@@ -65,7 +65,7 @@ public class RegisterPresenter implements BaseMultiLoadedListener<BaseEntity> {
     public void getValiCode(String phonenum) {
         if (valiPhonenum(phonenum)) {
             registerView.showLoading();
-            registerMode.getCode(phonenum, this);
+            registerMode.registerGetCode(phonenum, this);
         }
     }
 

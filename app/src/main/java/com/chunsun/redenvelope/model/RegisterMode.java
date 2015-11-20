@@ -10,7 +10,7 @@ public interface RegisterMode {
     /**
      * 获取验证码
      */
-    void getCode(String mobile, BaseMultiLoadedListener listener);
+    void registerGetCode(String mobile, BaseMultiLoadedListener listener);
 
     /**
      * 验证验证码

@@ -27,7 +27,7 @@ public class ForgetPwdNextPresenter implements BaseSingleLoadedListener<SampleRe
                             String new_pwd, String confirm_pwd) {
         if (StringUtil.validataPwd(new_pwd, confirm_pwd)) {
             forgetPwdNextView.showLoading();
-            forgetPwdNextMode.onSuccess(mobile, verify_code, new_pwd, confirm_pwd, this);
+            forgetPwdNextMode.findPwdSubmit(mobile, verify_code, new_pwd, confirm_pwd, this);
         }
     }
 

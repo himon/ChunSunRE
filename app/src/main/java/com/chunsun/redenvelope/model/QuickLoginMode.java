@@ -22,6 +22,6 @@ public interface QuickLoginMode {
      * @param pushDeviceToken
      * @param listener
      */
-    void login(String phone, String code,
+    void quickLogin(String phone, String code,
                String phoneInfo, String pushDeviceToken, BaseMultiLoadedListener listener);
 }

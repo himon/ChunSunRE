@@ -132,7 +132,7 @@ public class CreateAdContentPresenter implements BaseMultiLoadedListener<BaseEnt
                     break;
             }
         }
-        mCreateAdContentMode.commit(token, mAdEntity, title, content, this);
+        mCreateAdContentMode.commitAdCreate(token, mAdEntity, title, content, this);
     }
 
     private boolean validateBaseInfo(AdEntity mAdEntity, String title, String content) {
@@ -234,6 +234,6 @@ public class CreateAdContentPresenter implements BaseMultiLoadedListener<BaseEnt
                 }
             }
         }
-        mCreateAdContentMode.commit(token, adEntity, title, content, this);
+        mCreateAdContentMode.commitAdCreate(token, adEntity, title, content, this);
     }
 }

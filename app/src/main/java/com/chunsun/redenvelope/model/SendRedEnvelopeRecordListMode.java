@@ -15,7 +15,7 @@ public interface SendRedEnvelopeRecordListMode {
      * @param page_index
      * @param listener
      */
-    void loadData(String token, String type, int page_index, BaseMultiLoadedListener listener);
+    void loadRedEnvelopeSendRecordListData(String token, String type, int page_index, BaseMultiLoadedListener listener);
 
     /**
      * 删除红包记录

@@ -7,9 +7,9 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
  */
 public interface InteractivePlatformMode {
 
-    void getCountryList(String token, int page_index, BaseMultiLoadedListener listener);
+    void getCountryCommentList(String token, int page_index, BaseMultiLoadedListener listener);
 
-    void getLocalList(String token, int page_index, BaseMultiLoadedListener listener);
+    void getLocalCommentList(String token, int page_index, BaseMultiLoadedListener listener);
 
     void sendComment(String token, String comment, String province, String city, BaseMultiLoadedListener listener);
 }

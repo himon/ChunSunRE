@@ -7,5 +7,5 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
  */
 public interface SendRedEnvelopeRecordClassifyMode {
 
-    void loadData(String token, BaseSingleLoadedListener listener);
+    void loadRedEnvelopeSendRecordClassifyData(String token, BaseSingleLoadedListener listener);
 }

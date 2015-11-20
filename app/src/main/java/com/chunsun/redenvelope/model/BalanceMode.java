@@ -1,11 +1,17 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/8/18.
  */
 public interface BalanceMode {
 
-    void loadData(String token, BaseSingleLoadedListener listener);
+    /**
+     * 获取钱包页面显示的数据
+     *
+     * @param token
+     * @param listener
+     */
+    void loadWalletData(String token, BaseMultiLoadedListener listener);
 }

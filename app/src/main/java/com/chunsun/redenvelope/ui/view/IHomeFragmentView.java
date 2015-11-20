@@ -2,13 +2,14 @@ package com.chunsun.redenvelope.ui.view;
 
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
+import com.chunsun.redenvelope.ui.base.BaseView;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/10.
  */
-public interface IHomeFragmentView {
+public interface IHomeFragmentView extends BaseView{
 
     void setData(RedListDetailEntity.ResultEntity entity);
 

@@ -7,5 +7,13 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
  */
 public interface BalanceDetailListMode {
 
-    void loadData(String token, String type, int page_index, BaseSingleLoadedListener listener);
+    /**
+     * 加载账户明细数据列表
+     *
+     * @param token
+     * @param type
+     * @param page_index
+     * @param listener
+     */
+    void loadBalanceDetailLitsData(String token, String type, int page_index, BaseSingleLoadedListener listener);
 }

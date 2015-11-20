@@ -27,7 +27,7 @@ public class SendRedEnvelopeRecordClassifyPresenter implements BaseSingleLoadedL
     }
 
     public void loadData(String token) {
-        mSendRedEnvelopeRecordClassifyMode.loadData(token, this);
+        mSendRedEnvelopeRecordClassifyMode.loadRedEnvelopeSendRecordClassifyData(token, this);
     }
 
     @Override

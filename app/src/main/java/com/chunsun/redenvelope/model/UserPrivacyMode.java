@@ -7,5 +7,12 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
  */
 public interface UserPrivacyMode {
 
-    void updateUserInfo(String token, String private_json, BaseSingleLoadedListener listener);
+    /**
+     * 修改用户隐私设置
+     *
+     * @param token
+     * @param private_json
+     * @param listener
+     */
+    void updateUserPrivacySetting(String token, String private_json, BaseSingleLoadedListener listener);
 }

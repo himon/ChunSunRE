@@ -41,7 +41,7 @@ public class UserPrivacyPresenter implements BaseSingleLoadedListener<SampleResp
             e.printStackTrace();
         }
         mValue = jsonObj.toString();
-        mUserPrivacyMode.updateUserInfo(token, mValue, this);
+        mUserPrivacyMode.updateUserPrivacySetting(token, mValue, this);
     }
 
     @Override

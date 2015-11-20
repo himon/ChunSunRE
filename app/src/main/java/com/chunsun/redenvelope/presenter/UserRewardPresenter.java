@@ -37,7 +37,7 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
     }
 
     public void getData(String token, String user_id) {
-        mUserRewardMode.getData(token, user_id, this);
+        mUserRewardMode.getUserPublicData(token, user_id, this);
     }
 
     @Override
@@ -216,6 +216,6 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
      * @param hb_id
      */
     public void pay(String token, String user_id, String amount, String msg, String hb_id, String province, String city) {
-        mUserRewardMode.pay(token, user_id, amount, msg, hb_id, province, city, this);
+        mUserRewardMode.transfer(token, user_id, amount, msg, hb_id, province, city, this);
     }
 }

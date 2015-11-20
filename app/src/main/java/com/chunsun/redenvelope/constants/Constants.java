@@ -130,7 +130,7 @@ public interface Constants {
     String USER_UPDATE_PWD_JSON_REQUEST_URL = "user_mod_password_now";
     //没有旧密码，修改密码
     String USER_UPDATE_PWD_NOT_HAS_OLD_PWD_JSON_REQUEST_URL = "user_reset_password_bytoken";
-    //修改用户基本信息
+    //修改用户隐私设置
     String USER_UPDATE_INFO_JSON_REQUEST_URL = "user_info_edit_byuser";
     //获取广告延时时间
     String GET_AD_DELAY_SECONDS_RATE_JSON_REQUEST_URL = "send_delay_seconds_to_rate";

@@ -109,6 +109,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
                     ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB3);
                     return;
                 }
+                showLoading();
                 RedListDetailEntity.ResultEntity.PoolEntity entity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                 if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
                     toRepeatRedDetail(entity.getId());
@@ -206,6 +207,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
 
     @Override
     public void toRepeatRedDetail(String id) {
+        hideLoading();
         if (TextUtils.isEmpty(new Preferences(getActivity()).getToken())) {
             toLogin();
         } else {
@@ -225,6 +227,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
 
     @Override
     public void grabRedEnvelopeSuccess(RedListDetailEntity.ResultEntity.PoolEntity entity) {
+        hideLoading();
         if (Constants.RED_DETAIL_TYPE_LINK == entity.getType()) {
             toWebRedDetail(entity.getId());
         } else if (Constants.RED_DETAIL_TYPE_REPEAT == entity.getType()) {
@@ -263,5 +266,15 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         } else {
             mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId(), entity);
         }
+    }
+
+    @Override
+    public void showLoading() {
+        ((MainActivity) getActivity()).showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        ((MainActivity) getActivity()).hideLoading();
     }
 }

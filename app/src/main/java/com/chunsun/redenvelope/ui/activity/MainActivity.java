@@ -208,7 +208,6 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             }
         });
 
-
         isMengBanShow();
 
         initEvent();
@@ -450,6 +449,16 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             Intent intent = new Intent(this, InteractivePlatformActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
     }
 
     /**

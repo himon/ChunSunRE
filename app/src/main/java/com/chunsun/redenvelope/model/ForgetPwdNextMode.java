@@ -7,6 +7,6 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
  */
 public interface ForgetPwdNextMode {
 
-    void onSuccess(String mobile, String verify_code,
+    void findPwdSubmit(String mobile, String verify_code,
                    String new_pwd, String confirm_pwd, BaseSingleLoadedListener listener);
 }

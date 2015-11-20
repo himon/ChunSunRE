@@ -52,7 +52,7 @@ public class QuickLoginPresenter implements BaseMultiLoadedListener<BaseEntity> 
      */
     public void login(String phonenum, String code) {
         quickLoginView.showLoading();
-        quickLoginMode.login(phonenum, code, MainApplication.getContext().getPhoneInfomation(), "afasfasdfasfsafasfsadfas", this);
+        quickLoginMode.quickLogin(phonenum, code, MainApplication.getContext().getPhoneInfomation(), "afasfasdfasfsafasfsadfas", this);
     }
 
 

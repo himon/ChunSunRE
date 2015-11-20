@@ -27,7 +27,7 @@ public class BalanceDetailListPresenter implements BaseSingleLoadedListener<Bala
     }
 
     public void loadData(String token, String type, int page_index) {
-        mBalanceDetailListMode.loadData(token, type, page_index, this);
+        mBalanceDetailListMode.loadBalanceDetailLitsData(token, type, page_index, this);
     }
 
     private void initData(List<BalanceListEntity.ResultEntity.LogsEntity> list) {

@@ -1,10 +1,7 @@
 package com.chunsun.redenvelope.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -45,7 +42,7 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initView() {
 
-        mDialog.show();
+        showLoading();
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -59,9 +56,7 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (mDialog != null && mDialog.isShowing()) {
-                    mDialog.dismiss();
-                }
+                hideLoading();
                 if (mIsSuccessLoad) {
                     mWebView.setVisibility(View.VISIBLE);
                 } else {
@@ -95,7 +90,7 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_nav_left:
                 onBackPressed();
                 break;
@@ -109,9 +104,9 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        if(mWebView.canGoBack()){
+        if (mWebView.canGoBack()) {
             mWebView.goBack();
-        }else{
+        } else {
             back();
         }
     }

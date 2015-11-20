@@ -26,6 +26,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 账户明细列表
+ */
 public class BalanceDetailListActivity extends BaseActivity implements IBalanceDetailListView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)

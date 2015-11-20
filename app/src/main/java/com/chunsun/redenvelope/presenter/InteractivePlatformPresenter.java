@@ -25,11 +25,11 @@ public class InteractivePlatformPresenter implements BaseMultiLoadedListener<Bas
     }
 
     public void getCountryList(String token, int page_index) {
-        mInteractivePlatformMode.getCountryList(token, page_index, this);
+        mInteractivePlatformMode.getCountryCommentList(token, page_index, this);
     }
 
     public void getLocalList(String token, int page_index) {
-        mInteractivePlatformMode.getLocalList(token, page_index, this);
+        mInteractivePlatformMode.getLocalCommentList(token, page_index, this);
     }
 
     /**

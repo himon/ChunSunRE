@@ -106,6 +106,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
                     ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB1);
                     return;
                 }
+                showLoading();
                 mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                 mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
             }
@@ -215,6 +216,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @Override
     public void gradRedEnvelopeSuccess(String id) {
+        hideLoading();
         if (mEntity != null) {
             switch (mEntity.getType()) {
                 case 1:
@@ -224,6 +226,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
                     break;
                 case 4:
                     toWebRedDetail(id);
+                    break;
                 case 6:
                     toForwardRedDetail(id);
                     break;
@@ -258,5 +261,15 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     public void mengBanClick() {
         RedListDetailEntity.ResultEntity.PoolEntity entity = mList.get(0);
         mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId());
+    }
+
+    @Override
+    public void showLoading() {
+        ((MainActivity) getActivity()).showLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        ((MainActivity) getActivity()).hideLoading();
     }
 }

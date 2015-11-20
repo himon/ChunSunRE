@@ -38,7 +38,7 @@ public class NotReceivingRedPresenter implements BaseMultiLoadedListener<BaseEnt
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
-            case Constants.LISTENER_TYPE_RED_ENVELOPE_LIST:
+            case Constants.LISTENER_TYPE_COLLECT_RED_ENVELOPE_LIST:
                 RedDetailUnReceiveAndCollectEntity entity = (RedDetailUnReceiveAndCollectEntity) data;
                 List<RedDetailUnReceiveAndCollectEntity.ResultEntity> result = entity.getResult();
                 mINotReceivingRedView.setData(result);

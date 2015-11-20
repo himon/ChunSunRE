@@ -7,5 +7,13 @@ import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
  */
 public interface BalanceRechargeMode {
 
-    void recharge(String token, String type, String amount, BaseSingleLoadedListener listener);
+    /**
+     * 余额充值
+     *
+     * @param token
+     * @param type
+     * @param amount
+     * @param listener
+     */
+    void balanceRecharge(String token, String type, String amount, BaseSingleLoadedListener listener);
 }

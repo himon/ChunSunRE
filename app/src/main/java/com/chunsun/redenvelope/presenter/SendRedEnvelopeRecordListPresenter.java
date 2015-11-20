@@ -29,7 +29,7 @@ public class SendRedEnvelopeRecordListPresenter implements BaseMultiLoadedListen
     }
 
     public void loadData(String token, String type, int page_index) {
-        mSendRedEnvelopeRecordListMode.loadData(token, type, page_index, this);
+        mSendRedEnvelopeRecordListMode.loadRedEnvelopeSendRecordListData(token, type, page_index, this);
     }
 
     private void initData(List<RedDetailSendRecordListEntity.ResultEntity.LogsEntity> list) {

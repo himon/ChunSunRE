@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MeFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
@@ -17,7 +17,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/3.
  */
-public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity> {
+public class MeFragmentPresenter implements BaseMultiLoadedListener<UserEntity> {
 
     private IMeFragmentView meFragmentView;
     private MeFragmentMode meFragmentMode;
@@ -47,21 +47,34 @@ public class MeFragmentPresenter implements BaseSingleLoadedListener<UserEntity>
         }
     }
 
-    @Override
-    public void onSuccess(UserEntity entity) {
+    public void onSuccessGetData(UserEntity entity) {
         MainApplication.getContext().setmUserEntity(entity.getResult());
         meFragmentView.refresh(entity.getResult());
         meFragmentView.setLoginStatus();
     }
 
     @Override
+    public void onSuccess(int event_tag, UserEntity data) {
+        switch (event_tag) {
+            case Constants.LISTENER_TYPE_GET_USER_INFO:
+                onSuccessGetData(data);
+                break;
+        }
+    }
+
+    @Override
     public void onError(String msg) {
         if (mFlag) {
             EventBus.getDefault().post(new MainEvent(Constants.USER_INFO_PASS_FROM_ME));
-        }else{
+        } else {
             meFragmentView.loginError();
         }
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
     }
 
     @Override

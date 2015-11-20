@@ -8,5 +8,5 @@ import com.chunsun.redenvelope.model.entity.AdEntity;
  */
 public interface CreateAdContentMode {
 
-    void commit(String token, AdEntity mAdEntity, String title, String content, BaseMultiLoadedListener listener);
+    void commitAdCreate(String token, AdEntity mAdEntity, String title, String content, BaseMultiLoadedListener listener);
 }

@@ -22,7 +22,7 @@ public class BalanceRechargePresenter implements BaseSingleLoadedListener<Balanc
     }
 
     public void recharge(String token, String type, String amount) {
-        mBalanceRechargeMode.recharge(token, type, amount, this);
+        mBalanceRechargeMode.balanceRecharge(token, type, amount, this);
     }
 
     public void validateAmount(String amount) {
