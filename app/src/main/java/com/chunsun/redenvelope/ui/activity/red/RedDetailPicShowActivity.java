@@ -65,16 +65,15 @@ public class RedDetailPicShowActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             mUrls = intent.getStringArrayListExtra(Constants.EXTRA_LIST_KEY);
             mIndex = intent.getIntExtra(Constants.EXTRA_KEY, 0);
         }
-
         initFragment();
     }
 
     private void initFragment() {
-        for(int i = 0; i < mUrls.size(); i++){
+        for (int i = 0; i < mUrls.size(); i++) {
             String url = mUrls.get(i);
             RedDetailPicShowFragment fragment = new RedDetailPicShowFragment();
             Bundle data = new Bundle();
@@ -97,4 +96,5 @@ public class RedDetailPicShowActivity extends BaseActivity {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
 }
