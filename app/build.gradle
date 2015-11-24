@@ -31,9 +31,9 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.zhy:okhttputils:1.0.2'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile project(':PhotoPicker')
+    compile 'com.commit451:PhotoView:1.2.4'
     compile files('libs/locSDK_6.03.jar')
     compile files('libs/alipaySDK-20150818.jar')
     compile files('libs/MobLogCollector.jar')
@@ -44,11 +44,11 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-2.6.2.jar')
     compile files('libs/ShareSDK-Wechat-Core-2.6.2.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.6.2.jar')
-    compile 'com.commit451:PhotoView:1.2.4'
-    compile project(':pickerui')
     compile files('libs/Xg_sdk_v2.39_20150915_1121.jar')
     compile files('libs/wup-1.0.0-SNAPSHOT.jar')
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile files('libs/mid-sdk-2.20.jar')
     compile project(':Scanlibrary')
+    compile project(':pickerui')
+    compile project(':PhotoPicker')
 }
