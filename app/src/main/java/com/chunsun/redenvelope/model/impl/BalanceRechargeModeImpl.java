@@ -20,34 +20,6 @@ public class BalanceRechargeModeImpl implements BalanceRechargeMode {
 
     @Override
     public void balanceRecharge(final String token, final String type, final String amount, final BaseSingleLoadedListener listener) {
-//        GsonRequest<BalanceRechargeEntity> request = new GsonRequest<BalanceRechargeEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                BalanceRechargeEntity.class, null, new Response.Listener<BalanceRechargeEntity>() {
-//
-//            @Override
-//            public void onResponse(BalanceRechargeEntity response) {
-//                if (response.isSuccess()) {
-//                    listener.onSuccess(response);
-//                } else {
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.USER_RECHARGE_BALANCE_JSON_REQUEST_URL);
-//                params.put("parames", JsonManager.initDataRechargeToJson(token, type, amount));
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, mActivity);
         mManager.balanceRecharge(token, type, amount, listener, mActivity);
     }
 }

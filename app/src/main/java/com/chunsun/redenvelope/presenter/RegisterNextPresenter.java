@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RegisterNextMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
@@ -17,7 +17,7 @@ import com.chunsun.redenvelope.utils.StringUtil;
 /**
  * Created by Administrator on 2015/7/30.
  */
-public class RegisterNextPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class RegisterNextPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IRegisterNextView registerNextView;
     private RegisterNextMode registerNextMode;
@@ -79,11 +79,6 @@ public class RegisterNextPresenter implements BaseMultiLoadedListener<BaseEntity
     public void onError(String msg) {
         ShowToast.Short(msg);
         registerNextView.hideLoading();
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
     }
 
     @Override

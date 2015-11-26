@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
@@ -15,7 +15,6 @@ import com.chunsun.redenvelope.model.impl.CreateAdModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdView;
 import com.chunsun.redenvelope.utils.ListUtils;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ import java.util.List;
  * @updateDate $Date$
  * @updateDes ${TODO}
  */
-public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICreateAdView mICreateAdView;
     private CreateAdMode mCreateAdMode;
@@ -69,21 +68,6 @@ public class CreateAdPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 setProAndCity(entity);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     /**

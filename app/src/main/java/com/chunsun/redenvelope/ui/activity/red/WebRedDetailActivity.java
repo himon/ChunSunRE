@@ -122,7 +122,6 @@ public class WebRedDetailActivity extends BaseActivity implements IWebRedDetailV
         mNavIcon.setOnClickListener(this);
         mNavRightIcon.setOnClickListener(this);
         mIbInfo.setOnClickListener(this);
-        mRlGetRed.setOnClickListener(this);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 

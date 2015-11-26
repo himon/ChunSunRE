@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.widget.DatePicker;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.UserInfoMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
@@ -25,7 +25,7 @@ import java.util.Calendar;
 /**
  * Created by Administrator on 2015/9/14.
  */
-public class UserInfoPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class UserInfoPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IUserInfoView mIUserInfoView;
     private UserInfoMode mUserInfoMode;

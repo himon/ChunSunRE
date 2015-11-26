@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ForwardFragmentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
@@ -15,7 +15,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/8/5.
  */
-public class ForwardFragmentPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class ForwardFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IForwardFragmentView mForwardFragmentView;
     private ForwardFragmentMode mForwardFragmentMode;
@@ -80,15 +80,5 @@ public class ForwardFragmentPresenter implements BaseMultiLoadedListener<BaseEnt
     public void onError(String msg) {
         ShowToast.Short(msg);
         mForwardFragmentView.toLogin();
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

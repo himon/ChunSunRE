@@ -153,12 +153,12 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     }
 
     public void getData() {
-        mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken(), false);
+        mPresenter.getData(new Preferences(getActivity()).getToken(), false);
         setData();
     }
 
     public void getDataFromClick() {
-        mUserInfoEntity = mPresenter.getData(new Preferences(getActivity()).getToken(), true);
+        mPresenter.getData(new Preferences(getActivity()).getToken(), true);
         setData();
     }
 

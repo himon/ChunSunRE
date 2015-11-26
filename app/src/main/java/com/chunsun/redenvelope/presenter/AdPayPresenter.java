@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.AdPayMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.AdPayAmountDetailEntity;
@@ -14,7 +14,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/9/8.
  */
-public class AdPayPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class AdPayPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IAdPayView mIAdPayView;
     private AdPayMode mAdPayMode;

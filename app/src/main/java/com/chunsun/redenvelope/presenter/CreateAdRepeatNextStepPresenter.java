@@ -1,14 +1,13 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdRepeatNextStepMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RepeatMealEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdRepeatNextStepModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdRepeatNextStepActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdRepeatNextStepView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import java.util.List;
  * @updateDate $Date$
  * @updateDes ${TODO}
  */
-public class CreateAdRepeatNextStepPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CreateAdRepeatNextStepPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICreateAdRepeatNextStepView mICreateAdRepeatNextStepView;
     private CreateAdRepeatNextStepMode mCreateAdRepeatNextStepMode;
@@ -46,20 +45,5 @@ public class CreateAdRepeatNextStepPresenter implements BaseMultiLoadedListener<
                 mICreateAdRepeatNextStepView.getRepeatMealSuccess(result);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

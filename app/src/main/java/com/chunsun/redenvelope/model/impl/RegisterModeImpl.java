@@ -26,34 +26,6 @@ public class RegisterModeImpl implements RegisterMode {
      */
     @Override
     public void registerGetCode(final String mobile, final BaseMultiLoadedListener listener) {
-//        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
-//
-//            @Override
-//            public void onResponse(SampleResponseEntity response) {
-//                if(response.isSuccess()) {
-//                    listener.onSuccess(Constants.LISTENER_TYPE_GET_CODE, response);
-//                }else{
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.REGISTER_GET_VALIDATA_CODE_JSON_REQUEST_URL);
-//                params.put("parames", JsonManager.initDataSmsToJson(mobile));
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, mActivity);
         mManager.registerGetCode(mobile, listener, mActivity);
     }
 
@@ -66,36 +38,6 @@ public class RegisterModeImpl implements RegisterMode {
      */
     @Override
     public void nextStep(final String mobile, final String verify_code, final BaseMultiLoadedListener listener) {
-//        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
-//
-//            @Override
-//            public void onResponse(SampleResponseEntity response) {
-//                if (response.isSuccess()) {
-//                    listener.onSuccess(Constants.LISTENER_TYPE_NEXT_STEP, response);
-//                } else {
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                byte[] data = error.networkResponse.data;
-//                String str = new String(data);
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.REGISTER_NEXT_STEP_CODE_JSON_REQUEST_URL);
-//                params.put("parames", JsonManager.initDataVerifyToJson(mobile, verify_code));
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, mActivity);
         mManager.nextStep(mobile, verify_code, listener, mActivity);
     }
 
@@ -107,34 +49,6 @@ public class RegisterModeImpl implements RegisterMode {
      */
     @Override
     public void hasInviteCodeNextStep(final String invitation_code, final BaseMultiLoadedListener listener) {
-//        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
-//
-//            @Override
-//            public void onResponse(SampleResponseEntity response) {
-//                if (response.isSuccess()) {
-//                    listener.onSuccess(Constants.LISTENER_TYPE_GET_INVITE_CODE, response);
-//                } else {
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.REGISTER_VALIDATA_INVITE_CODE_JSON_REQUEST_URL);
-//                params.put("parames", JsonManager.initDataInviteToJson(invitation_code));
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, mActivity);
         mManager.hasInviteCodeNextStep(invitation_code, listener, mActivity);
     }
 }

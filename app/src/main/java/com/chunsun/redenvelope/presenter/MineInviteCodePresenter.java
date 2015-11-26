@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.MineInviteCodeMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
@@ -9,12 +9,11 @@ import com.chunsun.redenvelope.model.entity.json.UserEntity;
 import com.chunsun.redenvelope.model.impl.MineInviteCodeModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
 import com.chunsun.redenvelope.ui.view.IMineInviteCodeView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
  * Created by Administrator on 2015/8/22.
  */
-public class MineInviteCodePresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class MineInviteCodePresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IMineInviteCodeView mIMineInviteCodeView;
     private MineInviteCodeMode mMineInviteCodeMode;
@@ -59,21 +58,4 @@ public class MineInviteCodePresenter implements BaseMultiLoadedListener<BaseEnti
                 break;
         }
     }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
-    }
-
-
 }

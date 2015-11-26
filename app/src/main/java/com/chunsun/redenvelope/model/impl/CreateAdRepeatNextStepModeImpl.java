@@ -26,34 +26,6 @@ public class CreateAdRepeatNextStepModeImpl implements CreateAdRepeatNextStepMod
 
     @Override
     public void getRepeatMeal(final BaseMultiLoadedListener listener) {
-//        GsonRequest<RepeatMealEntity> request = new GsonRequest<RepeatMealEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                RepeatMealEntity.class, null, new Response.Listener<RepeatMealEntity>() {
-//
-//            @Override
-//            public void onResponse(RepeatMealEntity response) {
-//                if (response.isSuccess()) {
-//                    listener.onSuccess(Constants.LISTENER_TYPE_GET_REPEATE_MEAL, response);
-//                } else {
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.CEATE_AD_GET_REPEAT_MEAL_JSON_REQUEST_URL);
-//                params.put("parames", "");
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, mActivity);
         mManager.getRepeatMeal(listener, mActivity);
     }
 }

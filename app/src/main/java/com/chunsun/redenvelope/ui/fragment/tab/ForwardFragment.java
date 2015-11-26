@@ -148,7 +148,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_NEAR + "");
+            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_LEFT + "");
         }
         mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYPE_REPEAT + "", mCurrentPage);
     }

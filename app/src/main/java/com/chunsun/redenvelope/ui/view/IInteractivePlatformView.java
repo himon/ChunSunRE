@@ -14,4 +14,5 @@ public interface IInteractivePlatformView extends BaseView{
 
     void commentSuccess();
 
+    void toLogin();
 }

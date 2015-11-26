@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RegisterMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
@@ -19,7 +19,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/7/29.
  */
-public class RegisterPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IRegisterView registerView;
     private RegisterMode registerMode;
@@ -179,11 +179,6 @@ public class RegisterPresenter implements BaseMultiLoadedListener<BaseEntity> {
     public void onError(String msg) {
         ShowToast.Short(msg);
         registerView.hideLoading();
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
     }
 
     @Override

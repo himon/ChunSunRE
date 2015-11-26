@@ -1,14 +1,13 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordListMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordListModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordListActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/17.
  */
-public class SendRedEnvelopeRecordListPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class SendRedEnvelopeRecordListPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ISendRedEnvelopeRecordListView mISendRedEnvelopeRecordListView;
     private SendRedEnvelopeRecordListMode mSendRedEnvelopeRecordListMode;
@@ -93,20 +92,5 @@ public class SendRedEnvelopeRecordListPresenter implements BaseMultiLoadedListen
                 mISendRedEnvelopeRecordListView.delSuccess();
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

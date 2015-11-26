@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RedDetailFragmentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
@@ -19,7 +19,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/12.
  */
-public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class RedDetailFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IRedDetailFragmentView redDetailFragmentView;
     private RedDetailFragmentMode redDetailFragmentMode;
@@ -181,21 +181,4 @@ public class RedDetailFragmentPresenter implements BaseMultiLoadedListener<BaseE
                 break;
         }
     }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
-    }
-
-
 }

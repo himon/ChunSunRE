@@ -20,34 +20,6 @@ public class MeFragmentModeImpl implements MeFragmentMode {
 
     @Override
     public void getUserInfomation(final String token, final BaseMultiLoadedListener listener) {
-//        GsonRequest<UserEntity> request = new GsonRequest<UserEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-//                UserEntity.class, null, new Response.Listener<UserEntity>() {
-//
-//            @Override
-//            public void onResponse(UserEntity response) {
-//                if (response.isSuccess()) {
-//                    listener.onSuccess(response);
-//                } else {
-//                    listener.onError(response.getMsg());
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                listener.onException(error.getMessage());
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//                Map<String, String> params = new HashMap<String, String>();
-//                params.put("methodName", Constants.GET_USERINFO_JSON_REQUEST_URL);
-//                params.put("parames", JsonManager.initDataTokenToJson(token));
-//                return params;
-//            }
-//        };
-//        RequestManager.addRequest(request, meFragment);
         mManager.getUserInfomation(token, listener, meFragment, null);
     }
 }

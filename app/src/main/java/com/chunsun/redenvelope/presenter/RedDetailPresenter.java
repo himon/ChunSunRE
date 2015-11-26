@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
@@ -11,14 +11,13 @@ import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.impl.RedDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/8/10.
  */
-public class RedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class RedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
     private IRedDetailView mIRedDetailView;
     private RedDetailMode mRedDetailMode;
 
@@ -69,21 +68,4 @@ public class RedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 break;
         }
     }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
-    }
-
-
 }

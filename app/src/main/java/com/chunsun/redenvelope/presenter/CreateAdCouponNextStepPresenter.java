@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdCouponNextStepMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
@@ -20,7 +20,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
  * @time 2015/11/4 12:15
  * @des
  */
-public class CreateAdCouponNextStepPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CreateAdCouponNextStepPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICreateAdCouponNextStepView mICreateAdCouponNextStepView;
     private CreateAdCouponNextStepMode mCreateAdCouponNextStepMode;
@@ -94,21 +94,6 @@ public class CreateAdCouponNextStepPresenter implements BaseMultiLoadedListener<
                 getDelaySecondsSuccess((AdDelaySecondsRateEntity) data);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-
     }
 
     public void getDelaySecondsSuccess(AdDelaySecondsRateEntity response) {

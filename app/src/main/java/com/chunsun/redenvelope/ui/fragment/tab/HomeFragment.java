@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_LEFT + "");
+            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_NEAR + "");
         }
         mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYLE_SAMPLE + "", mCurrentPage);
     }

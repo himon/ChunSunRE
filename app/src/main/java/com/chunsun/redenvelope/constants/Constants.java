@@ -13,6 +13,8 @@ public interface Constants {
      */
     int PAGE_NUM = 30;
 
+    String UN_LOGIN_MESSAGE = "用户信息已失效";
+
     /**
      * 红包类型
      */

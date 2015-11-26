@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.InteractivePlatformMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
@@ -14,10 +14,11 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/9/12.
  */
-public class InteractivePlatformPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IInteractivePlatformView mIInteractivePlatformView;
     private InteractivePlatformMode mInteractivePlatformMode;
+    private boolean flag = true;
 
     public InteractivePlatformPresenter(IInteractivePlatformView iInteractivePlatformView) {
         mIInteractivePlatformView = iInteractivePlatformView;
@@ -74,17 +75,9 @@ public class InteractivePlatformPresenter implements BaseMultiLoadedListener<Bas
     public void onError(String msg) {
         mIInteractivePlatformView.hideLoading();
         ShowToast.Short(msg);
+        if("用户信息已失效".equals(msg) && flag){
+            mIInteractivePlatformView.toLogin();
+            flag = false;
+        }
     }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
-    }
-
-
 }

@@ -473,12 +473,14 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     /**
      * 页面跳转Event
      *
-     * @param event
+     * @param event x
      */
     public void onEvent(MainEvent event) {
+        //TODO
         if (Constants.FROM_LOGIN_BACK.equals(event.getMsg())) {
             mTabIndicators.get(0).setmIcon(bitmaps.get(4), mSelectedColor);
             mViewPager.setCurrentItem(0, false);
+            showTitleBar(R.id.indicator_home);
         } else if (Constants.FROM_TAB1.equals(event.getMsg())) {
             mTabIndicators.get(0).setmIcon(bitmaps.get(4), mSelectedColor);
             mViewPager.setCurrentItem(0, false);
@@ -497,6 +499,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mViewPager.setCurrentItem(3, false);
             //刷新MeFragment页面
             mMeFragment.getData();
+            showTitleBar(R.id.indicator_me);
         } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
         } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//老版本追加

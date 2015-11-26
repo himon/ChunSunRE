@@ -21,6 +21,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
 import com.chunsun.redenvelope.ui.base.BaseActivity;
@@ -310,6 +311,17 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
                 mPresenter.getLocalList(mToken, mCurrentLocalPage);
                 break;
         }
+    }
+
+    /**
+     * 用户信息失效
+     */
+    @Override
+    public void toLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB1);
+        startActivity(intent);
+        back();
     }
 
     /**

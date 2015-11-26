@@ -150,6 +150,8 @@ public class ShareSdkHelper implements PlatformActionListener {
         }
         //图片网络地址
         sp.setImageUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+        sp.setUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+        //ShowToast.Long(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
 
         Platform qzone = ShareSDK.getPlatform(which);
         qzone.setPlatformActionListener(this); // 设置分享事件回调
@@ -188,13 +190,14 @@ public class ShareSdkHelper implements PlatformActionListener {
     }
 
     @Override
-    public void onError(Platform platform, int i, Throwable throwable) {
+    public void onError(Platform platform, int i, final Throwable throwable) {
         // share_sdk 回调
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, "很遗憾，分享失败，请过会再试！", Toast.LENGTH_LONG)
+                Toast.makeText(mContext, "很遗憾，分享失败，请过会再试\n" + throwable.getMessage(), Toast.LENGTH_LONG)
                         .show();
+
             }
         });
     }

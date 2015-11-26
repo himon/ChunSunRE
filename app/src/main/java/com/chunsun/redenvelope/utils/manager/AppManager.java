@@ -2,6 +2,8 @@ package com.chunsun.redenvelope.utils.manager;
 
 import android.app.Activity;
 
+import com.chunsun.redenvelope.ui.activity.MainActivity;
+
 import java.util.Stack;
 
 /**
@@ -75,6 +77,20 @@ public class AppManager {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
             }
+        }
+    }
+
+    public void finishAllActivityExceptMain() {
+        if (null != activityStack) {
+            for (int i = 0, size = activityStack.size(); i < size; i++) {
+                if (null != activityStack.get(i)) {
+                    if(activityStack.get(i) instanceof MainActivity){
+                        continue;
+                    }
+                    activityStack.get(i).finish();
+                }
+            }
+            activityStack.clear();
         }
     }
 

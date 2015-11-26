@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
@@ -13,14 +13,13 @@ import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/8/18.
  */
-public class SendRedEnvelopeRecordDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class SendRedEnvelopeRecordDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ISendRedEnvelopeRecordDetailView mISendRedEnvelopeRecordDetailView;
     private SendRedEnvelopeRecordDetailMode mSendRedEnvelopeRecordDetailMode;
@@ -104,20 +103,6 @@ public class SendRedEnvelopeRecordDetailPresenter implements BaseMultiLoadedList
                 mISendRedEnvelopeRecordDetailView.getSuperaddition((RedSuperadditionEntity) data);
                 break;
         }
-    }
-
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     /**

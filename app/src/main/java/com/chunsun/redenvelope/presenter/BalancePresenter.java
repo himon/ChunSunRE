@@ -1,14 +1,13 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.BalanceMode;
 import com.chunsun.redenvelope.model.entity.SampleEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
 import com.chunsun.redenvelope.model.impl.BalanceModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
-import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/8/18.
  */
-public class BalancePresenter implements BaseMultiLoadedListener<BalanceEntity> {
+public class BalancePresenter extends BaseMultiLoadedListenerImpl<BalanceEntity> {
 
     private IBalanceView mIBalanceView;
     private BalanceMode mBalanceMode;
@@ -81,20 +80,5 @@ public class BalancePresenter implements BaseMultiLoadedListener<BalanceEntity> 
                 loadAmountSuccess(data);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

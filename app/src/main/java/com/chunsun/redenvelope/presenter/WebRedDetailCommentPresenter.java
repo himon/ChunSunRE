@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.WebRedDetailCommentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
@@ -16,7 +16,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/9/14.
  */
-public class WebRedDetailCommentPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class WebRedDetailCommentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IWebRedDetailCommentView mIWebRedDetailCommentView;
     private WebRedDetailCommentMode mWebRedDetailCommentMode;
@@ -72,21 +72,6 @@ public class WebRedDetailCommentPresenter implements BaseMultiLoadedListener<Bas
                 onCommentSuccess((SampleResponseEntity) data);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     /**

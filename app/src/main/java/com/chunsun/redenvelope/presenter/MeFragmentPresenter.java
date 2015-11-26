@@ -2,10 +2,9 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.MeFragmentMode;
 import com.chunsun.redenvelope.model.entity.json.UserEntity;
-import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
 import com.chunsun.redenvelope.model.event.MainEvent;
 import com.chunsun.redenvelope.model.impl.MeFragmentModeImpl;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
@@ -17,7 +16,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/3.
  */
-public class MeFragmentPresenter implements BaseMultiLoadedListener<UserEntity> {
+public class MeFragmentPresenter extends BaseMultiLoadedListenerImpl<UserEntity> {
 
     private IMeFragmentView meFragmentView;
     private MeFragmentMode meFragmentMode;
@@ -35,16 +34,9 @@ public class MeFragmentPresenter implements BaseMultiLoadedListener<UserEntity> 
      * @param b     是否是点击click tab请求的
      * @return
      */
-    public UserInfoEntity getData(String token, boolean b) {
+    public void getData(String token, boolean b) {
         this.mFlag = b;
-        UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
-        if (userEntity == null) {
-            meFragmentMode.getUserInfomation(token, this);
-            return null;
-        } else {
-            meFragmentView.setLoginStatus();
-            return userEntity;
-        }
+        meFragmentMode.getUserInfomation(token, this);
     }
 
     public void onSuccessGetData(UserEntity entity) {
@@ -69,16 +61,6 @@ public class MeFragmentPresenter implements BaseMultiLoadedListener<UserEntity> 
         } else {
             meFragmentView.loginError();
         }
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
         ShowToast.Short(msg);
     }
 }

@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.UserRewardMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
@@ -24,7 +24,7 @@ import org.json.JSONObject;
 /**
  * Created by Administrator on 2015/9/15.
  */
-public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class UserRewardPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IUserRewardView mIUserRewardView;
     private UserRewardMode mUserRewardMode;
@@ -55,21 +55,6 @@ public class UserRewardPresenter implements BaseMultiLoadedListener<BaseEntity> 
                 mIUserRewardView.paySuccess();
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     private void isPay(BalanceEntity entity) {

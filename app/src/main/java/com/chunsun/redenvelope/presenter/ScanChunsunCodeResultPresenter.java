@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ScanChunsunCodeResultMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseObjectEntity;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @time 2015/11/5 16:34
  * @des
  */
-public class ScanChunsunCodeResultPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class ScanChunsunCodeResultPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IScanChunsunCodeResultView mIScanChunsunCodeResultView;
     private ScanChunsunCodeResultMode mScanChunsunCodeResultMode;
@@ -83,15 +83,5 @@ public class ScanChunsunCodeResultPresenter implements BaseMultiLoadedListener<B
     @Override
     public void onError(String code) {
         mIScanChunsunCodeResultView.showErrorPage(code);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-
     }
 }

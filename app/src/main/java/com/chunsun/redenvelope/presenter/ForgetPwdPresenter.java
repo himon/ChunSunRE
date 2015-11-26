@@ -3,7 +3,7 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ForgetPwdMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
@@ -18,7 +18,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/1.
  */
-public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class ForgetPwdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IForgetPwdView forgetPwdView;
     private ForgetPwdMode forgetPwdMode;
@@ -110,20 +110,5 @@ public class ForgetPwdPresenter implements BaseMultiLoadedListener<BaseEntity> {
                 nextStepSuccess((SampleResponseEntity) data);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

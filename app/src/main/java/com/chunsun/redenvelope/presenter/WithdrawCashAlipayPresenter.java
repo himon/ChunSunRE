@@ -29,7 +29,6 @@ public class WithdrawCashAlipayPresenter {
             ShowToast.Short("您输入的支付宝账号不正确");
             return;
         }
-
         mIWithdrawCashAlipayView.toWithdrawCashConfirm(account, name);
     }
 }

@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RepeatRedDetailMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
@@ -20,7 +20,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
  * @time ${DATE} 15:54
  * @des 转发类红包的Presenter
  */
-public class RepeatRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class RepeatRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IRepeatRedDetailView mIRepeatRedDetailView;
     private RepeatRedDetailMode mRepeatRedDetailMode;
@@ -55,21 +55,6 @@ public class RepeatRedDetailPresenter implements BaseMultiLoadedListener<BaseEnt
                 mIRepeatRedDetailView.setShareHost((RepeatRedEnvelopeGetHostEntity) data);
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     /**

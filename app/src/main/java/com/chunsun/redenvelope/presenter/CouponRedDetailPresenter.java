@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CouponRedDetailFragmentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * @time 2015/11/3 14:03
  * @des 券红包详情Presenter
  */
-public class CouponRedDetailPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CouponRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICouponRedDetailFragmentView mICouponRedDetailFragmentView;
     private CouponRedDetailFragmentMode mCouponRedDetailFragmentMode;
@@ -117,21 +117,6 @@ public class CouponRedDetailPresenter implements BaseMultiLoadedListener<BaseEnt
                 mICouponRedDetailFragmentView.shareSuccess();
                 break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 
     /**

@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.entity.AdEntity;
@@ -62,7 +63,7 @@ public class HttpManager {
      * @param page_index 加载页码
      * @param listener   回调监听
      */
-    public void loadData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, Fragment fragment) {
+    public void loadData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, final Fragment fragment) {
         GsonRequest<RedListDetailEntity> request = new GsonRequest<RedListDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedListDetailEntity.class, null, new Response.Listener<RedListDetailEntity>() {
 
@@ -71,7 +72,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_RED_ENVELOPE_LIST, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -137,7 +142,7 @@ public class HttpManager {
      * @param hb_id    红包id
      * @param listener 回调监听
      */
-    public void grabRedEnvelope(final String token, final String hb_id, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void grabRedEnvelope(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -146,7 +151,15 @@ public class HttpManager {
                 if (response.isSuccess() || "-8".equals(response.getCode())) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -180,7 +193,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getAdAmountDetail(final String token, final String hb_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getAdAmountDetail(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<AdPayAmountDetailEntity> request = new GsonRequest<AdPayAmountDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 AdPayAmountDetailEntity.class, null, new Response.Listener<AdPayAmountDetailEntity>() {
 
@@ -189,7 +202,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_AD_AMOUNT_DETAIL, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -219,7 +236,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void payByBalance(final String token, final String hb_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void payByBalance(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -228,7 +245,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_PAY_BY_BANLANCE, response);
                 } else {
-                    listener.onError(Constants.LISTENER_TYPE_PAY_BY_BANLANCE, response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(Constants.LISTENER_TYPE_PAY_BY_BANLANCE, response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -299,7 +320,7 @@ public class HttpManager {
      * @param listener 回调监听
      * @param activity 来自的Activity
      */
-    public void loadWalletData(final String token, final BaseMultiLoadedListener listener, Activity activity) {
+    public void loadWalletData(final String token, final BaseMultiLoadedListenerImpl listener, final Activity activity) {
         GsonRequest<BalanceEntity> request = new GsonRequest<BalanceEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 BalanceEntity.class, null, new Response.Listener<BalanceEntity>() {
 
@@ -308,7 +329,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_AMOUNT, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -377,7 +402,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void loadData(final String token, final BaseMultiLoadedListener listener, Activity activity) {
+    public void loadData(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailUnReceiveAndCollectEntity> request = new GsonRequest<RedDetailUnReceiveAndCollectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailUnReceiveAndCollectEntity.class, null, new Response.Listener<RedDetailUnReceiveAndCollectEntity>() {
 
@@ -386,7 +411,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COLLECT_RED_ENVELOPE_LIST, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -417,7 +446,7 @@ public class HttpManager {
      * @param fragment
      * @param activity
      */
-    public void getCommentList(final String hb_id, final int page_index, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void getCommentList(final String hb_id, final int page_index, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<RedDetailCommentEntity> request = new GsonRequest<RedDetailCommentEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailCommentEntity.class, null, new Response.Listener<RedDetailCommentEntity>() {
 
@@ -460,7 +489,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void getRedRecordList(final String hb_id, final int page_index, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void getRedRecordList(final String hb_id, final int page_index, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<RedDetailGetRedRecordEntity> request = new GsonRequest<RedDetailGetRedRecordEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailGetRedRecordEntity.class, null, new Response.Listener<RedDetailGetRedRecordEntity>() {
 
@@ -503,7 +532,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void setFavorite(final String token, final String hb_id, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void setFavorite(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -512,7 +541,15 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_FAVORITE, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -547,7 +584,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void sendComment(final String token, final String hb_id, final String content, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void sendComment(final String token, final String hb_id, final String content, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -556,7 +593,15 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMMENT, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -591,7 +636,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -600,7 +645,15 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_SHARE_OPEN_RED, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -634,7 +687,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -643,7 +696,15 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_JUST_OPEN_RED, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -679,7 +740,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void commitAdCreate(final String token, final AdEntity adEntity, final String title, final String content, final BaseMultiLoadedListener listener, Activity activity) {
+    public void commitAdCreate(final String token, final AdEntity adEntity, final String title, final String content, final BaseMultiLoadedListener listener, final Activity activity) {
 
         GsonRequest<CreateAdResultEntity> request = new GsonRequest<CreateAdResultEntity>(Request.Method.POST, StringUtil.preUrl(Constants.CREATE_AD_JSON_REQUEST_URL),
                 CreateAdResultEntity.class, null, new Response.Listener<CreateAdResultEntity>() {
@@ -689,7 +750,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMMIT_AD, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -749,7 +814,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getAdDelaySecondsRate(final BaseMultiLoadedListener listener, Activity activity) {
+    public void getAdDelaySecondsRate(final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<AdDelaySecondsRateEntity> request = new GsonRequest<AdDelaySecondsRateEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 AdDelaySecondsRateEntity.class, null, new Response.Listener<AdDelaySecondsRateEntity>() {
 
@@ -786,7 +851,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getRepeatMeal(final BaseMultiLoadedListener listener, Activity activity) {
+    public void getRepeatMeal(final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RepeatMealEntity> request = new GsonRequest<RepeatMealEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RepeatMealEntity.class, null, new Response.Listener<RepeatMealEntity>() {
 
@@ -826,7 +891,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final BaseMultiLoadedListener listener, Activity activity) {
+    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -835,7 +900,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMLAINT_RED_ENVELOPE, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -866,7 +935,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void editUserInfo(final String token, final String field_name, final String field_value, final BaseMultiLoadedListener listener, Activity activity) {
+    public void editUserInfo(final String token, final String field_name, final String field_value, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -875,7 +944,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_EDIT_USER_INFO, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -904,7 +977,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getCode(final String mobile, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getCode(final String mobile, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1026,8 +1099,8 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getCountryCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, Activity activity) {
-        GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+    public void getCountryCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
+        final GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
 
             @Override
@@ -1035,7 +1108,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_COUNTRY, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1065,7 +1142,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getLocalCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getLocalCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
 
@@ -1074,7 +1151,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_LOCAL, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1106,7 +1187,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void sendComment(final String token, final String comment, final String province, final String city, final BaseMultiLoadedListener listener, Activity activity) {
+    public void sendComment(final String token, final String comment, final String province, final String city, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1115,7 +1196,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMMENT, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1186,7 +1271,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void getUserInfomation(final String token, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void getUserInfomation(final String token, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<UserEntity> request = new GsonRequest<UserEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 UserEntity.class, null, new Response.Listener<UserEntity>() {
 
@@ -1195,7 +1280,15 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_INFO, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        if (fragment != null) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB1);
+                        } else {
+                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                        }
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1228,7 +1321,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getInviteRecord(final String token, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getInviteRecord(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<InviteRecordEntity> request = new GsonRequest<InviteRecordEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InviteRecordEntity.class, null, new Response.Listener<InviteRecordEntity>() {
 
@@ -1237,7 +1330,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_INVITE_INFO, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1307,7 +1404,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1316,7 +1413,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_RECHARGE, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1390,7 +1491,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getRedData(final String token, final String hb_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getRedData(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailEntity> request = new GsonRequest<RedDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailEntity.class, null, new Response.Listener<RedDetailEntity>() {
 
@@ -1399,7 +1500,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1428,7 +1533,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getShareLimit(final String token, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getShareLimit(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<ShareLimitEntity> request = new GsonRequest<ShareLimitEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 ShareLimitEntity.class, null, new Response.Listener<ShareLimitEntity>() {
 
@@ -1437,7 +1542,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1591,7 +1700,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getHost(final String token, final String hb_id, final String platform, final boolean is_valid, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getHost(final String token, final String hb_id, final String platform, final boolean is_valid, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RepeatRedEnvelopeGetHostEntity> request = new GsonRequest<RepeatRedEnvelopeGetHostEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RepeatRedEnvelopeGetHostEntity.class, null, new Response.Listener<RepeatRedEnvelopeGetHostEntity>() {
 
@@ -1600,7 +1709,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_REPEAT_GET_HOST, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1785,7 +1898,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void loadRedEnvelopeSendRecordListData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, Activity activity) {
+    public void loadRedEnvelopeSendRecordListData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailSendRecordListEntity> request = new GsonRequest<RedDetailSendRecordListEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailSendRecordListEntity.class, null, new Response.Listener<RedDetailSendRecordListEntity>() {
 
@@ -1794,7 +1907,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_SEND_RED_ENVELOPE_RECORD, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1824,7 +1941,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void delRedEnvelope(final String token, final int hb_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void delRedEnvelope(final String token, final int hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1833,7 +1950,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_DETAIL_SEND_RED_ENVELOPE_RECORD, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -2021,7 +2142,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getUserPublicData(final String token, final String user_id, final BaseMultiLoadedListener listener, Activity activity) {
+    public void getUserPublicData(final String token, final String user_id, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<UserPublicInfoEntity> request = new GsonRequest<UserPublicInfoEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 UserPublicInfoEntity.class, null, new Response.Listener<UserPublicInfoEntity>() {
 
@@ -2030,7 +2151,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_INFO, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -2065,7 +2190,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final BaseMultiLoadedListener listener, Activity activity) {
+    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final BaseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -2074,7 +2199,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_USER_REWARD_PAY, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if(Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())){
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    }else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {

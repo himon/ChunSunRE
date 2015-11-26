@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.HomeFragmentMode;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
 import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
@@ -14,7 +14,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/8/10.
  */
-public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private IHomeFragmentView mHomeFragmentView;
     private HomeFragmentMode mHomeFragmentMode;
@@ -58,16 +58,7 @@ public class HomeFragmentPresenter implements BaseMultiLoadedListener<BaseEntity
     @Override
     public void onError(String msg) {
         ShowToast.Short(msg);
+        mHomeFragmentView.hideLoading();
         mHomeFragmentView.toLogin();
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

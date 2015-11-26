@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdContentMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
@@ -28,7 +28,7 @@ import me.iwf.photopicker.entity.Photo;
 /**
  * Created by Administrator on 2015/9/2.
  */
-public class CreateAdContentPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICreateAdContentView mICreateAdContentView;
     private CreateAdContentMode mCreateAdContentMode;
@@ -60,11 +60,6 @@ public class CreateAdContentPresenter implements BaseMultiLoadedListener<BaseEnt
     public void onError(String msg) {
         mICreateAdContentView.hideLoading();
         ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
     }
 
     @Override

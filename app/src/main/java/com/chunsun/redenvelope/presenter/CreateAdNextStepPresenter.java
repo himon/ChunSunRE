@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdNextStepMode;
 import com.chunsun.redenvelope.model.entity.AdEntity;
 import com.chunsun.redenvelope.model.entity.BaseEntity;
@@ -17,7 +17,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 /**
  * Created by Administrator on 2015/8/24.
  */
-public class CreateAdNextStepPresenter implements BaseMultiLoadedListener<BaseEntity> {
+public class CreateAdNextStepPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     private ICreateAdNextStepView mICreateAdNextStepView;
     private CreateAdNextStepMode mCreateAdNextStepMode;
@@ -57,22 +57,6 @@ public class CreateAdNextStepPresenter implements BaseMultiLoadedListener<BaseEn
                 break;
         }
     }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onError(int event_tag, String msg) {
-
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
-    }
-
 
     /**
      * 验证价格是否符合要求

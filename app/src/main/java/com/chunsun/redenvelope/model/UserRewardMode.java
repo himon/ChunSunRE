@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.model;
 
+import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 
 /**
@@ -22,7 +23,7 @@ public interface UserRewardMode {
      * @param token
      * @param listener
      */
-    void getUserAmount(String token, BaseMultiLoadedListener listener);
+    void getUserAmount(String token, BaseMultiLoadedListenerImpl listener);
 
     /**
      * 支付奖励

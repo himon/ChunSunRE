@@ -91,7 +91,7 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             textView.setTextColor(mContext.getResources().getColor(R.color.font_gray2));
         }
 
-        holder.setText(R.id.tv_title, poolEntity.getTitle()).setText(R.id.tv_time, time).setText(R.id.tv_author, poolEntity.getNick_name()).setText(R.id.tv_reply, poolEntity.getComment_count() + "").setText(R.id.tv_price, "￥" + poolEntity.getPayable_amount());
+        holder.setText(R.id.tv_title, poolEntity.getTitle()).setText(R.id.tv_time, time).setText(R.id.tv_author, "来自：" + poolEntity.getNick_name()).setText(R.id.tv_reply, poolEntity.getComment_count() + "").setText(R.id.tv_price, "￥" + poolEntity.getPayable_amount());
         holder.setImageResource(R.id.iv_icon, poolEntity.getCover_img_url());
     }
 }
