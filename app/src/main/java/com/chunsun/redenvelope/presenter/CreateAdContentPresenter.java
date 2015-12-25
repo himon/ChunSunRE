@@ -8,11 +8,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdContentMode;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdContentModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
@@ -47,11 +47,15 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
 
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
+        mICreateAdContentView.hideLoading();
         switch (event_tag) {
             case Constants.LISTENER_TYPE_COMMIT_AD:
                 CreateAdResultEntity entity1 = (CreateAdResultEntity) data;
                 mICreateAdContentView.toAdPayActivity(entity1.getResult());
-                mICreateAdContentView.hideLoading();
+                break;
+            case Constants.LISTENER_TYPE_COMMIT_CIRCLE:
+                CreateAdResultEntity entity2 = (CreateAdResultEntity) data;
+                mICreateAdContentView.toCreateCircleSuccess(entity2.getResult());
                 break;
         }
     }
@@ -66,6 +70,15 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
     public void onException(String msg) {
         mICreateAdContentView.hideLoading();
         ShowToast.Short(msg);
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+        switch (event_tag){
+            case Constants.LISTENER_TYPE_COMMIT_CIRCLE:
+                mICreateAdContentView.toCreateError();
+                break;
+        }
     }
 
     /**
@@ -130,31 +143,6 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
         mCreateAdContentMode.commitAdCreate(token, mAdEntity, title, content, this);
     }
 
-    private boolean validateBaseInfo(AdEntity mAdEntity, String title, String content) {
-        if (TextUtils.isEmpty(title)) {
-            ShowToast.Short("请输入广告标题！");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(mAdEntity.getCoverImagePath())) {
-            ShowToast.Short("请选择要上传的封面图片！");
-            return true;
-        }
-
-        if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_LINK + "")) {
-            if (TextUtils.isEmpty(content)) {
-                ShowToast.Short("请输入链接网址！");
-                return true;
-            }
-            if (!content.startsWith("http") && !content.startsWith("https")) {
-                ShowToast.Short("请输入已http或https开头的网址！");
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * 追加提交广告
      *
@@ -194,6 +182,66 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
         }
     }
 
+    /**
+     * 圈子提交
+     *
+     * @param mToken
+     * @param mAdEntity
+     * @param title
+     * @param content
+     * @param mPhotos
+     */
+    public void commitCircle(String mToken, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
+        if (validateBaseInfo(mAdEntity, title, content))
+            return;
+
+        mICreateAdContentView.showLoading();
+
+        for (int i = 0; i < mPhotos.size(); i++) {
+
+            Photo item = mPhotos.get(i);
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(item.getPath(), options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 800, 480);
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(item.getPath(), options);
+
+            switch (i) {
+                case 0:
+                    mAdEntity.setImagePath(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 1:
+                    mAdEntity.setImagePath2(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 2:
+                    mAdEntity.setImagePath3(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 3:
+                    mAdEntity.setImagePath4(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 4:
+                    mAdEntity.setImagePath5(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 5:
+                    mAdEntity.setImagePath6(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 6:
+                    mAdEntity.setImagePath7(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+                case 7:
+                    mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
+                    break;
+            }
+        }
+        mCreateAdContentMode.commitCircleCreate(mToken, mAdEntity, title, content, this);
+    }
+
     private void bitmapToString(String token, AdEntity adEntity, String title, String content) {
         if (mBitmapList != null && mBitmapList.size() > 0) {
             for (int i = 0; i < mBitmapList.size(); i++) {
@@ -230,5 +278,38 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
             }
         }
         mCreateAdContentMode.commitAdCreate(token, adEntity, title, content, this);
+    }
+
+    /**
+     * 验证输入信息
+     *
+     * @param mAdEntity
+     * @param title
+     * @param content
+     * @return
+     */
+    private boolean validateBaseInfo(AdEntity mAdEntity, String title, String content) {
+        if (TextUtils.isEmpty(title)) {
+            ShowToast.Short("请输入广告标题！");
+            return true;
+        }
+
+        if (TextUtils.isEmpty(mAdEntity.getCoverImagePath())) {
+            ShowToast.Short("请选择要上传的封面图片！");
+            return true;
+        }
+
+        if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_LINK + "")) {
+            if (TextUtils.isEmpty(content)) {
+                ShowToast.Short("请输入链接网址！");
+                return true;
+            }
+            if (!content.startsWith("http") && !content.startsWith("https")) {
+                ShowToast.Short("请输入已http或https开头的网址！");
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 
 /**
  * Created by Administrator on 2015/8/18.

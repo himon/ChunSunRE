@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
-import com.chunsun.redenvelope.model.entity.json.RepeatMealEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.json.RepeatMealEntity;
 import com.chunsun.redenvelope.presenter.CreateAdRepeatNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdRepeatNextStepView;
 import com.chunsun.redenvelope.utils.ShowToast;
 

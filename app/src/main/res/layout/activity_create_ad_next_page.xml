@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/img_create_ad_bg"
-              android:orientation="vertical"
-              tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_gray"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,13 +26,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="选择套餐"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <EditText
                     android:id="@+id/et_title"
@@ -41,23 +41,23 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_red_detail_edit_text"
+                    android:background="@drawable/shape_radius_white_no_stroke"
                     android:hint="@string/ad_title"
                     android:maxLength="30"
                     android:padding="5dp"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textColorHint="@color/font_gray3"
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <TextView
+                    android:id="@+id/tv_cover_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="广告封面图片"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_radius_white"
+                    android:background="@drawable/shape_radius_white_no_stroke"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="7dp">
@@ -74,7 +74,15 @@
                         android:id="@+id/iv_add_title_img"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/img_add_title_img"/>
+                        android:src="@drawable/img_add_title_img" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="（必选：图片质量代表您的形象哦~）"
+                        android:textColor="@color/font_gray3"
+                        android:textSize="@dimen/font_size_sp_12" />
                 </LinearLayout>
 
                 <TextView
@@ -84,8 +92,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="广告内容图片"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <LinearLayout
                     android:id="@+id/ll_image_container"
@@ -94,24 +101,32 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_radius_white"
-                    android:orientation="horizontal"
+                    android:background="@drawable/shape_radius_white_no_stroke"
+                    android:orientation="vertical"
                     android:padding="7dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"/>
+                        android:layout_height="170dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="（选填：最多8张）"
+                        android:textColor="@color/font_gray3"
+                        android:textSize="@dimen/font_size_sp_12" />
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:text="广告内容"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <EditText
                     android:id="@+id/et_content"
@@ -120,7 +135,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/shape_red_detail_edit_text"
+                    android:background="@drawable/shape_radius_white_no_stroke"
                     android:gravity="top"
                     android:hint="@string/ad_content"
                     android:maxLength="2000"
@@ -128,8 +143,33 @@
                     android:minLines="6"
                     android:padding="5dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textColorHint="@color/font_gray3"
+                    android:textSize="@dimen/font_size_sp_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cb_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/read_and_agree" />
+
+                <TextView
+                    android:id="@+id/tv_agreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_ad_agreement"
+                    android:textColor="@color/global_red" />
             </LinearLayout>
 
             <Button
@@ -144,7 +184,7 @@
                 android:gravity="center"
                 android:text="@string/commit"
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_size_sp_18"/>
+                android:textSize="@dimen/font_size_sp_18" />
         </LinearLayout>
 
     </ScrollView>

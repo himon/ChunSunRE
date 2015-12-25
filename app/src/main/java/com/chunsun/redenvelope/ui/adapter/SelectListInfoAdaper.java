@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.View;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
-import com.chunsun.redenvelope.ui.base.CommonAdapter;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
+import com.chunsun.redenvelope.ui.base.adapter.CommonAdapter;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
 
 import java.util.List;

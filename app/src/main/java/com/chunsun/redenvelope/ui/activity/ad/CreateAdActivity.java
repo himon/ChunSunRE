@@ -8,24 +8,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseCreateActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.fragment.mengban.MengBanCreateAdFragment;
 import com.chunsun.redenvelope.ui.view.ICreateAdView;
 import com.dpizarro.uipicker.library.picker.PickerUI;
-import com.dpizarro.uipicker.library.picker.PickerUISettings;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,10 +31,8 @@ import butterknife.ButterKnife;
 /**
  * 创建广告首页
  */
-public class CreateAdActivity extends BaseActivity implements ICreateAdView, View.OnClickListener {
+public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAdPresenter> implements ICreateAdView, View.OnClickListener {
 
-    @Bind(R.id.tools_bar)
-    RelativeLayout mToolsBar;
     @Bind(R.id.btn_company)
     RadioButton mRbCompany;
     @Bind(R.id.btn_repeat)
@@ -57,73 +53,26 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
     ImageView mIvCity;
     @Bind(R.id.rl_range)
     RelativeLayout mRlRange;
-    @Bind(R.id.tv_province)
-    TextView mTvProvince;
-    @Bind(R.id.tv_city)
-    TextView mTvCity;
-    @Bind(R.id.tv_range)
-    TextView mTvRange;
     @Bind(R.id.btn_next_step)
     Button mBtnNextStep;
-    @Bind(R.id.picker_ui_view)
-    PickerUI mPickerUI;
-
-
-    private CreateAdPresenter mPresenter;
-    private int currentPosition = 1;
-    /**
-     * 标示正在选择选项
-     */
-    private String mCurrentSelectType;
-    /**
-     * 封装广告数据
-     */
-    private AdEntity mAdEntity = new AdEntity();
-    /**
-     * 距离列表
-     */
-    private ArrayList<SampleEntity> mDistanceList;
-    /**
-     * 广告类型列表
-     */
-    private ArrayList<SampleEntity> mTypeList;
-    /**
-     * 地址列表
-     */
-    private ArrayList<DistrictEntity.AreaEntity> mDistrictList;
-    /**
-     * PickerUi显示的数据列表
-     */
-    private List<String> options;
 
     //追加的广告信息
     private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
     private MengBanCreateAdFragment mMengBanCreateAdFragment;
-    /**
-     * 当前省信息
-     */
-    private DistrictEntity.AreaEntity mCurrentProvince;
-    /**
-     * 当前市信息
-     */
-    private DistrictEntity.AreaEntity.CcEntity mCurrentCity;
-    /**
-     * 默认省信息
-     */
-    private DistrictEntity.AreaEntity mDefaultProvince;
-    /**
-     * 默认市信息
-     */
-    private DistrictEntity.AreaEntity.CcEntity mDefaultCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ad);
         ButterKnife.bind(this);
-        mPresenter = new CreateAdPresenter(this);
+        mPresenter = (CreateAdPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new CreateAdPresenter(this);
     }
 
     @Override
@@ -142,11 +91,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         }
     }
 
-    private void initTitle() {
-        initTitleBar("", "首页", "", Constants.TITLE_TYPE_SAMPLE);
-        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-    }
-
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
@@ -160,13 +104,7 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         mRlRange.setOnClickListener(this);
         mBtnNextStep.setOnClickListener(this);
 
-        mPickerUI.setColorTextCenter(R.color.background_picker);
-        mPickerUI.setColorTextNoCenter(R.color.background_picker);
-        mPickerUI.setBackgroundColorPanel(R.color.background_picker);
-        mPickerUI.setLinesColor(getResources().getColor(
-                R.color.background_picker));
-        mPickerUI.setItemsClickables(true);
-        mPickerUI.setAutoDismiss(false);
+       setEvent();
 
         mPickerUI
                 .setOnClickItemPickerUIListener(new PickerUI.PickerUIItemClickListener() {
@@ -205,12 +143,10 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
 
     @Override
     protected void initData() {
-
         Intent intent = getIntent();
         if (intent != null) {
             mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
         }
-
         mPresenter.getData(mAdEntity, mSuperadditionEntity);
     }
 
@@ -260,20 +196,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
                 nextCreateActivity();
                 break;
         }
-    }
-
-    /**
-     * 弹出PickerUI
-     */
-    private void select() {
-        PickerUISettings pickerUISettings = new PickerUISettings.Builder()
-                .withItems(options).withBackgroundColor(-1)
-                .withAutoDismiss(false)// 自动消失
-                .withItemsClickables(true)// 选中状态
-                .withUseBlur(false).build();
-
-        mPickerUI.setSettings(pickerUISettings);
-        mPickerUI.slide(0);
     }
 
     /**
@@ -334,43 +256,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         mTvRange.setText(mAdEntity.getDistance().getValue());
     }
 
-    private void chooseFinish(int currentPosition) {
-        mPickerUI.slide(currentPosition);
-        String str = options.get(currentPosition);
-        if ("province".equals(mCurrentSelectType)) {
-            for (DistrictEntity.AreaEntity item : mDistrictList) {
-                if (str.equals(item.getP())) {
-                    mAdEntity.setProvince(item);
-                    mTvProvince.setText(item.getP());
-                    // 设置城区
-                    ArrayList<DistrictEntity.AreaEntity.CcEntity> cc = item.getCc();
-                    mAdEntity.setCity(cc.get(0));
-                    mTvCity.setText(cc.get(0).getC());
-                    break;
-                }
-            }
-        } else if ("city".equals(mCurrentSelectType)) {
-            DistrictEntity.AreaEntity province = mAdEntity.getProvince();
-            ArrayList<DistrictEntity.AreaEntity.CcEntity> cityList = province.getCc();
-            for (DistrictEntity.AreaEntity.CcEntity item : cityList) {
-                if (str.equals(item.getC())) {
-                    mAdEntity.setCity(item);
-                    mTvCity.setText(item.getC());
-                    break;
-                }
-            }
-        } else if ("range".equals(mCurrentSelectType)) {
-            for (SampleEntity item : mDistanceList) {
-                if (str.equals(item.getValue())) {
-                    mAdEntity.setDistance(item);
-                    mTvRange.setText(item.getValue());
-                    break;
-                }
-            }
-        }
-    }
-
-
     @Override
     public void setInitData(ArrayList<SampleEntity> distanceList, ArrayList<SampleEntity> typeList, ArrayList<DistrictEntity.AreaEntity> districtList, DistrictEntity.AreaEntity currentProvince, DistrictEntity.AreaEntity.CcEntity currentCity, DistrictEntity.AreaEntity defaultProvince, DistrictEntity.AreaEntity.CcEntity defaultCity, AdEntity adEntity) {
         this.mDistanceList = distanceList;
@@ -381,7 +266,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         this.mCurrentCity = currentCity;
         this.mDefaultProvince = defaultProvince;
         this.mDefaultCity = defaultCity;
-
         setStatus();
     }
 
@@ -399,32 +283,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
-
-    private List<String> getDistance() {
-        List<String> list = new ArrayList<String>();
-        for (SampleEntity item : mDistanceList) {
-            list.add(item.getValue());
-        }
-        return list;
-    }
-
-    private List<String> getCity() {
-        List<String> list = new ArrayList<>();
-        DistrictEntity.AreaEntity province = mAdEntity.getProvince();
-        for (DistrictEntity.AreaEntity.CcEntity item : province.getCc()) {
-            list.add(item.getC());
-        }
-        return list;
-    }
-
-    private List<String> getProvince() {
-        List<String> list = new ArrayList<String>();
-        for (DistrictEntity.AreaEntity item : mDistrictList) {
-            list.add(item.getP());
-        }
-        return list;
-    }
-
 
     /**
      * 设置页面控件显示数据
@@ -447,7 +305,6 @@ public class CreateAdActivity extends BaseActivity implements ICreateAdView, Vie
         mTvProvince.setText(mAdEntity.getProvince().getP());
         mTvCity.setText(mAdEntity.getCity().getC());
         mTvRange.setText(mAdEntity.getDistance().getValue());
-
     }
 
     /**

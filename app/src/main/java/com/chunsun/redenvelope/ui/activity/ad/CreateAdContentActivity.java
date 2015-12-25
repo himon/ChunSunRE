@@ -10,6 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,18 +19,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.clip.PicClipActivity;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdContentPresenter;
-import com.chunsun.redenvelope.ui.activity.red.PreviewRedDetailActivity;
-import com.chunsun.redenvelope.ui.activity.red.PreviewRepeatRedDetailActivity;
-import com.chunsun.redenvelope.ui.activity.red.PreviewWebRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRepeatRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.preview.PreviewWebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.PhotoAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
 import com.chunsun.redenvelope.utils.Base64Utils;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -50,18 +53,30 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
 
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
+    @Bind(R.id.tv_title)
+    TextView mTvTitle;
     @Bind(R.id.et_title)
     EditText mEtTitle;
+    @Bind(R.id.tv_cover_pic)
+    TextView mTvCoverPicTitle;
     @Bind(R.id.iv_add_title_img)
     ImageView mIvCover;
     @Bind(R.id.tv_content_pic)
-    TextView mTvContentPic;
+    TextView mTvContentPicTitle;
     @Bind(R.id.ll_image_container)
     LinearLayout mLLImages;
+    @Bind(R.id.tv_content)
+    TextView mTvContent;
     @Bind(R.id.et_content)
     EditText mEtContent;
     @Bind(R.id.recycler_view)
     RecyclerView mRvPic;
+    @Bind(R.id.ll_agreement)
+    LinearLayout mLLAgreement;
+    @Bind(R.id.cb_agreement)
+    CheckBox mCbAgreement;
+    @Bind(R.id.tv_agreement)
+    TextView mTvAgreement;
     @Bind(R.id.btn_next_step)
     Button mBtnNextStep;
 
@@ -96,14 +111,11 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
 
     @Override
     protected void initView() {
-        initTitleBar("发广告", "", "预览", Constants.TITLE_TYPE_SAMPLE);
-        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
+        initTitle();
         selectedPhotos.add("");
         photoAdapter = new PhotoAdapter(this, selectedPhotos, mPhotos);
         mRvPic.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
         mRvPic.setAdapter(photoAdapter);
-        mNavRight.setVisibility(View.VISIBLE);
 
         initEvent();
     }
@@ -116,8 +128,15 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
         mBtnNextStep.setOnClickListener(this);
     }
 
+    private void initTitle() {
+        initTitleBar("发广告", "", "预览", Constants.TITLE_TYPE_SAMPLE);
+        mNavRight.setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void initData() {
+        //重新获取位置（创建红包和圈子的时候使用）
+        MainApplication.getContext().getLocationClient().start();
         mToken = new Preferences(this).getToken();
         Intent intent = getIntent();
         if (intent != null) {
@@ -125,12 +144,42 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
             mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
 
             if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(mAdEntity.getType().getKey())) {
-                mTvContentPic.setVisibility(View.GONE);
+                mTvContentPicTitle.setVisibility(View.GONE);
                 mLLImages.setVisibility(View.GONE);
                 mEtContent
                         .setHint("请输入您的链接：http:// \n只能输入有效网址，以http开头，输入格式不合法广告将出错！自己承担填写错误影响广告效果责任。 \n多个网址请使用中文逗号“，”分割 \n本平台将备案发广告的信息和发广告人的信息，如有违法、虚假等广告，将依法追究法律责任。");
+                mTvTitle.setText("链接标题");
+                mTvCoverPicTitle.setText("链接封面图");
+                mTvContent.setText("链接地址");
+            } else if ((Constants.RED_DETAIL_TYPE_COUPON + "").equals(mAdEntity.getType().getKey())) {
+                mTvTitle.setText("券名称");
+                mTvCoverPicTitle.setText("券封面");
+                mTvContentPicTitle.setText("券内容图片");
+                mTvContent.setText("券使用规则定义");
+            } else if ((Constants.RED_DETAIL_TYPE_CIRCLE + "").equals(mAdEntity.getType().getKey())) {
+                mNavRight.setVisibility(View.GONE);
+                mLLAgreement.setVisibility(View.GONE);
+                mNavTitle.setText("春笋圈子");
+                mEtTitle.setHint("写个主题吧");
+                mEtContent.setHint("写点什么吧...");
+                mTvTitle.setText("标题");
+                mTvCoverPicTitle.setText("封面图片");
+                mTvContentPicTitle.setText("内容图片");
+                mTvContent.setText("正文");
+                mBtnNextStep.setText("发 布");
+            } else if ((Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "").equals(mAdEntity.getType().getKey())) {
+                mTvContentPicTitle.setVisibility(View.GONE);
+                mLLImages.setVisibility(View.GONE);
+                mNavRight.setVisibility(View.GONE);
+                mLLAgreement.setVisibility(View.GONE);
+                mNavTitle.setText("春笋圈子");
+                mEtTitle.setHint("写个主题吧");
+                mEtContent.setHint("http:// \\n(必选：只能输入http://开头的有效网址)");
+                mTvTitle.setText("标题");
+                mTvCoverPicTitle.setText("封面图片");
+                mTvContent.setText("链接地址");
+                mBtnNextStep.setText("发 布");
             }
-
             if (mSuperadditionEntity != null) {
                 initSuperaddition();
             }
@@ -202,15 +251,18 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
                 selectCoverImage();
                 break;
             case R.id.btn_next_step://提交
-                if (mSuperadditionEntity != null) {
-                    mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
+                if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "")) {
+                    mPresenter.commitCircle(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                 } else {
-                    mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                    if (mSuperadditionEntity != null) {
+                        mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
+                    } else {
+                        mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                    }
                 }
                 break;
         }
     }
-
 
     /**
      * 选择广告封面图
@@ -236,6 +288,22 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     }
 
     @Override
+    public void toCreateCircleSuccess(CreateAdResultEntity.ResultEntity result) {
+
+        RedDetailEntity.ResultEntity.DetailEntity detail = new RedDetailEntity.ResultEntity.DetailEntity();
+        detail.setId(result.getId());
+        detail.setShare_host(result.getShare_host());
+        detail.setTitle(mAdEntity.getTitle());
+        detail.setContent(mAdEntity.getContent());
+        detail.setCover_img_url(mCoverPath);
+        detail.setHb_type(mAdEntity.getType().getKey());
+
+        Intent intent = new Intent(this, CreateCircleResultActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, detail);
+        startActivity(intent);
+    }
+
+    @Override
     public void toPreview() {
         mAdEntity.setTitle(mEtTitle.getText().toString().trim());
         mAdEntity.setContent(mEtContent.getText().toString().trim());
@@ -256,13 +324,19 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     }
 
     @Override
+    public void toCreateError() {
+        Intent intent = new Intent(this, CreateCircleResultActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 
     public void previewPhoto(Intent intent) {

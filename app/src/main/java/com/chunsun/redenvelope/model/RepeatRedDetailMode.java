@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * @author Administrator
@@ -16,7 +17,7 @@ public interface RepeatRedDetailMode {
      * @param hb_id
      * @param listener
      */
-    void getRedDetail(String token, String hb_id, BaseMultiLoadedListener listener);
+    void getRedDetail(String token, String hb_id, UserLoseMultiLoadedListener listener);
 
     /**
      * 获取红包评论列表
@@ -34,7 +35,7 @@ public interface RepeatRedDetailMode {
      * @param id
      * @param listener
      */
-    void setFavorite(String token, String id, BaseMultiLoadedListener listener);
+    void setFavorite(String token, String id, UserLoseMultiLoadedListener listener);
 
     /**
      * 评论
@@ -44,7 +45,7 @@ public interface RepeatRedDetailMode {
      * @param comment
      * @param listener
      */
-    void sendComment(String token, String id, String comment, BaseMultiLoadedListener listener);
+    void sendComment(String token, String id, String comment, UserLoseMultiLoadedListener listener);
 
     /**
      * 转发类获取host
@@ -54,5 +55,5 @@ public interface RepeatRedDetailMode {
      * @param is_valid
      * @param listener
      */
-    void getHost(String token, String hb_id, String platform, boolean is_valid, BaseMultiLoadedListener listener);
+    void getHost(String token, String hb_id, String platform, boolean is_valid, UserLoseMultiLoadedListener listener);
 }

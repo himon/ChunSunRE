@@ -5,17 +5,18 @@ import android.text.TextUtils;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.LoginMode;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.LoginModeImpl;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
  * Created by Administrator on 2015/7/28.
  */
-public class LoginPresenter implements BaseSingleLoadedListener<SampleResponseEntity> {
+public class LoginPresenter extends BasePresenter<ILoginView> implements BaseSingleLoadedListener<SampleResponseEntity> {
 
     private ILoginView loginView;
     private LoginMode loginMode;

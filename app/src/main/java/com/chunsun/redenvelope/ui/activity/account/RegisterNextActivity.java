@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.presenter.RegisterNextPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IRegisterNextView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.widget.TextButtonDialog;
@@ -85,12 +85,12 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-       super.showLoading();
+       showCircleLoading();
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.os.Environment;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.SettingMode;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.SettingModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
 import com.chunsun.redenvelope.ui.view.ISettingView;

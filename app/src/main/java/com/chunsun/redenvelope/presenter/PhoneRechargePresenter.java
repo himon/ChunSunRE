@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.presenter;
 
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeView;
 import com.chunsun.redenvelope.utils.RegexUtils;
 import com.chunsun.redenvelope.utils.ShowToast;

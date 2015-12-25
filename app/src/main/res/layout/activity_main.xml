@@ -1,15 +1,14 @@
-<RelativeLayout
-    android:id="@+id/root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:louis="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <include
         android:id="@+id/toolsbar"
-        layout="@layout/layout_title_bar"/>
+        layout="@layout/layout_title_bar" />
 
     <LinearLayout
         android:id="@+id/ll_indicator"
@@ -18,8 +17,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/layout_gray_line"/>
+        <include layout="@layout/layout_gray_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,9 +31,9 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 louis:tab_color="@color/font_gray"
-                louis:tab_icon="@drawable/img_icon_near"
-                louis:tab_text="@string/get_red_envelope"
-                louis:tab_text_size="@dimen/font_size_sp_12"/>
+                louis:tab_icon="@drawable/img_icon_red"
+                louis:tab_text="@string/red"
+                louis:tab_text_size="@dimen/font_size_sp_11" />
 
             <com.chunsun.redenvelope.widget.ChangeColorIconWithText
                 android:id="@+id/indicator_ad"
@@ -46,14 +44,14 @@
                 louis:tab_color="@color/font_gray"
                 louis:tab_icon="@drawable/img_icon_ad"
                 louis:tab_text="@string/ad"
-                louis:tab_text_size="@dimen/font_size_sp_12"/>
+                louis:tab_text_size="@dimen/font_size_sp_11" />
 
-            <LinearLayout
+            <View
                 android:id="@+id/indicator_interact"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"/>
+                android:padding="5dp" />
 
             <com.chunsun.redenvelope.widget.ChangeColorIconWithText
                 android:id="@+id/indicator_near"
@@ -62,9 +60,9 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 louis:tab_color="@color/global_red"
-                louis:tab_icon="@drawable/img_icon_home_selected"
-                louis:tab_text="@string/home"
-                louis:tab_text_size="@dimen/font_size_sp_12"/>
+                louis:tab_icon="@drawable/img_icon_interaction"
+                louis:tab_text="@string/interaction"
+                louis:tab_text_size="@dimen/font_size_sp_11" />
 
             <com.chunsun.redenvelope.widget.ChangeColorIconWithText
                 android:id="@+id/indicator_me"
@@ -75,7 +73,7 @@
                 louis:tab_color="@color/font_gray"
                 louis:tab_icon="@drawable/img_icon_me"
                 louis:tab_text="@string/me"
-                louis:tab_text_size="@dimen/font_size_sp_12"/>
+                louis:tab_text_size="@dimen/font_size_sp_11" />
         </LinearLayout>
     </LinearLayout>
 
@@ -94,6 +92,6 @@
         android:layout_height="@dimen/main_tab_size"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/img_interact_tab"/>
+        android:src="@drawable/img_circle_icon_selected" />
 
 </RelativeLayout>

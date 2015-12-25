@@ -4,11 +4,11 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CreateAdNextStepMode;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdNextStepModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdNextStepActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdNextStepView;

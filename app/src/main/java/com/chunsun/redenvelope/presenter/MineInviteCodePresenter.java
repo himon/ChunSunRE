@@ -1,11 +1,11 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.MineInviteCodeMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.UserEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
+import com.chunsun.redenvelope.entities.json.UserEntity;
 import com.chunsun.redenvelope.model.impl.MineInviteCodeModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
 import com.chunsun.redenvelope.ui.view.IMineInviteCodeView;

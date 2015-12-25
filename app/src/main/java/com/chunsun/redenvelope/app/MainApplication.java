@@ -16,9 +16,9 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
-import com.chunsun.redenvelope.model.event.BaiduMapLocationEvent;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
+import com.chunsun.redenvelope.event.BaiduMapLocationEvent;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -45,8 +45,8 @@ public class MainApplication extends Application {
     private LocationClient mLocationClient;
     private MyLocationListener mMyLocationListener;
     private Vibrator mVibrator;
-    private double mLatitude;
-    private double mLongitude;
+    private double mLatitude = 0;
+    private double mLongitude = 0;
     private String mProvince = "不限";
     private String mCity = "不限";
 

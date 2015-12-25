@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.BalancePresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 

@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/8/10.
@@ -15,7 +16,7 @@ public interface HomeFragmentMode {
      * @param page_index
      * @param listener
      */
-    void loadData(String token, String type, int page_index, BaseMultiLoadedListener listener);
+    void loadData(String token, String type, int page_index, UserLoseMultiLoadedListener listener);
 
     /**
      * 红包列表广告
@@ -32,5 +33,5 @@ public interface HomeFragmentMode {
      * @param id
      * @param listener
      */
-    void grabRedEnvelope(String mToken, String id, BaseMultiLoadedListener listener);
+    void grabRedEnvelope(String mToken, String id, UserLoseMultiLoadedListener listener);
 }

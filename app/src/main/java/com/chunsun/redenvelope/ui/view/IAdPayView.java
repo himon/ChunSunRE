@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.AdPayAmountDetailEntity;
+import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
 
 /**
  * Created by Administrator on 2015/9/8.

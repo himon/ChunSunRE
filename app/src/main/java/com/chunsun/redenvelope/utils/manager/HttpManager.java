@@ -10,38 +10,41 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.json.BalanceListEntity;
+import com.chunsun.redenvelope.entities.json.BalanceRechargeEntity;
+import com.chunsun.redenvelope.entities.json.CarrierOperatorEntity;
+import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
+import com.chunsun.redenvelope.entities.json.InteractiveEntity;
+import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordClassifyEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailUnReceiveAndCollectEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.json.RepeatMealEntity;
+import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseObjectEntity;
+import com.chunsun.redenvelope.entities.json.ScanCouponResultEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.entities.json.UserEntity;
+import com.chunsun.redenvelope.entities.json.UserPublicInfoEntity;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.AdPayAmountDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceListEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceRechargeEntity;
-import com.chunsun.redenvelope.model.entity.json.CarrierOperatorEntity;
-import com.chunsun.redenvelope.model.entity.json.CreateAdResultEntity;
-import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
-import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordClassifyEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
-import com.chunsun.redenvelope.model.entity.json.RepeatMealEntity;
-import com.chunsun.redenvelope.model.entity.json.RepeatRedEnvelopeGetHostEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseObjectEntity;
-import com.chunsun.redenvelope.model.entity.json.ScanCouponResultEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
-import com.chunsun.redenvelope.model.entity.json.UserEntity;
-import com.chunsun.redenvelope.model.entity.json.UserPublicInfoEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
+import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
+import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.util.HashMap;
@@ -63,7 +66,7 @@ public class HttpManager {
      * @param page_index 加载页码
      * @param listener   回调监听
      */
-    public void loadData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, final Fragment fragment) {
+    public void loadData(final String token, final String type, final int page_index, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<RedListDetailEntity> request = new GsonRequest<RedListDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedListDetailEntity.class, null, new Response.Listener<RedListDetailEntity>() {
 
@@ -72,8 +75,8 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_RED_ENVELOPE_LIST, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
-                        listener.onError(response.getMsg(), fragment.getActivity(), Constants.FROM_TAB1);
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg()) && fragment == null) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
                     } else {
                         listener.onError(response.getMsg());
                     }
@@ -95,7 +98,11 @@ public class HttpManager {
                 return params;
             }
         };
-        RequestManager.addRequest(request, fragment);
+        if (activity == null) {
+            RequestManager.addRequest(request, fragment);
+        } else {
+            RequestManager.addRequest(request, activity);
+        }
     }
 
     /**
@@ -104,7 +111,7 @@ public class HttpManager {
      * @param type     1（领红包），3（任务）
      * @param listener 回调监听
      */
-    public void getAdData(final String type, final BaseMultiLoadedListener listener, Fragment fragment) {
+    public void getAdData(final String type, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
         GsonRequest<RedAutoAdEntity> request = new GsonRequest<RedAutoAdEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedAutoAdEntity.class, null, new Response.Listener<RedAutoAdEntity>() {
 
@@ -132,7 +139,11 @@ public class HttpManager {
                 return params;
             }
         };
-        RequestManager.addRequest(request, fragment);
+        if (activity == null) {
+            RequestManager.addRequest(request, fragment);
+        } else {
+            RequestManager.addRequest(request, activity);
+        }
     }
 
     /**
@@ -142,7 +153,7 @@ public class HttpManager {
      * @param hb_id    红包id
      * @param listener 回调监听
      */
-    public void grabRedEnvelope(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void grabRedEnvelope(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -158,7 +169,11 @@ public class HttpManager {
                             listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
                         }
                     } else {
-                        listener.onError(response.getMsg());
+                        if ("-9".equals(response.getCode())) {//红包已抢完
+                            listener.onSuccess(Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE, response);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     }
                 }
             }
@@ -193,7 +208,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getAdAmountDetail(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getAdAmountDetail(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<AdPayAmountDetailEntity> request = new GsonRequest<AdPayAmountDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 AdPayAmountDetailEntity.class, null, new Response.Listener<AdPayAmountDetailEntity>() {
 
@@ -236,7 +251,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void payByBalance(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void payByBalance(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -402,7 +417,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void loadData(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void loadData(final String token, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailUnReceiveAndCollectEntity> request = new GsonRequest<RedDetailUnReceiveAndCollectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailUnReceiveAndCollectEntity.class, null, new Response.Listener<RedDetailUnReceiveAndCollectEntity>() {
 
@@ -532,7 +547,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void setFavorite(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void setFavorite(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -584,7 +599,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void sendComment(final String token, final String hb_id, final String content, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -636,7 +651,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void shareOpen(final String token, final String grab_id, final String shareType, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -687,7 +702,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void justOpen(final String token, final String grab_id, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -740,7 +755,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void commitAdCreate(final String token, final AdEntity adEntity, final String title, final String content, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void commitAdCreate(final String token, final AdEntity adEntity, final String title, final String content, final UserLoseMultiLoadedListener listener, final Activity activity) {
 
         GsonRequest<CreateAdResultEntity> request = new GsonRequest<CreateAdResultEntity>(Request.Method.POST, StringUtil.preUrl(Constants.CREATE_AD_JSON_REQUEST_URL),
                 CreateAdResultEntity.class, null, new Response.Listener<CreateAdResultEntity>() {
@@ -786,8 +801,8 @@ public class HttpManager {
                 params.put("province", adEntity.getProvince().getP());
                 params.put("city", adEntity.getCity().getC());
                 params.put("range", adEntity.getDistance().getKey());
-                params.put("longitude", "");
-                params.put("latitude", "");
+                params.put("longitude", MainApplication.getContext().getLongitude() + "");
+                params.put("latitude", MainApplication.getContext().getLatitude() + "");
                 params.put("price", adEntity.getPrice());
                 params.put("everyday_count", adEntity.getNum());
                 params.put("day_count", adEntity.getDays());
@@ -891,7 +906,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -935,7 +950,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void editUserInfo(final String token, final String field_name, final String field_value, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void editUserInfo(final String token, final String field_name, final String field_value, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1098,8 +1113,9 @@ public class HttpManager {
      * @param page_index
      * @param listener
      * @param activity
+     * @param fragment
      */
-    public void getCountryCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getCountryCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, final InteractiveFragment fragment) {
         final GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
 
@@ -1108,7 +1124,7 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_COUNTRY, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg()) && fragment == null) {
                         listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
                     } else {
                         listener.onError(response.getMsg());
@@ -1131,7 +1147,11 @@ public class HttpManager {
                 return params;
             }
         };
-        RequestManager.addRequest(request, activity);
+        if (fragment == null) {
+            RequestManager.addRequest(request, activity);
+        } else {
+            RequestManager.addRequest(request, fragment);
+        }
     }
 
     /**
@@ -1141,8 +1161,9 @@ public class HttpManager {
      * @param page_index
      * @param listener
      * @param activity
+     * @param fragment
      */
-    public void getLocalCommentList(final String token, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getLocalCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, InteractiveFragment fragment) {
         GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
 
@@ -1151,7 +1172,7 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_LOCAL, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg()) && activity != null) {
                         listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
                     } else {
                         listener.onError(response.getMsg());
@@ -1168,13 +1189,17 @@ public class HttpManager {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("methodName", Constants.INTERACTION_COMMENT_LIST);
                 params.put("parames", JsonManager.initInterractiveDataToJson(token, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity(), page_index + ""));
                 return params;
             }
         };
-        RequestManager.addRequest(request, activity);
+        if (activity != null) {
+            RequestManager.addRequest(request, activity);
+        } else {
+            RequestManager.addRequest(request, fragment);
+        }
     }
 
     /**
@@ -1187,7 +1212,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void sendComment(final String token, final String comment, final String province, final String city, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void sendComment(final String token, final String comment, final String province, final String city, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1281,10 +1306,15 @@ public class HttpManager {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_INFO, response);
                 } else {
                     if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
-                        if (fragment != null) {
-                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB1);
+                        if (listener instanceof UserLoseMultiLoadedListener) {
+                            UserLoseMultiLoadedListener loseMultiLoadedListener = (UserLoseMultiLoadedListener) listener;
+                            if (fragment != null) {
+                                loseMultiLoadedListener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB1);
+                            } else {
+                                loseMultiLoadedListener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                            }
                         } else {
-                            listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                            listener.onError(Constants.LISTENER_TYPE_GET_USER_INFO, response.getMsg());
                         }
                     } else {
                         listener.onError(response.getMsg());
@@ -1314,6 +1344,7 @@ public class HttpManager {
         }
     }
 
+
     /**
      * 取用户下级用户，包含通过代理提成和好友助力获取的金额
      *
@@ -1321,7 +1352,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getInviteRecord(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getInviteRecord(final String token, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<InviteRecordEntity> request = new GsonRequest<InviteRecordEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 InviteRecordEntity.class, null, new Response.Listener<InviteRecordEntity>() {
 
@@ -1404,7 +1435,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1491,7 +1522,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getRedData(final String token, final String hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getRedData(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailEntity> request = new GsonRequest<RedDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailEntity.class, null, new Response.Listener<RedDetailEntity>() {
 
@@ -1511,6 +1542,8 @@ public class HttpManager {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                byte[] data = error.networkResponse.data;
+                String msg = new String(data);
                 listener.onException(error.getMessage());
             }
         }) {
@@ -1533,7 +1566,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getShareLimit(final String token, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getShareLimit(final String token, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<ShareLimitEntity> request = new GsonRequest<ShareLimitEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 ShareLimitEntity.class, null, new Response.Listener<ShareLimitEntity>() {
 
@@ -1700,7 +1733,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getHost(final String token, final String hb_id, final String platform, final boolean is_valid, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getHost(final String token, final String hb_id, final String platform, final boolean is_valid, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RepeatRedEnvelopeGetHostEntity> request = new GsonRequest<RepeatRedEnvelopeGetHostEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RepeatRedEnvelopeGetHostEntity.class, null, new Response.Listener<RepeatRedEnvelopeGetHostEntity>() {
 
@@ -1890,7 +1923,7 @@ public class HttpManager {
     }
 
     /**
-     * 红包发送记录分类列表
+     * 红包发送记录分类列表，圈子记录
      *
      * @param token
      * @param type
@@ -1898,7 +1931,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void loadRedEnvelopeSendRecordListData(final String token, final String type, final int page_index, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void loadRedEnvelopeSendRecordListData(final String token, final String type, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailSendRecordListEntity> request = new GsonRequest<RedDetailSendRecordListEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailSendRecordListEntity.class, null, new Response.Listener<RedDetailSendRecordListEntity>() {
 
@@ -1941,7 +1974,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void delRedEnvelope(final String token, final int hb_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void delRedEnvelope(final String token, final int hb_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -2142,7 +2175,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getUserPublicData(final String token, final String user_id, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void getUserPublicData(final String token, final String user_id, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<UserPublicInfoEntity> request = new GsonRequest<UserPublicInfoEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 UserPublicInfoEntity.class, null, new Response.Listener<UserPublicInfoEntity>() {
 
@@ -2190,7 +2223,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final BaseMultiLoadedListener listener, final Activity activity) {
+    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -2199,9 +2232,9 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_USER_REWARD_PAY, response);
                 } else {
-                    if(Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())){
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
                         listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
-                    }else {
+                    } else {
                         listener.onError(response.getMsg());
                     }
                 }
@@ -2261,6 +2294,112 @@ public class HttpManager {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.RECHARGE_ALIPAY_JSON_REQUEST_URL);
                 params.put("parames", JsonManager.initDataWithdrawCashAlipayToJson(token, zfb_no, zfb_name, zfb_poundage_id));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 圈子创建
+     *
+     * @param token
+     * @param adEntity
+     * @param title
+     * @param content
+     * @param listener
+     * @param activity
+     */
+    public void commitCircleCreate(final String token, final AdEntity adEntity, final String title, final String content, final UserLoseMultiLoadedListener listener, final CreateAdContentActivity activity) {
+        GsonRequest<CreateAdResultEntity> request = new GsonRequest<CreateAdResultEntity>(Request.Method.POST, StringUtil.preUrl(Constants.CREATE_CIRCLE_JSON_REQUEST_URL),
+                CreateAdResultEntity.class, null, new Response.Listener<CreateAdResultEntity>() {
+
+            @Override
+            public void onResponse(CreateAdResultEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_COMMIT_CIRCLE, response);
+                } else {
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(Constants.LISTENER_TYPE_COMMIT_CIRCLE, response.getMsg());
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //byte[] data = error.networkResponse.data;
+                //String msg = new String(data);
+                listener.onError(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+                params.put("type", adEntity.getType().getKey());
+                params.put("title", title);
+                params.put("content", content);
+                params.put("cover_img_byte_str", adEntity.getCoverImagePath());
+                params.put("img_byte_str1", adEntity.getImagePath());
+                params.put("img_byte_str2", adEntity.getImagePath2());
+                params.put("img_byte_str3", adEntity.getImagePath3());
+                params.put("img_byte_str4", adEntity.getImagePath4());
+                params.put("img_byte_str5", adEntity.getImagePath5());
+                params.put("img_byte_str6", adEntity.getImagePath6());
+                params.put("img_byte_str7", adEntity.getImagePath7());
+                params.put("img_byte_str8", adEntity.getImagePath8());
+                params.put("province", adEntity.getProvince().getP());
+                params.put("city", adEntity.getCity().getC());
+                params.put("range", adEntity.getDistance().getKey());
+                params.put("longitude", MainApplication.getContext().getLongitude() + "");
+                params.put("latitude", MainApplication.getContext().getLatitude() + "");
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 圈子操作
+     *
+     * @param token
+     * @param province
+     * @param city
+     * @param longitude
+     * @param latitude
+     * @param operate_type
+     * @param hb_id
+     * @param activity
+     */
+    public void userOperateCircle(final String token, final String province, final String city, final String longitude, final String latitude, final int operate_type, final String hb_id, final BaseSingleLoadedListener listener, Activity activity) {
+        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.CIRCLE_OPERATOR);
+                params.put("parames", JsonManager.initDataCircleOperatorToJson(token, province, city, longitude, latitude, operate_type, hb_id));
                 return params;
             }
         };

@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.chunsun.redenvelope.ui.activity.red.WebRedDetailCommentActivity">
+              tools:context="com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailCommentActivity">
 
     <include layout="@layout/layout_title_bar"/>
 

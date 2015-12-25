@@ -1,304 +1,51 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chunsun.redenvelope.ui.fragment.tab.AdFragment">
+    android:background="@drawable/img_create_ad_bg"
+    tools:context="com.example.textisselectdemo.MainActivity" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_create_red"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/img_create_ad" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="12dp"
+            android:text="发红包广告"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_18" />
 
-            <RadioGroup
-                android:id="@+id/rg_send_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/shape_send_red_envelope_type_bg"
-                android:orientation="horizontal"
-                android:padding="0.5dp">
+        <Button
+            android:id="@+id/btn_create_circle"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/img_create_circle" />
 
-                <RadioButton
-                    android:id="@+id/rb_immediate_send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_send_red_envelope_type_immediate_bg"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/immediate_send"
-                    android:textColor="@drawable/selector_text_red_white"
-                    android:textSize="@dimen/font_size_sp_16" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="发免费广告"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_sp_18" />
+    </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/rb_time_send"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/selector_send_red_envelope_type_time_bg"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:text="@string/time_send"
-                    android:textColor="@drawable/selector_text_red_white"
-                    android:textSize="@dimen/font_size_sp_16" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <EditText
-                    android:id="@+id/et_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@color/transparency"
-                    android:hint="@string/input_price"
-                    android:inputType="numberDecimal"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <ImageView
-                    android:id="@+id/iv_explain"
-                    android:layout_width="20dip"
-                    android:layout_height="20dip"
-                    android:layout_marginRight="10dip"
-                    android:src="@drawable/img_price_explain" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/num"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <EditText
-                    android:id="@+id/et_num"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@color/transparency"
-                    android:hint="@string/input_num"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:text="2000"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_send_days_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/send_days"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <EditText
-                    android:id="@+id/et_days"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@color/transparency"
-                    android:hint="@string/input_send_days"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:text="1"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_show_time_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/selector_balance_list_item"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <TextView
-                    android:id="@+id/tv_show_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_time_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/selector_balance_list_item"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/delayed"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_invoice_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/invoice"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:textColor="@color/font_gray"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <ToggleButton
-                    android:id="@+id/tb_need_invoice"
-                    android:layout_width="41dp"
-                    android:layout_height="26dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/selector_toogle_btn"
-                    android:checked="false"
-                    android:textOff=""
-                    android:textOn="" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ad_price"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16" />
-
-                <TextView
-                    android:id="@+id/tv_total_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="￥0元"
-                    android:textColor="@color/global_red"
-                    android:textSize="@dimen/font_size_sp_16" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_next_step"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/selector_button_red_radius"
-                android:gravity="center"
-                android:text="@string/next_step"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_size_sp_18" />
-        </LinearLayout>
-    </ScrollView>
-
-</FrameLayout>
+</RelativeLayout>

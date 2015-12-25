@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,7 +42,7 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initView() {
 
-        showLoading();
+        showCircleLoading();
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -56,7 +56,7 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                hideLoading();
+                hideCircleLoading();
                 if (mIsSuccessLoad) {
                     mWebView.setVisibility(View.VISIBLE);
                 } else {

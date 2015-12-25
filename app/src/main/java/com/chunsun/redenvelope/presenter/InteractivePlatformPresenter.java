@@ -2,12 +2,13 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.InteractivePlatformMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.model.impl.InteractivePlatformModeImpl;
 import com.chunsun.redenvelope.ui.activity.InteractivePlatformActivity;
+import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -18,11 +19,15 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
 
     private IInteractivePlatformView mIInteractivePlatformView;
     private InteractivePlatformMode mInteractivePlatformMode;
-    private boolean flag = true;
 
     public InteractivePlatformPresenter(IInteractivePlatformView iInteractivePlatformView) {
         mIInteractivePlatformView = iInteractivePlatformView;
-        mInteractivePlatformMode = new InteractivePlatformModeImpl((InteractivePlatformActivity) iInteractivePlatformView);
+        if (iInteractivePlatformView instanceof InteractivePlatformActivity) {
+            mInteractivePlatformMode = new InteractivePlatformModeImpl((InteractivePlatformActivity) iInteractivePlatformView, null);
+        } else {
+            mInteractivePlatformMode = new InteractivePlatformModeImpl(null, (InteractiveFragment) iInteractivePlatformView);
+        }
+
     }
 
     public void getCountryList(String token, int page_index) {
@@ -68,16 +73,6 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
                 mIInteractivePlatformView.hideLoading();
                 mIInteractivePlatformView.commentSuccess();
                 break;
-        }
-    }
-
-    @Override
-    public void onError(String msg) {
-        mIInteractivePlatformView.hideLoading();
-        ShowToast.Short(msg);
-        if("用户信息已失效".equals(msg) && flag){
-            mIInteractivePlatformView.toLogin();
-            flag = false;
         }
     }
 }

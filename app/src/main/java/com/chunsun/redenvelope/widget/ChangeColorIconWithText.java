@@ -27,7 +27,6 @@ public class ChangeColorIconWithText extends View {
     private String mText = "";
     private int mTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics());
 
-
     private Canvas mCanvas;
     private Bitmap mBitmap;
     private Paint mPaint;

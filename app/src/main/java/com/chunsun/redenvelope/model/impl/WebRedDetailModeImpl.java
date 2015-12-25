@@ -1,8 +1,8 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailMode;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
 
 /**
@@ -19,22 +19,27 @@ public class WebRedDetailModeImpl implements WebRedDetailMode {
     }
 
     @Override
-    public void getRedData(final String token, final String hb_id, final BaseMultiLoadedListener listener) {
+    public void getRedData(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.getRedData(token, hb_id, listener, mActivity);
     }
 
     @Override
-    public void getShareLimit(final String token, final BaseMultiLoadedListener listener) {
+    public void getShareLimit(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getShareLimit(token, listener, mActivity);
     }
 
     @Override
-    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener) {
+    public void shareOpen(final String token, final String grab_id, final String shareType, final UserLoseMultiLoadedListener listener) {
         mManager.shareOpen(token, grab_id, shareType, listener, null, mActivity);
     }
 
     @Override
-    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener) {
+    public void justOpen(final String token, final String grab_id, final UserLoseMultiLoadedListener listener) {
         mManager.justOpen(token, grab_id, listener, null, mActivity);
+    }
+
+    @Override
+    public void setFavorite(String token, String hb_id, UserLoseMultiLoadedListener listener) {
+        mManager.setFavorite(token, hb_id, listener, null, mActivity);
     }
 }

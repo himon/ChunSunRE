@@ -2,7 +2,6 @@ package com.chunsun.redenvelope.ui.fragment;
 
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -25,24 +24,21 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
-import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
-import com.chunsun.redenvelope.model.event.RedDetailEvent;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.RedDetailBackEvent;
+import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
-import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
-import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
-import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.MBaseFragment;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
-import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
@@ -63,7 +59,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * A simple {@link Fragment} subclass.
  * 红包详情Fragment
  */
-public class RedDetailFragment extends BaseFragment implements View.OnClickListener, IRedDetailFragmentView {
+public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, RedDetailFragmentPresenter> implements View.OnClickListener, IRedDetailFragmentView {
 
     @Bind(R.id.main)
     LinearLayout mMain;
@@ -100,17 +96,18 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     TextView mTvRedPrice;
     RadioButton mRbCommentRecord;
     RadioButton mRbGetRedRecord;
+    TextView mTvEffectiveDate;
 
-    private RedDetailFragmentPresenter mPresenter;
-    //activity传递过来的红包信息
-    private RedDetailEntity.ResultEntity.DetailEntity mDetail;
     //轮播图adapter
     private ImageAdapter mAdapter;
     private RedDetailFragmentAdapter mDataAdapter;
-    //评论列表
-    private List<RedDetailCommentEntity.ResultEntity.ListEntity> mListComment = new ArrayList<RedDetailCommentEntity.ResultEntity.ListEntity>();
-    //领取记录列表
-    private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity>();
+    private RedDetailFragmentPresenter mPresenter;
+    //activity传递过来的红包信息
+    private RedDetailEntity.ResultEntity.DetailEntity mDetail;
+    //分享的限制信息
+    private ShareLimitEntity.ResultEntity mShareLimitResult;
+    //图片的路径
+    private ArrayList mUrls;
     //是否是下拉刷新
     private boolean isRefresh;
     //当前评论显示页数
@@ -123,12 +120,15 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
     private int mTotalGetRedRecord = 0;
     //标示当前列表显示的是评论还是领取记录， 0 ： 评论， 1 ： 领取记录
     private int mCurrentCheckType = 0;
-
+    //评论列表
+    private List<RedDetailCommentEntity.ResultEntity.ListEntity> mListComment = new ArrayList<RedDetailCommentEntity.ResultEntity.ListEntity>();
+    //领取记录列表
+    private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity>();
     private String mToken;
-    //分享的限制信息
-    private ShareLimitEntity.ResultEntity mShareLimitResult;
-    //图片的路径
-    private ArrayList mUrls;
+    /**
+     * 红包帮助类
+     */
+    RedDetailHelper mRedDetailHelper;
 
     public RedDetailFragment() {
     }
@@ -138,11 +138,17 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_red_detail, container, false);
         ButterKnife.bind(this, view);
+        mPresenter = (RedDetailFragmentPresenter) super.mPresenter;
+        mRedDetailHelper = new RedDetailHelper(getActivity());
         EventBus.getDefault().register(this);
-        mPresenter = new RedDetailFragmentPresenter(this);
         initView();
         initData();
         return view;
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new RedDetailFragmentPresenter(this);
     }
 
     private void initTitle() {
@@ -175,6 +181,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mTvRedPrice = (TextView) view.findViewById(R.id.tv_red_price);
         mRbCommentRecord = (RadioButton) view.findViewById(R.id.rb_comment_record);
         mRbGetRedRecord = (RadioButton) view.findViewById(R.id.rb_get_red_record);
+        mTvEffectiveDate = (TextView) view.findViewById(R.id.tv_effective_date);
 
         /**
          * ListView
@@ -265,10 +272,7 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), RedDetailPicShowActivity.class);
-                intent.putExtra(Constants.EXTRA_LIST_KEY, mUrls);
-                intent.putExtra(Constants.EXTRA_KEY, position);
-                startActivity(intent);
+                mRedDetailHelper.toPicShowActivity(mUrls, position);
             }
         });
     }
@@ -350,16 +354,13 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         } else {
             mIvCollect.setImageResource(R.drawable.img_collect_normal);
         }
-    }
 
-    /**
-     * 跳转用户奖励页面
-     */
-    private void toUserRewardActivity(String id) {
-        Intent intent = new Intent(getActivity(), UserRewardActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, mDetail.getId());
-        startActivity(intent);
+        if ((Constants.RED_DETAIL_TYPE_COUPON + "").equals(mDetail.getHb_type())) {
+            mTvEffectiveDate.setVisibility(View.VISIBLE);
+            mTvEffectiveDate.setVisibility(View.VISIBLE);
+            mTvEffectiveDate.setText("有效期：" + mDetail.getStart_time() + " -- "
+                    + mDetail.getEnd_time());
+        }
     }
 
 
@@ -395,10 +396,24 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         mViewPager.stopAutoScroll();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mViewPager.stopAutoScroll();
+    /**
+     * 切换列表
+     */
+    public void changerDataList() {
+        mDataAdapter.setData(mListComment, mListRedRecord, mCurrentCheckType);
+        mDataAdapter.notifyDataSetChanged();
+    }
+
+
+    private void refreshDelaySeconds(int delaySeconds) {
+        if (delaySeconds > 0) {
+            mTvRedPrice.setText("现金红包");
+            mBtnOpenRed.setText(delaySeconds + "秒后可领取红包");
+        } else {
+            mTvRedPrice.setText("点击领取");
+            mBtnOpenRed.setText(mDetail.getPrice() + "元");
+            mBtnOpenRed.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -444,14 +459,12 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-
-    /**
-     * 切换列表
-     */
-    public void changerDataList() {
-        mDataAdapter.setData(mListComment, mListRedRecord, mCurrentCheckType);
-        mDataAdapter.notifyDataSetChanged();
+    @Override
+    public void onPause() {
+        super.onPause();
+        mViewPager.stopAutoScroll();
     }
+
 
     @Override
     public void setCommentData(RedDetailCommentEntity.ResultEntity result) {
@@ -489,32 +502,17 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        if (entity.getResult().equalsIgnoreCase("true")) {
-            mIvCollect.setImageResource(R.drawable.img_collect_select);
-        } else {
-            mIvCollect.setImageResource(R.drawable.img_collect_normal);
-        }
-        ShowToast.Short(entity.getMsg());
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
     }
 
     @Override
     public void toComplaintActivity() {
-        Intent intent = new Intent(getActivity(), EditInfoActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY_ID, mDetail.getId());
-        intent.putExtra(Constants.EXTRA_KEY_TITLE, "举报");
-        intent.putExtra(Constants.EXTRA_KEY_TEXT, "");
-        intent.putExtra(Constants.EXTRA_KEY_LINES, 5);
-        intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EDIT_TYPE_COMPLAINT);
-        startActivity(intent);
+        mRedDetailHelper.toComplaintActivity(mDetail.getId());
     }
 
     @Override
     public void toGuaranteeActivity() {
-        Intent intentWeb = new Intent(getActivity(),
-                CommonWebActivity.class);
-        intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, Constants.SEND_GUARANTEE_URL);
-        intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, "担保交易");
-        startActivity(intentWeb);
+        mRedDetailHelper.toGuaranteeActivity();
     }
 
     @Override
@@ -531,23 +529,21 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         EventBus.getDefault().post(new RedDetailBackEvent(""));
     }
 
-    private void refreshDelaySeconds(int delaySeconds) {
-        if (delaySeconds > 0) {
-            mTvRedPrice.setText("现金红包");
-            mBtnOpenRed.setText(delaySeconds + "秒后可领取红包");
-        } else {
-            mTvRedPrice.setText("点击领取");
-            mBtnOpenRed.setText(mDetail.getPrice() + "元");
-            mBtnOpenRed.setOnClickListener(this);
-        }
+    /**
+     * 跳转用户奖励页面
+     */
+    @Override
+    public void toUserRewardActivity(String id) {
+        mRedDetailHelper.toUserRewardActivity(id, mDetail.getId());
     }
+
 
     public void onEventMainThread(RedDetailEvent event) {
         if (TextUtils.isEmpty(event.getMsg())) {//倒计时
             refreshDelaySeconds(event.getSecond());
-        } else if ("share".equals(event.getMsg())) {
+        } else if ("share".equals(event.getMsg())) {//分享
             mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
-        } else if ("no_share".equals(event.getMsg())) {
+        } else if ("no_share".equals(event.getMsg())) {//直接领钱
             mPresenter.justOpen(mToken, mDetail.getHg_id());
         }
     }
@@ -557,4 +553,6 @@ public class RedDetailFragment extends BaseFragment implements View.OnClickListe
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
+
 }

@@ -8,12 +8,12 @@ import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
-import com.chunsun.redenvelope.model.event.SelectAdDelaySecondsRateEvent;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.event.SelectAdDelaySecondsRateEvent;
 import com.chunsun.redenvelope.ui.adapter.SelectListInfoAdaper;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
 import com.chunsun.redenvelope.ui.view.ISelectListInfoView;
 

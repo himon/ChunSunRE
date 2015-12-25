@@ -17,16 +17,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.activity.MainActivity;
-import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.ChunsunCouponWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
+import com.chunsun.redenvelope.ui.activity.personal.MyCircleListActivity;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
@@ -87,21 +86,10 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     private MeFragmentPresenter mPresenter;
     private DecimalFormat mFormat;
     private UserInfoEntity mUserInfoEntity;
-    private boolean showMengban;
-    /**
-     * 第一次加载是否登录成功
-     * true 登录成功， false 失败
-     */
-    private boolean isLogin = true;
-
-    public boolean isLogin() {
-        return isLogin;
-    }
 
     public NewMeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,12 +141,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     }
 
     public void getData() {
-        mPresenter.getData(new Preferences(getActivity()).getToken(), false);
-        setData();
-    }
-
-    public void getDataFromClick() {
-        mPresenter.getData(new Preferences(getActivity()).getToken(), true);
+        mPresenter.getData(new Preferences(getActivity()).getToken());
         setData();
     }
 
@@ -240,9 +223,9 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
      * 充值
      */
     @Override
-    public void toRecharge() {
+    public void toMyCircle() {
         Intent intentRecharge = new Intent(getActivity(),
-                BalanceRechargeActivity.class);
+                MyCircleListActivity.class);
         intentRecharge.putExtra(Constants.EXTRA_KEY,
                 mUserInfoEntity.isEnable_unionpay());
         startActivity(intentRecharge);
@@ -270,7 +253,6 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     public void refresh(UserInfoEntity entity) {
         mUserInfoEntity = entity;
         setData();
-        isShowMengban();
     }
 
     /**
@@ -305,17 +287,6 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     }
 
     @Override
-    public void loginError() {
-        isLogin = false;
-        mPtr.refreshComplete();
-    }
-
-    @Override
-    public void setLoginStatus() {
-        isLogin = true;
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_head_icon:
@@ -334,7 +305,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                 toNotReceivingRed();
                 break;
             case R.id.ib_phone_recharge:
-                toRecharge();
+                toMyCircle();
                 break;
             case R.id.ib_collect:
                 toCollect();
@@ -351,15 +322,6 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             case R.id.ib_novice_guidelines:
                 noviceGuidelines();
                 break;
-        }
-    }
-
-    /**
-     * 是否显示蒙版
-     */
-    public void isShowMengban() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).isMengBanShowOfTab4();
         }
     }
 }

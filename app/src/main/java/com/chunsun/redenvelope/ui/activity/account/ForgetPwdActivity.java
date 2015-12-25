@@ -11,9 +11,9 @@ import android.widget.EditText;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.event.ValiCodeEvent;
+import com.chunsun.redenvelope.event.ValiCodeEvent;
 import com.chunsun.redenvelope.presenter.ForgetPwdPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdView;
 import com.chunsun.redenvelope.utils.CountDownUtils;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -134,12 +134,12 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, V
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 
     public void onEventMainThread(ValiCodeEvent event) {

@@ -1,8 +1,8 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
 
 import java.util.ArrayList;
 

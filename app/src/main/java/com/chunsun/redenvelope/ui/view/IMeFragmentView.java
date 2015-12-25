@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 
 /**
  * Created by Administrator on 2015/8/3.
@@ -35,7 +35,7 @@ public interface IMeFragmentView {
     /**
      * 充值
      */
-    void toRecharge();
+    void toMyCircle();
 
     /**
      * 收藏
@@ -66,14 +66,4 @@ public interface IMeFragmentView {
      * 春笋券列表
      */
     void chunsunCoupon();
-
-    /**
-     * 账号登陆不成功
-     */
-    void loginError();
-
-    /**
-     * 设置获取用户信息成功
-     */
-    void setLoginStatus();
 }

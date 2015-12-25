@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
 
 import butterknife.Bind;
@@ -24,7 +24,7 @@ import de.greenrobot.event.EventBus;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WebRedDetailFragment extends BaseFragment {
+public class WebRedDetailFragment extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.webView)
     WebView mWebView;
@@ -65,7 +65,7 @@ public class WebRedDetailFragment extends BaseFragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if(mFlag){
+                if (mFlag) {
                     EventBus.getDefault().post(new WebRedDetailEvent("hideLoading"));
                 }
                 if (mIsSuccessLoad) {
@@ -77,12 +77,11 @@ public class WebRedDetailFragment extends BaseFragment {
         });
         WebSettings setting = mWebView.getSettings();
         setting.setJavaScriptEnabled(true);
-
         initEvent();
     }
 
     private void initEvent() {
-
+        mBtnError.setOnClickListener(this);
     }
 
     @Override
@@ -93,5 +92,14 @@ public class WebRedDetailFragment extends BaseFragment {
         mWebView.loadUrl(mUrl);
     }
 
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_common_webview_load_error:
+                mWebView.reload();
+                mWebView.setVisibility(View.VISIBLE);
+                mLLError.setVisibility(View.GONE);
+                break;
+        }
+    }
 }

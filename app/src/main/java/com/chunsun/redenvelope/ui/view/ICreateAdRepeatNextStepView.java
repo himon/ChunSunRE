@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RepeatMealEntity;
+import com.chunsun.redenvelope.entities.json.RepeatMealEntity;
 
 import java.util.List;
 

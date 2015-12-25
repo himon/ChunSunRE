@@ -13,7 +13,7 @@ import com.chunsun.redenvelope.clip.widget.ClipRectLayout;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.utils.ImageUtils;
 
 import java.io.ByteArrayOutputStream;

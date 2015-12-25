@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -19,7 +20,7 @@ public class SendRedEnvelopeRecordDetailModeImpl implements SendRedEnvelopeRecor
     }
 
     @Override
-    public void getRedEnvelopeDetail(final String token, final String hb_id, final BaseMultiLoadedListener listener) {
+    public void getRedEnvelopeDetail(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.getRedData(token, hb_id, listener, mActivity);
     }
 

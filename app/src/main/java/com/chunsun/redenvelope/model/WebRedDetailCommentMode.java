@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/9/14.
@@ -32,5 +33,5 @@ public interface WebRedDetailCommentMode {
      * @param hb_id
      * @param content
      */
-    void sendComment(String token, String hb_id, String content, BaseMultiLoadedListener listener);
+    void sendComment(String token, String hb_id, String content, UserLoseMultiLoadedListener listener);
 }

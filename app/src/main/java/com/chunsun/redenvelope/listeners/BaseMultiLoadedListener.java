@@ -17,8 +17,6 @@
 package com.chunsun.redenvelope.listeners;
 
 
-import android.content.Context;
-
 public interface BaseMultiLoadedListener<T> {
 
     /**
@@ -37,8 +35,6 @@ public interface BaseMultiLoadedListener<T> {
     void onError(String msg);
 
     void onError(int event_tag, String msg);
-
-    void onError(String msg, Context context, String from);
 
     /**
      * when data call back occurred exception

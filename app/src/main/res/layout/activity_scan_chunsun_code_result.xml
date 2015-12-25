@@ -26,7 +26,7 @@
             android:layout_below="@+id/iv_not_chunsun_quan"
             android:layout_centerHorizontal="true"
             android:text="您扫的不是春笋券"
-            android:textColor="@color/font_grag4"
+            android:textColor="@color/font_gray4"
             android:textSize="@dimen/font_size_sp_22"/>
     </RelativeLayout>
 
@@ -50,7 +50,7 @@
             android:layout_below="@+id/iv_not_permission"
             android:layout_centerHorizontal="true"
             android:text="对不起您无权消费该春笋券"
-            android:textColor="@color/font_grag4"
+            android:textColor="@color/font_gray4"
             android:textSize="@dimen/font_size_sp_22"/>
     </RelativeLayout>
 
@@ -74,7 +74,7 @@
             android:layout_below="@+id/iv_chunsun_quan_expired"
             android:layout_centerHorizontal="true"
             android:text="对不起该春笋券已过期"
-            android:textColor="@color/font_grag4"
+            android:textColor="@color/font_gray4"
             android:textSize="@dimen/font_size_sp_22"/>
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
             android:layout_below="@+id/iv_chunsun_quan_lose_efficacy"
             android:layout_centerHorizontal="true"
             android:text="对不起该春笋券已失效"
-            android:textColor="@color/font_grag4"
+            android:textColor="@color/font_gray4"
             android:textSize="@dimen/font_size_sp_22"/>
     </RelativeLayout>
 
@@ -122,7 +122,7 @@
             android:layout_below="@+id/iv_chunsun_quan_used"
             android:layout_centerHorizontal="true"
             android:text="对不起该春笋券已使用"
-            android:textColor="@color/font_grag4"
+            android:textColor="@color/font_gray4"
             android:textSize="@dimen/font_size_sp_22"/>
     </RelativeLayout>
 

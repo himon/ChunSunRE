@@ -1,13 +1,13 @@
 <LinearLayout
-    android:id="@+id/main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity">
+    tools:context="com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,15 +29,14 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/img_web_red_envelopebutton"/>
+            android:background="@drawable/img_web_red_envelopebutton" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_get_red"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/global_red"
-        android:orientation="horizontal">
+        android:background="@color/global_red">
 
         <ImageView
             android:id="@+id/iv_icon"
@@ -46,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/ll_content"
-            android:src="@drawable/img_icon_gold"/>
+            android:src="@drawable/img_icon_gold" />
 
         <LinearLayout
             android:id="@+id/ll_content"
@@ -60,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="看完领钱"
-                android:textColor="@color/font_yellow"/>
+                android:textColor="@color/font_yellow" />
 
             <TextView
                 android:id="@+id/tv_price"
@@ -70,7 +69,7 @@
                 android:textColor="@color/font_yellow"
                 android:textSize="@dimen/font_size_sp_20"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_yuan"
@@ -80,8 +79,68 @@
                 android:text="元"
                 android:textColor="@color/font_yellow"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_comment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/global_red"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:id="@+id/rl_collect"
+            android:layout_width="40dp"
+            android:layout_height="40dp" >
+
+            <ImageView
+                android:id="@+id/iv_collect"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/img_circle_collect_icon" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/web_circle_comment_line_gray" />
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="评论"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/web_circle_comment_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp" >
+
+            <ImageView
+                android:id="@+id/iv_report"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/img_circle_report_icon" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

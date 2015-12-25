@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 import butterknife.Bind;

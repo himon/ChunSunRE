@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.AdPayMode;
 import com.chunsun.redenvelope.ui.activity.ad.AdPayActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -26,12 +27,12 @@ public class AdPayModeImpl implements AdPayMode {
      * @param listener
      */
     @Override
-    public void getAdAmountDetail(final String token, final String hb_id, final BaseMultiLoadedListener listener) {
+    public void getAdAmountDetail(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.getAdAmountDetail(token, hb_id, listener, mActivity);
     }
 
     @Override
-    public void payByBalance(final String token, final String hb_id, final BaseMultiLoadedListener listener) {
+    public void payByBalance(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.payByBalance(token, hb_id, listener, mActivity);
     }
 }

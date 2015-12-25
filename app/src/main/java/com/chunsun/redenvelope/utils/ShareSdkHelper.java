@@ -1,16 +1,21 @@
 package com.chunsun.redenvelope.utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.event.CouponRedDetailEvent;
-import com.chunsun.redenvelope.model.event.RedDetailEvent;
-import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.event.CouponRedDetailEvent;
+import com.chunsun.redenvelope.event.CreateCircleResultEvent;
+import com.chunsun.redenvelope.event.RedDetailEvent;
+import com.chunsun.redenvelope.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
+import java.io.File;
 import java.util.HashMap;
 
 import cn.sharesdk.framework.Platform;
@@ -43,6 +48,11 @@ public class ShareSdkHelper implements PlatformActionListener {
      */
     private boolean mFlag;
 
+    /**
+     * 创建圈子后的朋友圈分享
+     */
+    private boolean mCircleShare;
+
     public ShareSdkHelper(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, String shareHost, int from, boolean b) {
         this.mContext = context;
         this.mDetailEntity = detail;
@@ -53,10 +63,10 @@ public class ShareSdkHelper implements PlatformActionListener {
 
     public void share(String which, String url) {
         if (Wechat.NAME.equals(which)) {
-            wechatShareParams(url, Wechat.NAME);
+            wechatShareParams(url, Wechat.NAME, true);
             shareType = "wf";
         } else if (WechatMoments.NAME.equals(which)) {
-            wechatShareParams(url, WechatMoments.NAME);
+            wechatShareParams(url, WechatMoments.NAME, true);
             shareType = "wc";
         } else if (QZone.NAME.equals(which)) {
             qzoneShareParams(url);
@@ -65,6 +75,12 @@ public class ShareSdkHelper implements PlatformActionListener {
             sinaWeiboShareParams(url);
             shareType = "sw";
         }
+    }
+
+    public void circleShare(String url) {
+        mCircleShare = true;
+        wechatShareParams(url, WechatMoments.NAME, false);
+        shareType = "wc";
     }
 
     /**
@@ -134,8 +150,9 @@ public class ShareSdkHelper implements PlatformActionListener {
      *
      * @param url
      * @param which
+     * @param b
      */
-    private void wechatShareParams(String url, String which) {
+    private void wechatShareParams(String url, String which, boolean b) {
         ShareParams sp = new ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
         //分享的标题
@@ -149,14 +166,31 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(mDetailEntity.getContent());
         }
         //图片网络地址
-        sp.setImageUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
-        sp.setUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
-        //ShowToast.Long(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
-
-        Platform qzone = ShareSDK.getPlatform(which);
-        qzone.setPlatformActionListener(this); // 设置分享事件回调
+        if (b) {
+            sp.setImageUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+            sp.setUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+            //ShowToast.Long(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+        } else {
+            File file = new File(mDetailEntity.getCover_img_url());
+            if (file.exists()) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 150, 150);
+                options.inJustDecodeBounds = false;
+                Bitmap bitmap = BitmapFactory.decodeFile(mDetailEntity.getCover_img_url(), options);
+                //Bitmap bitmap = BitmapClipUtils.createImageThumbnailScale(mDetailEntity.getCover_img_url(), 150);
+                if (bitmap != null) {
+                    ShowToast.Short("bitamp != null");
+                    sp.setImageData(bitmap);
+                } else {
+                    ShowToast.Short("bitamp == null");
+                }
+            }
+        }
+        Platform platform = ShareSDK.getPlatform(which);
+        platform.setPlatformActionListener(this); // 设置分享事件回调
         // 执行图文分享
-        qzone.share(sp);
+        platform.share(sp);
     }
 
     @Override
@@ -183,7 +217,11 @@ public class ShareSdkHelper implements PlatformActionListener {
                             break;
                     }
                 } else {
-                    ShowToast.Short("分享成功！");
+                    if (mCircleShare) {
+                        EventBus.getDefault().post(new CreateCircleResultEvent("success"));
+                    } else {
+                        ShowToast.Short("分享成功！");
+                    }
                 }
             }
         });
@@ -208,8 +246,12 @@ public class ShareSdkHelper implements PlatformActionListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, "取消分享，将领不到红包哦！", Toast.LENGTH_LONG)
-                        .show();
+                if (mCircleShare) {
+                    EventBus.getDefault().post(new CreateCircleResultEvent("cancel"));
+                } else {
+                    Toast.makeText(mContext, "取消分享，将领不到红包哦！", Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
     }

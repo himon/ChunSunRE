@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/9/15.
@@ -15,5 +15,5 @@ public interface UserInfoMode {
      * @param field_value
      * @param listener
      */
-    void editUserInfo(String token, String field_name, String field_value, BaseMultiLoadedListener listener);
+    void editUserInfo(String token, String field_name, String field_value, UserLoseMultiLoadedListener listener);
 }

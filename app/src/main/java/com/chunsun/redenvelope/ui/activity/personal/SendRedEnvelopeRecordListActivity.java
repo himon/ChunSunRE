@@ -8,12 +8,12 @@ import android.widget.AdapterView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordListPresenter;
 import com.chunsun.redenvelope.ui.adapter.SendRedEnvelopeRecordListAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.swipe.SwipeListAdapter;
@@ -81,6 +81,15 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
 
         if (Constants.RED_DETAIL_STATUS_DZF.equals(mClassify.getKey()) || Constants.RED_DETAIL_STATUS_WTG.equals(mClassify.getKey())) {
             mSwipeListAdapter = new SwipeListAdapter(this, mList, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Integer p = (Integer) v.getTag();
+                    int id = v.getId();
+                    if (id == R.id.bt_delete) {
+                        mPresenter.delRecord(mToken, p);
+                    }
+                }
+            }, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Integer p = (Integer) v.getTag();

@@ -1,10 +1,10 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.CollectRedEnvelopeListMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.model.impl.CollectRedEnvelopeListModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
 import com.chunsun.redenvelope.ui.view.ICollectRedEnvelopeListView;

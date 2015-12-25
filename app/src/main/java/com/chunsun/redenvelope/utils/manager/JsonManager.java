@@ -582,13 +582,14 @@ public class JsonManager {
 
     /**
      * 获取转发类分享host
+     *
      * @param token
      * @param hb_id
      * @param platform
      * @param is_valid
      * @return
      */
-    public static String initDataRepeatRedEnvelopeDetailGetHostToJson(String token, String hb_id, String platform, boolean is_valid){
+    public static String initDataRepeatRedEnvelopeDetailGetHostToJson(String token, String hb_id, String platform, boolean is_valid) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("token", token);
@@ -601,11 +602,39 @@ public class JsonManager {
         return jsonObject.toString();
     }
 
-    public static String initDataCouponDetailToJson(String sellerToken, String code){
+    public static String initDataCouponDetailToJson(String sellerToken, String code) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("sellerToken", sellerToken);
             jsonObject.put("code", code);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 圈子记录操作
+     *
+     * @param token
+     * @param province
+     * @param city
+     * @param longitude
+     * @param latitude
+     * @param operate_type
+     * @param hb_id
+     * @return
+     */
+    public static String initDataCircleOperatorToJson(String token, String province, String city, String longitude, String latitude, int operate_type, String hb_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+            jsonObject.put("longitude", longitude);
+            jsonObject.put("latitude", latitude);
+            jsonObject.put("operate_type", operate_type);
+            jsonObject.put("hb_id", hb_id);
         } catch (JSONException e1) {
             e1.printStackTrace();
         }

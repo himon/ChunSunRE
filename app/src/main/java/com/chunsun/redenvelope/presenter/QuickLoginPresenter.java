@@ -4,11 +4,11 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.QuickLoginMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.event.ValiCodeEvent;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.ValiCodeEvent;
 import com.chunsun.redenvelope.model.impl.QuickLoginModeImpl;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.QuickLoginActivity;

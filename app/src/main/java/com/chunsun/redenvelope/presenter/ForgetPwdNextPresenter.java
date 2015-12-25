@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.ForgetPwdNextMode;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.ForgetPwdNextModeImpl;
 import com.chunsun.redenvelope.ui.activity.account.ForgetPwdNextActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdNextView;

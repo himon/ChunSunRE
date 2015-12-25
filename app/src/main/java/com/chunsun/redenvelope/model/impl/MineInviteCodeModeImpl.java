@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MineInviteCodeMode;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -19,12 +19,12 @@ public class MineInviteCodeModeImpl implements MineInviteCodeMode {
     }
 
     @Override
-    public void getInviteRecord(final String token, final BaseMultiLoadedListener listener) {
+    public void getInviteRecord(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getInviteRecord(token, listener, mActivity);
     }
 
     @Override
-    public void getUserInfomation(final String token, final BaseMultiLoadedListener listener) {
+    public void getUserInfomation(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getUserInfomation(token, listener, null, mActivity);
     }
 }

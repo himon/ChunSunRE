@@ -10,11 +10,11 @@ import android.widget.TextView;
 import com.alipay.sdk.pay.demo.PayPresenter;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.AdPayAmountDetailEntity;
+import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.AdPayPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IAdPayView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -189,12 +189,12 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 
     @Override

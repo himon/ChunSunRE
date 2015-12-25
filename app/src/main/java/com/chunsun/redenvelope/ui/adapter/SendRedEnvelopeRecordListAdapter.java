@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
-import com.chunsun.redenvelope.ui.base.SampleBaseAdapter;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.ui.base.adapter.SampleBaseAdapter;
 
 import java.util.List;
 

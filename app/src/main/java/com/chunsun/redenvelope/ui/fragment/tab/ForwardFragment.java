@@ -13,8 +13,8 @@ import android.widget.AdapterView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.ForwardFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
@@ -22,7 +22,7 @@ import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
 import com.chunsun.redenvelope.ui.view.IForwardFragmentView;
@@ -105,7 +105,7 @@ public class ForwardFragment extends BaseFragment implements IForwardFragmentVie
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!((MainActivity) getActivity()).isLogin()) {
+                if (TextUtils.isEmpty(new Preferences(getActivity()).getToken())) {
                     ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB3);
                     return;
                 }

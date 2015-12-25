@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
-import com.chunsun.redenvelope.model.event.WelcomeEvent;
+import com.chunsun.redenvelope.event.WelcomeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WelcomePresenter;
 import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;
 
 import java.util.ArrayList;

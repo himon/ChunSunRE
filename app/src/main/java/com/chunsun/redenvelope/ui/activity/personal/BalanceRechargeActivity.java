@@ -16,7 +16,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.BalanceRechargePresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceRechargeView;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -179,11 +179,11 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 }

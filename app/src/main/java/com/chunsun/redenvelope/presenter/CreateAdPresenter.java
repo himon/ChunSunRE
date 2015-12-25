@@ -1,18 +1,19 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.app.Activity;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.CreateAdMode;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.model.impl.CreateAdModeImpl;
-import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ICreateAdView;
 import com.chunsun.redenvelope.utils.ListUtils;
 
@@ -28,7 +29,7 @@ import java.util.List;
  * @updateDate $Date$
  * @updateDes ${TODO}
  */
-public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private ICreateAdView mICreateAdView;
     private CreateAdMode mCreateAdMode;
@@ -40,7 +41,7 @@ public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     public CreateAdPresenter(ICreateAdView iCreateAdView) {
         mICreateAdView = iCreateAdView;
-        mCreateAdMode = new CreateAdModeImpl((CreateAdActivity) iCreateAdView);
+        mCreateAdMode = new CreateAdModeImpl((Activity) iCreateAdView);
     }
 
     /**
@@ -54,7 +55,11 @@ public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
         }
 
         mTypeList = new ArrayList<>();
-        initType(mTypeList);
+        if (mAdEntity.getType() != null && ("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(mAdEntity.getType().getKey())) {
+            initCircleType(mTypeList);
+        } else {
+            initType(mTypeList);
+        }
         mDistanceList = new ArrayList<>();
         initDistance(mDistanceList);
         mCreateAdMode.initProvinceAndCity(this);
@@ -190,6 +195,26 @@ public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
         list.add(item);
     }
 
+    /**
+     * 圈子类别
+     *
+     * @param list
+     */
+    private void initCircleType(List<SampleEntity> list) {
+        SampleEntity item = new SampleEntity();
+        item = new SampleEntity();
+        item.setKey(Constants.RED_DETAIL_TYPE_CIRCLE + "");
+        item.setType(Constants.AD_SELECT_LIST_TYPE);
+        item.setValue("图文");
+        list.add(item);
+
+        item = new SampleEntity();
+        item.setKey(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "");
+        item.setType(Constants.AD_SELECT_LIST_TYPE);
+        item.setValue("链接");
+        list.add(item);
+    }
+
     public void setProAndCity(DistrictEntity data) {
         ArrayList<DistrictEntity.AreaEntity> list = (ArrayList<DistrictEntity.AreaEntity>) data.getArea();
 
@@ -224,8 +249,8 @@ public class CreateAdPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
         } else {
             mTypeList.get(0).setCheck(true);
             this.mAdEntity.setType(mTypeList.get(0));
-            mDistanceList.get(9).setCheck(true);
-            this.mAdEntity.setDistance(mDistanceList.get(9));
+            mDistanceList.get(0).setCheck(true);
+            this.mAdEntity.setDistance(mDistanceList.get(0));
 
             province = MainApplication.getContext().getProvince();
             city = MainApplication.getContext().getCity();

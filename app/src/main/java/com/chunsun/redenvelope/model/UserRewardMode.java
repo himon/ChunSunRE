@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/9/15.
@@ -15,7 +15,7 @@ public interface UserRewardMode {
      * @param user_id
      * @param listener
      */
-    void getUserPublicData(String token, String user_id, BaseMultiLoadedListener listener);
+    void getUserPublicData(String token, String user_id, UserLoseMultiLoadedListener listener);
 
     /**
      * 获取用户账户信息
@@ -35,5 +35,5 @@ public interface UserRewardMode {
      * @param hb_id
      * @param listener
      */
-    void transfer(String token, String user_id, String amount, String msg, String hb_id, String province, String city, BaseMultiLoadedListener listener);
+    void transfer(String token, String user_id, String amount, String msg, String hb_id, String province, String city, UserLoseMultiLoadedListener listener);
 }

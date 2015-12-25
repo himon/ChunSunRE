@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
-import com.chunsun.redenvelope.ui.base.CommonAdapter;
+import com.chunsun.redenvelope.entities.json.RedDetailUnReceiveAndCollectEntity;
+import com.chunsun.redenvelope.ui.base.adapter.CommonAdapter;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

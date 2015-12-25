@@ -1,12 +1,13 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.app.Activity;
+
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordListMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordListModeImpl;
-import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordListActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordListView;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +25,7 @@ public class SendRedEnvelopeRecordListPresenter extends BaseMultiLoadedListenerI
 
     public SendRedEnvelopeRecordListPresenter(ISendRedEnvelopeRecordListView sendRedEnvelopeRecordListView) {
         this.mISendRedEnvelopeRecordListView = sendRedEnvelopeRecordListView;
-        mSendRedEnvelopeRecordListMode = new SendRedEnvelopeRecordListModeImpl((SendRedEnvelopeRecordListActivity) sendRedEnvelopeRecordListView);
+        mSendRedEnvelopeRecordListMode = new SendRedEnvelopeRecordListModeImpl((Activity) sendRedEnvelopeRecordListView);
     }
 
     public void loadData(String token, String type, int page_index) {

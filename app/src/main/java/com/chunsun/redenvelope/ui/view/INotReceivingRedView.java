@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RedDetailUnReceiveAndCollectEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailUnReceiveAndCollectEntity;
 
 import java.util.List;
 

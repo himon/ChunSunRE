@@ -3,11 +3,11 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ScanChunsunCodeResultMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseObjectEntity;
-import com.chunsun.redenvelope.model.entity.json.ScanCouponResultEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseObjectEntity;
+import com.chunsun.redenvelope.entities.json.ScanCouponResultEntity;
 import com.chunsun.redenvelope.model.impl.ScanChunsunCodeResultModeImpl;
 import com.chunsun.redenvelope.ui.activity.scan.ScanChunsunCodeResultActivity;
 import com.chunsun.redenvelope.ui.view.IScanChunsunCodeResultView;

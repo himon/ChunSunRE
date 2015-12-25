@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.EditInfoMode;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -19,12 +20,12 @@ public class EditInfoModeImpl implements EditInfoMode {
     }
 
     @Override
-    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final BaseMultiLoadedListener listener) {
+    public void complaintRedEnvelope(final String token, final String hb_id, final String reason, final UserLoseMultiLoadedListener listener) {
         mManager.complaintRedEnvelope(token, hb_id, reason, listener, mActivity);
     }
 
     @Override
-    public void editUserInfo(final String token, final String field_name, final String field_value, final BaseMultiLoadedListener listener) {
+    public void editUserInfo(final String token, final String field_name, final String field_value, final UserLoseMultiLoadedListener listener) {
         mManager.editUserInfo(token, field_name, field_value, listener, mActivity);
     }
 }

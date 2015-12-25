@@ -32,24 +32,34 @@ public interface Constants {
     int RED_DETAIL_TYPE_REPEAT = 5;
     //券
     int RED_DETAIL_TYPE_COUPON = 6;
+    //圈子图文
+    int RED_DETAIL_TYPE_CIRCLE = 7;
+    //圈子链接
+    int RED_DETAIL_TYPE_CIRCLE_LINK = 8;
 
+    /**
+     * 循环广告类型
+     */
+    //圈子
+    String SCROLL_AD_TYPE = "1";
+    //任务
+    String TASK_AD_TYPE = "2";
+    //红包
+    String RED_AD_TYPE = "3";
 
     /**
      * 服务器地址
      */
-    String HOST_URL = "http://cssv.chunsunkeji.com";
-//    String HOST_URL = "http://192.168.1.109:9101";// 外网
-    //    String HOST_URL = "http://192.168.1.195:9000";//内网
+//    String HOST_URL = "http://cssv.chunsunkeji.com";
+    String HOST_URL = "http://192.168.1.109:9101";// 外网
 
-    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-//    String IMG_HOST_URL = "http://192.168.1.109:9101";//外网
-    //    String IMG_HOST_URL = "http://192.168.1.195:9000";//内网
+    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    String IMG_HOST_URL = "http://192.168.1.109:9101";//外网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
      */
     String SYSTEM_USER_ID = "22292";
-//    String SYSTEM_USER_ID = "6778";// 测试环境
 
     /**
      * 正式发布时需要修正-----web service地址
@@ -138,6 +148,8 @@ public interface Constants {
     String GET_AD_DELAY_SECONDS_RATE_JSON_REQUEST_URL = "send_delay_seconds_to_rate";
     //创建广告
     String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_9";
+    //创建圈子
+    String CREATE_CIRCLE_JSON_REQUEST_URL = NEW_URL + "hb_create_circle";
     //获取红包支付明细
     String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
     //余额支付广告费用
@@ -170,6 +182,8 @@ public interface Constants {
     String GET_CHUNSUN_COUPON_INFO = "get_ticket_info_for_seller";
     //使用春笋券
     String USE_CHUNSUN_COUPON = "use_chunsun_ticket";
+    //圈子记录操作
+    String CIRCLE_OPERATOR = "user_operate_circle";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -212,11 +226,6 @@ public interface Constants {
      */
     String NOVICE_GUIDELINES_URL = "http://www.chunsunkeji.com/Help/Nav";
 
-    /**
-     * 注册类型
-     */
-    String REGISTER_TYPE_PERSONAL = "1";
-    String REGISTER_TYPE_COMPANY = "2";
 
     /**
      * 验证码倒计时时间
@@ -274,6 +283,11 @@ public interface Constants {
      * 标示从tab1的fragment跳转到登录
      */
     String FROM_TAB1 = "from_tab1";
+
+    /**
+     * 标示从circle的fragment跳转到登录
+     */
+    String FROM_CIRCLE = "from_circle";
 
     /**
      * 标示从tab3的fragment跳转到登录
@@ -404,6 +418,7 @@ public interface Constants {
     int LISTENER_GET_CHUNSUN_COUPON_INFO = 0x2036;
     int LISTENER_USE_CHUNSUN_COUPON = 0x2037;
     int LISTENER_TYPE_GET_USER_INVITE_INFO = 0x2038;
+    int LISTENER_TYPE_COMMIT_CIRCLE = 0x2039;
 
     /**
      * 发广告默认数据
@@ -424,6 +439,7 @@ public interface Constants {
      * startActivityForResult
      */
     int REQUEST_CODE = 1;
+    int REQUEST_CODE_IMAGE_CUT = 0x9001;
 
     /**
      * 支付宝
@@ -464,8 +480,4 @@ public interface Constants {
     int SHARE_FROM_WEB_RED = 0x9001;
     int SHARE_FROM_RED = 0x9002;
 
-    /**
-     * startActivityForResult
-     */
-    int REQUEST_CODE_IMAGE_CUT = 0x9001;
 }

@@ -1,15 +1,15 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.ui.base.BaseView;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
+import com.chunsun.redenvelope.ui.base.view.LoadingView;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/5.
  */
-public interface IForwardFragmentView extends BaseView{
+public interface IForwardFragmentView extends LoadingView {
 
     void setData(RedListDetailEntity.ResultEntity entity);
 

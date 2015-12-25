@@ -1,8 +1,9 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailCommentMode;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailCommentActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailCommentActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
 
 /**
@@ -29,7 +30,7 @@ public class WebRedDetailCommentModeImpl implements WebRedDetailCommentMode {
     }
 
     @Override
-    public void sendComment(final String token, final String hb_id, final String content, final BaseMultiLoadedListener listener) {
+    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener) {
         mManager.sendComment(token, hb_id, content, listener, null, mActivity);
     }
 }

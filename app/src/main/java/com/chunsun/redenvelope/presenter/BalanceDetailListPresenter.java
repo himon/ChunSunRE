@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.BalanceDetailListMode;
-import com.chunsun.redenvelope.model.entity.json.BalanceListEntity;
+import com.chunsun.redenvelope.entities.json.BalanceListEntity;
 import com.chunsun.redenvelope.model.impl.BalanceDetailListModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceDetailListActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceDetailListView;

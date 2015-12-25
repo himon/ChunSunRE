@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.UserInfoMode;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -19,7 +20,7 @@ public class UserInfoModeImpl implements UserInfoMode {
     }
 
     @Override
-    public void editUserInfo(final String token, final String field_name, final String field_value, final BaseMultiLoadedListener listener) {
+    public void editUserInfo(final String token, final String field_name, final String field_value, final UserLoseMultiLoadedListener listener) {
         mManager.editUserInfo(token, field_name, field_value, listener, mActivity);
     }
 }

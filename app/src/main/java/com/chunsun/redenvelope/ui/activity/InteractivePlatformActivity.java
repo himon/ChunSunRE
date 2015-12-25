@@ -1,10 +1,8 @@
 package com.chunsun.redenvelope.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,15 +16,14 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.InteractiveEntity;
+import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
-import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
-import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.helper.InteractiveHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 
 import java.util.ArrayList;
@@ -82,7 +79,10 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
     private boolean isLocalFinished = false;
 
     private String mToken;
-
+    /**
+     * 互动平台帮助类
+     */
+    private InteractiveHelper mInteractiveHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
         setContentView(R.layout.activity_interactive_platform);
         ButterKnife.bind(this);
         mPresenter = new InteractivePlatformPresenter(this);
+        mInteractiveHelper = new InteractiveHelper(this);
         initView();
         initData();
     }
@@ -210,15 +211,20 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
     /**
      * 跳转用户奖励页面
      */
-    private void toUserRewardActivity(String id) {
-        Intent intent = new Intent(this, UserRewardActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        if (mCurrentCountryPage == 1) {
-            intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_COUNTRY);
-        } else if (mCurrentCountryPage == 2) {
-            intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_LOCAL);
-        }
-        startActivity(intent);
+    @Override
+    public void toUserRewardActivity(String id) {
+        mInteractiveHelper.toUserRewardActivity(id, mCurrentCountryPage);
+    }
+
+    /**
+     * 设置系统公告内容
+     *
+     * @param notice
+     */
+    @Override
+    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice)  {
+        InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
+        mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
     }
 
     @Override
@@ -268,17 +274,6 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
         mPtr.refreshComplete();
     }
 
-    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice) {
-        InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
-        if (TextUtils.isEmpty(noticeEntity.getTitle())) {
-            mTvTitle.setText("系统公告");
-        } else {
-            mTvTitle.setText(Html.fromHtml("<html><head></head><body>" + noticeEntity.getTitle() + "</body></html>"));
-        }
-        mTvContent.setText(Html.fromHtml("<html><head></head><body>" + noticeEntity.getContent() + "</body></html>"));
-        mTvTime.setText(noticeEntity.getAdd_time());
-    }
-
     @Override
     public void setLocalList(InteractiveEntity entity) {
         List<InteractiveEntity.ResultEntity.ListEntity> list = entity.getResult().getList();
@@ -318,9 +313,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
      */
     @Override
     public void toLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB1);
-        startActivity(intent);
+        mInteractiveHelper.toLogin();
         back();
     }
 
@@ -352,11 +345,11 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 }

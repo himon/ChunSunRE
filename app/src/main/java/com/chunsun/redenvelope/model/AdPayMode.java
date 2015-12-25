@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/9/8.
@@ -8,7 +8,7 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 public interface AdPayMode {
 
 
-    void getAdAmountDetail(String mToken, String hb_id, BaseMultiLoadedListener listener);
+    void getAdAmountDetail(String mToken, String hb_id, UserLoseMultiLoadedListener listener);
 
-    void payByBalance(String token, String hb_id, BaseMultiLoadedListener listener);
+    void payByBalance(String token, String hb_id, UserLoseMultiLoadedListener listener);
 }

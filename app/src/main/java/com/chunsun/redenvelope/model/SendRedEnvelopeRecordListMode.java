@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/8/17.
@@ -15,7 +15,7 @@ public interface SendRedEnvelopeRecordListMode {
      * @param page_index
      * @param listener
      */
-    void loadRedEnvelopeSendRecordListData(String token, String type, int page_index, BaseMultiLoadedListener listener);
+    void loadRedEnvelopeSendRecordListData(String token, String type, int page_index, UserLoseMultiLoadedListener listener);
 
     /**
      * 删除红包记录
@@ -24,5 +24,5 @@ public interface SendRedEnvelopeRecordListMode {
      * @param hb_id
      * @param listener
      */
-    void delRedEnvelope(String token, int hb_id, BaseMultiLoadedListener listener);
+    void delRedEnvelope(String token, int hb_id, UserLoseMultiLoadedListener listener);
 }

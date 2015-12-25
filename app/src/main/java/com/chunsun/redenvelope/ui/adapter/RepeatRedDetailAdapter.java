@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.ui.base.CommonAdapter;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.ui.base.adapter.CommonAdapter;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

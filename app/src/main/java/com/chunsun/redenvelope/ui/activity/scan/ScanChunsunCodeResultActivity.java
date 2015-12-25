@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.ScanCouponResultEntity;
+import com.chunsun.redenvelope.entities.json.ScanCouponResultEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.ScanChunsunCodeResultPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IScanChunsunCodeResultView;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;

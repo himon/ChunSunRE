@@ -1,23 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment">
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@id/view_nav_bar"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/lay_common_webview_load_error"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_weight="1"
         android:orientation="vertical"
         android:visibility="gone">
@@ -27,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="加载失败，点击重试"
             android:textColor="@color/font_hint_gray"
-            android:textSize="@dimen/font_size_sp_18"/>
+            android:textSize="@dimen/font_size_sp_18" />
 
         <Button
             android:id="@+id/btn_common_webview_load_error"
@@ -35,7 +33,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
-            android:background="@drawable/selector_button_webview_reload"/>
+            android:background="@drawable/selector_button_webview_reload" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

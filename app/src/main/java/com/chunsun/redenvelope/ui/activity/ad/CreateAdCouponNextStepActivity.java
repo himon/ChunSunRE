@@ -21,12 +21,12 @@ import android.widget.ToggleButton;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.AdEntity;
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.AdEntity;
+import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.presenter.CreateAdCouponNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdCouponNextStepView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -123,7 +123,7 @@ public class CreateAdCouponNextStepActivity extends BaseActivity implements ICre
 
         //判断是否是企业用户
         if (MainApplication.getContext().getUserEntity() != null) {
-            if (Constants.REGISTER_TYPE_COMPANY.equals(MainApplication.getContext().getUserEntity().getType())) {
+            if (Constants.USER_REGISTER_TYPE_ENTERPRISE.equals(MainApplication.getContext().getUserEntity().getType())) {
                 mLLInvoice.setVisibility(View.VISIBLE);
             } else {
                 mLLInvoice.setVisibility(View.GONE);

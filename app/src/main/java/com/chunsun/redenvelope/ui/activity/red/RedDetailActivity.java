@@ -10,13 +10,13 @@ import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
-import com.chunsun.redenvelope.model.event.RedDetailBackEvent;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
-import com.chunsun.redenvelope.ui.fragment.CouponRedDetailFragment;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.fragment.CircleDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicPreviewFragment;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
@@ -30,7 +30,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/8/10.
- * 红包详情
+ * 红包详情（最外层的ViewPager页）
  */
 public class RedDetailActivity extends BaseActivity implements IRedDetailView {
 
@@ -45,10 +45,10 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
 
     //红包id
     private String mRedDetailId;
-    //生活类红包Fragment
+    //红包Fragment
     private RedDetailFragment mRedDetailFragment;
-    //券类红包Fragment
-    private CouponRedDetailFragment mCouponRedDetailFragment;
+    //圈子Fragment
+    private CircleDetailFragment mCircleDetailFragment;
     private String mToken;
     private ShareLimitEntity.ResultEntity mShareLimit;
     //红包类型
@@ -94,16 +94,16 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             public void onPageSelected(int position) {
                 if (position == mFragments.size() - 1) {
                     mViewPager.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+                    if (mRedDetailFragment != null) {
                         mRedDetailFragment.startAutoScroll();
-                    } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
-                        mCouponRedDetailFragment.startAutoScroll();
+                    } else {
+                        mCircleDetailFragment.startAutoScroll();
                     }
                 } else {
-                    if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+                    if (mRedDetailFragment != null) {
                         mRedDetailFragment.stopAutoScroll();
-                    } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
-                        mCouponRedDetailFragment.stopAutoScroll();
+                    } else {
+                        mCircleDetailFragment.startAutoScroll();
                     }
                 }
             }
@@ -117,7 +117,6 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
 
     @Override
     protected void initData() {
-
         mToken = new Preferences(this).getToken();
 
         Intent intent = getIntent();
@@ -126,7 +125,6 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             mType = intent.getIntExtra(Constants.EXTRA_KEY2, -1);
         }
         mPresenter.getShareLimit(mToken);
-
     }
 
     @Override
@@ -136,25 +134,19 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
             RedDetailPicPreviewFragment fragment = new RedDetailPicPreviewFragment(str);
             mFragments.add(fragment);
         }
-
-        if (mType == Constants.RED_DETAIL_TYPE_LEFT) {
+        Bundle data = new Bundle();
+        data.putParcelable(Constants.EXTRA_KEY, detail);
+        data.putStringArrayList(Constants.EXTRA_KEY2, urls);
+        data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
+        if ((Constants.RED_DETAIL_TYPE_CIRCLE + "").equals(detail.getHb_type())) {
+            mCircleDetailFragment = new CircleDetailFragment();
+            mCircleDetailFragment.setArguments(data);
+            mFragments.add(mCircleDetailFragment);
+        } else {
             mRedDetailFragment = new RedDetailFragment();
-            Bundle data = new Bundle();
-            data.putParcelable(Constants.EXTRA_KEY, detail);
-            data.putStringArrayList(Constants.EXTRA_KEY2, urls);
-            data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
             mRedDetailFragment.setArguments(data);
             mFragments.add(mRedDetailFragment);
-        } else if (mType == Constants.RED_DETAIL_TYPE_COUPON) {
-            mCouponRedDetailFragment = new CouponRedDetailFragment();
-            Bundle data = new Bundle();
-            data.putParcelable(Constants.EXTRA_KEY, detail);
-            data.putStringArrayList(Constants.EXTRA_KEY2, urls);
-            data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
-            mCouponRedDetailFragment.setArguments(data);
-            mFragments.add(mCouponRedDetailFragment);
         }
-
         mViewPager.setAdapter(mAdapter);
         //设置预加载数
         mViewPager.setOffscreenPageLimit(urls.size() + 1);

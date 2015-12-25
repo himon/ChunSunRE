@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/8/14.
@@ -14,7 +14,7 @@ public interface EditInfoMode {
      * @param hb_id  红包id
      * @param reason 内容
      */
-    void complaintRedEnvelope(String token, String hb_id, String reason, BaseMultiLoadedListener listener);
+    void complaintRedEnvelope(String token, String hb_id, String reason, UserLoseMultiLoadedListener listener);
 
     /**
      * 修改用户基本信息
@@ -24,5 +24,5 @@ public interface EditInfoMode {
      * @param field_value
      * @param listener
      */
-    void editUserInfo(String token, String field_name, String field_value, BaseMultiLoadedListener listener);
+    void editUserInfo(String token, String field_name, String field_value, UserLoseMultiLoadedListener listener);
 }

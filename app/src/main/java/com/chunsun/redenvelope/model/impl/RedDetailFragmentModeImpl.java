@@ -1,8 +1,10 @@
 package com.chunsun.redenvelope.model.impl;
 
+import android.support.v4.app.Fragment;
+
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailFragmentMode;
-import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
 
 /**
@@ -10,10 +12,10 @@ import com.chunsun.redenvelope.utils.manager.HttpManager;
  */
 public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
 
-    private RedDetailFragment mFragment;
+    private Fragment mFragment;
     private HttpManager mManager;
 
-    public RedDetailFragmentModeImpl(RedDetailFragment redDetailFragmentView) {
+    public RedDetailFragmentModeImpl(Fragment redDetailFragmentView) {
         this.mFragment = redDetailFragmentView;
         this.mManager = new HttpManager();
     }
@@ -29,22 +31,22 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
     }
 
     @Override
-    public void setFavorite(final String token, final String hb_id, final BaseMultiLoadedListener listener) {
+    public void setFavorite(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.setFavorite(token, hb_id, listener, mFragment, null);
     }
 
     @Override
-    public void sendComment(final String token, final String hb_id, final String content, final BaseMultiLoadedListener listener) {
+    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener) {
         mManager.sendComment(token, hb_id, content, listener, mFragment, null);
     }
 
     @Override
-    public void shareOpen(final String token, final String grab_id, final String shareType, final BaseMultiLoadedListener listener) {
+    public void shareOpen(final String token, final String grab_id, final String shareType, final UserLoseMultiLoadedListener listener) {
         mManager.shareOpen(token, grab_id, shareType, listener, mFragment, null);
     }
 
     @Override
-    public void justOpen(final String token, final String grab_id, final BaseMultiLoadedListener listener) {
+    public void justOpen(final String token, final String grab_id, final UserLoseMultiLoadedListener listener) {
         mManager.justOpen(token, grab_id, listener, mFragment, null);
     }
 }

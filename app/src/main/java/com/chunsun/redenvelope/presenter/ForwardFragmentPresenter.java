@@ -1,12 +1,12 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ForwardFragmentMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.ForwardFragmentModeImpl;
 import com.chunsun.redenvelope.ui.fragment.tab.ForwardFragment;
 import com.chunsun.redenvelope.ui.view.IForwardFragmentView;

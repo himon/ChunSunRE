@@ -14,10 +14,9 @@ public class Preferences {
 
         if (mySetting == null) {
             if (context != null) {
-                mySetting = context.getSharedPreferences("", Context.MODE_PRIVATE);
+                mySetting = context.getSharedPreferences("louis", Context.MODE_PRIVATE);
             }
         }
-
     }
 
     /**
@@ -49,45 +48,6 @@ public class Preferences {
 
     public String getFirstOpen() {
         return mySetting.getString("first_open", "-1");
-    }
-
-    /**
-     * 设置初次显示tab1
-     *
-     * @param first
-     */
-    public void setFirstShowTab1(boolean first) {
-        mySetting.edit().putBoolean("first_open_tab1", first).commit();
-    }
-
-    public boolean getFirstShowTab1() {
-        return mySetting.getBoolean("first_open_tab1", true);
-    }
-
-    /**
-     * 设置初次显示tab3
-     *
-     * @param first
-     */
-    public void setFirstShowTab3(boolean first) {
-        mySetting.edit().putBoolean("first_open_tab3", first).commit();
-    }
-
-    public boolean getFirstShowTab3() {
-        return mySetting.getBoolean("first_open_tab3", true);
-    }
-
-    /**
-     * 设置初次显示tab4
-     *
-     * @param first
-     */
-    public void setFirstShowPersonal(boolean first) {
-        mySetting.edit().putBoolean("first_open_tab4", first).commit();
-    }
-
-    public boolean getFirstShowPersonal() {
-        return mySetting.getBoolean("first_open_tab4", true);
     }
 
     /**

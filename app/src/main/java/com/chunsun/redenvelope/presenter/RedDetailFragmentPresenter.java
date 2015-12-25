@@ -1,16 +1,18 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.support.v4.app.Fragment;
+
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.RedDetailEvent;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailFragmentMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.event.RedDetailEvent;
 import com.chunsun.redenvelope.model.impl.RedDetailFragmentModeImpl;
-import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -19,14 +21,14 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/12.
  */
-public class RedDetailFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFragmentView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IRedDetailFragmentView redDetailFragmentView;
     private RedDetailFragmentMode redDetailFragmentMode;
 
     public RedDetailFragmentPresenter(IRedDetailFragmentView redDetailFragmentView) {
         this.redDetailFragmentView = redDetailFragmentView;
-        redDetailFragmentMode = new RedDetailFragmentModeImpl((RedDetailFragment) redDetailFragmentView);
+        redDetailFragmentMode = new RedDetailFragmentModeImpl((Fragment) redDetailFragmentView);
     }
 
     /**

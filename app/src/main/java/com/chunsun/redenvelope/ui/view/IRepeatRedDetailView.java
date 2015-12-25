@@ -1,9 +1,8 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RepeatRedEnvelopeGetHostEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
+import com.chunsun.redenvelope.ui.base.view.IBaseRedDetailView;
 
 /**
  * @author Administrator
@@ -11,7 +10,7 @@ import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
  * @time ${DATA} 15:55
  * @des ${TODO}
  */
-public interface IRepeatRedDetailView {
+public interface IRepeatRedDetailView extends IBaseRedDetailView {
 
     /**
      * 获取红包信息
@@ -19,30 +18,6 @@ public interface IRepeatRedDetailView {
      * @param entity
      */
     void getRedDetailSuccess(RedDetailEntity.ResultEntity.DetailEntity entity);
-
-    /**
-     * 获取评论列表
-     *
-     * @param result
-     */
-    void setCommentData(RedDetailCommentEntity.ResultEntity result);
-
-    /**
-     * 跳转举报Activity
-     */
-    void toComplaintActivity();
-
-    /**
-     * 收藏成功
-     *
-     * @param entity
-     */
-    void setFavoriteSuccess(SampleResponseEntity entity);
-
-    /**
-     * 评论成功
-     */
-    void commentSuccess();
 
     /**
      * 设置分享host

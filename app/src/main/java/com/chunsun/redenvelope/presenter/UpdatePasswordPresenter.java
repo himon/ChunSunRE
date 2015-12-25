@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.UpdatePasswordMode;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.UpdatePasswordModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.UpdatePasswordActivity;
 import com.chunsun.redenvelope.ui.view.IUpdatePasswordView;

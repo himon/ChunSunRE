@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import android.text.TextUtils;
 
-import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
+import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
 import com.chunsun.redenvelope.ui.view.IInviteRecordListView;
 
 import java.text.DecimalFormat;

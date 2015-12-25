@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.ScanCouponResultEntity;
+import com.chunsun.redenvelope.entities.json.ScanCouponResultEntity;
 
 /**
  * @author Administrator

@@ -1,9 +1,9 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 
 import java.util.ArrayList;
 

@@ -2,6 +2,7 @@ package com.chunsun.redenvelope.widget.swipe;
 
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,8 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
-import com.chunsun.redenvelope.ui.base.SampleBaseAdapter;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.ui.base.adapter.SampleBaseAdapter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,11 +26,13 @@ public class SwipeListAdapter extends SampleBaseAdapter<RedDetailSendRecordListE
     private LayoutInflater mInflater;
     private HashSet<SwipeLayout> mUnClosedLayouts = new HashSet<SwipeLayout>();
     private OnClickListener mOnActionClick;
+    private OnClickListener mOnItemClicklistener;
 
-    public SwipeListAdapter(Context context, List<RedDetailSendRecordListEntity.ResultEntity.LogsEntity> list, OnClickListener listener) {
+    public SwipeListAdapter(Context context, List<RedDetailSendRecordListEntity.ResultEntity.LogsEntity> list, OnClickListener onClickListener, OnClickListener onItemClicklistener) {
         super(context, list);
         this.mInflater = LayoutInflater.from(context);
-        this.mOnActionClick = listener;
+        this.mOnActionClick = onClickListener;
+        this.mOnItemClicklistener = onItemClicklistener;
     }
 
     /**
@@ -55,7 +58,6 @@ public class SwipeListAdapter extends SampleBaseAdapter<RedDetailSendRecordListE
 
         RedDetailSendRecordListEntity.ResultEntity.LogsEntity entity = list.get(position);
         int type = getItemViewType(position);
-
 
         if (convertView != null) {
             switch (type) {
@@ -90,16 +92,15 @@ public class SwipeListAdapter extends SampleBaseAdapter<RedDetailSendRecordListE
 
                 view.close(false, false);
 
-                view.getFrontView().setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                view.getFrontView().setTag(entity.getId());
+                view.getFrontView().setOnClickListener(mOnItemClicklistener);
 
                 view.setSwipeListener(mSwipeListener);
-                mHolder2.status.setText(entity.getStatus_title());
+                if(TextUtils.isEmpty(entity.getStatus_title())){
+                    mHolder2.status.setText(entity.getStatus_name());
+                }else {
+                    mHolder2.status.setText(entity.getStatus_title());
+                }
                 mHolder2.title.setText(entity.getTitle());
                 mHolder2.type.setText(entity.getType_title());
                 mHolder2.time.setText(entity.getAdd_time());
@@ -107,7 +108,6 @@ public class SwipeListAdapter extends SampleBaseAdapter<RedDetailSendRecordListE
                 mHolder2.mButtonDel.setOnClickListener(mOnActionClick);
                 break;
         }
-
         return convertView;
     }
 

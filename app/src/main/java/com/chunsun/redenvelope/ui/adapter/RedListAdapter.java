@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.ui.base.CommonAdapter;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
+import com.chunsun.redenvelope.ui.base.adapter.CommonAdapter;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -50,10 +50,10 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
         type.setText(poolEntity.getTypeName());
         ImageView icon = holder.getView(R.id.iv_quan_icon);
 
-        if (Constants.RED_DETAIL_TYPE_LINK == poolEntity.getType()) {
+        if (Constants.RED_DETAIL_TYPE_LINK == poolEntity.getType() || Constants.RED_DETAIL_TYPE_CIRCLE_LINK == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
             icon.setVisibility(View.GONE);
-        } else if (Constants.RED_DETAIL_TYPE_LEFT == poolEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == poolEntity.getType()) {
+        } else if (Constants.RED_DETAIL_TYPE_LEFT == poolEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == poolEntity.getType() || Constants.RED_DETAIL_TYPE_CIRCLE == poolEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
             icon.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_TYPE_NEAR == poolEntity.getType()) {

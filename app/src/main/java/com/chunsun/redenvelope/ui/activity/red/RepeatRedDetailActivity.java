@@ -21,18 +21,17 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RepeatRedEnvelopeGetHostEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
-import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IRepeatRedDetailView;
-import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
@@ -80,12 +79,12 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     TextView mTvPrice;
     TextView mTvRestNum;
 
-
     //是否是下拉刷新
     private boolean isRefresh;
     //轮播图adapter
     private ImageAdapter mAdapter;
     private RepeatRedDetailAdapter mDataAdapter;
+    private RepeatRedDetailPresenter mPresenter;
     //评论列表
     private List<RedDetailCommentEntity.ResultEntity.ListEntity> mListComment = new ArrayList<RedDetailCommentEntity.ResultEntity.ListEntity>();
     //当前评论显示页数
@@ -95,10 +94,13 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     private String mToken;
     private String mRedId;
 
-    private RepeatRedDetailPresenter mPresenter;
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
     private ArrayList<String> mUrls;
     private ShareRedEnvelopePopupWindow mMenuWindow;
+    /**
+     * 红包帮助类
+     */
+    private RedDetailHelper mRedDetailHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         setContentView(R.layout.activity_repeat_red_detail);
         ButterKnife.bind(this);
         mPresenter = new RepeatRedDetailPresenter(this);
+        mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
     }
@@ -212,10 +215,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(RepeatRedDetailActivity.this, RedDetailPicShowActivity.class);
-                intent.putExtra(Constants.EXTRA_LIST_KEY, mUrls);
-                intent.putExtra(Constants.EXTRA_KEY, position);
-                startActivity(intent);
+                mRedDetailHelper.toPicShowActivity(mUrls, position);
             }
         });
     }
@@ -223,7 +223,6 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     @Override
     protected void initData() {
         mToken = new Preferences(this).getToken();
-
         Intent intent = getIntent();
         if (intent != null) {
             mRedId = intent.getStringExtra(Constants.EXTRA_KEY);
@@ -236,17 +235,13 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
             mListComment.clear();
         }
         mPresenter.getRedDetail(mToken, mRedId);
-
     }
 
     /**
      * 跳转用户奖励页面
      */
     private void toUserRewardActivity(String id) {
-        Intent intent = new Intent(this, UserRewardActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, mDetail.getId());
-        startActivity(intent);
+        mRedDetailHelper.toUserRewardActivity(id, mDetail.getId());
     }
 
     @Override
@@ -269,7 +264,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
                 toUserRewardActivity(mDetail.getUser_id());
                 break;
             case R.id.ll_repeat://转发
-                mMenuWindow = new ShareRedEnvelopePopupWindow(this, mDetail, new GetRepeatHostCallback(){
+                mMenuWindow = new ShareRedEnvelopePopupWindow(this, mDetail, new GetRepeatHostCallback() {
 
                     @Override
                     public void getHost(String platform) {
@@ -279,14 +274,12 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
                 mMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
         }
-
     }
 
     @Override
     public void getRedDetailSuccess(RedDetailEntity.ResultEntity.DetailEntity entity) {
 
         mDetail = entity;
-
 
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
 
@@ -310,7 +303,6 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         mTvTime.setText(mDetail.getSend_time());
         mTvContent.setText(mDetail.getContent());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
-
 
         ArrayList<String> list = new ArrayList<String>();
         list.add(Constants.HOST_URL + mDetail.getCover_img_url());
@@ -355,23 +347,12 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
      */
     @Override
     public void toComplaintActivity() {
-        Intent intent = new Intent(this, EditInfoActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY_ID, mDetail.getId());
-        intent.putExtra(Constants.EXTRA_KEY_TITLE, "举报");
-        intent.putExtra(Constants.EXTRA_KEY_TEXT, "");
-        intent.putExtra(Constants.EXTRA_KEY_LINES, 5);
-        intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EDIT_TYPE_COMPLAINT);
-        startActivity(intent);
+        mRedDetailHelper.toComplaintActivity(mDetail.getId());
     }
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        if (entity.getResult().equalsIgnoreCase("true")) {
-            mIvCollect.setImageResource(R.drawable.img_collect_select);
-        } else {
-            mIvCollect.setImageResource(R.drawable.img_collect_normal);
-        }
-        ShowToast.Short(entity.getMsg());
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
     }
 
     @Override
@@ -384,7 +365,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
 
     @Override
     public void setShareHost(RepeatRedEnvelopeGetHostEntity entity) {
-        if(mMenuWindow != null){
+        if (mMenuWindow != null) {
             mMenuWindow.repeatShare(entity.getResult().getShare_url());
         }
     }

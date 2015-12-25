@@ -13,10 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.event.ValiCodeEvent;
+import com.chunsun.redenvelope.event.ValiCodeEvent;
 import com.chunsun.redenvelope.presenter.RegisterPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.ui.view.IRegisterView;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -59,7 +59,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Vie
     //标示是否以点击获取验证码
     private boolean countdowning = false;
     //注册类型：1 个人，2 企业
-    private String mTypeId = Constants.REGISTER_TYPE_PERSONAL;
+    private String mTypeId = Constants.USER_REGISTER_TYPE_PERSONAL;
     //手机号
     private String mPhone;
     //验证码
@@ -113,12 +113,12 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Vie
             case R.id.btn_personal:
                 mPersonalLine.setBackgroundColor(getResources().getColor(R.color.global_red));
                 mCompanyLine.setBackgroundColor(getResources().getColor(R.color.white));
-                mTypeId = Constants.REGISTER_TYPE_PERSONAL;
+                mTypeId = Constants.USER_REGISTER_TYPE_PERSONAL;
                 break;
             case R.id.btn_enterprise:
                 mPersonalLine.setBackgroundColor(getResources().getColor(R.color.white));
                 mCompanyLine.setBackgroundColor(getResources().getColor(R.color.global_red));
-                mTypeId = Constants.REGISTER_TYPE_COMPANY;
+                mTypeId = Constants.USER_REGISTER_TYPE_ENTERPRISE;
                 break;
             case R.id.tv_get_code:
                 mPresenter.getValiCode(StringUtil.textview2String(mPhoneNum));
@@ -149,12 +149,12 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Vie
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 
     @Override

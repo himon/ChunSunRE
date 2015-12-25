@@ -2,14 +2,14 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.WebRedDetailCommentMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.WebRedDetailCommentModeImpl;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailCommentActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailCommentActivity;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailCommentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 

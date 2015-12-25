@@ -8,12 +8,12 @@ import android.widget.AdapterView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.BalanceListEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailSendRecordListEntity;
+import com.chunsun.redenvelope.entities.json.BalanceListEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.BalanceDetailListPresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceDetailListAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceDetailListView;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 

@@ -20,16 +20,16 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailCommentEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailGetRedRecordEntity;
-import com.chunsun.redenvelope.model.entity.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.manager.AppManager;
@@ -265,6 +265,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
             mRedLine.setVisibility(View.GONE);
             mBtnPay.setText("支 付");
             mTvClassifyStatus.setText(mClassifyValue);
+            mLLInputComment.setVisibility(View.GONE);
         } else if (Constants.RED_DETAIL_STATUS_YFB.equals(mClassify) || Constants.RED_DETAIL_STATUS_YQW.equals(mClassify)) {//已发布、已抢完
             mPresenter.getRedEnvelopeDetail(mToken, mRedEnvelopeId);
             mPresenter.getCommentList(mRedEnvelopeId, mCurrentCommentPage);
@@ -279,6 +280,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
             mLLButtonPay.setVisibility(View.GONE);
             mRedLine.setVisibility(View.GONE);
             mTvClassifyStatus.setText(mClassifyValue);
+            mLLInputComment.setVisibility(View.GONE);
         }
     }
 

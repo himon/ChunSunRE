@@ -76,6 +76,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.commit451/PhotoView/1.2.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.zhy/okhttputils/1.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/in.srain.cube/ultra-ptr/1.0.7/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/me.codeboy.android/align-text-view/2.1.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -115,6 +116,7 @@
     <orderEntry type="library" exported="" name="alipaySDK-20150818" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="locSDK_6.03" level="project" />
+    <orderEntry type="library" exported="" name="align-text-view-2.1.0" level="project" />
     <orderEntry type="library" exported="" name="okhttputils-1.0.2" level="project" />
     <orderEntry type="library" exported="" name="MobTools" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.5.0" level="project" />

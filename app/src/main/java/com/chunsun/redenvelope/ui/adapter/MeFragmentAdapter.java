@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.MeFragmentEntity;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.entities.MeFragmentEntity;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

@@ -1,7 +1,7 @@
 <in.srain.cube.views.ptr.PtrClassicFrameLayout
-    android:id="@+id/ptr_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ptr_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,7 +31,7 @@
                         android:id="@+id/iv_head_icon"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="7dp"/>
+                        android:layout_marginTop="7dp" />
 
                     <ImageView
                         android:id="@+id/iv_proxy_icon"
@@ -39,7 +39,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/img_personal_proxy"/>
+                        android:src="@drawable/img_personal_proxy" />
                 </RelativeLayout>
 
                 <TextView
@@ -50,7 +50,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <TextView
                     android:id="@+id/tv_account"
@@ -59,7 +59,7 @@
                     android:layout_below="@id/tv_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,20 +82,20 @@
                             android:layout_height="wrap_content"
                             android:text="@string/accumulated_income"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_sp_12"/>
+                            android:textSize="@dimen/font_size_sp_12" />
 
                         <TextView
                             android:id="@+id/tv_payoff"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/font_yellow"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="0.3dp"
                         android:layout_height="match_parent"
-                        android:background="@color/white"/>
+                        android:background="@color/white" />
 
                     <LinearLayout
                         android:id="@+id/ll_invite_code"
@@ -110,14 +110,14 @@
                             android:layout_height="wrap_content"
                             android:text="@string/my_invite"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_sp_12"/>
+                            android:textSize="@dimen/font_size_sp_12" />
 
                         <TextView
                             android:id="@+id/tv_invite_code"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/font_yellow"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
@@ -150,14 +150,14 @@
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_wallet"/>
+                            android:src="@drawable/selector_personal_wallet" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:text="@string/wallet"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -168,19 +168,19 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/ib_scan_quan"
+                            android:id="@+id/ib_phone_recharge"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_scan_quan"/>
+                            android:src="@drawable/selector_personal_phone_recharge" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
-                            android:text="@string/scan_coupon"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:text="@string/circle"
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -191,21 +191,20 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/ib_chunsun_quan"
+                            android:id="@+id/ib_send_ad_record"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_chunsun_quan"/>
+                            android:src="@drawable/selector_personal_send_ad_record" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
-                            android:text="@string/chunsun_coupon"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:text="@string/send_ad_record"
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -224,67 +223,67 @@
                         android:orientation="vertical">
 
                         <ImageButton
-                            android:id="@+id/ib_phone_recharge"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:background="@null"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_phone_recharge"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:text="@string/recharge"
-                            android:textSize="@dimen/font_size_sp_16"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/ib_send_ad_record"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:background="@null"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_send_ad_record"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:text="@string/send_ad_record"
-                            android:textSize="@dimen/font_size_sp_16"/>
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <ImageButton
                             android:id="@+id/ib_novice_guidelines"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_novice_guidelines_collect"/>
+                            android:src="@drawable/selector_novice_guidelines_collect" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:text="@string/novice_guidelines"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_scan_quan"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/selector_scan_quan" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:text="@string/scan_coupon"
+                            android:textSize="@dimen/font_size_sp_16" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_chunsun_quan"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@null"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/selector_chunsun_quan" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:text="@string/chunsun_coupon"
+                            android:textSize="@dimen/font_size_sp_16" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -307,7 +306,7 @@
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_collect"/>
+                            android:src="@drawable/selector_personal_collect" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -315,7 +314,7 @@
                             android:layout_margin="15dp"
 
                             android:text="@string/collection"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -331,14 +330,14 @@
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_not_receiving"/>
+                            android:src="@drawable/selector_personal_not_receiving" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:text="@string/not_receiving_red"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -354,14 +353,14 @@
                             android:layout_height="70dp"
                             android:background="@null"
                             android:scaleType="fitXY"
-                            android:src="@drawable/selector_personal_setting"/>
+                            android:src="@drawable/selector_personal_setting" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:text="@string/setting"
-                            android:textSize="@dimen/font_size_sp_16"/>
+                            android:textSize="@dimen/font_size_sp_16" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

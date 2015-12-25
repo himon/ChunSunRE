@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.presenter;
 
-import com.chunsun.redenvelope.model.event.WelcomeEvent;
+import com.chunsun.redenvelope.event.WelcomeEvent;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;
 
 import de.greenrobot.event.EventBus;

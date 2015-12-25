@@ -1,15 +1,16 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
-import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.model.impl.WebRedDetailModeImpl;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -18,7 +19,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/8/11.
  */
-public class WebRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class WebRedDetailPresenter extends UserLosePresenter<IWebRedDetailView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IWebRedDetailView mIWebRedDetailView;
     private WebRedDetailMode mWebRedDetailMode;
@@ -36,6 +37,16 @@ public class WebRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
      */
     public void getData(String token, String id) {
         mWebRedDetailMode.getRedData(token, id, this);
+    }
+
+    /**
+     * 设置收藏当前红包
+     *
+     * @param mToken
+     * @param id
+     */
+    public void favorite(String mToken, String id) {
+        mWebRedDetailMode.setFavorite(mToken, id, this);
     }
 
     /**
@@ -88,6 +99,9 @@ public class WebRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
             case Constants.LISTENER_TYPE_SHARE_OPEN_RED:
                 ShowToast.Short(((SampleResponseEntity)data).getMsg());
                 mIWebRedDetailView.shareSuccess();
+                break;
+            case Constants.LISTENER_TYPE_FAVORITE:
+                mIWebRedDetailView.setFavoriteSuccess((SampleResponseEntity) data);
                 break;
         }
     }

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.presenter.ForgetPwdNextPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdNextView;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -86,11 +86,11 @@ public class ForgetPwdNextActivity extends BaseActivity implements IForgetPwdNex
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 }

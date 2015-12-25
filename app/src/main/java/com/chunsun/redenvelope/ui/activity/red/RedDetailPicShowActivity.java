@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.event.RedDetailShowPicBackEvent;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.event.RedDetailShowPicBackEvent;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicShowFragment;
 
 import java.util.ArrayList;
@@ -21,6 +21,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
+/**
+ * 红包详情中轮播图片的放大显示
+ */
 public class RedDetailPicShowActivity extends BaseActivity {
 
     @Bind(R.id.toolsbar)

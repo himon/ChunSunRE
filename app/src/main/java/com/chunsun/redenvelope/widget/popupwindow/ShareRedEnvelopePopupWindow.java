@@ -19,9 +19,9 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
-import com.chunsun.redenvelope.model.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.utils.ShareSdkHelper;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -95,6 +95,22 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
         initView();
         initShareSDK();
+        initData(mDetail.getShare_host());
+    }
+
+    /**
+     * 无UI微信分享
+     *
+     * @param context
+     * @param detail
+     */
+    public ShareRedEnvelopePopupWindow(FragmentActivity context, RedDetailEntity.ResultEntity.DetailEntity detail, String string) {
+        super(context);
+        this.mContext = context;
+        this.mDetail = detail;
+
+        // 初始化share_sdk
+        ShareSDK.initSDK(mContext);
         initData(mDetail.getShare_host());
     }
 
@@ -239,6 +255,10 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
                 mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
             } else if ("-1".equals(mDetail.getHb_type())) {// 邀请码分享
                 mShowUrl = shareHost + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
+            } else if ("7".equals(mDetail.getHb_type())) {
+                mShowUrl = shareHost + "pages/circle/index.html?hbId=" + mDetail.getId();
+            } else if ("8".equals(mDetail.getHb_type())) {
+                mShowUrl = mDetail.getContent();
             } else {
                 mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
             }
@@ -246,6 +266,18 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, shareHost, mFrom, mShareLimitResult != null);
     }
 
+    /**
+     * 创建圈子同步朋友圈
+     */
+    public void circleSyncFriend() {
+        mShareSdkHelper.circleShare(mShowUrl);
+    }
+
+    /**
+     * 转发类分享
+     *
+     * @param share_url
+     */
     public void repeatShare(String share_url) {
         initData(share_url);
         mShareSdkHelper.share(mWhich, mShowUrl);
@@ -329,6 +361,11 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         }
     }
 
+    /**
+     * 无奖励分享
+     *
+     * @param view
+     */
     private void noRewardShareOnClick(View view) {
         mWhich = "";
         switch (view.getId()) {

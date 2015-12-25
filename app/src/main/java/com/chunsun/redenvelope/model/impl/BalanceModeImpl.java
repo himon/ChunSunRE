@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.BalanceMode;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;

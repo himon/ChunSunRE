@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.PhoneRechargeConfirmMode;
 import com.chunsun.redenvelope.ui.activity.personal.PhoneRechargeConfirmActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -25,7 +26,7 @@ public class PhoneRechargeConfirmModeImpl implements PhoneRechargeConfirmMode {
     }
 
     @Override
-    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final BaseMultiLoadedListener listener) {
+    public void rechargeMobile(final String token, final String mobile, final String yunyingshang, final int cz_poundage_id, final UserLoseMultiLoadedListener listener) {
         mManager.rechargeMobile(token, mobile, yunyingshang, cz_poundage_id, listener, mActivity);
     }
 }

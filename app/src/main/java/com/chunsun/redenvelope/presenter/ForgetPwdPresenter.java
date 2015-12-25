@@ -3,11 +3,11 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.ForgetPwdMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.event.ValiCodeEvent;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.ValiCodeEvent;
 import com.chunsun.redenvelope.model.impl.ForgetPwdModeImpl;
 import com.chunsun.redenvelope.ui.activity.account.ForgetPwdActivity;
 import com.chunsun.redenvelope.ui.view.IForgetPwdView;

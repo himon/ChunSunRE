@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
 
 /**
  * Created by Administrator on 2015/8/21.

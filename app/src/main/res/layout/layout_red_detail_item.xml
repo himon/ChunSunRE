@@ -103,6 +103,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_red_envelope"
             android:layout_width="150dip"
             android:layout_height="80dip"
             android:layout_gravity="center_horizontal"

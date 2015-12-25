@@ -12,17 +12,17 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.clip.PicClipActivity;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
-import com.chunsun.redenvelope.model.entity.json.UserInfoEntity;
-import com.chunsun.redenvelope.model.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
+import com.chunsun.redenvelope.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.UserInfoPresenter;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserInfoView;
-import com.chunsun.redenvelope.utils.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.widget.SettingItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -119,12 +119,12 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
         mToken = new Preferences(this).getToken();
 
         mUserEntity = MainApplication.getContext().getUserEntity();
-        if (Constants.REGISTER_TYPE_PERSONAL.equals(mUserEntity.getType())) {
+        if (Constants.USER_REGISTER_TYPE_PERSONAL.equals(mUserEntity.getType())) {
             initTitleBar("个人信息", "", "", Constants.TITLE_TYPE_SAMPLE);
             mMoreContentList = new String[]{"头像", "名字", "春笋号", "手机号",
                     "电话", "微信", "支付宝", "身份证号", "个性签名", "", "性别", "生日",
                     "职业", "QQ"};
-        } else if (Constants.REGISTER_TYPE_COMPANY.equals(mUserEntity.getType())) {
+        } else if (Constants.USER_REGISTER_TYPE_ENTERPRISE.equals(mUserEntity.getType())) {
             initTitleBar("个人信息", "", "", Constants.TITLE_TYPE_SAMPLE);
             mMoreContentList = new String[]{"企业形象", "名称", "春笋号", "手机号",
                     "电话", "微信", "支付宝", "", "企业介绍", "认证", "", "", "", "QQ"};
@@ -456,11 +456,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
 
     @Override
     public void showLoading() {
-        super.showLoading();
+        showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        hideCircleLoading();
     }
 }

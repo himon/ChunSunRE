@@ -9,11 +9,11 @@ import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity.ResultEntity.CzPoundageEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity.ResultEntity.CzPoundageEntity;
 import com.chunsun.redenvelope.presenter.PhoneRechargePresenter;
 import com.chunsun.redenvelope.ui.adapter.PhoneRechargeAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeView;
 import com.chunsun.redenvelope.utils.StringUtil;
 

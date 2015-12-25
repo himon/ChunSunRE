@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.SampleEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
 
 import java.util.List;
 

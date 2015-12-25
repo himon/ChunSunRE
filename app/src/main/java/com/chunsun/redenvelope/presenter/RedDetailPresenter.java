@@ -3,11 +3,11 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.RedDetailMode;
-import com.chunsun.redenvelope.model.entity.BaseEntity;
-import com.chunsun.redenvelope.model.entity.json.RedDetailEntity;
-import com.chunsun.redenvelope.model.entity.json.ShareLimitEntity;
+import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.model.impl.RedDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;

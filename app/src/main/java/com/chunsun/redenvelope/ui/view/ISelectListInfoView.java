@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
 
 /**

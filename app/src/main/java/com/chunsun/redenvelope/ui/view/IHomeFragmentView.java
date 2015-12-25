@@ -1,18 +1,28 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
-import com.chunsun.redenvelope.ui.base.BaseView;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
+import com.chunsun.redenvelope.ui.base.view.LoadingView;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2015/8/10.
  */
-public interface IHomeFragmentView extends BaseView{
+public interface IHomeFragmentView extends LoadingView {
 
+    /**
+     * 设置列表数据
+     *
+     * @param entity
+     */
     void setData(RedListDetailEntity.ResultEntity entity);
 
+    /**
+     * 设置轮播广告数据
+     *
+     * @param advert
+     */
     void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert);
 
     /**
@@ -44,10 +54,22 @@ public interface IHomeFragmentView extends BaseView{
      */
     void toAdWebView(String title, String url);
 
+    /**
+     * 获取占位id
+     *
+     * @param id
+     */
     void gradRedEnvelopeSuccess(String id);
 
     /**
      * 跳转登录
      */
     void toLogin();
+
+    /**
+     * 跳转转发类详情
+     *
+     * @param id
+     */
+    void toRepeatRedDetail(String id);
 }

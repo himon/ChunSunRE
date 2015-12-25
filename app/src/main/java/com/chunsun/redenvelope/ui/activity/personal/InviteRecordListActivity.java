@@ -8,10 +8,10 @@ import android.widget.ListView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.InviteRecordEntity;
+import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
 import com.chunsun.redenvelope.presenter.InviteRecordListPresenter;
 import com.chunsun.redenvelope.ui.adapter.InviteRecordListAdapter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IInviteRecordListView;
 
 import java.util.ArrayList;

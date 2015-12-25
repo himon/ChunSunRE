@@ -1,8 +1,8 @@
 package com.chunsun.redenvelope.ui.fragment.tab;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +11,17 @@ import android.widget.AdapterView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.entity.json.RedAutoAdEntity;
-import com.chunsun.redenvelope.model.entity.json.RedListDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
+import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
-import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
-import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
-import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
-import com.chunsun.redenvelope.ui.activity.red.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.view.LoadingView;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
 import com.chunsun.redenvelope.utils.DensityUtils;
+import com.chunsun.redenvelope.utils.helper.RedEvenlopeListHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.AdImageAdapter;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
@@ -38,18 +36,18 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
- * 附近广告Fragment
+ * 广告列表Fragment
  */
-public class HomeFragment extends BaseFragment implements IHomeFragmentView {
+public class HomeFragment extends BaseFragment implements IHomeFragmentView, LoadingView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
 
+    private GuideGallery mViewPager;
     private HomeFragmentPresenter mPresenter;
     private RedListAdapter mAdapter;
-    private GuideGallery mViewPager;
     private AdImageAdapter imageAdapter;
 
     //当前显示页数
@@ -61,7 +59,18 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     private int mTotal = 0;
     //选中的Item的详情
     private RedListDetailEntity.ResultEntity.PoolEntity mEntity;
-
+    /**
+     * 滚动广告类型
+     */
+    private String mScrollAdType;
+    /**
+     * 列表显示广告类型
+     */
+    private String mShowAdType;
+    /**
+     * 帮助类
+     */
+    RedEvenlopeListHelper mRedEvenlopeListHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +78,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         View view = inflater.inflate(R.layout.fragment_near, container, false);
         ButterKnife.bind(this, view);
         mPresenter = new HomeFragmentPresenter(this);
+        mRedEvenlopeListHelper = new RedEvenlopeListHelper(getActivity());
         initView();
         initData();
         return view;
@@ -76,6 +86,16 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @Override
     protected void initView() {
+
+        Bundle bundle = getArguments();
+        mScrollAdType = bundle.getString(Constants.EXTRA_KEY);
+        if (Constants.RED_AD_TYPE.equals(mScrollAdType)) {
+            mShowAdType = Constants.RED_DETAIL_TYLE_SAMPLE;
+        } else if (Constants.TASK_AD_TYPE.equals(mScrollAdType)) {
+            mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT + "";
+        } else if (Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
+            mShowAdType = Constants.RED_DETAIL_TYPE_CIRCLE + "";
+        }
 
         /**
          * 轮播图
@@ -102,13 +122,22 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!((MainActivity) getActivity()).isLogin()) {
-                    ((MainActivity) getActivity()).toLogin(Constants.FROM_TAB1);
+                if (TextUtils.isEmpty(new Preferences(getActivity()).getToken()) && !Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
+                    toLogin();
                     return;
                 }
                 showLoading();
                 mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
+                if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {//转发
+                    toRepeatRedDetail(mEntity.getId());
+                } else if (Constants.RED_DETAIL_TYPE_CIRCLE == mEntity.getType()) {//圈子
+                    toRedDetail(mEntity.getId());
+                } else if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mEntity.getType()) {//链接圈子
+//                    toRedDetail(mEntity.getId());
+                    toWebRedDetail(mEntity.getId());
+                } else {
+                    mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
+                }
             }
         });
 
@@ -142,9 +171,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(Constants.RED_DETAIL_TYPE_NEAR + "");
+            mPresenter.getAdData(mScrollAdType);
         }
-        mPresenter.loadData(new Preferences(getActivity()).getToken(), Constants.RED_DETAIL_TYLE_SAMPLE + "", mCurrentPage);
+        mPresenter.loadData(new Preferences(getActivity()).getToken(), mShowAdType, mCurrentPage);
     }
 
     @Override
@@ -185,38 +214,34 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
 
     @Override
     public void toRedDetail(String id) {
-        Intent intent = new Intent(getActivity(), RedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_LEFT);
-        startActivity(intent);
+        hideLoading();
+        mRedEvenlopeListHelper.toRedDetail(id);
     }
 
     @Override
     public void toWebRedDetail(String id) {
-        Intent intent = new Intent(getActivity(), WebRedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        startActivity(intent);
+        hideLoading();
+        mRedEvenlopeListHelper.toWebRedDetail(id, mEntity.getType());
     }
 
     @Override
-    public void toForwardRedDetail(String id) {
-        Intent intent = new Intent(getActivity(), RedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_COUPON);
-        startActivity(intent);
+    public void toRepeatRedDetail(String id) {
+        hideLoading();
+        mRedEvenlopeListHelper.toRepeatRedDetail(id);
     }
 
     @Override
     public void toAdWebView(String title, String url) {
-        Intent intent = new Intent(getActivity(), CommonWebActivity.class);
-        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL, url);
-        intent.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE, title);
-        startActivity(intent);
+        mRedEvenlopeListHelper.toAdWebView(title, url);
+    }
+
+    @Override
+    public void toForwardRedDetail(String id) {
+        mRedEvenlopeListHelper.toForwardRedDetail(id);
     }
 
     @Override
     public void gradRedEnvelopeSuccess(String id) {
-        hideLoading();
         if (mEntity != null) {
             switch (mEntity.getType()) {
                 case 1:
@@ -227,21 +252,20 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
                 case 4:
                     toWebRedDetail(id);
                     break;
+                case 5:
+                    toRepeatRedDetail(mEntity.getId());
+                    break;
                 case 6:
                     toForwardRedDetail(id);
                     break;
             }
-
         }
     }
 
     @Override
     public void toLogin() {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB1);
-        startActivity(intent);
+        mRedEvenlopeListHelper.toLogin();
     }
-
 
     @Override
     public void onPause() {
@@ -253,14 +277,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView {
     public void onResume() {
         super.onResume();
         mViewPager.startAutoScroll();
-    }
-
-    /**
-     * 从蒙版点击进入第一个Item广告详情
-     */
-    public void mengBanClick() {
-        RedListDetailEntity.ResultEntity.PoolEntity entity = mList.get(0);
-        mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), entity.getId());
     }
 
     @Override

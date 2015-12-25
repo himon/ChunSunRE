@@ -1,11 +1,11 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.ui.base.BaseView;
+import com.chunsun.redenvelope.ui.base.view.LoadingView;
 
 /**
  * Created by Administrator on 2015/8/1.
  */
-public interface IMainView extends BaseView{
+public interface IMainView extends LoadingView {
 
     boolean isLogin(String from);
 
@@ -23,4 +23,9 @@ public interface IMainView extends BaseView{
      * 扫描二维码
      */
     void toScan();
+
+    /**
+     * 跳转任务列表
+     */
+    void toTaskList();
 }

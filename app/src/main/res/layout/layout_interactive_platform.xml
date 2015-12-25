@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">\
+
+        <com.chunsun.redenvelope.widget.GetMoreListView
+            android:id="@+id/gmlv_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/global_gray"
+            android:dividerHeight="5dp" />
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_red_detail_edit_text"
+            android:hint="@string/input_comment"
+            android:maxHeight="250dp"
+            android:maxLength="160"
+            android:minHeight="40dp"
+            android:textColorHint="@color/font_hint_gray"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <Button
+            android:id="@+id/btn_send_comment"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_radius_gray"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:text="@string/send"
+            android:textColor="@color/font_hint_gray"
+            android:textSize="@dimen/font_size_sp_16" />
+    </LinearLayout>
+
+</merge>

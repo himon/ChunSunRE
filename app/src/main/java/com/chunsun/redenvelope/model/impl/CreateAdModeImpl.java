@@ -1,10 +1,11 @@
 package com.chunsun.redenvelope.model.impl;
 
+import android.app.Activity;
+
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.model.CreateAdMode;
-import com.chunsun.redenvelope.model.entity.json.DistrictEntity;
-import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.utils.AssetsUtils;
 import com.google.gson.Gson;
 
@@ -19,9 +20,9 @@ import com.google.gson.Gson;
  */
 public class CreateAdModeImpl implements CreateAdMode {
 
-    private CreateAdActivity mActivity;
+    private Activity mActivity;
 
-    public CreateAdModeImpl(CreateAdActivity activity) {
+    public CreateAdModeImpl(Activity activity) {
         mActivity = activity;
     }
 

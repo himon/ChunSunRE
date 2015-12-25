@@ -1,10 +1,10 @@
 package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.BalanceMode;
-import com.chunsun.redenvelope.model.entity.SampleEntity;
-import com.chunsun.redenvelope.model.entity.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.SampleEntity;
+import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.model.impl.BalanceModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.ui.view.IBalanceView;

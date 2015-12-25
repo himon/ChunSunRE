@@ -1,7 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.UserRewardMode;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -20,7 +20,7 @@ public class UserRewardModeImpl implements UserRewardMode {
     }
 
     @Override
-    public void getUserPublicData(final String token, final String user_id, final BaseMultiLoadedListener listener) {
+    public void getUserPublicData(final String token, final String user_id, final UserLoseMultiLoadedListener listener) {
         mManager.getUserPublicData(token, user_id, listener, mActivity);
     }
 
@@ -30,7 +30,7 @@ public class UserRewardModeImpl implements UserRewardMode {
     }
 
     @Override
-    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final BaseMultiLoadedListener listener) {
+    public void transfer(final String token, final String user_id, final String amount, final String msg, final String hb_id, final String province, final String city, final UserLoseMultiLoadedListener listener) {
         mManager.transfer(token, user_id, amount, msg, hb_id, province, city, listener, mActivity);
     }
 }

@@ -16,7 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
-import com.chunsun.redenvelope.model.entity.TitlePopupItemEntity;
+import com.chunsun.redenvelope.entities.TitlePopupItemEntity;
 import com.chunsun.redenvelope.utils.DensityUtils;
 
 import java.util.ArrayList;

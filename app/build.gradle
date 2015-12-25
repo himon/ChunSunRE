@@ -34,6 +34,7 @@ dependencies {
     compile 'com.zhy:okhttputils:1.0.2'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.commit451:PhotoView:1.2.4'
+    compile 'me.codeboy.android:align-text-view:2.1.0'
     compile files('libs/locSDK_6.03.jar')
     compile files('libs/alipaySDK-20150818.jar')
     compile files('libs/MobLogCollector.jar')

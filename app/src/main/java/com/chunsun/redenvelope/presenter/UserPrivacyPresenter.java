@@ -2,7 +2,7 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.UserPrivacyMode;
-import com.chunsun.redenvelope.model.entity.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.UserPrivacyModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.UserPrivacyActivity;
 import com.chunsun.redenvelope.ui.view.IUserPrivacyView;

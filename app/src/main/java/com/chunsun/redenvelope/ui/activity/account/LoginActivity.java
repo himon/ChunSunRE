@@ -10,9 +10,10 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.model.event.MainEvent;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.presenter.LoginPresenter;
-import com.chunsun.redenvelope.ui.base.BaseActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
+import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -23,7 +24,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 登录Activity
  */
-public class LoginActivity extends BaseActivity implements ILoginView, View.OnClickListener {
+public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> implements ILoginView, View.OnClickListener {
 
     @Bind(R.id.tv_no_pwd_login)
     TextView mQuickLogin;
@@ -46,9 +47,14 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        mPresenter = new LoginPresenter(this);
+        mPresenter = (LoginPresenter) super.mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new LoginPresenter(this);
     }
 
     @Override
@@ -133,12 +139,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
 
     @Override
     public void showLoading() {
-       super.showLoading();
+       super.showCircleLoading();
     }
 
     @Override
     public void hideLoading() {
-        super.hideLoading();
+        super.hideCircleLoading();
     }
 
 }
