@@ -258,5 +258,6 @@
     <string name="title_activity_create_circle_result">CreateCircleResultActivity</string>
     <string name="title_activity_my_circle_list">MyCircleListActivity</string>
     <string name="title_activity_my_circle_list_detail">MyCircleListDetailActivity</string>
+    <string name="title_activity_search_circle">SearchCircleActivity</string>
 
 </resources>

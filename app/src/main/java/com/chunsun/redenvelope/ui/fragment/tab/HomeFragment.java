@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
@@ -38,12 +39,14 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 广告列表Fragment
  */
-public class HomeFragment extends BaseFragment implements IHomeFragmentView, LoadingView {
+public class HomeFragment extends BaseFragment implements IHomeFragmentView, LoadingView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
+    @Bind(R.id.iv_to_top)
+    ImageView mIvTop;
 
     private GuideGallery mViewPager;
     private HomeFragmentPresenter mPresenter;
@@ -66,7 +69,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     /**
      * 列表显示广告类型
      */
-    private String mShowAdType;
+    private int mShowAdType;
+    /**
+     * 排序方式
+     */
+    private int mOrderType = Constants.CIRCLE_ORDER_TYPE_FLASHBACK;
     /**
      * 帮助类
      */
@@ -92,9 +99,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         if (Constants.RED_AD_TYPE.equals(mScrollAdType)) {
             mShowAdType = Constants.RED_DETAIL_TYLE_SAMPLE;
         } else if (Constants.TASK_AD_TYPE.equals(mScrollAdType)) {
-            mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT + "";
+            mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT;
         } else if (Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
-            mShowAdType = Constants.RED_DETAIL_TYPE_CIRCLE + "";
+            mShowAdType = Constants.RED_DETAIL_TYPE_CIRCLE;
         }
 
         /**
@@ -133,7 +140,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
                 } else if (Constants.RED_DETAIL_TYPE_CIRCLE == mEntity.getType()) {//圈子
                     toRedDetail(mEntity.getId());
                 } else if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mEntity.getType()) {//链接圈子
-//                    toRedDetail(mEntity.getId());
                     toWebRedDetail(mEntity.getId());
                 } else {
                     mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
@@ -144,7 +150,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
-                mListView.setHasMore();
+
                 isRefresh = true;
                 getData();
             }
@@ -156,6 +162,29 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
                 mPtr.autoRefresh();
             }
         }, 100);
+
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                mListView.doOnScrollStateChanged(view, scrollState);
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                if ((firstVisibleItem + visibleItemCount) - visibleItemCount >= 3) {
+                    mIvTop.setVisibility(View.VISIBLE);
+                } else {
+                    mIvTop.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        initEvent();
+    }
+
+    private void initEvent() {
+        mIvTop.setOnClickListener(this);
     }
 
     @Override
@@ -164,16 +193,14 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     }
 
     public void getData() {
-        if (mCurrentPage * Constants.PAGE_NUM > mTotal + Constants.PAGE_NUM) {
-            mPtr.refreshComplete();
-            return;
-        }
+
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
             mPresenter.getAdData(mScrollAdType);
         }
-        mPresenter.loadData(new Preferences(getActivity()).getToken(), mShowAdType, mCurrentPage);
+
+        mPresenter.loadData(new Preferences(getActivity()).getToken(), mShowAdType, mCurrentPage, mOrderType, "");
     }
 
     @Override
@@ -184,6 +211,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
 
         if (list.size() < Constants.PAGE_NUM) {
             mListView.setNoMore();
+        } else {
+            mListView.setHasMore();
         }
 
         mCurrentPage++;
@@ -215,7 +244,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     @Override
     public void toRedDetail(String id) {
         hideLoading();
-        mRedEvenlopeListHelper.toRedDetail(id);
+        mRedEvenlopeListHelper.toRedDetail(id, mShowAdType);
     }
 
     @Override
@@ -287,5 +316,52 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     @Override
     public void hideLoading() {
         ((MainActivity) getActivity()).hideLoading();
+    }
+
+    /**
+     * 按排序刷新
+     *
+     * @param order
+     */
+    public void orderRefresh(int order) {
+        showLoading();
+        switch (order) {
+            case 0:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_FLASHBACK;
+                break;
+            case 1:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_HOT;
+                break;
+            case 2:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_ESSENCE;
+                break;
+            case 3:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_RANDOM;
+                break;
+            case 4:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_LOCAL;
+                break;
+            case 5:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_MY_CIRCLE;
+                break;
+            case 6:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_COLLECTION;
+                break;
+            case 7:
+                mOrderType = Constants.CIRCLE_ORDER_TYPE_RANGE;
+                break;
+        }
+        mList.clear();
+        mCurrentPage = 1;
+        getData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_to_top:
+                mListView.setSelection(0);
+                break;
+        }
     }
 }

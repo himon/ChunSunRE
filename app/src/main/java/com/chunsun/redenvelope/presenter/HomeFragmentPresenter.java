@@ -7,6 +7,7 @@ import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
 import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.model.HomeFragmentMode;
 import com.chunsun.redenvelope.model.impl.HomeFragmentModeImpl;
+import com.chunsun.redenvelope.ui.activity.red.SearchCircleActivity;
 import com.chunsun.redenvelope.ui.activity.red.TaskListActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
@@ -23,15 +24,17 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
 
     public HomeFragmentPresenter(IHomeFragmentView homeFragmentView) {
         this.mHomeFragmentView = homeFragmentView;
-        if(mHomeFragmentView instanceof HomeFragment) {
+        if (mHomeFragmentView instanceof HomeFragment) {
             mHomeFragmentMode = new HomeFragmentModeImpl((HomeFragment) homeFragmentView, null);
-        }else{
-            mHomeFragmentMode = new HomeFragmentModeImpl(null, (TaskListActivity)homeFragmentView);
+        } else if (mHomeFragmentView instanceof TaskListActivity) {
+            mHomeFragmentMode = new HomeFragmentModeImpl(null, (TaskListActivity) homeFragmentView);
+        } else {
+            mHomeFragmentMode = new HomeFragmentModeImpl(null, (SearchCircleActivity) homeFragmentView);
         }
     }
 
-    public void loadData(String token, String type, int page_index) {
-        mHomeFragmentMode.loadData(token, type, page_index, this);
+    public void loadData(String token, int type, int page_index, int order_type, String keywords) {
+        mHomeFragmentMode.loadData(token, type, page_index, order_type, keywords, this);
     }
 
     public void getAdData(String type) {
@@ -45,6 +48,7 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
 
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
+        mHomeFragmentView.hideLoading();
         switch (event_tag) {
             case Constants.LISTENER_TYPE_RED_ENVELOPE_LIST:
                 RedListDetailEntity entity = (RedListDetailEntity) data;

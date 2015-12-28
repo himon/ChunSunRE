@@ -34,7 +34,7 @@ public class ForwardFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
      * @param type
      * @param page_index
      */
-    public void loadData(String token, String type, int page_index) {
+    public void loadData(String token, int type, int page_index) {
         mForwardFragmentMode.loadData(token, type, page_index, this);
     }
 

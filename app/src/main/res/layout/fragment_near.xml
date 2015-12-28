@@ -7,7 +7,7 @@
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">\
+        android:layout_height="match_parent">
 
         <com.chunsun.redenvelope.widget.GetMoreListView
             android:id="@+id/gmlv_main"
@@ -16,5 +16,15 @@
             android:divider="@color/line_gray3"
             android:dividerHeight="1dp" />
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_to_top"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/img_to_top"
+        android:visibility="gone" />
 
 </FrameLayout>

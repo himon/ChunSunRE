@@ -22,6 +22,10 @@ public class TitlePopupItemEntity {
         this.mDrawable = context.getResources().getDrawable(drawableId);
     }
 
+    public TitlePopupItemEntity(CharSequence title) {
+        this.mTitle = title;
+    }
+
     public TitlePopupItemEntity(Context context, CharSequence title, int drawableId) {
         this.mTitle = title;
         this.mDrawable = context.getResources().getDrawable(drawableId);

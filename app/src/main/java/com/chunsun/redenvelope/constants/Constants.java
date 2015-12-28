@@ -19,7 +19,7 @@ public interface Constants {
      * 红包类型
      */
     //生活、企业
-    String RED_DETAIL_TYLE_SAMPLE = "-1";
+    int RED_DETAIL_TYLE_SAMPLE = -1;
     //生活
     int RED_DETAIL_TYPE_LEFT = 1;
     //企业
@@ -48,6 +48,18 @@ public interface Constants {
     String RED_AD_TYPE = "3";
 
     /**
+     * 圈子排序类别
+     */
+    int CIRCLE_ORDER_TYPE_FLASHBACK = 1;//按时间倒叙
+    int CIRCLE_ORDER_TYPE_HOT = 2;//热门
+    int CIRCLE_ORDER_TYPE_ESSENCE = 3;//精华（置顶）
+    int CIRCLE_ORDER_TYPE_RANDOM = 4;//随机
+    int CIRCLE_ORDER_TYPE_LOCAL = 5;//本地
+    int CIRCLE_ORDER_TYPE_MY_CIRCLE = 6;//我的圈子
+    int CIRCLE_ORDER_TYPE_COLLECTION = 7;//我的收藏
+    int CIRCLE_ORDER_TYPE_RANGE = 8;//距离
+
+    /**
      * 服务器地址
      */
 //    String HOST_URL = "http://cssv.chunsunkeji.com";
@@ -73,6 +85,7 @@ public interface Constants {
     int TITLE_TYPE_HOME = 0x1001;
     int TITLE_TYPE_NONE = 0x1002;
     int TITLE_TYPE_AD = 0x1003;
+    int TITLE_TYPE_CIRCLE = 0x1004;
 
     /**
      * web service地址接口

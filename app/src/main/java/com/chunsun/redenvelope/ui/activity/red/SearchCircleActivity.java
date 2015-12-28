@@ -1,13 +1,18 @@
 package com.chunsun.redenvelope.ui.activity.red;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
@@ -18,11 +23,8 @@ import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
-import com.chunsun.redenvelope.utils.DensityUtils;
 import com.chunsun.redenvelope.utils.helper.RedEvenlopeListHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
-import com.chunsun.redenvelope.widget.autoscrollviewpager.AdImageAdapter;
-import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,20 +35,33 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class TaskListActivity extends BaseActivity implements IHomeFragmentView, View.OnClickListener {
+/**
+ * 查询圈子
+ */
+public class SearchCircleActivity extends BaseActivity implements IHomeFragmentView, View.OnClickListener {
 
+    @Bind(R.id.main_nav)
+    RelativeLayout mToolsBar;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
+    @Bind(R.id.et_search)
+    EditText mEtSearch;
+    @Bind(R.id.ll_clear)
+    LinearLayout mLlClear;
+    @Bind(R.id.iv_clear)
+    ImageView mIvClear;
+    @Bind(R.id.btn_search)
+    Button mBtnSearch;
     @Bind(R.id.iv_to_top)
     ImageView mIvTop;
+    @Bind(R.id.fl_list)
+    FrameLayout mFlList;
 
-    private GuideGallery mViewPager;
+
     private HomeFragmentPresenter mPresenter;
     private RedListAdapter mAdapter;
-    private AdImageAdapter imageAdapter;
-
     //当前显示页数
     private int mCurrentPage = 1;
     private List<RedListDetailEntity.ResultEntity.PoolEntity> mList = new ArrayList<RedListDetailEntity.ResultEntity.PoolEntity>();
@@ -54,16 +69,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     private boolean isRefresh;
     //红包列表总数
     private int mTotal = 0;
-    //选中的Item的详情
-    private RedListDetailEntity.ResultEntity.PoolEntity mEntity;
-    /**
-     * 滚动广告类型
-     */
-    private String mScrollAdType;
-    /**
-     * 列表显示广告类型
-     */
-    private int mShowAdType;
+    private String mToken;
     /**
      * 帮助类
      */
@@ -72,7 +78,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_list);
+        setContentView(R.layout.activity_search_circle);
         ButterKnife.bind(this);
         mPresenter = new HomeFragmentPresenter(this);
         mRedEvenlopeListHelper = new RedEvenlopeListHelper(this);
@@ -82,19 +88,9 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
 
     @Override
     protected void initView() {
-        initTitleBar("任务", "", "", Constants.TITLE_TYPE_SAMPLE);
-        /**
-         * 轮播图
-         */
-        int density = (int) (120 * DensityUtils.getDensity(this));
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, density);
-        mViewPager = new GuideGallery(this);
-        mViewPager.setLayoutParams(params);
 
-        /**
-         * List列表
-         */
-        mListView.addHeaderView(mViewPager);
+        mToolsBar.setVisibility(View.GONE);
+
         mListView.setOnGetMoreListener(new GetMoreListView.OnGetMoreListener() {
             @Override
             public void onGetMore() {
@@ -108,18 +104,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (TextUtils.isEmpty(new Preferences(TaskListActivity.this).getToken()) && !Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
-                    toLogin();
-                    return;
-                }
-                showLoading();
-                mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                //如果是转发
-                if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {
-                    toRepeatRedDetail(mEntity.getId());
-                } else {
-                    mPresenter.grabRedEnvelope(new Preferences(TaskListActivity.this).getToken(), mEntity.getId());
-                }
+
             }
         });
 
@@ -149,44 +134,57 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
             }
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtr.autoRefresh();
-            }
-        }, 100);
-
         initEvent();
     }
 
     private void initEvent() {
-        mNavIcon.setOnClickListener(this);
-        mNavLeft.setOnClickListener(this);
+        mBtnSearch.setOnClickListener(this);
+        mLlClear.setOnClickListener(this);
+        mIvClear.setOnClickListener(this);
         mIvTop.setOnClickListener(this);
+        mEtSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (editTextIsEmpty()) {
+                    mBtnSearch.setText("取消");
+                    mLlClear.setVisibility(View.INVISIBLE);
+                } else {
+                    mBtnSearch.setText("搜索");
+                    mLlClear.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
     protected void initData() {
-        Intent intent = getIntent();
-        mScrollAdType = intent.getStringExtra(Constants.EXTRA_KEY);
-        if (Constants.RED_AD_TYPE.equals(mScrollAdType)) {
-            mShowAdType = Constants.RED_DETAIL_TYLE_SAMPLE;
-        } else if (Constants.TASK_AD_TYPE.equals(mScrollAdType)) {
-            mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT;
-        }
+        mToken = new Preferences(this).getToken();
     }
 
     public void getData() {
         if (mCurrentPage * Constants.PAGE_NUM > mTotal + Constants.PAGE_NUM) {
             mPtr.refreshComplete();
+            hideLoading();
             return;
         }
         if (isRefresh) {
             mCurrentPage = 1;
             mList.clear();
-            mPresenter.getAdData(mScrollAdType);
         }
-        mPresenter.loadData(new Preferences(this).getToken(), mShowAdType, mCurrentPage, 0, "");
+        mPresenter.loadData(mToken, Constants.RED_DETAIL_TYPE_CIRCLE, mCurrentPage, Constants.CIRCLE_ORDER_TYPE_FLASHBACK, mEtSearch.getText().toString().trim());
     }
 
     @Override
@@ -203,6 +201,12 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
 
         mList.addAll(list);
 
+        if (mList.size() == 0) {
+            mFlList.setVisibility(View.GONE);
+        } else {
+            mFlList.setVisibility(View.VISIBLE);
+        }
+
         mAdapter.notifyDataSetChanged();
 
         mListView.getMoreComplete();
@@ -212,84 +216,42 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
 
     @Override
     public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
-        imageAdapter = new AdImageAdapter(advert, this);
-        mViewPager.setSize(advert.size());
-        mViewPager.setAdapter(imageAdapter);
-        mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedAutoAdEntity.ResultEntity.AdvertEntity entity = (RedAutoAdEntity.ResultEntity.AdvertEntity) parent.getAdapter().getItem(position);
-                toAdWebView(entity.getTitle(), entity.getTarget_url());
-            }
-        });
-        mViewPager.startAutoScroll();
+
     }
 
     @Override
     public void toRedDetail(String id) {
-        mRedEvenlopeListHelper.toRedDetail(id, mShowAdType);
+
     }
 
     @Override
     public void toWebRedDetail(String id) {
-        mRedEvenlopeListHelper.toWebRedDetail(id, mEntity.getType());
-    }
 
-    @Override
-    public void toRepeatRedDetail(String id) {
-        hideLoading();
-        mRedEvenlopeListHelper.toRepeatRedDetail(id);
-    }
-
-    @Override
-    public void toAdWebView(String title, String url) {
-        mRedEvenlopeListHelper.toAdWebView(title, url);
     }
 
     @Override
     public void toForwardRedDetail(String id) {
-        mRedEvenlopeListHelper.toForwardRedDetail(id);
+
+    }
+
+    @Override
+    public void toAdWebView(String title, String url) {
+
     }
 
     @Override
     public void gradRedEnvelopeSuccess(String id) {
-        hideLoading();
-        if (mEntity != null) {
-            switch (mEntity.getType()) {
-                case 1:
-                case 2:
-                case 3:
-                    toRedDetail(id);
-                    break;
-                case 4:
-                    toWebRedDetail(id);
-                    break;
-                case 5:
-                    toRepeatRedDetail(mEntity.getId());
-                    break;
-                case 6:
-                    toForwardRedDetail(id);
-                    break;
-            }
 
-        }
     }
 
     @Override
     public void toLogin() {
-        mRedEvenlopeListHelper.toLogin();
+
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mViewPager.stopAutoScroll();
-    }
+    public void toRepeatRedDetail(String id) {
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mViewPager.startAutoScroll();
     }
 
     @Override
@@ -305,13 +267,40 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
+            case R.id.btn_search:
+                if (editTextIsEmpty()) {
+                    back();
+                } else {
+                    search();
+                }
+                break;
+            case R.id.ll_clear:
+            case R.id.iv_clear:
+                mEtSearch.setText("");
+                mList.clear();
+                mCurrentPage = 1;
+                mFlList.setVisibility(View.GONE);
+                mAdapter.notifyDataSetChanged();
                 break;
             case R.id.iv_to_top:
                 mListView.setSelection(0);
                 break;
         }
+    }
+
+    private boolean editTextIsEmpty() {
+        String search = mEtSearch.getText().toString().trim();
+        if (TextUtils.isEmpty(search)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void search() {
+        showLoading();
+        hideKeyboard();
+        mCurrentPage = 1;
+        getData();
     }
 }

@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.red.SearchCircleActivity">
+
+    <include layout="@layout/layout_title_bar" />
+
+    <include layout="@layout/layout_search_bar" />
+
+    <FrameLayout
+        android:id="@+id/fl_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <in.srain.cube.views.ptr.PtrClassicFrameLayout
+            android:id="@+id/ptr_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.chunsun.redenvelope.widget.GetMoreListView
+                android:id="@+id/gmlv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/line_gray3"
+                android:dividerHeight="1dp" />
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_to_top"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/img_to_top"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_empty_view" />
+
+</LinearLayout>

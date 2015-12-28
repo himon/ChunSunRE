@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.ForwardFragmentMode;
@@ -20,8 +21,8 @@ public class ForwardFragmentModeImpl implements ForwardFragmentMode {
     }
 
     @Override
-    public void loadData(final String token, final String type, final int page_index, final UserLoseMultiLoadedListener listener) {
-        mManager.loadData(token, type, page_index, listener, mForwardFragment, null);
+    public void loadData(final String token, final int type, final int page_index, final UserLoseMultiLoadedListener listener) {
+        mManager.loadData(token, type, page_index, Constants.CIRCLE_ORDER_TYPE_FLASHBACK, "", listener, mForwardFragment, null);
     }
 
     @Override

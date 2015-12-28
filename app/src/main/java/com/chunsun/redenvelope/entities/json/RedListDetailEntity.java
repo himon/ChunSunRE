@@ -206,6 +206,12 @@ public class RedListDetailEntity extends BaseEntity {
             private String add_time;
             private String payment_type;
 
+            private String circle_num;
+            private String user_name;
+            private String user_img;
+            private String cover_img_url_source;
+            private String add_time_str;
+
             public String getImg_url() {
                 return img_url;
             }
@@ -684,6 +690,46 @@ public class RedListDetailEntity extends BaseEntity {
 
             public void setPayment_type(String payment_type) {
                 this.payment_type = payment_type;
+            }
+
+            public String getCircle_num() {
+                return circle_num;
+            }
+
+            public void setCircle_num(String circle_num) {
+                this.circle_num = circle_num;
+            }
+
+            public String getUser_name() {
+                return user_name;
+            }
+
+            public void setUser_name(String user_name) {
+                this.user_name = user_name;
+            }
+
+            public String getUser_img() {
+                return user_img;
+            }
+
+            public void setUser_img(String user_img) {
+                this.user_img = user_img;
+            }
+
+            public String getCover_img_url_source() {
+                return cover_img_url_source;
+            }
+
+            public void setCover_img_url_source(String cover_img_url_source) {
+                this.cover_img_url_source = cover_img_url_source;
+            }
+
+            public String getAdd_time_str() {
+                return add_time_str;
+            }
+
+            public void setAdd_time_str(String add_time_str) {
+                this.add_time_str = add_time_str;
             }
         }
     }

@@ -307,6 +307,10 @@
             android:name=".ui.activity.personal.MyCircleListDetailActivity"
             android:label="@string/title_activity_my_circle_list_detail" >
         </activity>
+        <activity
+            android:name=".ui.activity.red.SearchCircleActivity"
+            android:label="@string/title_activity_search_circle" >
+        </activity>
     </application>
 
 </manifest>

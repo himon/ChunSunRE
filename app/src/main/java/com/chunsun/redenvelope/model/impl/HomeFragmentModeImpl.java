@@ -1,9 +1,10 @@
 package com.chunsun.redenvelope.model.impl;
 
+import android.app.Activity;
+
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.HomeFragmentMode;
-import com.chunsun.redenvelope.ui.activity.red.TaskListActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
 
@@ -12,10 +13,10 @@ import com.chunsun.redenvelope.utils.manager.HttpManager;
  */
 public class HomeFragmentModeImpl implements HomeFragmentMode {
     private HomeFragment mFragment;
-    private TaskListActivity mActivity;
+    private Activity mActivity;
     private HttpManager mManager;
 
-    public HomeFragmentModeImpl(HomeFragment fragment, TaskListActivity activity) {
+    public HomeFragmentModeImpl(HomeFragment fragment, Activity activity) {
         this.mFragment = fragment;
         this.mActivity = activity;
         mManager = new HttpManager();
@@ -30,8 +31,8 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
      * @param listener
      */
     @Override
-    public void loadData(final String token, final String type, final int page_index, final UserLoseMultiLoadedListener listener) {
-        mManager.loadData(token, type, page_index, listener, mFragment, mActivity);
+    public void loadData(final String token, final int type, final int page_index, int order_type, String keywords, final UserLoseMultiLoadedListener listener) {
+        mManager.loadData(token, type, page_index, order_type, keywords, listener, mFragment, mActivity);
     }
 
     @Override

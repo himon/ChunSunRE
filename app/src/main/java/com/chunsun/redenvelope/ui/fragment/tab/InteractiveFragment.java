@@ -312,7 +312,7 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
      * @param notice
      */
     @Override
-    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice)  {
+    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice) {
         InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
         mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
     }

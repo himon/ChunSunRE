@@ -123,8 +123,13 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
             mType = intent.getIntExtra(Constants.EXTRA_KEY2, -1);
+
         }
-        mPresenter.getShareLimit(mToken);
+        if (mType == Constants.RED_DETAIL_TYPE_CIRCLE) {
+            mPresenter.getData(mToken, mRedDetailId);
+        } else {
+            mPresenter.getShareLimit(mToken);
+        }
     }
 
     @Override

@@ -66,7 +66,7 @@ public class HttpManager {
      * @param page_index 加载页码
      * @param listener   回调监听
      */
-    public void loadData(final String token, final String type, final int page_index, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void loadData(final String token, final int type, final int page_index, final int order_type, final String keywords, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<RedListDetailEntity> request = new GsonRequest<RedListDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedListDetailEntity.class, null, new Response.Listener<RedListDetailEntity>() {
 
@@ -94,7 +94,7 @@ public class HttpManager {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_POOL_JSON_REQUEST_URL);
-                params.put("parames", JsonManager.initDataRedEnvelopePoolToJson(token, type, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity(), MainApplication.getContext().getLongitude() + "", MainApplication.getContext().getLatitude() + "", page_index));
+                params.put("parames", JsonManager.initDataRedEnvelopePoolToJson(token, type, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity(), MainApplication.getContext().getLongitude() + "", MainApplication.getContext().getLatitude() + "", page_index, order_type, keywords));
                 return params;
             }
         };

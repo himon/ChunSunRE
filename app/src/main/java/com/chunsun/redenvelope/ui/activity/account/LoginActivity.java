@@ -12,6 +12,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.presenter.LoginPresenter;
+import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
 import com.chunsun.redenvelope.ui.view.ILoginView;
@@ -125,6 +126,13 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
 
     @Override
     public void success() {
+        if(mFrom == null){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         if (mFrom.equals(Constants.FROM_AD)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_AD));
         } else if (mFrom.equals(Constants.FROM_ME)) {

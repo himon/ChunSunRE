@@ -1,16 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.chunsun.redenvelope.ui.activity.red.TaskListActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">\
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_nav">\
 
         <com.chunsun.redenvelope.widget.GetMoreListView
             android:id="@+id/gmlv_main"
@@ -20,4 +20,15 @@
             android:dividerHeight="1dp" />
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_to_top"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/img_to_top"
+        android:visibility="gone" />
+
+</RelativeLayout>

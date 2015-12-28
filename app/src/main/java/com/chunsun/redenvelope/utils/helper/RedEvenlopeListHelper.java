@@ -24,10 +24,10 @@ public class RedEvenlopeListHelper {
         this.mContext = context;
     }
 
-    public void toRedDetail(String id) {
+    public void toRedDetail(String id, int type) {
         Intent intent = new Intent(mContext, RedDetailActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_LEFT);
+        intent.putExtra(Constants.EXTRA_KEY2, type);
         mContext.startActivity(intent);
     }
 

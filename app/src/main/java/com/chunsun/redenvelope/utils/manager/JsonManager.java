@@ -79,7 +79,7 @@ public class JsonManager {
      * @param page_index
      * @return
      */
-    public static String initDataRedEnvelopePoolToJson(String token, String type, String province, String city, String longitude, String latitude, int page_index) {
+    public static String initDataRedEnvelopePoolToJson(String token, int type, String province, String city, String longitude, String latitude, int page_index, int order_type, String keywords) {
         JSONObject object = new JSONObject();
         try {
             object.put("token", token);
@@ -90,6 +90,9 @@ public class JsonManager {
             object.put("latitude", latitude);
             object.put("page_index", String.valueOf(page_index));
             object.put("page_size", String.valueOf(Constants.PAGE_NUM));
+            object.put("order_type", order_type);
+            object.put("keywords", keywords);
+            object.put("ids_str", order_type == 4 ? "1,2,3,4" : "");
         } catch (JSONException e) {
             e.printStackTrace();
         }

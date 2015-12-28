@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.event.WelcomeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WelcomePresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;
@@ -34,7 +35,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
 
     private ArrayList<View> mViews = null;
     private ArrayList<View> mPoints = null;
-    private int[] imgs = {R.drawable.img_welcom_page1, R.drawable.img_welcom_page2, R.drawable.img_welcom_page3, R.drawable.img_welcom_page4};
+    private int[] imgs = {R.drawable.img_welcom_page1, R.drawable.img_welcom_page2, R.drawable.img_welcom_page3, R.drawable.img_welcom_page4, R.drawable.img_welcom_page5};
     private WelcomePresenter mPresenter;
     private WelcomeAdapter mAdapter;
 
@@ -73,14 +74,16 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
             View contentView = LayoutInflater.from(this).inflate(
                     R.layout.layout_lead_page_item, null);
             ImageView page = (ImageView) contentView.findViewById(R.id.iv_page);
-            ImageView entry = (ImageView) contentView.findViewById(R.id.iv_entry);
+            ImageView enter = (ImageView) contentView.findViewById(R.id.iv_look);
+            ImageView login = (ImageView) contentView.findViewById(R.id.iv_login);
             page.setImageResource(imgs[i]);
 
             if (i == imgs.length - 1) {
-                entry.setVisibility(View.VISIBLE);
-                entry.setOnClickListener(this);
+                enter.setVisibility(View.VISIBLE);
+                enter.setOnClickListener(this);
+                login.setVisibility(View.VISIBLE);
+                login.setOnClickListener(this);
             }
-
             mViews.add(contentView);
         }
 
@@ -129,10 +132,20 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_entry:
+            case R.id.iv_look:
                 toMainActivity();
                 break;
+            case R.id.iv_login:
+                toLoginActivity();
+                break;
         }
+    }
+
+    private void toLoginActivity() {
+        Intent intent = new Intent(WelcomeActivity.this,
+                LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onEventMainThread(WelcomeEvent event) {

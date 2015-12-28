@@ -16,7 +16,7 @@ public interface ForwardFragmentMode {
      * @param page_index
      * @param listener
      */
-    void loadData(String token, String type, int page_index, UserLoseMultiLoadedListener listener);
+    void loadData(String token, int type, int page_index, UserLoseMultiLoadedListener listener);
 
     /**
      * 红包列表广告

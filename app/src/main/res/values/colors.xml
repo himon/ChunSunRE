@@ -16,6 +16,7 @@
     <color name="font_gray3">#959595</color>
     <color name="font_gray4">#B7B7B7</color>
     <color name="font_gray5">#7B7A7A</color>
+    <color name="font_pink">#BA5959</color>
     <color name="red_detail_comment_font_gray">#adadae</color>
     <color name="font_gray_red_envelope">#B2B2B2</color>
     <color name="font_web_red_detail">#BCBCBC</color>
@@ -34,7 +35,9 @@
     <color name="line_gray">#B0B0B0</color>
     <color name="line_gray2">#C8C7CC</color>
     <color name="line_gray3">#C8C8C8</color>
+
     <color name="web_circle_comment_line_gray">#D84747</color>
+
 
     <!-- 背景色 -->
     <color name="bg_gray">#F6F6F6</color>
@@ -50,6 +53,7 @@
     <color name="bg_yellow_deep">#FFEF6B</color>
     <color name="clip_picture_gray">#905A5A5A</color>
     <color name="dialog_black">#252525</color>
+    <color name="bg_pink">#F79F9F</color>
 
 
     <color name="white">#FFFFFF</color>

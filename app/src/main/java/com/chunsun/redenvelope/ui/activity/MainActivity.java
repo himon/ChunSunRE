@@ -26,6 +26,8 @@ import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateCircleActivity;
+import com.chunsun.redenvelope.ui.activity.red.SearchCircleActivity;
 import com.chunsun.redenvelope.ui.activity.red.TaskListActivity;
 import com.chunsun.redenvelope.ui.activity.scan.ScanChunsunCodeResultActivity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
@@ -87,6 +89,8 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
     //定义标题栏弹窗按钮
     private TitlePopup mTitlePopup;
+    //圈子排序弹窗按钮
+    private TitlePopup mOrderPopup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +150,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Override
     protected void initView() {
 
-        initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_HOME);
+        initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_CIRCLE);
 
         mTabIndicators.add(mHome);
         mTabIndicators.add(mAd);
@@ -211,6 +215,47 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             }
         });
 
+        mOrderPopup = new TitlePopup(this, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mOrderPopup.setItemOnClickListener(new TitlePopup.OnItemOnClickListener() {
+            @Override
+            public void onItemClick(TitlePopupItemEntity item, int position) {
+                switch (position) {
+                    case 0:
+                        mCircleFragment.orderRefresh(0);
+                        mTvOrder.setText("最新");
+                        break;
+                    case 1:
+                        mCircleFragment.orderRefresh(1);
+                        mTvOrder.setText("最热");
+                        break;
+                    case 2:
+                        mCircleFragment.orderRefresh(2);
+                        mTvOrder.setText("精华");
+                        break;
+                    case 3:
+                        mCircleFragment.orderRefresh(3);
+                        mTvOrder.setText("随机");
+                        break;
+                    case 4:
+                        mCircleFragment.orderRefresh(4);
+                        mTvOrder.setText("市区");
+                        break;
+                    case 5:
+                        mCircleFragment.orderRefresh(5);
+                        mTvOrder.setText("我的");
+                        break;
+                    case 6:
+                        mCircleFragment.orderRefresh(6);
+                        mTvOrder.setText("收藏");
+                        break;
+                    case 7:
+                        mCircleFragment.orderRefresh(7);
+                        mTvOrder.setText("附近");
+                        break;
+                }
+            }
+        });
+
         initEvent();
     }
 
@@ -220,6 +265,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mNavRightIcon.setOnClickListener(this);
+        mRlCreate.setOnClickListener(this);
+        mIvCreate.setOnClickListener(this);
+        mRlSearch.setOnClickListener(this);
+        mIvSearch.setOnClickListener(this);
+        mLLOrder.setOnClickListener(this);
 
         mHome.setOnClickListener(this);
         mAd.setOnClickListener(this);
@@ -250,6 +300,15 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mTitlePopup.addAction(new TitlePopupItemEntity(this, "扫一扫", R.drawable.img_dialog_scan));
         mTitlePopup.addAction(new TitlePopupItemEntity(this, "任务", R.drawable.img_dialog_scan));
 
+        //给圈子排序弹窗添加子类
+        mOrderPopup.addAction(new TitlePopupItemEntity("最新"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("最热"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("精华"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("随机"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("市区"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("我的"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("收藏"));
+        mOrderPopup.addAction(new TitlePopupItemEntity("附近"));
     }
 
 
@@ -267,9 +326,30 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             case R.id.ib_nav_right:
                 mTitlePopup.show(mToolsBar);
                 break;
+            case R.id.rl_create:
+            case R.id.iv_create:
+                toCreateCircle();
+                break;
+            case R.id.rl_search:
+            case R.id.iv_search:
+                toSearchCircle();
+                break;
+            case R.id.ll_order:
+                mOrderPopup.show(mToolsBar);
+                break;
             default:
                 clickTab(v);
         }
+    }
+
+    private void toSearchCircle() {
+        Intent intent = new Intent(this, SearchCircleActivity.class);
+        startActivity(intent);
+    }
+
+    private void toCreateCircle() {
+        Intent intent = new Intent(this, CreateCircleActivity.class);
+        startActivity(intent);
     }
 
     private void clickTab(View v) {
@@ -325,7 +405,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 initTitleBar("个人中心", "", "", Constants.TITLE_TYPE_NONE);
                 break;
             case R.id.iv_toInteractive:
-                initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_HOME);
+                initTitleBar("春笋红包", MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity(), "", Constants.TITLE_TYPE_CIRCLE);
                 break;
         }
     }
@@ -447,7 +527,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
             mInteractiveFragment.getAllData();
             showTitleBar(R.id.indicator_ad);
-    } else if (Constants.FROM_TAB3.equals(event.getMsg())) {
+        } else if (Constants.FROM_TAB3.equals(event.getMsg())) {
             mTabIndicators.get(2).setmIcon(bitmaps.get(6), mSelectedColor);
             mViewPager.setCurrentItem(3, false);
             //刷新MeFragment页面

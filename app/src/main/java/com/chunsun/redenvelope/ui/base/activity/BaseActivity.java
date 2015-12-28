@@ -35,19 +35,19 @@ public abstract class BaseActivity extends FragmentActivity {
     @Bind(R.id.ib_nav_right)
     protected ImageButton mNavRightIcon;
     @Bind(R.id.ll_circle)
-    private LinearLayout mLLCircle;
+    protected LinearLayout mLLCircle;
     @Bind(R.id.ll_order)
-    private LinearLayout mLLOrder;
+    protected LinearLayout mLLOrder;
     @Bind(R.id.tv_order)
-    private TextView mTvOrder;
+    protected TextView mTvOrder;
     @Bind(R.id.rl_search)
-    private RelativeLayout mRlSearch;
+    protected RelativeLayout mRlSearch;
     @Bind(R.id.iv_search)
-    private ImageView mIvSearch;
+    protected ImageView mIvSearch;
     @Bind(R.id.rl_create)
-    private RelativeLayout mRlCreate;
+    protected RelativeLayout mRlCreate;
     @Bind(R.id.iv_create)
-    private ImageView mIvCreate;
+    protected ImageView mIvCreate;
 
     protected CustomProgressDialog mDialog;
 
@@ -76,6 +76,8 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavRight.setText(right);
                 mNavRight.setVisibility(View.VISIBLE);
                 mNavRightIcon.setVisibility(View.INVISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
                 break;
             case Constants.TITLE_TYPE_HOME:
                 mNavIcon.setVisibility(View.VISIBLE);
@@ -86,6 +88,8 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavRight.setVisibility(View.INVISIBLE);
                 mNavRightIcon.setImageResource(R.drawable.img_add);
                 mNavRightIcon.setVisibility(View.VISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
                 break;
             case Constants.TITLE_TYPE_NONE:
                 mNavIcon.setVisibility(View.GONE);
@@ -93,6 +97,8 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavTitle.setText(title);
                 mNavRight.setVisibility(View.GONE);
                 mNavRightIcon.setVisibility(View.GONE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
                 break;
             case Constants.TITLE_TYPE_AD:
                 mNavIcon.setVisibility(View.INVISIBLE);
@@ -101,6 +107,18 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavRight.setText(right);
                 mNavRight.setVisibility(View.VISIBLE);
                 mNavRightIcon.setVisibility(View.INVISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
+                break;
+            case Constants.TITLE_TYPE_CIRCLE:
+                mNavIcon.setVisibility(View.VISIBLE);
+                mNavIcon.setImageResource(R.drawable.img_place);
+                mNavLeft.setText("".equals(left) ? "返回" : left);
+                mNavLeft.setVisibility(View.VISIBLE);
+                mNavTitle.setVisibility(View.GONE);
+                mNavRight.setVisibility(View.GONE);
+                mNavRightIcon.setVisibility(View.GONE);
+                mLLCircle.setVisibility(View.VISIBLE);
                 break;
         }
     }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 /**
  * @author yangyu
- *	功能描述：标题按钮上的弹窗（继承自PopupWindow）
+ *         功能描述：标题按钮上的弹窗（继承自PopupWindow）
  */
 public class TitlePopup extends PopupWindow {
     private Context mContext;
@@ -38,7 +38,7 @@ public class TitlePopup extends PopupWindow {
     private final int[] mLocation = new int[2];
 
     //屏幕的宽度和高度
-    private int mScreenWidth,mScreenHeight;
+    private int mScreenWidth, mScreenHeight;
 
     //判断是否需要添加或更新列表子类项
     private boolean mIsDirty;
@@ -55,12 +55,12 @@ public class TitlePopup extends PopupWindow {
     //定义弹窗子类项列表
     private ArrayList<TitlePopupItemEntity> mActionItems = new ArrayList<TitlePopupItemEntity>();
 
-    public TitlePopup(Context context){
+    public TitlePopup(Context context) {
         //设置布局的参数
         this(context, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     }
 
-    public TitlePopup(Context context, int width, int height){
+    public TitlePopup(Context context, int width, int height) {
         this.mContext = context;
 
         //设置可以获得焦点
@@ -89,16 +89,16 @@ public class TitlePopup extends PopupWindow {
     /**
      * 初始化弹窗列表
      */
-    private void initUI(){
+    private void initUI() {
         mListView = (ListView) getContentView().findViewById(R.id.title_list);
 
         mListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int index,long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
                 //点击子类项后，弹窗消失
                 dismiss();
 
-                if(mItemOnClickListener != null)
+                if (mItemOnClickListener != null)
                     mItemOnClickListener.onItemClick(mActionItems.get(index), index);
             }
         });
@@ -107,26 +107,26 @@ public class TitlePopup extends PopupWindow {
     /**
      * 显示弹窗列表界面
      */
-    public void show(View view){
+    public void show(View view) {
         //获得点击屏幕的位置坐标
         view.getLocationOnScreen(mLocation);
 
         //设置矩形的大小
-        mRect.set(mLocation[0], mLocation[1], mLocation[0] + view.getWidth(),mLocation[1] + view.getHeight());
+        mRect.set(mLocation[0], mLocation[1], mLocation[0] + view.getWidth(), mLocation[1] + view.getHeight());
 
         //判断是否需要添加或更新列表子类项
-        if(mIsDirty){
+        if (mIsDirty) {
             populateActions();
         }
 
         //显示弹窗的位置
-        showAtLocation(view, popupGravity, mScreenWidth - LIST_PADDING - (getWidth()/2), mRect.bottom);
+        showAtLocation(view, popupGravity, mScreenWidth - LIST_PADDING - (getWidth() / 2), mRect.bottom);
     }
 
     /**
      * 设置弹窗列表子项
      */
-    private void populateActions(){
+    private void populateActions() {
         mIsDirty = false;
 
         //设置列表的适配器
@@ -135,7 +135,7 @@ public class TitlePopup extends PopupWindow {
             public View getView(int position, View convertView, ViewGroup parent) {
                 TextView textView = null;
 
-                if(convertView == null){
+                if (convertView == null) {
                     textView = new TextView(mContext);
                     textView.setTextColor(mContext.getResources().getColor(android.R.color.black));
                     textView.setTextSize(16);
@@ -145,7 +145,7 @@ public class TitlePopup extends PopupWindow {
                     textView.setPadding(20, 20, 20, 20);
                     //设置文本在一行内显示（不换行）
                     textView.setSingleLine(true);
-                }else{
+                } else {
                     textView = (TextView) convertView;
                 }
 
@@ -156,8 +156,9 @@ public class TitlePopup extends PopupWindow {
                 //设置文字与图标的间隔
                 //textView.setCompoundDrawablePadding(1);
                 //设置在文字的左边放一个图标
-                textView.setCompoundDrawablesWithIntrinsicBounds(item.mDrawable, null , null, null);
-
+                if (item.mDrawable != null) {
+                    textView.setCompoundDrawablesWithIntrinsicBounds(item.mDrawable, null, null, null);
+                }
                 return textView;
             }
 
@@ -175,14 +176,14 @@ public class TitlePopup extends PopupWindow {
             public int getCount() {
                 return mActionItems.size();
             }
-        }) ;
+        });
     }
 
     /**
      * 添加子类项
      */
-    public void addAction(TitlePopupItemEntity action){
-        if(action != null){
+    public void addAction(TitlePopupItemEntity action) {
+        if (action != null) {
             mActionItems.add(action);
             mIsDirty = true;
         }
@@ -191,8 +192,8 @@ public class TitlePopup extends PopupWindow {
     /**
      * 清除子类项
      */
-    public void cleanAction(){
-        if(mActionItems.isEmpty()){
+    public void cleanAction() {
+        if (mActionItems.isEmpty()) {
             mActionItems.clear();
             mIsDirty = true;
         }
@@ -201,8 +202,8 @@ public class TitlePopup extends PopupWindow {
     /**
      * 根据位置得到子类项
      */
-    public TitlePopupItemEntity getAction(int position){
-        if(position < 0 || position > mActionItems.size())
+    public TitlePopupItemEntity getAction(int position) {
+        if (position < 0 || position > mActionItems.size())
             return null;
         return mActionItems.get(position);
     }
@@ -210,15 +211,15 @@ public class TitlePopup extends PopupWindow {
     /**
      * 设置监听事件
      */
-    public void setItemOnClickListener(OnItemOnClickListener onItemOnClickListener){
+    public void setItemOnClickListener(OnItemOnClickListener onItemOnClickListener) {
         this.mItemOnClickListener = onItemOnClickListener;
     }
 
     /**
      * @author yangyu
-     *	功能描述：弹窗子类项按钮监听事件
+     *         功能描述：弹窗子类项按钮监听事件
      */
-    public static interface OnItemOnClickListener{
-        public void onItemClick(TitlePopupItemEntity item , int position);
+    public static interface OnItemOnClickListener {
+        public void onItemClick(TitlePopupItemEntity item, int position);
     }
 }
