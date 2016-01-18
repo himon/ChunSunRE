@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -15,7 +16,8 @@ import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailPresenter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.SwipeBackActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.fragment.CircleDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailFragment;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicPreviewFragment;
@@ -32,7 +34,7 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2015/8/10.
  * 红包详情（最外层的ViewPager页）
  */
-public class RedDetailActivity extends BaseActivity implements IRedDetailView {
+public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDetailPresenter> implements IRedDetailView {
 
     @Bind(R.id.viewpager)
     ViewPager mViewPager;
@@ -60,9 +62,14 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
         setContentView(R.layout.activity_red_detail);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        mPresenter = new RedDetailPresenter(this);
+        mPresenter = (RedDetailPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new RedDetailPresenter(this);
     }
 
     @Override
@@ -133,6 +140,11 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     }
 
     @Override
+    protected void click(View v) {
+
+    }
+
+    @Override
     public void setData(ArrayList<String> urls, RedDetailEntity.ResultEntity.DetailEntity detail) {
 
         for (String str : urls) {
@@ -164,7 +176,11 @@ public class RedDetailActivity extends BaseActivity implements IRedDetailView {
     }
 
     public void onEvent(RedDetailBackEvent event) {
-        back();
+        if(TextUtils.isEmpty(event.getMsg())){
+            back();
+        }else{
+            mViewPager.setCurrentItem(mFragments.size() - 1);
+        }
     }
 
     @Override

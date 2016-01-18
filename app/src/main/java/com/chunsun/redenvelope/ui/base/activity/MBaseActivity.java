@@ -7,19 +7,23 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.utils.DensityUtils;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.CustomProgressDialog;
 
 import butterknife.Bind;
 
-public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBaseActivity {
+public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBaseActivity implements View.OnClickListener {
 
     @Bind(R.id.iv_nav_icon)
     protected ImageView mNavIcon;
@@ -31,8 +35,28 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
     protected TextView mNavRight;
     @Bind(R.id.ib_nav_right)
     protected ImageButton mNavRightIcon;
+    @Bind(R.id.ll_circle)
+    protected LinearLayout mLLCircle;
+    @Bind(R.id.ll_order)
+    protected LinearLayout mLLOrder;
+    @Bind(R.id.tv_order)
+    protected TextView mTvOrder;
+    @Bind(R.id.rl_search)
+    protected RelativeLayout mRlSearch;
+    @Bind(R.id.iv_search)
+    protected ImageView mIvSearch;
+    @Bind(R.id.rl_create)
+    protected RelativeLayout mRlCreate;
+    @Bind(R.id.iv_create)
+    protected ImageView mIvCreate;
 
     protected CustomProgressDialog mDialog;
+
+    /**
+     * 左上角按钮是否是返回键
+     * 0 : back, 1 : web back, 2 : other, 3 : 不处理
+     */
+    private int isLeftType = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +71,17 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
 
     protected abstract void initData();
 
+    protected abstract void click(View v);
+
     protected void initTitleBar(String title, String left, String right, int type) {
 
         switch (type) {
+            case Constants.TITLE_TYPE_SAMPLE_WEB:
+                isLeftType = 1;
+            case Constants.TITLE_TYPE_SAMPLE_NO_BACK:
+                if(isLeftType == 0) {
+                    isLeftType = 4;
+                }
             case Constants.TITLE_TYPE_SAMPLE:
                 mNavIcon.setVisibility(View.VISIBLE);
                 mNavIcon.setImageResource(R.drawable.img_back);
@@ -59,6 +91,8 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
                 mNavRight.setText(right);
                 mNavRight.setVisibility(View.VISIBLE);
                 mNavRightIcon.setVisibility(View.INVISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
                 break;
             case Constants.TITLE_TYPE_HOME:
                 mNavIcon.setVisibility(View.VISIBLE);
@@ -69,6 +103,9 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
                 mNavRight.setVisibility(View.INVISIBLE);
                 mNavRightIcon.setImageResource(R.drawable.img_add);
                 mNavRightIcon.setVisibility(View.VISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
+                isLeftType = 0;
                 break;
             case Constants.TITLE_TYPE_NONE:
                 mNavIcon.setVisibility(View.GONE);
@@ -76,6 +113,8 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
                 mNavTitle.setText(title);
                 mNavRight.setVisibility(View.GONE);
                 mNavRightIcon.setVisibility(View.GONE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
                 break;
             case Constants.TITLE_TYPE_AD:
                 mNavIcon.setVisibility(View.INVISIBLE);
@@ -84,10 +123,22 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
                 mNavRight.setText(right);
                 mNavRight.setVisibility(View.VISIBLE);
                 mNavRightIcon.setVisibility(View.INVISIBLE);
+                mLLCircle.setVisibility(View.GONE);
+                mNavTitle.setVisibility(View.VISIBLE);
+                break;
+            case Constants.TITLE_TYPE_CIRCLE:
+                mNavIcon.setVisibility(View.VISIBLE);
+                mNavIcon.setImageResource(R.drawable.img_place);
+                mNavLeft.setText("".equals(left) ? "返回" : left);
+                mNavLeft.setVisibility(View.VISIBLE);
+                mNavTitle.setVisibility(View.GONE);
+                mNavRight.setVisibility(View.GONE);
+                mNavRightIcon.setVisibility(View.GONE);
+                mLLCircle.setVisibility(View.VISIBLE);
                 break;
         }
-
-
+        mNavIcon.setOnClickListener(this);
+        mNavLeft.setOnClickListener(this);
     }
 
     protected void showCircleLoading() {
@@ -136,5 +187,23 @@ public abstract class MBaseActivity<V, T extends BasePresenter<V>> extends MVPBa
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.anim_none, R.anim.trans_center_2_right);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_nav_left:
+            case R.id.iv_nav_icon:
+                if (isLeftType == 0) {
+                    back();
+                } else if (isLeftType == 1) {
+                    onBackPressed();
+                } else if (isLeftType == 2) {
+                    MainApplication.getContext().getLocationClient().start();
+                    ShowToast.Short("重新获取位置");
+                }
+                break;
+        }
+        click(v);
     }
 }

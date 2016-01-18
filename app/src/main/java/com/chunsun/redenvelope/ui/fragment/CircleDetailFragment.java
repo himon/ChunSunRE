@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
@@ -28,6 +29,7 @@ import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
+import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
@@ -64,6 +66,8 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
     TextView mNavTitle;
     @Bind(R.id.ib_nav_right)
     ImageButton mIbRepeat;
+    @Bind(R.id.view_bg)
+    View mViewBg;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
@@ -121,6 +125,7 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
         View view = inflater.inflate(R.layout.fragment_red_detail, container, false);
         ButterKnife.bind(this, view);
         mPresenter = (RedDetailFragmentPresenter) super.mPresenter;
+        EventBus.getDefault().register(this);
         mRedDetailHelper = new RedDetailHelper(getActivity());
         initView();
         initData();
@@ -332,6 +337,7 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
                 EventBus.getDefault().post(new RedDetailBackEvent(""));
                 break;
             case R.id.ib_nav_right:
+                mViewBg.setVisibility(View.VISIBLE);
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail);
                 noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -345,7 +351,10 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
                 toComplaintActivity();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                mToken = new Preferences(getActivity()).getToken();
+                if(LoginContext.getLoginContext().comment(getActivity(), Constants.FROM_COMMENT)) {
+                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                }
                 break;
         }
     }
@@ -410,5 +419,15 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
     @Override
     public void toUserRewardActivity(String id) {
         mRedDetailHelper.toUserRewardActivity(id, mDetail.getId());
+    }
+
+    public void onEvent(ShareRedEnvelopeEvent event) {
+        mViewBg.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

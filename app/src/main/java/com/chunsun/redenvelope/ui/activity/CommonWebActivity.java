@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * 普通WebView显示Activity
  */
-public class CommonWebActivity extends BaseActivity implements View.OnClickListener {
+public class CommonWebActivity extends BaseActivity {
 
     @Bind(R.id.webView)
     WebView mWebView;
@@ -82,18 +82,14 @@ public class CommonWebActivity extends BaseActivity implements View.OnClickListe
         if (intent != null) {
             String url = intent.getStringExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL);
             String title = intent.getStringExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE);
-            initTitleBar(title, "", "", Constants.TITLE_TYPE_SAMPLE);
+            initTitleBar(title, "", "", Constants.TITLE_TYPE_SAMPLE_WEB);
             mWebView.loadUrl(url);
         }
     }
 
-
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                onBackPressed();
-                break;
             case R.id.btn_common_webview_load_error:
                 mIsSuccessLoad = true;
                 mLayLoadError.setVisibility(View.GONE);

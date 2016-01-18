@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * 余额充值Activity
  */
-public class BalanceRechargeActivity extends BaseActivity implements IBalanceRechargeView, View.OnClickListener {
+public class BalanceRechargeActivity extends BaseActivity implements IBalanceRechargeView {
 
     @Bind(R.id.et_recharge)
     EditText mEtRecharge;
@@ -115,13 +115,10 @@ public class BalanceRechargeActivity extends BaseActivity implements IBalanceRec
         }
     }
 
+
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.ll_zhifubao:
                 mIvAlipay.setVisibility(View.VISIBLE);
                 mIvBank.setVisibility(View.GONE);

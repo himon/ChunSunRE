@@ -9,12 +9,15 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LoginState;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.MainEvent;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.LoginPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
-import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -25,7 +28,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 登录Activity
  */
-public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> implements ILoginView, View.OnClickListener {
+public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> implements ILoginView {
 
     @Bind(R.id.tv_no_pwd_login)
     TextView mQuickLogin;
@@ -60,9 +63,7 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
 
     @Override
     protected void initView() {
-
-        initTitleBar("登 录", "返回", "注册", Constants.TITLE_TYPE_SAMPLE);
-
+        initTitleBar("登 录", "返回", "注册", Constants.TITLE_TYPE_SAMPLE_NO_BACK);
         initEvent();
     }
 
@@ -76,7 +77,6 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
 
     @Override
     protected void initData() {
-
         Intent intent = getIntent();
         if (intent != null) {
             mFrom = intent.getStringExtra(Constants.EXTRA_KEY);
@@ -84,9 +84,10 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
             case R.id.tv_nav_left:
+            case R.id.iv_nav_icon:
                 EventBus.getDefault().post(new MainEvent(Constants.FROM_LOGIN_BACK));
                 back();
                 break;
@@ -100,7 +101,8 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
                 mPresenter.findPwd();
                 break;
             case R.id.btn_login:
-                mPresenter.login(StringUtil.textview2String(mAccount), StringUtil.textview2String(mPwd), "sdfasfasdfasfsafsfsafasfsadfsdfasfsafsaf", MainApplication.getContext().getPhoneInfomation());
+                String xgToken = new Preferences(this).getXGToken();
+                mPresenter.login(StringUtil.textview2String(mAccount), StringUtil.textview2String(mPwd), xgToken, MainApplication.getContext().getPhoneInfomation());
                 break;
         }
     }
@@ -126,10 +128,12 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
 
     @Override
     public void success() {
+        //更改UserState为登录状态
+        LoginContext.getLoginContext().setState(new LoginState());
         if(mFrom == null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
+            back();
             return;
         }
 
@@ -141,6 +145,8 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
             EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB1));
         } else if (mFrom.equals(Constants.FROM_TAB3)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB3));
+        }else if(mFrom.equals(Constants.FROM_COMMENT)){
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_COMMENT));
         }
         back();
     }

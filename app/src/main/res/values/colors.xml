@@ -16,6 +16,9 @@
     <color name="font_gray3">#959595</color>
     <color name="font_gray4">#B7B7B7</color>
     <color name="font_gray5">#7B7A7A</color>
+    <color name="font_gray6">#777777</color>
+    <color name="font_gray7">#7e7e7e</color>
+    <color name="font_gray8">#A7A7A7</color>
     <color name="font_pink">#BA5959</color>
     <color name="red_detail_comment_font_gray">#adadae</color>
     <color name="font_gray_red_envelope">#B2B2B2</color>
@@ -41,6 +44,7 @@
 
     <!-- 背景色 -->
     <color name="bg_gray">#F6F6F6</color>
+    <color name="bg_gray2">#66000000</color>
     <color name="bg_list_gray">#ABACA9</color>
     <color name="bg_web_red_detail">#E3E3E3</color>
     <color name="bg_red_detail_bg">#DDDDE5</color>

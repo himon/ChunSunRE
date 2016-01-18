@@ -93,6 +93,7 @@ public class JsonManager {
             object.put("order_type", order_type);
             object.put("keywords", keywords);
             object.put("ids_str", order_type == 4 ? "1,2,3,4" : "");
+            object.put("app_version", MainApplication.getContext().getmAppVersion());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -442,8 +443,8 @@ public class JsonManager {
         JSONObject object = new JSONObject();
         try {
             object.put("type", type);
-            object.put("province", "不限");
-            object.put("city", "不限");
+            object.put("province", province);
+            object.put("city", city);
         } catch (JSONException e) {
             e.printStackTrace();
         }

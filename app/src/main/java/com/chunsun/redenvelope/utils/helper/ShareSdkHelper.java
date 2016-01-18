@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.utils;
+package com.chunsun.redenvelope.utils.helper;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -13,6 +13,7 @@ import com.chunsun.redenvelope.event.CouponRedDetailEvent;
 import com.chunsun.redenvelope.event.CreateCircleResultEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
 import java.io.File;

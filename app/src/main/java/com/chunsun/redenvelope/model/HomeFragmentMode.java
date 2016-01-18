@@ -24,7 +24,7 @@ public interface HomeFragmentMode {
      * @param type
      * @param listener
      */
-    void getAdData(String type, BaseMultiLoadedListener listener);
+    void getAdData(int type, BaseMultiLoadedListener listener);
 
     /**
      * 抢红包

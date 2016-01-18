@@ -32,7 +32,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 钱包Activity
  */
-public class WalletActivity extends BaseActivity implements IBalanceView, View.OnClickListener {
+public class WalletActivity extends BaseActivity implements IBalanceView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -115,6 +115,7 @@ public class WalletActivity extends BaseActivity implements IBalanceView, View.O
         mToken = new Preferences(this).getToken();
     }
 
+
     public void getData() {
         mList.clear();
         mPresenter.loadData(mToken);
@@ -157,12 +158,8 @@ public class WalletActivity extends BaseActivity implements IBalanceView, View.O
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_recharge:
                 toBalanceRecharge();
                 break;

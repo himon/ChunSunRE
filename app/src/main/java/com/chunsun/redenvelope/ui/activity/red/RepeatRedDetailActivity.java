@@ -25,10 +25,12 @@ import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.SwipeBackActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IRepeatRedDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
@@ -43,6 +45,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -50,7 +53,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 转发红包详情
  */
-public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedDetailView, View.OnClickListener {
+public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailView, RepeatRedDetailPresenter> implements IRepeatRedDetailView {
 
     @Bind(R.id.main)
     LinearLayout mMain;
@@ -58,6 +61,8 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
+    @Bind(R.id.view_bg)
+    View mViewBg;
     @Bind(R.id.ll_comment_input_container)
     LinearLayout mLLInputComment;
     @Bind(R.id.et_comment)
@@ -107,10 +112,16 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repeat_red_detail);
         ButterKnife.bind(this);
-        mPresenter = new RepeatRedDetailPresenter(this);
+        mPresenter = (RepeatRedDetailPresenter) mMPresenter;
+        EventBus.getDefault().register(this);
         mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new RepeatRedDetailPresenter(this);
     }
 
     @Override
@@ -245,12 +256,8 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.ll_collect_container://收藏
                 mPresenter.favorite(mToken, mDetail.getId());
                 break;
@@ -264,6 +271,7 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
                 toUserRewardActivity(mDetail.getUser_id());
                 break;
             case R.id.ll_repeat://转发
+                mViewBg.setVisibility(View.VISIBLE);
                 mMenuWindow = new ShareRedEnvelopePopupWindow(this, mDetail, new GetRepeatHostCallback() {
 
                     @Override
@@ -368,5 +376,15 @@ public class RepeatRedDetailActivity extends BaseActivity implements IRepeatRedD
         if (mMenuWindow != null) {
             mMenuWindow.repeatShare(entity.getResult().getShare_url());
         }
+    }
+
+    public void onEvent(ShareRedEnvelopeEvent event) {
+        mViewBg.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

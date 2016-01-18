@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * 提现Activity
  */
-public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashView, View.OnClickListener {
+public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashView {
 
     @Bind(R.id.tv_cumulative_gain)
     TextView mTvCumulativeGain;
@@ -96,12 +96,8 @@ public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashV
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.ital_withdrawal_bankcard:
                 toWithdrawCashByBank();
                 break;

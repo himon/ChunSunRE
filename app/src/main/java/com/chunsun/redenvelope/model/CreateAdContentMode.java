@@ -29,4 +29,15 @@ public interface CreateAdContentMode {
      * @param listener
      */
     void commitCircleCreate(String mToken, AdEntity mAdEntity, String title, String content, UserLoseMultiLoadedListener listener);
+
+    /**
+     * 拼手气红包创建
+     *
+     * @param token
+     * @param adEntity
+     * @param title
+     * @param content
+     * @param listener
+     */
+    void commitLuckCreate(String token, AdEntity adEntity, String title, String content, UserLoseMultiLoadedListener listener);
 }

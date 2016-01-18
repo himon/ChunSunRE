@@ -19,7 +19,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class ChunsunCouponWebActivity extends BaseActivity implements View.OnClickListener {
+public class ChunsunCouponWebActivity extends BaseActivity {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -39,7 +39,7 @@ public class ChunsunCouponWebActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initView() {
-        initTitleBar("春笋券", "", "", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("春笋券", "", "", Constants.TITLE_TYPE_SAMPLE_WEB);
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -103,18 +103,13 @@ public class ChunsunCouponWebActivity extends BaseActivity implements View.OnCli
         }, 100);
     }
 
-    private void getData() {
-        mWebView.loadUrl(mUrl);
+    @Override
+    protected void click(View v) {
+
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                onBackPressed();
-                break;
-        }
+    private void getData() {
+        mWebView.loadUrl(mUrl);
     }
 
     @Override

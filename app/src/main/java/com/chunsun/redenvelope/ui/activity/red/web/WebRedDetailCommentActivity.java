@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
@@ -40,7 +41,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 链接红包评论界面
  */
-public class WebRedDetailCommentActivity extends BaseActivity implements IWebRedDetailCommentView, View.OnClickListener {
+public class WebRedDetailCommentActivity extends BaseActivity implements IWebRedDetailCommentView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -233,12 +234,8 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.rb_comment_record:
                 mCurrentCheckType = 0;
                 mLLInputComment.setVisibility(View.VISIBLE);
@@ -260,7 +257,9 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
                 changerDataList();
                 break;
             case R.id.btn_send_comment:
-                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId);
+                if(LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
+                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId);
+                }
                 break;
         }
     }

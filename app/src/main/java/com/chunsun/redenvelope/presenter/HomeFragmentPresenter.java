@@ -12,6 +12,7 @@ import com.chunsun.redenvelope.ui.activity.red.TaskListActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.google.gson.Gson;
 
 /**
  * Created by Administrator on 2015/8/10.
@@ -21,6 +22,7 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
     private IHomeFragmentView mHomeFragmentView;
     private HomeFragmentMode mHomeFragmentMode;
     private String mCurrentRedId;
+    private final Gson mGson;
 
     public HomeFragmentPresenter(IHomeFragmentView homeFragmentView) {
         this.mHomeFragmentView = homeFragmentView;
@@ -31,13 +33,14 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
         } else {
             mHomeFragmentMode = new HomeFragmentModeImpl(null, (SearchCircleActivity) homeFragmentView);
         }
+        mGson = new Gson();
     }
 
     public void loadData(String token, int type, int page_index, int order_type, String keywords) {
         mHomeFragmentMode.loadData(token, type, page_index, order_type, keywords, this);
     }
 
-    public void getAdData(String type) {
+    public void getAdData(int type) {
         mHomeFragmentMode.getAdData(type, this);
     }
 
@@ -68,5 +71,15 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
     public void onError(String msg) {
         ShowToast.Short(msg);
         mHomeFragmentView.hideLoading();
+    }
+
+    public void loadCash(String cash) {
+        RedListDetailEntity entity = mGson.fromJson(cash, RedListDetailEntity.class);
+        mHomeFragmentView.setData(entity.getResult());
+    }
+
+    public void loadAdCash(String cash) {
+        RedAutoAdEntity entity = mGson.fromJson(cash, RedAutoAdEntity.class);
+        mHomeFragmentView.setAdData(entity.getResult().getAdvert());
     }
 }

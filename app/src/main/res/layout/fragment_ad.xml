@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/img_create_ad_bg"
-    tools:context="com.example.textisselectdemo.MainActivity" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,8 +12,8 @@
 
         <Button
             android:id="@+id/btn_create_red"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
@@ -24,19 +22,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="12dp"
             android:text="发红包广告"
-            android:textColor="@color/white"
+            android:textColor="@color/global_red"
             android:textSize="@dimen/font_size_sp_18" />
 
         <Button
-            android:id="@+id/btn_create_circle"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:id="@+id/btn_luck_red"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/img_create_luck_red" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="12dp"
+            android:text="拼手气广告"
+            android:textColor="@color/global_red"
+            android:textSize="@dimen/font_size_sp_16" />
+
+        <Button
+            android:id="@+id/btn_create_circle"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/img_create_circle" />
 
         <TextView
@@ -44,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="发免费广告"
-            android:textColor="@color/white"
+            android:textColor="@color/global_red"
             android:textSize="@dimen/font_size_sp_18" />
+
     </LinearLayout>
 
 </RelativeLayout>

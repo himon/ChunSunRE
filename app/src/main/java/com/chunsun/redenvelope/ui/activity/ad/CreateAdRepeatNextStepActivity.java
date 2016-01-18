@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
@@ -31,10 +30,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CreateAdRepeatNextStepActivity extends BaseActivity implements ICreateAdRepeatNextStepView, View.OnClickListener {
+public class CreateAdRepeatNextStepActivity extends BaseActivity implements ICreateAdRepeatNextStepView {
 
-    @Bind(R.id.main_nav)
-    RelativeLayout mToolsBar;
     @Bind(R.id.ll_first)
     LinearLayout mLLFirst;
     @Bind(R.id.tv_first_total)
@@ -151,8 +148,7 @@ public class CreateAdRepeatNextStepActivity extends BaseActivity implements ICre
     }
 
     private void initTitle() {
-        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        initTitleBar("发广告", "", "说明", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("设置红包金额", "", "说明", Constants.TITLE_TYPE_SAMPLE);
         mNavRight.setVisibility(View.VISIBLE);
     }
 
@@ -233,12 +229,8 @@ public class CreateAdRepeatNextStepActivity extends BaseActivity implements ICre
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_nav_right:
                 toIllustrate();
                 break;

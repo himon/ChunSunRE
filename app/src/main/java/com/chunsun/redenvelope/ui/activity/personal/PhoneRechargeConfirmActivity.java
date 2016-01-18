@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * 手机充值确认Activity
  */
-public class PhoneRechargeConfirmActivity extends BaseActivity implements IPhoneRechargeConfirmView, View.OnClickListener {
+public class PhoneRechargeConfirmActivity extends BaseActivity implements IPhoneRechargeConfirmView {
 
     @Bind(R.id.tv_phone)
     TextView mTvPhone;
@@ -77,12 +77,8 @@ public class PhoneRechargeConfirmActivity extends BaseActivity implements IPhone
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_apply_withdrawal:
                 mPresenter.rechargeMobile(mToken, mPhoneNum, mCarrierOperator, mEntity.getId());
                 break;

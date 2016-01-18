@@ -29,7 +29,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 收藏Activity
  */
-public class CollectRedEnvelopeListActivity extends BaseActivity implements ICollectRedEnvelopeListView, View.OnClickListener {
+public class CollectRedEnvelopeListActivity extends BaseActivity implements ICollectRedEnvelopeListView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -117,11 +117,7 @@ public class CollectRedEnvelopeListActivity extends BaseActivity implements ICol
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
+    protected void click(View v) {
+
     }
 }

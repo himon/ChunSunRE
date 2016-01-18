@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 /***
  * 隐私设置Activity
  */
-public class UserPrivacyActivity extends BaseActivity implements IUserPrivacyView, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class UserPrivacyActivity extends BaseActivity implements IUserPrivacyView, CompoundButton.OnCheckedChangeListener {
 
     @Bind(R.id.tv_name_title_tag)
     TextView mTvNameTitleTag;
@@ -131,6 +131,11 @@ public class UserPrivacyActivity extends BaseActivity implements IUserPrivacyVie
         }
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     private void initToggle(String private_json) {
         boolean isShowName = true;
         boolean isShowPhone = true;
@@ -177,16 +182,6 @@ public class UserPrivacyActivity extends BaseActivity implements IUserPrivacyVie
             mTbAge.setOnCheckedChangeListener(this);
             mTbJob.setOnCheckedChangeListener(this);
             mTbQQ.setOnCheckedChangeListener(this);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
         }
     }
 

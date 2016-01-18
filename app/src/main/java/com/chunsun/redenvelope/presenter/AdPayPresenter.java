@@ -1,27 +1,29 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.app.Activity;
+
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.AdPayMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.AdPayMode;
 import com.chunsun.redenvelope.model.impl.AdPayModeImpl;
-import com.chunsun.redenvelope.ui.activity.ad.AdPayActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IAdPayView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
  * Created by Administrator on 2015/9/8.
  */
-public class AdPayPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class AdPayPresenter extends UserLosePresenter<IAdPayView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IAdPayView mIAdPayView;
     private AdPayMode mAdPayMode;
 
     public AdPayPresenter(IAdPayView iAdPayView) {
         this.mIAdPayView = iAdPayView;
-        mAdPayMode = new AdPayModeImpl((AdPayActivity) iAdPayView);
+        mAdPayMode = new AdPayModeImpl((Activity) iAdPayView);
     }
 
     /**
@@ -32,6 +34,17 @@ public class AdPayPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
      */
     public void getAdAmountDetail(String mToken, String hb_id) {
         mAdPayMode.getAdAmountDetail(mToken, hb_id, this);
+    }
+
+    /**
+     * 余额付款
+     *
+     * @param token
+     * @param hb_id
+     */
+    public void payByBalance(String token, String hb_id) {
+        mIAdPayView.showLoading();
+        mAdPayMode.payByBalance(token, hb_id, this);
     }
 
     @Override
@@ -72,16 +85,7 @@ public class AdPayPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
         ShowToast.Short(msg);
     }
 
-    /**
-     * 余额付款
-     *
-     * @param token
-     * @param hb_id
-     */
-    public void payByBalance(String token, String hb_id) {
-        mIAdPayView.showLoading();
-        mAdPayMode.payByBalance(token, hb_id, this);
-    }
+
 
 
 }

@@ -142,7 +142,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
 
     public void getData() {
         mPresenter.getData(new Preferences(getActivity()).getToken());
-        setData();
+//        setData();
     }
 
     @Override

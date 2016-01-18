@@ -40,7 +40,7 @@ import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.entity.Photo;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
-public class UserInfoActivity extends BaseActivity implements IUserInfoView, View.OnClickListener {
+public class UserInfoActivity extends BaseActivity implements IUserInfoView {
 
     @Bind(R.id.ital_logo_info)
     LinearLayout mLLHeadLogo;
@@ -135,12 +135,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Vie
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.ital_name:
                 toEdit(mMoreContentList[1], mSiName.getData(), "1", Constants.EDIT_TYPE_NICK_NAME);
                 break;

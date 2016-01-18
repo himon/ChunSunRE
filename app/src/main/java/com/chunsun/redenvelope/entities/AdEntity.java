@@ -100,6 +100,16 @@ public class AdEntity implements Parcelable {
     private RepeatMealEntity.ResultEntity meal;
 
     /**
+     * 拼手气红包套餐id
+     */
+    private String fight_package_id;
+
+    /**
+     * 拼手气红包倍数
+     */
+    private String fight_multiple;
+
+    /**
      * 券类开始时间
      */
     private String couponStartTime;
@@ -348,6 +358,21 @@ public class AdEntity implements Parcelable {
         this.content = content;
     }
 
+    public String getFight_package_id() {
+        return fight_package_id;
+    }
+
+    public void setFight_package_id(String fight_package_id) {
+        this.fight_package_id = fight_package_id;
+    }
+
+    public String getFight_multiple() {
+        return fight_multiple;
+    }
+
+    public void setFight_multiple(String fight_multiple) {
+        this.fight_multiple = fight_multiple;
+    }
 
     @Override
     public int describeContents() {
@@ -382,6 +407,8 @@ public class AdEntity implements Parcelable {
         dest.writeString(this.couponEndTime);
         dest.writeString(this.title);
         dest.writeString(this.content);
+        dest.writeString(this.fight_package_id);
+        dest.writeString(this.fight_multiple);
     }
 
     public AdEntity() {
@@ -414,6 +441,8 @@ public class AdEntity implements Parcelable {
         this.couponEndTime = in.readString();
         this.title = in.readString();
         this.content = in.readString();
+        this.fight_package_id = in.readString();
+        this.fight_multiple = in.readString();
     }
 
     public static final Parcelable.Creator<AdEntity> CREATOR = new Parcelable.Creator<AdEntity>() {

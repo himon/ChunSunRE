@@ -30,7 +30,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 快捷登录Activity
  */
-public class QuickLoginActivity extends BaseActivity implements IQuickLoginView, View.OnClickListener, TextWatcher {
+public class QuickLoginActivity extends BaseActivity implements IQuickLoginView, TextWatcher {
 
     @Bind(R.id.et_input_phone)
     EditText etPhoneNum;
@@ -87,11 +87,8 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_service_protocol:
                 showServiceProtocol();
                 break;

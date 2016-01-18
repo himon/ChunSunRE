@@ -25,7 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ScanChunsunCodeResultActivity extends BaseActivity implements IScanChunsunCodeResultView, View.OnClickListener {
+public class ScanChunsunCodeResultActivity extends BaseActivity implements IScanChunsunCodeResultView {
 
     @Bind(R.id.rl_not_chunsun_quan)
     RelativeLayout mRlNotChunsunCoupon;
@@ -183,12 +183,8 @@ public class ScanChunsunCodeResultActivity extends BaseActivity implements IScan
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_validate_quan:
                 mPresenter.useChunsunCoupon(mToken, mCode);
                 break;

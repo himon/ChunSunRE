@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * 用户奖励Activity
  */
-public class UserRewardActivity extends BaseActivity implements IUserRewardView, View.OnClickListener {
+public class UserRewardActivity extends BaseActivity implements IUserRewardView {
 
     @Bind(R.id.iv_head_logo)
     ImageView mIvHeadLogo;
@@ -117,12 +117,8 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView,
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_reward:
                 mPresenter.reward(mToken, StringUtil.textview2String(mEtAmount), mCanTrans);
                 break;

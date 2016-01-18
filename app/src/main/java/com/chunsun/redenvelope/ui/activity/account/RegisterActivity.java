@@ -29,7 +29,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 注册Activity
  */
-public class RegisterActivity extends BaseActivity implements IRegisterView, View.OnClickListener, TextWatcher {
+public class RegisterActivity extends BaseActivity implements IRegisterView, TextWatcher {
 
     @Bind(R.id.et_input_phone)
     EditText mPhoneNum;
@@ -105,11 +105,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Vie
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_personal:
                 mPersonalLine.setBackgroundColor(getResources().getColor(R.color.global_red));
                 mCompanyLine.setBackgroundColor(getResources().getColor(R.color.white));

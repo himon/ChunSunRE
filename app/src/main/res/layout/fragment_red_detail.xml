@@ -8,6 +8,23 @@
 
     <include layout="@layout/layout_title_bar" />
 
-    <include layout="@layout/layout_red_detail" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/layout_red_detail" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray2"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>

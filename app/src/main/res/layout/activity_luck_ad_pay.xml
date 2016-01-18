@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/global_gray"
+    android:gravity="center_horizontal"
+    tools:context="com.chunsun.redenvelope.ui.activity.ad.LuckAdPayActivity">
+
+   <include layout="@layout/layout_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/shape_radius_white"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/pay_total_money" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_icon" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/global_red"
+                android:textSize="@dimen/font_size_sp_20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yuan" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/global_red" />
+
+    <TextView
+        android:id="@+id/tv_balance_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff7f0"
+        android:padding="15dp"
+        android:text="@string/ad_pay_prompt"
+        android:textColor="#2d9bfa"
+        android:textSize="@dimen/font_size_sp_14"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/btn_pay_balance"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:src="@drawable/selector_pay_by_balance" />
+
+        <ImageView
+            android:id="@+id/btn_pay_zhifubao"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:src="@drawable/selector_pay_by_zhifubao" />
+    </LinearLayout>
+
+</LinearLayout>

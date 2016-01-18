@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * 关于我们Activity
  */
-public class AboutUsActivity extends BaseActivity implements View.OnClickListener {
+public class AboutUsActivity extends BaseActivity {
 
     @Bind(R.id.tv_phonenum)
     TextView mTvPhoneNum;
@@ -49,12 +49,8 @@ public class AboutUsActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_phonenum:
                 calling();
                 break;

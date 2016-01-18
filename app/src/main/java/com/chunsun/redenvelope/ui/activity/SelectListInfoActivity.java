@@ -26,7 +26,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 选择列表Activity
  */
-public class SelectListInfoActivity extends BaseActivity implements ISelectListInfoView, View.OnClickListener {
+public class SelectListInfoActivity extends BaseActivity implements ISelectListInfoView {
 
     @Bind(R.id.lv_main)
     ListView mLvMain;
@@ -77,13 +77,8 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                back();
-                break;
-        }
+    protected void click(View v) {
+
     }
 
     @Override

@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * 手机话费充值
  */
-public class PhoneRechargeActivity extends BaseActivity implements IPhoneRechargeView, View.OnClickListener {
+public class PhoneRechargeActivity extends BaseActivity implements IPhoneRechargeView {
 
     @Bind(R.id.et_phone)
     EditText mEtPhoneNum;
@@ -77,20 +77,15 @@ public class PhoneRechargeActivity extends BaseActivity implements IPhoneRecharg
     }
 
     @Override
+    protected void click(View v) {
+
+    }
+
+    @Override
     public void toRechargePhoneConfirm(BalanceEntity.ResultEntity.CzPoundageEntity entity, String phonenum){
         Intent intent = new Intent(this, PhoneRechargeConfirmActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, phonenum);
         intent.putExtra(Constants.EXTRA_KEY2, entity);
         startActivity(intent);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 }

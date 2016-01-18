@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 /**
  * 修改密码Activity
  */
-public class UpdatePasswordActivity extends BaseActivity implements IUpdatePasswordView, View.OnClickListener {
+public class UpdatePasswordActivity extends BaseActivity implements IUpdatePasswordView {
 
     @Bind(R.id.ll_old_pwd_container)
     LinearLayout mLLOldPwdContainer;
@@ -72,12 +72,8 @@ public class UpdatePasswordActivity extends BaseActivity implements IUpdatePassw
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_nav_right:
                 mPresenter.updatePassword(mToken, StringUtil.textview2String(mEtOldPwd), StringUtil.textview2String(mEtNewPwd), StringUtil.textview2String(mEtConfrimPwd), mIsHas);
                 break;

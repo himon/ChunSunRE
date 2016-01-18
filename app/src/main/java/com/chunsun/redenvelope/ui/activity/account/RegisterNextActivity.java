@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * 注册输入密码Activity
  */
-public class RegisterNextActivity extends BaseActivity implements IRegisterNextView, View.OnClickListener {
+public class RegisterNextActivity extends BaseActivity implements IRegisterNextView {
 
     @Bind(R.id.et_input_password)
     EditText mPwd;
@@ -77,7 +77,6 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
         }
     }
 
-
     @Override
     public void success() {
 
@@ -116,12 +115,8 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
     }
 
     @Override
-    public void onClick(View v) {
-
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_register:
                 mPresenter.register(mTypeId, mPhone, mCode, StringUtil.textview2String(mPwd), StringUtil.textview2String(mRepwd), "asfasfsadfsadfsadfasdf", MainApplication.getContext().getPhoneInfomation(), mInviteCode);
                 break;

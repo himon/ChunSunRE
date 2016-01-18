@@ -7,8 +7,6 @@ import com.chunsun.redenvelope.ui.base.view.LoadingView;
  */
 public interface IMainView extends LoadingView {
 
-    boolean isLogin(String from);
-
     /**
      * 跳转发广告的说明
      */

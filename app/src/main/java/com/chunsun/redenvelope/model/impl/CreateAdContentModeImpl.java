@@ -4,19 +4,17 @@ import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.CreateAdContentMode;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
-import com.chunsun.redenvelope.utils.manager.HttpManager;
+import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 
 /**
  * Created by Administrator on 2015/9/2.
  */
-public class CreateAdContentModeImpl implements CreateAdContentMode {
+public class CreateAdContentModeImpl extends BaseModeImpl implements CreateAdContentMode {
 
     private CreateAdContentActivity mActivity;
-    private HttpManager mManager;
 
     public CreateAdContentModeImpl(CreateAdContentActivity createAdNextPageActivity) {
         this.mActivity = createAdNextPageActivity;
-        mManager = new HttpManager();
     }
 
     @Override
@@ -27,5 +25,10 @@ public class CreateAdContentModeImpl implements CreateAdContentMode {
     @Override
     public void commitCircleCreate(String token, AdEntity adEntity, String title, String content, UserLoseMultiLoadedListener listener) {
         mManager.commitCircleCreate(token, adEntity, title, content, listener, mActivity);
+    }
+
+    @Override
+    public void commitLuckCreate(String token, AdEntity adEntity, String title, String content, UserLoseMultiLoadedListener listener) {
+        mManager.commitLuckCreate(token, adEntity, title, content, listener, mActivity);
     }
 }

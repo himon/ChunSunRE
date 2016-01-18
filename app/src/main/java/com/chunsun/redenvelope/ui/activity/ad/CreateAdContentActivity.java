@@ -32,7 +32,8 @@ import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.preview.PreviewWebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.PhotoAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
 import com.chunsun.redenvelope.utils.Base64Utils;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -49,7 +50,7 @@ import me.iwf.photopicker.utils.PhotoPickerIntent;
 /**
  * 广告添加图片、文本Activity
  */
-public class CreateAdContentActivity extends BaseActivity implements ICreateAdContentView, View.OnClickListener {
+public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView, CreateAdContentPresenter> implements ICreateAdContentView {
 
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
@@ -104,9 +105,14 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ad_next_page);
         ButterKnife.bind(this);
-        mPresenter = new CreateAdContentPresenter(this);
+        mPresenter = (CreateAdContentPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new CreateAdContentPresenter(this);
     }
 
     @Override
@@ -129,7 +135,7 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     }
 
     private void initTitle() {
-        initTitleBar("发广告", "", "预览", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("编辑广告", "", "预览", Constants.TITLE_TYPE_SAMPLE);
         mNavRight.setVisibility(View.VISIBLE);
     }
 
@@ -143,7 +149,7 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
             mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
 
-            if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(mAdEntity.getType().getKey())) {
+            if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(mAdEntity.getType().getKey()) || (Constants.RED_DETAIL_TYPE_lUCK_LINK + "").equals(mAdEntity.getType().getKey())) {
                 mTvContentPicTitle.setVisibility(View.GONE);
                 mLLImages.setVisibility(View.GONE);
                 mEtContent
@@ -238,12 +244,8 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                back();
-                break;
             case R.id.tv_nav_right:
                 toPreview();
                 break;
@@ -253,9 +255,11 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
             case R.id.btn_next_step://提交
                 if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "")) {
                     mPresenter.commitCircle(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                } else if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK_LINK + "")) {
+                    mPresenter.commitLuck(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                 } else {
                     if (mSuperadditionEntity != null) {
-                        mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
+                        mPresenter.superadditionCommit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
                     } else {
                         mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                     }
@@ -283,6 +287,17 @@ public class CreateAdContentActivity extends BaseActivity implements ICreateAdCo
     @Override
     public void toAdPayActivity(CreateAdResultEntity.ResultEntity result) {
         Intent intent = new Intent(this, AdPayActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, result.getId());
+        startActivity(intent);
+    }
+
+    /**
+     * 拼手气支付界面
+     * @param result
+     */
+    @Override
+    public void toLuckAdPayActivity(CreateAdResultEntity.ResultEntity result) {
+        Intent intent = new Intent(this, LuckAdPayActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, result.getId());
         startActivity(intent);
     }

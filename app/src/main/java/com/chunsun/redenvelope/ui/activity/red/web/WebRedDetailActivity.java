@@ -20,10 +20,11 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WebRedDetailPresenter;
-import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.SwipeBackActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;
@@ -41,7 +42,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 链接型红包详情Activity
  */
-public class WebRedDetailActivity extends MBaseActivity<IWebRedDetailView, WebRedDetailPresenter> implements IWebRedDetailView, View.OnClickListener {
+public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, WebRedDetailPresenter> implements IWebRedDetailView {
 
     @Bind(R.id.main)
     LinearLayout mLLMain;
@@ -71,6 +72,8 @@ public class WebRedDetailActivity extends MBaseActivity<IWebRedDetailView, WebRe
     TextView mTvComment;
     @Bind(R.id.rl_report)
     RelativeLayout mRlReport;
+    @Bind(R.id.view_bg)
+    View mViewBg;
 
     private String mRedDetailId;
     private RedDetailEntity.ResultEntity.DetailEntity mRed;
@@ -292,13 +295,10 @@ public class WebRedDetailActivity extends MBaseActivity<IWebRedDetailView, WebRe
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                back();
-                break;
             case R.id.ib_nav_right:
+                mViewBg.setVisibility(View.VISIBLE);
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed);
                 noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -437,6 +437,10 @@ public class WebRedDetailActivity extends MBaseActivity<IWebRedDetailView, WebRe
                 }
             }, 1000);
         }
+    }
+
+    public void onEvent(ShareRedEnvelopeEvent event) {
+        mViewBg.setVisibility(View.GONE);
     }
 
     @Override

@@ -30,7 +30,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 未领取红包列表Activity
  */
-public class NotReceivingRedActivity extends BaseActivity implements INotReceivingRedView, View.OnClickListener {
+public class NotReceivingRedActivity extends BaseActivity implements INotReceivingRedView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -130,12 +130,7 @@ public class NotReceivingRedActivity extends BaseActivity implements INotReceivi
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
+    protected void click(View v) {
+
     }
 }

@@ -29,7 +29,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 编辑信息Activity
  */
-public class EditInfoActivity extends BaseActivity implements View.OnClickListener, IEditInfoView {
+public class EditInfoActivity extends BaseActivity implements IEditInfoView {
 
     @Bind(R.id.et_content)
     EditText mEtContent;
@@ -148,11 +148,8 @@ public class EditInfoActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_nav_right:
                 submit();
                 break;

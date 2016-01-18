@@ -14,15 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.utils.DensityUtils;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.CustomProgressDialog;
 
 import butterknife.Bind;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.iv_nav_icon)
     protected ImageView mNavIcon;
@@ -50,6 +52,12 @@ public abstract class BaseActivity extends FragmentActivity {
     protected ImageView mIvCreate;
 
     protected CustomProgressDialog mDialog;
+    /**
+     * 左上角按钮是否是返回键
+     * 0 : back, 1 : web back, 2 : other
+     */
+    private int isLeftType = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +72,13 @@ public abstract class BaseActivity extends FragmentActivity {
 
     protected abstract void initData();
 
+    protected abstract void click(View v);
+
     protected void initTitleBar(String title, String left, String right, int type) {
 
         switch (type) {
+            case Constants.TITLE_TYPE_SAMPLE_WEB:
+                isLeftType = 1;
             case Constants.TITLE_TYPE_SAMPLE:
                 mNavIcon.setVisibility(View.VISIBLE);
                 mNavIcon.setImageResource(R.drawable.img_back);
@@ -90,6 +102,7 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavRightIcon.setVisibility(View.VISIBLE);
                 mLLCircle.setVisibility(View.GONE);
                 mNavTitle.setVisibility(View.VISIBLE);
+                isLeftType = 2;
                 break;
             case Constants.TITLE_TYPE_NONE:
                 mNavIcon.setVisibility(View.GONE);
@@ -119,8 +132,11 @@ public abstract class BaseActivity extends FragmentActivity {
                 mNavRight.setVisibility(View.GONE);
                 mNavRightIcon.setVisibility(View.GONE);
                 mLLCircle.setVisibility(View.VISIBLE);
+                isLeftType = 2;
                 break;
         }
+        mNavIcon.setOnClickListener(this);
+        mNavLeft.setOnClickListener(this);
     }
 
     protected void showCircleLoading() {
@@ -169,5 +185,23 @@ public abstract class BaseActivity extends FragmentActivity {
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.anim_none, R.anim.trans_center_2_right);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_nav_left:
+            case R.id.iv_nav_icon:
+                if (isLeftType == 0) {
+                    back();
+                } else if (isLeftType == 1) {
+                    onBackPressed();
+                } else if (isLeftType == 2) {
+                    MainApplication.getContext().getLocationClient().start();
+                    ShowToast.Short("重新获取位置");
+                }
+                break;
+        }
+        click(v);
     }
 }

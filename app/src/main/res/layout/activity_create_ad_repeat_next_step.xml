@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/img_create_ad_bg"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
-        android:text="@string/choose_meal"
-        android:textColor="@color/white"/>
+        android:text="@string/choose_meal" />
 
     <LinearLayout
         android:id="@+id/ll_first"
@@ -34,13 +32,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/font_gray3">
-        </View>
+            android:background="@color/font_gray3"></View>
 
         <TextView
             android:id="@+id/tv_first_num"
@@ -48,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <ImageView
             android:id="@+id/iv_first"
@@ -56,7 +53,7 @@
             android:layout_height="22dp"
             android:layout_gravity="bottom|right"
             android:src="@drawable/img_selected_meal"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -78,13 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/font_gray3">
-        </View>
+            android:background="@color/font_gray3"></View>
 
         <TextView
             android:id="@+id/tv_second_num"
@@ -92,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <ImageView
             android:id="@+id/iv_second"
@@ -100,7 +96,7 @@
             android:layout_height="22dp"
             android:layout_gravity="bottom|right"
             android:src="@drawable/img_selected_meal"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,13 +118,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/font_gray3">
-        </View>
+            android:background="@color/font_gray3"></View>
 
         <TextView
             android:id="@+id/tv_third_num"
@@ -136,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <ImageView
             android:id="@+id/iv_third"
@@ -144,7 +139,7 @@
             android:layout_height="22dp"
             android:layout_gravity="bottom|right"
             android:src="@drawable/img_selected_meal"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -166,13 +161,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/font_gray3">
-        </View>
+            android:background="@color/font_gray3"></View>
 
         <TextView
             android:id="@+id/tv_fourth_num"
@@ -180,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:gravity="center"
-            android:textSize="@dimen/font_size_sp_16"/>
+            android:textSize="@dimen/font_size_sp_16" />
 
         <ImageView
             android:id="@+id/iv_fourth"
@@ -188,7 +182,7 @@
             android:layout_height="22dp"
             android:layout_gravity="bottom|right"
             android:src="@drawable/img_selected_meal"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
     </LinearLayout>
 
     <TextView
@@ -196,8 +190,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="25dp"
-        android:text="@string/buy_multiple"
-        android:textColor="@color/white"/>
+        android:text="@string/buy_multiple" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -221,14 +214,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="60.00元"
-                android:textSize="@dimen/font_size_sp_16"/>
+                android:textSize="@dimen/font_size_sp_16" />
 
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/img_multiple_sign"/>
+                android:src="@drawable/img_multiple_sign" />
 
             <ImageView
                 android:id="@+id/iv_subtraction"
@@ -236,7 +229,7 @@
                 android:layout_height="26dp"
                 android:background="@drawable/shape_rect_white_bg"
                 android:padding="4dp"
-                android:src="@drawable/selector_num_subtraction"/>
+                android:src="@drawable/selector_num_subtraction" />
 
             <EditText
                 android:id="@+id/et_multiple"
@@ -247,7 +240,7 @@
                 android:numeric="decimal"
                 android:singleLine="true"
                 android:text="1.5"
-                android:textColor="@color/global_red"/>
+                android:textColor="@color/global_red" />
 
             <ImageView
                 android:id="@+id/iv_add"
@@ -255,20 +248,20 @@
                 android:layout_height="26dp"
                 android:background="@drawable/shape_rect_white_bg"
                 android:padding="4dp"
-                android:src="@drawable/selector_num_add"/>
+                android:src="@drawable/selector_num_add" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:text="@string/multiple"
-                android:textSize="@dimen/font_size_sp_16"/>
+                android:textSize="@dimen/font_size_sp_16" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/font_gray3"/>
+            android:background="@color/font_gray3" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -282,7 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="@string/ad_total_price"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_total"
@@ -291,7 +284,7 @@
                 android:text="90.00元"
                 android:textColor="@color/global_red"
                 android:textSize="@dimen/font_size_sp_20"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -306,6 +299,6 @@
         android:gravity="center"
         android:text="@string/next_step"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_sp_18"/>
+        android:textSize="@dimen/font_size_sp_18" />
 
 </LinearLayout>

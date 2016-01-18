@@ -27,7 +27,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 圈子记录
  */
-public class MyCircleListActivity extends BaseActivity implements ISendRedEnvelopeRecordListView, View.OnClickListener {
+public class MyCircleListActivity extends BaseActivity implements ISendRedEnvelopeRecordListView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -118,6 +118,11 @@ public class MyCircleListActivity extends BaseActivity implements ISendRedEnvelo
         initTitleBar("我的圈子", "", "", Constants.TITLE_TYPE_SAMPLE);
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     public void getData() {
         if (isRefresh) {
             mCurrentPage = 1;
@@ -151,14 +156,5 @@ public class MyCircleListActivity extends BaseActivity implements ISendRedEnvelo
     public void delSuccess() {
         mCurrentPage = 1;
         mPtr.autoRefresh();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 }

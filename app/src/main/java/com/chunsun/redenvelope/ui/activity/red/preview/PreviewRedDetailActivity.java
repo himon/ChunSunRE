@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import me.iwf.photopicker.entity.Photo;
 
-public class PreviewRedDetailActivity extends BaseActivity implements View.OnClickListener {
+public class PreviewRedDetailActivity extends BaseActivity {
 
     @Bind(R.id.viewpager)
     ViewPager mViewPager;
@@ -120,6 +120,11 @@ public class PreviewRedDetailActivity extends BaseActivity implements View.OnCli
         setData();
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     public void setData() {
 
         ArrayList<String> urls = initUrls();
@@ -163,16 +168,6 @@ public class PreviewRedDetailActivity extends BaseActivity implements View.OnCli
         }
 
         return urls;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 
     public void onEvent(RedDetailBackEvent event) {

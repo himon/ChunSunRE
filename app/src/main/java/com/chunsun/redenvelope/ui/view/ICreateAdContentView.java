@@ -16,6 +16,12 @@ public interface ICreateAdContentView extends LoadingView {
     void toAdPayActivity(CreateAdResultEntity.ResultEntity result);
 
     /**
+     * 跳转拼手气付款Activity
+     * @param result
+     */
+    void toLuckAdPayActivity(CreateAdResultEntity.ResultEntity result);
+
+    /**
      * 成功创建圈子
      *
      * @param result

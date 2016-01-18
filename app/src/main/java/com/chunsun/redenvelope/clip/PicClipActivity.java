@@ -22,7 +22,10 @@ import java.io.File;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PicClipActivity extends BaseActivity implements View.OnClickListener {
+/**
+ * 图片剪切
+ */
+public class PicClipActivity extends BaseActivity {
 
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
@@ -73,7 +76,7 @@ public class PicClipActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
             case R.id.btn_selected:
                 clipBitmap();
@@ -133,9 +136,9 @@ public class PicClipActivity extends BaseActivity implements View.OnClickListene
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] bitmapByte = baos.toByteArray();
-        if(flag) {
+        if (flag) {
             intent = new Intent(this, CreateAdContentActivity.class);
-        }else{
+        } else {
             intent = new Intent(this, UserInfoActivity.class);
         }
         intent.putExtra(Constants.EXTRA_KEY, imgPath);

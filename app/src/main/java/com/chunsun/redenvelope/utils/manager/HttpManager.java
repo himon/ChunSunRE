@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.entities.json.CarrierOperatorEntity;
 import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
 import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
+import com.chunsun.redenvelope.entities.json.LuckMealsEntity;
 import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
@@ -62,13 +63,17 @@ public class HttpManager {
      * tab页获取列表数据
      *
      * @param token      token值
-     * @param type       -1（领红包），3（任务）
+     * @param type       -1（领红包），5（任务）, 7（圈子）
      * @param page_index 加载页码
      * @param listener   回调监听
      */
     public void loadData(final String token, final int type, final int page_index, final int order_type, final String keywords, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+        int t = 0;
+        if (page_index == 1) {
+            t = type;
+        }
         GsonRequest<RedListDetailEntity> request = new GsonRequest<RedListDetailEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                RedListDetailEntity.class, null, new Response.Listener<RedListDetailEntity>() {
+                RedListDetailEntity.class, t, null, new Response.Listener<RedListDetailEntity>() {
 
             @Override
             public void onResponse(RedListDetailEntity response) {
@@ -111,9 +116,9 @@ public class HttpManager {
      * @param type     1（领红包），3（任务）
      * @param listener 回调监听
      */
-    public void getAdData(final String type, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
+    public void getAdData(final int type, final BaseMultiLoadedListener listener, Fragment fragment, Activity activity) {
         GsonRequest<RedAutoAdEntity> request = new GsonRequest<RedAutoAdEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                RedAutoAdEntity.class, null, new Response.Listener<RedAutoAdEntity>() {
+                RedAutoAdEntity.class, type, null, new Response.Listener<RedAutoAdEntity>() {
 
             @Override
             public void onResponse(RedAutoAdEntity response) {
@@ -133,9 +138,9 @@ public class HttpManager {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("methodName", Constants.HB_AD_JSON_REQUEST_URL);
-                params.put("parames", JsonManager.initAdDataToJson(type, "", ""));
+                params.put("parames", JsonManager.initAdDataToJson(type + "", MainApplication.getContext().getProvince(), MainApplication.getContext().getCity()));
                 return params;
             }
         };
@@ -1116,8 +1121,13 @@ public class HttpManager {
      * @param fragment
      */
     public void getCountryCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, final InteractiveFragment fragment) {
+        int type = 0;
+        if (page_index == 1) {
+            type = 8;
+        }
+
         final GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
+                InteractiveEntity.class, type, null, new Response.Listener<InteractiveEntity>() {
 
             @Override
             public void onResponse(InteractiveEntity response) {
@@ -1164,8 +1174,13 @@ public class HttpManager {
      * @param fragment
      */
     public void getLocalCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, InteractiveFragment fragment) {
+        int type = 0;
+        if (page_index == 1) {
+            type = 9;
+        }
+
         GsonRequest<InteractiveEntity> request = new GsonRequest<InteractiveEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                InteractiveEntity.class, null, new Response.Listener<InteractiveEntity>() {
+                InteractiveEntity.class, type, null, new Response.Listener<InteractiveEntity>() {
 
             @Override
             public void onResponse(InteractiveEntity response) {
@@ -2364,6 +2379,74 @@ public class HttpManager {
     }
 
     /**
+     * 创建拼手气红包
+     *
+     * @param token
+     * @param adEntity
+     * @param title
+     * @param content
+     * @param listener
+     * @param activity
+     */
+    public void commitLuckCreate(final String token, final AdEntity adEntity, final String title, final String content, final UserLoseMultiLoadedListener listener, final CreateAdContentActivity activity) {
+        GsonRequest<CreateAdResultEntity> request = new GsonRequest<CreateAdResultEntity>(Request.Method.POST, StringUtil.preUrl(Constants.CREATE_LUCK_JSON_REQUEST_URL),
+                CreateAdResultEntity.class, null, new Response.Listener<CreateAdResultEntity>() {
+
+            @Override
+            public void onResponse(CreateAdResultEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_COMMIT_LUCK, response);
+                } else {
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    } else {
+                        listener.onError(Constants.LISTENER_TYPE_COMMIT_LUCK, response.getMsg());
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //byte[] data = error.networkResponse.data;
+                //String msg = new String(data);
+                listener.onError(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+                params.put("type", adEntity.getType().getKey());
+                params.put("title", title);
+                params.put("content", content);
+                params.put("cover_img_byte_str", adEntity.getCoverImagePath());
+                params.put("img_byte_str1", adEntity.getImagePath());
+                params.put("img_byte_str2", adEntity.getImagePath2());
+                params.put("img_byte_str3", adEntity.getImagePath3());
+                params.put("img_byte_str4", adEntity.getImagePath4());
+                params.put("img_byte_str5", adEntity.getImagePath5());
+                params.put("img_byte_str6", adEntity.getImagePath6());
+                params.put("img_byte_str7", adEntity.getImagePath7());
+                params.put("img_byte_str8", adEntity.getImagePath8());
+                params.put("province", adEntity.getProvince().getP());
+                params.put("city", adEntity.getCity().getC());
+                params.put("range", adEntity.getDistance().getKey());
+                params.put("longitude", MainApplication.getContext().getLongitude() + "");
+                params.put("latitude", MainApplication.getContext().getLatitude() + "");
+                params.put("everyday_count", adEntity.getNum());
+                params.put("day_count", adEntity.getDays());
+                params.put("time", adEntity.getStartTime());
+                params.put("fight_packages_id", adEntity.getFight_package_id());
+                params.put("fight_multiple", adEntity.getFight_multiple());
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
      * 圈子操作
      *
      * @param token
@@ -2405,4 +2488,42 @@ public class HttpManager {
         };
         RequestManager.addRequest(request, activity);
     }
+
+    /**
+     * 获取拼手气套餐列表
+     *
+     * @param listener
+     */
+    public void getFightLuckPackageList(final BaseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<LuckMealsEntity> request = new GsonRequest<LuckMealsEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                LuckMealsEntity.class, null, new Response.Listener<LuckMealsEntity>() {
+
+            @Override
+            public void onResponse(LuckMealsEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_GET_FIGHT_LUCK_PACKAGE_LIST, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.GET_FIGHT_LUCK_PACKAGE_LIST);
+                params.put("parames", "");
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+
 }

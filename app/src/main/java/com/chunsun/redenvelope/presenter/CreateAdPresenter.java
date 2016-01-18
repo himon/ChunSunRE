@@ -55,7 +55,7 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
         }
 
         mTypeList = new ArrayList<>();
-        if (mAdEntity.getType() != null && ("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(mAdEntity.getType().getKey())) {
+        if (mAdEntity.getType() != null && (("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(mAdEntity.getType().getKey()) || ("" + Constants.RED_DETAIL_TYPE_lUCK).equals(mAdEntity.getType().getKey()))) {
             initCircleType(mTypeList);
         } else {
             initType(mTypeList);
@@ -213,6 +213,18 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
         item.setType(Constants.AD_SELECT_LIST_TYPE);
         item.setValue("链接");
         list.add(item);
+
+        item = new SampleEntity();
+        item.setKey(Constants.RED_DETAIL_TYPE_lUCK + "");
+        item.setType(Constants.AD_SELECT_LIST_TYPE);
+        item.setValue("图文");
+        list.add(item);
+
+        item = new SampleEntity();
+        item.setKey(Constants.RED_DETAIL_TYPE_lUCK_LINK + "");
+        item.setType(Constants.AD_SELECT_LIST_TYPE);
+        item.setValue("链接");
+        list.add(item);
     }
 
     public void setProAndCity(DistrictEntity data) {
@@ -248,7 +260,10 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
             city = mSuperadditionEntity.getCity();
         } else {
             mTypeList.get(0).setCheck(true);
-            this.mAdEntity.setType(mTypeList.get(0));
+            //圈子和拼手气红包，mAdEntity有值
+            if(mAdEntity.getType() == null || !("" + Constants.RED_DETAIL_TYPE_lUCK).equals(mAdEntity.getType().getKey())){
+                this.mAdEntity.setType(mTypeList.get(0));
+            }
             mDistanceList.get(0).setCheck(true);
             this.mAdEntity.setDistance(mDistanceList.get(0));
 

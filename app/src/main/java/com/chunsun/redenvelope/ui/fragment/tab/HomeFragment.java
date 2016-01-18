@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
@@ -65,7 +66,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     /**
      * 滚动广告类型
      */
-    private String mScrollAdType;
+    private int mScrollAdType;
     /**
      * 列表显示广告类型
      */
@@ -95,12 +96,12 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     protected void initView() {
 
         Bundle bundle = getArguments();
-        mScrollAdType = bundle.getString(Constants.EXTRA_KEY);
-        if (Constants.RED_AD_TYPE.equals(mScrollAdType)) {
+        mScrollAdType = bundle.getInt(Constants.EXTRA_KEY);
+        if (Constants.RED_AD_TYPE == mScrollAdType) {
             mShowAdType = Constants.RED_DETAIL_TYLE_SAMPLE;
-        } else if (Constants.TASK_AD_TYPE.equals(mScrollAdType)) {
+        } else if (Constants.TASK_AD_TYPE == mScrollAdType) {
             mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT;
-        } else if (Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
+        } else if (Constants.SCROLL_AD_TYPE == mScrollAdType) {
             mShowAdType = Constants.RED_DETAIL_TYPE_CIRCLE;
         }
 
@@ -129,20 +130,18 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (TextUtils.isEmpty(new Preferences(getActivity()).getToken()) && !Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
-                    toLogin();
-                    return;
-                }
-                showLoading();
-                mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {//转发
-                    toRepeatRedDetail(mEntity.getId());
-                } else if (Constants.RED_DETAIL_TYPE_CIRCLE == mEntity.getType()) {//圈子
-                    toRedDetail(mEntity.getId());
-                } else if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mEntity.getType()) {//链接圈子
-                    toWebRedDetail(mEntity.getId());
-                } else {
-                    mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
+                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(getActivity())) {
+                    showLoading();
+                    mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
+                    if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {//转发
+                        toRepeatRedDetail(mEntity.getId());
+                    } else if (Constants.RED_DETAIL_TYPE_CIRCLE == mEntity.getType()) {//圈子
+                        toRedDetail(mEntity.getId());
+                    } else if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mEntity.getType()) {//链接圈子
+                        toWebRedDetail(mEntity.getId());
+                    } else {
+                        mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
+                    }
                 }
             }
         });
@@ -150,7 +149,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
-
                 isRefresh = true;
                 getData();
             }
@@ -190,16 +188,37 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     @Override
     protected void initData() {
 
+        switch (mShowAdType) {
+            case Constants.RED_DETAIL_TYLE_SAMPLE:
+                String redListCash = new Preferences(getActivity()).getRedDetailListData();
+                String redAdCash = new Preferences(getActivity()).getRedDetailListAdsData();
+                if (!TextUtils.isEmpty(redListCash)) {
+                    mPresenter.loadCash(redListCash);
+                }
+                if (!TextUtils.isEmpty(redAdCash)) {
+                    mPresenter.loadAdCash(redAdCash);
+                }
+                break;
+            case Constants.RED_DETAIL_TYPE_CIRCLE:
+                String circleListCash = new Preferences(getActivity()).getCircleListData();
+                String circleAdCash = new Preferences(getActivity()).getCircleListAdsData();
+                if (!TextUtils.isEmpty(circleListCash)) {
+                    mPresenter.loadCash(circleListCash);
+                }
+                if (!TextUtils.isEmpty(circleAdCash)) {
+                    mPresenter.loadAdCash(circleAdCash);
+                }
+                break;
+        }
     }
 
     public void getData() {
 
         if (isRefresh) {
             mCurrentPage = 1;
-            mList.clear();
+
             mPresenter.getAdData(mScrollAdType);
         }
-
         mPresenter.loadData(new Preferences(getActivity()).getToken(), mShowAdType, mCurrentPage, mOrderType, "");
     }
 
@@ -217,8 +236,12 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
 
         mCurrentPage++;
 
+        if (isRefresh) {
+            mList.clear();
+        }
         mList.addAll(list);
 
+        mAdapter.setmDatas(mList);
         mAdapter.notifyDataSetChanged();
 
         mListView.getMoreComplete();

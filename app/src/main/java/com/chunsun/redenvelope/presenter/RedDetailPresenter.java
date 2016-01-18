@@ -3,13 +3,14 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.model.impl.RedDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IRedDetailView;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2015/8/10.
  */
-public class RedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implements UserLoseMultiLoadedListener<BaseEntity> {
     private IRedDetailView mIRedDetailView;
     private RedDetailMode mRedDetailMode;
 
@@ -32,6 +33,7 @@ public class RedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> 
 
     /**
      * 获取分享次数信息
+     *
      * @param token
      */
     public void getShareLimit(String token) {

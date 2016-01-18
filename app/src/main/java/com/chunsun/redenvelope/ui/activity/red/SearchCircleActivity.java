@@ -38,7 +38,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 查询圈子
  */
-public class SearchCircleActivity extends BaseActivity implements IHomeFragmentView, View.OnClickListener {
+public class SearchCircleActivity extends BaseActivity implements IHomeFragmentView {
 
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
@@ -265,7 +265,7 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
             case R.id.btn_search:
                 if (editTextIsEmpty()) {

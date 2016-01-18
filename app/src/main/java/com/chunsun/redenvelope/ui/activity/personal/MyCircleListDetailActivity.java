@@ -46,7 +46,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class MyCircleListDetailActivity extends BaseActivity implements IMyCircleListDetailView, View.OnClickListener {
+public class MyCircleListDetailActivity extends BaseActivity implements IMyCircleListDetailView {
 
     @Bind(R.id.iv_nav_icon)
     ImageView mNavIcon;
@@ -344,12 +344,8 @@ public class MyCircleListDetailActivity extends BaseActivity implements IMyCircl
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.iv_head_logo:
                 toUserRewardActivity(mDetail.getUser_id());
                 break;

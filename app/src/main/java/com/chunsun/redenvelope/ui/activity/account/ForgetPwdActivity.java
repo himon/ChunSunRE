@@ -22,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, View.OnClickListener, TextWatcher {
+public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, TextWatcher {
 
     @Bind(R.id.et_input_phone)
     EditText etPhoneNum;
@@ -74,13 +74,9 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, V
 
     }
 
-
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_get_code:
                 mPresenter.getValiCode(StringUtil.textview2String(etPhoneNum));
                 btnGetCode.setEnabled(false);

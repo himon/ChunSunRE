@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LogoutState;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -22,7 +24,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 设置Activity
  */
-public class SettingActivity extends BaseActivity implements ISettingView, View.OnClickListener {
+public class SettingActivity extends BaseActivity implements ISettingView {
 
     @Bind(R.id.si_about_us)
     SettingItem mSiAboutUs;
@@ -81,19 +83,13 @@ public class SettingActivity extends BaseActivity implements ISettingView, View.
 
     @Override
     protected void initData() {
-
         mToken = new Preferences(this).getToken();
-
         mExitDialog = new TextButtonDialog(this, R.style.progress_dialog, mExitListener);
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.si_about_us:
                 toAboutUs();
                 break;
@@ -129,6 +125,7 @@ public class SettingActivity extends BaseActivity implements ISettingView, View.
 
     @Override
     public void toLogout() {
+        LoginContext.getLoginContext().setState(new LogoutState());
         new Preferences(this).setToken("");
         MainApplication.getContext().setmUserEntity(null);
         EventBus.getDefault().post(new MainEvent(Constants.FROM_LOGIN_BACK));

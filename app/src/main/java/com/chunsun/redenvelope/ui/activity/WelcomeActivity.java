@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 启动页+引导页
  */
-public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.OnClickListener, ViewPager.OnPageChangeListener {
+public class WelcomeActivity extends BaseActivity implements IWelcomeView, ViewPager.OnPageChangeListener {
 
     ViewPager mViewPager;
     LinearLayout mLLPoints;
@@ -130,7 +130,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, View.
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
             case R.id.iv_look:
                 toMainActivity();

@@ -18,7 +18,7 @@ import com.chunsun.redenvelope.utils.StringUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ForgetPwdNextActivity extends BaseActivity implements IForgetPwdNextView, View.OnClickListener {
+public class ForgetPwdNextActivity extends BaseActivity implements IForgetPwdNextView {
 
     @Bind(R.id.et_input_password)
     EditText etPwd;
@@ -63,13 +63,9 @@ public class ForgetPwdNextActivity extends BaseActivity implements IForgetPwdNex
         }
     }
 
-
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_complete:
                 mPresenter.setPassword(mMobile, mVerifyCode, StringUtil.textview2String(etPwd), StringUtil.textview2String(etRepwd));
                 break;

@@ -24,7 +24,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 链接类预览Activity
  */
-public class PreviewWebRedDetailActivity extends BaseActivity implements View.OnClickListener {
+public class PreviewWebRedDetailActivity extends BaseActivity {
 
     @Bind(R.id.viewpager)
     ViewPager mViewPager;
@@ -80,13 +80,8 @@ public class PreviewWebRedDetailActivity extends BaseActivity implements View.On
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
+    protected void click(View v) {
+
     }
 
     /**

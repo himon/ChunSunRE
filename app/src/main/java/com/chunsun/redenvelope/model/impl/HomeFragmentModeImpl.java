@@ -36,7 +36,7 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
     }
 
     @Override
-    public void getAdData(final String type, final BaseMultiLoadedListener listener) {
+    public void getAdData(final int type, final BaseMultiLoadedListener listener) {
         mManager.getAdData(type, listener, mFragment, mActivity);
     }
 

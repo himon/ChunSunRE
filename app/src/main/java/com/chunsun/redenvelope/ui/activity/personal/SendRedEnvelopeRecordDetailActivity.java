@@ -50,7 +50,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 发广告记录详情Activity
  */
-public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements ISendRedEnvelopeRecordDetailView, View.OnClickListener {
+public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements ISendRedEnvelopeRecordDetailView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -303,12 +303,8 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_pay_red:
                 if (Constants.RED_DETAIL_STATUS_DZF.equals(mClassify)) {
                     mPresenter.onException("");

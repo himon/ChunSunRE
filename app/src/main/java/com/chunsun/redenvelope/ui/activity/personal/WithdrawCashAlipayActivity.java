@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 /**
  * 支付宝提现
  */
-public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdrawCashAlipayView, View.OnClickListener {
+public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdrawCashAlipayView {
 
     @Bind(R.id.et_zhifubao_account)
     EditText mEtAlipayAccount;
@@ -120,12 +120,8 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_apply_withdrawal:
                 String account = mEtAlipayAccount.getText().toString().trim();
                 String name = mEtAlipayName.getText().toString().trim();

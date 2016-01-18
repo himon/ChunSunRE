@@ -20,6 +20,10 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     protected LayoutInflater mInflater;
     private int layoutId;
 
+    public void setmDatas(List<T> mDatas) {
+        this.mDatas = mDatas;
+    }
+
     public CommonAdapter(Context context, List<T> datas, int layoutId) {
         this.mContext = context;
         this.mDatas = datas;

@@ -28,7 +28,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 发广告记录Activity
  */
-public class SendRedEnvelopeRecordClassifyActivity extends BaseActivity implements ISendRedEnvelopeRecordClassifyView, View.OnClickListener {
+public class SendRedEnvelopeRecordClassifyActivity extends BaseActivity implements ISendRedEnvelopeRecordClassifyView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -91,18 +91,14 @@ public class SendRedEnvelopeRecordClassifyActivity extends BaseActivity implemen
         mToken = new Preferences(this).getToken();
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     public void getData() {
         mList.clear();
         mPresenter.loadData(mToken);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 
     @Override

@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_create_circle_bg"
     tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateCircleActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,10 +15,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_create_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="@string/chunsun_circle"
-            android:textColor="@color/white"
+            android:textColor="@color/global_red"
             android:textSize="@dimen/font_size_sp_30" />
 
         <TextView
@@ -28,7 +29,7 @@
             android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
             android:text="@string/choose_type"
-            android:textColor="@color/white"
+            android:textColor="@color/font_gray6"
             android:textSize="@dimen/font_size_sp_14" />
 
         <RadioGroup
@@ -44,12 +45,12 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/image_text"
-                android:textColor="@color/selector_text_white_red" />
+                android:textColor="@color/selector_radio_button_text_red_white" />
 
             <RadioButton
                 android:id="@+id/rb_link"
@@ -57,11 +58,11 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/link"
-                android:textColor="@color/selector_text_white_red" />
+                android:textColor="@color/selector_radio_button_text_red_white" />
         </RadioGroup>
 
         <TextView
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:text="@string/choose_address"
-            android:textColor="@color/white"
+            android:textColor="@color/font_gray6"
             android:textSize="@dimen/font_size_sp_14" />
 
         <LinearLayout
@@ -78,39 +79,39 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:background="@drawable/shape_radius_stroke_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="7dp"
+            android:paddingRight="14dp"
+            android:paddingTop="7dp">
 
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_left_radius_white_stroke"
                 android:gravity="center"
                 android:text="@string/province"
-                android:textColor="@color/white" />
+                android:textColor="@color/font_gray6" />
 
-            <RelativeLayout
-                android:id="@+id/rl_province"
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_right_radius_white_bg"
-                android:padding="8dp">
+                android:background="@color/font_gray6" />
 
-                <TextView
-                    android:id="@+id/tv_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/unlimited" />
+            <TextView
+                android:id="@+id/tv_province"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/unlimited" />
 
-                <ImageView
-                    android:id="@+id/iv_province"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/img_pull_down_triangle" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_province"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/img_pull_down_triangle" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -119,39 +120,39 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:background="@drawable/shape_radius_stroke_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="7dp"
+            android:paddingRight="14dp"
+            android:paddingTop="7dp">
 
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_left_radius_white_stroke"
                 android:gravity="center"
                 android:text="@string/city"
-                android:textColor="@color/white" />
+                android:textColor="@color/font_gray6" />
 
-            <RelativeLayout
-                android:id="@+id/rl_city"
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_right_radius_white_bg"
-                android:padding="8dp">
+                android:background="@color/font_gray6" />
 
-                <TextView
-                    android:id="@+id/tv_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/unlimited" />
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/unlimited" />
 
-                <ImageView
-                    android:id="@+id/iv_city"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/img_pull_down_triangle" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_city"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/img_pull_down_triangle" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -160,39 +161,38 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:background="@drawable/shape_radius_stroke_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="7dp"
+            android:paddingRight="14dp"
+            android:paddingTop="7dp">
 
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_left_radius_white_stroke"
                 android:gravity="center"
                 android:text="@string/circle_range"
-                android:textColor="@color/white" />
+                android:textColor="@color/font_gray6" />
 
-            <RelativeLayout
-                android:id="@+id/rl_range"
-                android:layout_width="match_parent"
+            <View
+                android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_right_radius_white_bg"
-                android:padding="8dp">
+                android:background="@color/font_gray6" />
 
-                <TextView
-                    android:id="@+id/tv_range"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/unlimited" />
+            <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/unlimited" />
 
-                <ImageView
-                    android:id="@+id/iv_range"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/img_pull_down_triangle" />
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_range"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/img_pull_down_triangle" />
         </LinearLayout>
 
         <Button

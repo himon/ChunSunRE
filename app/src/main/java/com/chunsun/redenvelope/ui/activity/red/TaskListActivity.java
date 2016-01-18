@@ -33,7 +33,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class TaskListActivity extends BaseActivity implements IHomeFragmentView, View.OnClickListener {
+public class TaskListActivity extends BaseActivity implements IHomeFragmentView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -59,7 +59,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     /**
      * 滚动广告类型
      */
-    private String mScrollAdType;
+    private int mScrollAdType;
     /**
      * 列表显示广告类型
      */
@@ -108,7 +108,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (TextUtils.isEmpty(new Preferences(TaskListActivity.this).getToken()) && !Constants.SCROLL_AD_TYPE.equals(mScrollAdType)) {
+                if (TextUtils.isEmpty(new Preferences(TaskListActivity.this).getToken()) && Constants.SCROLL_AD_TYPE == mScrollAdType) {
                     toLogin();
                     return;
                 }
@@ -168,22 +168,26 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        mScrollAdType = intent.getStringExtra(Constants.EXTRA_KEY);
-        if (Constants.RED_AD_TYPE.equals(mScrollAdType)) {
+        mScrollAdType = intent.getIntExtra(Constants.EXTRA_KEY, 0);
+        if (Constants.RED_AD_TYPE == mScrollAdType) {
             mShowAdType = Constants.RED_DETAIL_TYLE_SAMPLE;
-        } else if (Constants.TASK_AD_TYPE.equals(mScrollAdType)) {
+        } else if (Constants.TASK_AD_TYPE == mScrollAdType) {
             mShowAdType = Constants.RED_DETAIL_TYPE_REPEAT;
+        }
+
+        String listCash = new Preferences(this).getTaskData();
+        String adCash = new Preferences(this).getTaskAdsData();
+        if (!TextUtils.isEmpty(listCash)) {
+            mPresenter.loadCash(listCash);
+        }
+        if (!TextUtils.isEmpty(adCash)) {
+            mPresenter.loadAdCash(adCash);
         }
     }
 
     public void getData() {
-        if (mCurrentPage * Constants.PAGE_NUM > mTotal + Constants.PAGE_NUM) {
-            mPtr.refreshComplete();
-            return;
-        }
         if (isRefresh) {
             mCurrentPage = 1;
-            mList.clear();
             mPresenter.getAdData(mScrollAdType);
         }
         mPresenter.loadData(new Preferences(this).getToken(), mShowAdType, mCurrentPage, 0, "");
@@ -201,6 +205,9 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
 
         mCurrentPage++;
 
+        if (isRefresh) {
+            mList.clear();
+        }
         mList.addAll(list);
 
         mAdapter.notifyDataSetChanged();
@@ -303,12 +310,8 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView,
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.iv_to_top:
                 mListView.setSelection(0);
                 break;

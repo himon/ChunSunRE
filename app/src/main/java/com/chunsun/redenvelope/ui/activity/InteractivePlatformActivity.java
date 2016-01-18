@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -38,7 +39,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 互动平台
  */
-public class InteractivePlatformActivity extends BaseActivity implements IInteractivePlatformView, View.OnClickListener {
+public class InteractivePlatformActivity extends BaseActivity implements IInteractivePlatformView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -149,6 +150,21 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
             }
         }, 100);
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                mListView.doOnScrollStateChanged(view, scrollState);
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+               int[] location = new int[2];
+                mRgType.getLocationOnScreen(location);
+                System.out.println("top：" + location[0]);
+            }
+        });
+
         initEvent();
     }
 
@@ -196,6 +212,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
         mToken = new Preferences(this).getToken();
     }
 
+
     private void getAllData() {
         if (isRefresh) {
             mCurrentCountryPage = 1;
@@ -222,18 +239,14 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
      * @param notice
      */
     @Override
-    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice)  {
+    public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice) {
         InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
         mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                back();
-                break;
             case R.id.rb_comment_country:
                 mCurrentCheckType = 0;
                 mListView.setHasMore();

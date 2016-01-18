@@ -1,22 +1,20 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import android.app.Activity;
+
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.AdPayMode;
-import com.chunsun.redenvelope.ui.activity.ad.AdPayActivity;
-import com.chunsun.redenvelope.utils.manager.HttpManager;
+import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 
 /**
  * Created by Administrator on 2015/9/8.
  */
-public class AdPayModeImpl implements AdPayMode {
+public class AdPayModeImpl extends BaseModeImpl implements AdPayMode {
 
-    private AdPayActivity mActivity;
-    private HttpManager mManager;
+    private Activity mActivity;
 
-    public AdPayModeImpl(AdPayActivity adPayActivity) {
+    public AdPayModeImpl(Activity adPayActivity) {
         this.mActivity = adPayActivity;
-        this.mManager = new HttpManager();
     }
 
     /**

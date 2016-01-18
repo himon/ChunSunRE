@@ -9,10 +9,19 @@ public interface IAdPayView extends IAlipayResult{
 
     void setData(AdPayAmountDetailEntity.ResultEntity result);
 
+    /**
+     * 网上银行支付
+     */
     void bankPay();
 
+    /**
+     * 支付宝支付
+     */
     void alipay();
 
+    /**
+     * 余额支付
+     */
     void balancePay();
 
     /**

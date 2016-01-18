@@ -10,28 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red_detail_gralley_gray"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="15dip"
         android:visibility="gone">
 
         <ImageView
+            android:id="@+id/iv_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:src="@drawable/img_back" />
 
         <TextView
             android:id="@+id/tv_exit"
             android:layout_width="wrap_content"
             android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_exit"
             android:text="@string/exit"
             android:textColor="@color/white" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_enter"
+            android:text="进入"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_enter"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/img_enter_icon" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_other"

@@ -21,9 +21,10 @@ import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.utils.ShareSdkHelper;
+import com.chunsun.redenvelope.utils.helper.ShareSdkHelper;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -242,6 +243,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
+                EventBus.getDefault().post(new ShareRedEnvelopeEvent(""));
                 clear();
             }
         });
@@ -313,7 +315,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
     @Override
     public void showAtLocation(View parent, int gravity, int x, int y) {
         WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
-        lp.alpha = 0.7f;
+        lp.alpha = 1.0f;
         mContext.getWindow().setAttributes(lp);
         super.showAtLocation(parent, gravity, x, y);
     }

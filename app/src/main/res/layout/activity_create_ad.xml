@@ -3,8 +3,7 @@
                 xmlns:pickerui="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/root"
-                android:background="@drawable/img_create_ad_bg">
+                android:id="@+id/root">
 
     <include layout="@layout/layout_title_bar"/>
 
@@ -19,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ad_confirm"
-            android:textColor="@color/white"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/global_red"
             android:textSize="@dimen/font_size_sp_30"/>
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/choose_type"
-            android:textColor="@color/white"
+            android:textColor="@color/font_gray6"
             android:textSize="@dimen/font_size_sp_14"/>
 
         <RadioGroup
@@ -43,11 +43,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/coupon"
-                android:textColor="@color/selector_text_white_red"/>
+                android:textColor="@color/selector_radio_button_text_red_white"/>
 
             <RadioButton
                 android:id="@+id/btn_repeat"
@@ -56,11 +56,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/repeat"
-                android:textColor="@color/selector_text_white_red"/>
+                android:textColor="@color/selector_radio_button_text_red_white"/>
 
             <RadioButton
                 android:id="@+id/btn_lift"
@@ -69,12 +69,12 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/life"
-                android:textColor="@color/selector_text_white_red"/>
+                android:textColor="@color/selector_radio_button_text_red_white"/>
 
             <RadioButton
                 android:id="@+id/btn_link"
@@ -83,11 +83,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/link"
-                android:textColor="@color/selector_text_white_red"/>
+                android:textColor="@color/selector_radio_button_text_red_white"/>
 
             <RadioButton
                 android:id="@+id/btn_near"
@@ -96,11 +96,11 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/selector_btn_white_to_trans"
+                android:background="@drawable/selector_ad_radio_button_bg"
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/near"
-                android:textColor="@color/selector_text_white_red"/>
+                android:textColor="@color/selector_radio_button_text_red_white"/>
         </RadioGroup>
 
         <TextView
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/send_range"
-            android:textColor="@color/white"
+            android:textColor="@color/font_gray6"
             android:textSize="@dimen/font_size_sp_14"/>
 
         <RelativeLayout
@@ -118,7 +118,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_radius_white"
+            android:background="@drawable/shape_radius_stroke_white"
             android:padding="8dp">
 
             <TextView
@@ -144,7 +144,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_radius_white"
+            android:background="@drawable/shape_radius_stroke_white"
             android:padding="8dp">
 
             <TextView
@@ -170,7 +170,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/shape_radius_white"
+            android:background="@drawable/shape_radius_stroke_white"
             android:padding="8dp"
             android:visibility="gone">
 

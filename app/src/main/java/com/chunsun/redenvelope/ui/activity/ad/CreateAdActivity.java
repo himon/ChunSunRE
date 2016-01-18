@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * 创建广告首页
  */
-public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAdPresenter> implements ICreateAdView, View.OnClickListener {
+public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAdPresenter> implements ICreateAdView {
 
     @Bind(R.id.btn_company)
     RadioButton mRbCompany;
@@ -151,12 +151,8 @@ public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAd
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_company://券类
                 mAdEntity.setType(mTypeList.get(5));
                 initSelected(2, true);

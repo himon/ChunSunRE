@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -37,10 +36,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdNextStepView, View.OnClickListener {
+public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdNextStepView {
 
-    @Bind(R.id.main_nav)
-    RelativeLayout mToolsBar;
     @Bind(R.id.et_price)
     EditText mEtPrice;
     @Bind(R.id.et_num)
@@ -228,8 +225,7 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     private void initTitle() {
-        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        initTitleBar("发广告", "", "说明", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("设置红包金额", "", "说明", Constants.TITLE_TYPE_SAMPLE);
         mNavRight.setVisibility(View.VISIBLE);
     }
 
@@ -244,12 +240,8 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.tv_nav_right:
                 toIllustrate();
                 break;

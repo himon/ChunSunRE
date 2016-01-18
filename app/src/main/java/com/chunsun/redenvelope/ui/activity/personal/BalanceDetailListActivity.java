@@ -29,7 +29,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 账户明细列表
  */
-public class BalanceDetailListActivity extends BaseActivity implements IBalanceDetailListView, View.OnClickListener {
+public class BalanceDetailListActivity extends BaseActivity implements IBalanceDetailListView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -123,13 +123,7 @@ public class BalanceDetailListActivity extends BaseActivity implements IBalanceD
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
+    protected void click(View v) {
     }
 
     @Override

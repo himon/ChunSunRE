@@ -155,9 +155,9 @@
     <!-- 发送广告 -->
     <string name="immediate_send">即时发送</string>
     <string name="time_send">定时发送</string>
-    <string name="price">单价</string>
+    <string name="price">单个金额</string>
     <string name="input_price">请输入一条广告价格</string>
-    <string name="num">数量</string>
+    <string name="num">红包个数</string>
     <string name="input_num">请输入本广告发出条数</string>
     <string name="send_days">发放天数</string>
     <string name="input_send_days">请输入总发放天数</string>
@@ -191,13 +191,13 @@
     <string name="repeat">转发</string>
     <string name="company">企业</string>
     <string name="coupon">券</string>
-    <string name="ad_confirm">定制你的专属广告</string>
+    <string name="ad_confirm">定制专属红包广告</string>
     <string name="multiple">倍套餐</string>
     <string name="buy_multiple">购买套餐倍数</string>
     <string name="choose_meal">选择套餐</string>
     <string name="near">附近</string>
     <string name="image_text">图文</string>
-    <string name="choose_address">选择可见地域</string>
+    <string name="choose_address">选择投放范围</string>
     <string name="unlimited">不限</string>
     <string name="circle_range">范围</string>
     <string name="chose">选好了</string>
@@ -213,6 +213,8 @@
     <string name="create_fail_msg">错误信息：网络错误</string>
     <string name="fail_to_circle">放弃，去圈子逛逛</string>
     <string name="try_again_create">留下，再试试</string>
+    <string name="money_icon">￥</string>
+    <string name="pay_total_money">应付总金额：</string>
 
     <!-- 分享 -->
     <string name="wecharmoments">朋友圈</string>
@@ -259,5 +261,9 @@
     <string name="title_activity_my_circle_list">MyCircleListActivity</string>
     <string name="title_activity_my_circle_list_detail">MyCircleListDetailActivity</string>
     <string name="title_activity_search_circle">SearchCircleActivity</string>
+    <string name="title_activity_demo">DemoActivity</string>
+    <string name="title_activity_create_luck">CreateLuckActivity</string>
+    <string name="title_activity_create_luck_next">CreateLuckNextActivity</string>
+    <string name="title_activity_luck_ad_pay">LuckAdPayActivity</string>
 
 </resources>

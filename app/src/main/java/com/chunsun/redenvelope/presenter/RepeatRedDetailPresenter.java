@@ -2,15 +2,16 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.RepeatRedDetailMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.RepeatRedDetailMode;
 import com.chunsun.redenvelope.model.impl.RepeatRedDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IRepeatRedDetailView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -20,7 +21,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
  * @time ${DATE} 15:54
  * @des 转发类红包的Presenter
  */
-public class RepeatRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class RepeatRedDetailPresenter extends UserLosePresenter<IRepeatRedDetailView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IRepeatRedDetailView mIRepeatRedDetailView;
     private RepeatRedDetailMode mRepeatRedDetailMode;
@@ -55,6 +56,21 @@ public class RepeatRedDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEn
                 mIRepeatRedDetailView.setShareHost((RepeatRedEnvelopeGetHostEntity) data);
                 break;
         }
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+
+    }
+
+    @Override
+    public void onException(String msg) {
+
     }
 
     /**

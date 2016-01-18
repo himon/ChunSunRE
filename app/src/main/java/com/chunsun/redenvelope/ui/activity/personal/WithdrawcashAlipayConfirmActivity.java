@@ -18,7 +18,7 @@ import com.chunsun.redenvelope.utils.ShowToast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements IWithdrawcashAlipayConfirmView, View.OnClickListener {
+public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements IWithdrawcashAlipayConfirmView {
 
     @Bind(R.id.tv_account)
     TextView mTvAccount;
@@ -76,12 +76,8 @@ public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements I
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_apply_withdrawal:
                 if (mEntity == null) {
                     ShowToast.Short("提现金额不正确");

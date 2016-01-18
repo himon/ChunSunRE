@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * 广告支付
  */
-public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnClickListener {
+public class AdPayActivity extends BaseActivity implements IAdPayView {
 
     @Bind(R.id.tv_price)
     TextView mTvPrice;
@@ -81,9 +81,7 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
 
     @Override
     protected void initData() {
-
         mToken = new Preferences(this).getToken();
-
         Intent intent = getIntent();
         if (intent != null) {
             mAdId = intent.getStringExtra(Constants.EXTRA_KEY);
@@ -93,12 +91,8 @@ public class AdPayActivity extends BaseActivity implements IAdPayView, View.OnCl
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                back();
-                break;
             case R.id.btn_pay_bankcard:
                 bankPay();
                 break;

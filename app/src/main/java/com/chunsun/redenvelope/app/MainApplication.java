@@ -9,15 +9,21 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Vibrator;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LoginState;
+import com.chunsun.redenvelope.app.state.impl.LogoutState;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.event.BaiduMapLocationEvent;
+import com.chunsun.redenvelope.preference.Preferences;
+import com.chunsun.redenvelope.utils.AppUtil;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -49,6 +55,11 @@ public class MainApplication extends Application {
     private double mLongitude = 0;
     private String mProvince = "不限";
     private String mCity = "不限";
+    private Preferences mPreferences;
+    /**
+     * app当前版本号
+     */
+    private String mAppVersion;
 
     public LocationClient getLocationClient() {
         return mLocationClient;
@@ -121,6 +132,14 @@ public class MainApplication extends Application {
         return mLatitude;
     }
 
+    public String getmAppVersion() {
+        return mAppVersion;
+    }
+
+    public void setmAppVersion(String mAppVersion) {
+        this.mAppVersion = mAppVersion;
+    }
+
     /**
      * 获取MainApplication对象
      *
@@ -141,7 +160,41 @@ public class MainApplication extends Application {
         initHeadOptions();
         initBaiduMap();
 
+        initUserState();
+
+        mAppVersion = AppUtil.getVersion(getContext());
+
         ImageLoader.getInstance().init(ImageLoaderHelper.getInstance(this).getImageLoaderConfiguration(Constants.IMAGE_LOADER_CACHE_PATH));
+
+        mPreferences = new Preferences(getApplicationContext());
+        String province = mPreferences.getProvinceData();
+        String city = mPreferences.getCityData();
+        String longitude = mPreferences.getLongitude();
+        String latitude = mPreferences.getLatitude();
+
+        if (!TextUtils.isEmpty(province)) {
+            mProvince = province;
+        }
+        if (!TextUtils.isEmpty(city)) {
+            mCity = city;
+        }
+        if (!TextUtils.isEmpty(longitude)) {
+            mLongitude = Double.parseDouble(longitude);
+        }
+        if (!TextUtils.isEmpty(latitude)) {
+            mLatitude = Double.parseDouble(latitude);
+        }
+    }
+
+    /**
+     * 初始化登录状态
+     */
+    private void initUserState() {
+        if(TextUtils.isEmpty(new Preferences(this).getToken())){
+            LoginContext.getLoginContext().setState(new LogoutState());
+        }else{
+            LoginContext.getLoginContext().setState(new LoginState());
+        }
     }
 
     private void initHeadOptions() {
@@ -226,6 +279,11 @@ public class MainApplication extends Application {
             mLongitude = location.getLongitude();
             mProvince = location.getProvince() == null ? "不限" : location.getProvince();
             mCity = location.getCity() == null ? "不限" : location.getCity();
+
+            mPreferences.setProvinceData(mProvince);
+            mPreferences.setCityData(mCity);
+            mPreferences.setLatitude(mLatitude + "");
+            mPreferences.setLongitude(mLongitude + "");
 
             if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
                 System.out.println("GPS定位结果");

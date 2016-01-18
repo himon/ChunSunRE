@@ -75,6 +75,11 @@ public class RedDetailPicShowActivity extends BaseActivity {
         initFragment();
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     private void initFragment() {
         for (int i = 0; i < mUrls.size(); i++) {
             String url = mUrls.get(i);

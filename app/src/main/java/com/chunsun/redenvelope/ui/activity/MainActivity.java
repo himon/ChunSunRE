@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,6 +18,8 @@ import android.widget.Toast;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.callback.LoginCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.TitlePopupItemEntity;
 import com.chunsun.redenvelope.event.BaiduMapLocationEvent;
@@ -52,7 +53,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
-public class MainActivity extends BaseActivity implements IMainView, View.OnClickListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements IMainView, ViewPager.OnPageChangeListener {
 
     @Bind(R.id.root)
     RelativeLayout mRoot;
@@ -129,11 +130,12 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         // 如果需要绑定账号，请使用registerPush(getApplicationContext(),account)版本
         // 具体可参考详细的开发指南
         // 传递的参数为ApplicationContext
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
         XGPushManager.registerPush(context, new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int i) {
                 Log.d("TPush", "注册成功，设备token为：" + data);
+                new Preferences(context).setXGToken(XGPushConfig.getToken(context));
             }
 
             @Override
@@ -164,15 +166,15 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mMeFragment = new NewMeFragment();
 
         Bundle homeBundle = new Bundle();
-        homeBundle.putString(Constants.EXTRA_KEY, Constants.RED_AD_TYPE);
+        homeBundle.putInt(Constants.EXTRA_KEY, Constants.RED_AD_TYPE);
         mHomeFragment.setArguments(homeBundle);
 
         Bundle circleBundle = new Bundle();
-        circleBundle.putString(Constants.EXTRA_KEY, Constants.SCROLL_AD_TYPE);
+        circleBundle.putInt(Constants.EXTRA_KEY, Constants.SCROLL_AD_TYPE);
         mCircleFragment.setArguments(circleBundle);
 
         Bundle forwardBundle = new Bundle();
-        forwardBundle.putString(Constants.EXTRA_KEY, Constants.TASK_AD_TYPE);
+        forwardBundle.putInt(Constants.EXTRA_KEY, Constants.TASK_AD_TYPE);
         mInteractiveFragment.setArguments(forwardBundle);
 
         mTabs.add(mHomeFragment);
@@ -202,16 +204,16 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mTitlePopup.setItemOnClickListener(new TitlePopup.OnItemOnClickListener() {
             @Override
             public void onItemClick(TitlePopupItemEntity item, int position) {
-                switch (position) {
-                    case 0:
-                        toInteract();
-                        break;
-                    case 1:
-                        toScan();
-                    case 2:
-                        toTaskList();
-                        break;
-                }
+                    switch (position) {
+                        case 0:
+                            toInteract();
+                            break;
+                        case 1:
+                            toScan();
+                        case 2:
+                            toTaskList();
+                            break;
+                    }
             }
         });
 
@@ -311,17 +313,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         mOrderPopup.addAction(new TitlePopupItemEntity("附近"));
     }
 
-
     @Override
-    public void onClick(View v) {
+    public void click(View v) {
         switch (v.getId()) {
             case R.id.tv_nav_right:
                 toAdExplain();
-                break;
-            case R.id.tv_nav_left:
-            case R.id.iv_nav_icon:
-                MainApplication.getContext().getLocationClient().start();
-                ShowToast.Short("重新获取位置");
                 break;
             case R.id.ib_nav_right:
                 mTitlePopup.show(mToolsBar);
@@ -352,7 +348,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
         startActivity(intent);
     }
 
-    private void clickTab(View v) {
+    private void clickTab(final View v) {
 
         switch (v.getId()) {
             case R.id.indicator_home:
@@ -360,22 +356,31 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
                 showTitleBar(v.getId());
                 break;
             case R.id.indicator_ad:
-                if (isLogin(Constants.FROM_AD)) {
-                    mViewPager.setCurrentItem(1, false);
-                    showTitleBar(v.getId());
-                }
+                LoginContext.getLoginContext().tabChange(this, Constants.FROM_AD, new LoginCallback() {
+                    @Override
+                    public void setCurrent() {
+                        mViewPager.setCurrentItem(1, false);
+                        showTitleBar(v.getId());
+                    }
+                });
                 break;
             case R.id.indicator_near:
-                if (isLogin(Constants.FROM_TAB3)) {
-                    mViewPager.setCurrentItem(3, false);
-                    showTitleBar(v.getId());
-                }
+                LoginContext.getLoginContext().tabChange(this, Constants.FROM_TAB3, new LoginCallback() {
+                    @Override
+                    public void setCurrent() {
+                        mViewPager.setCurrentItem(3, false);
+                        showTitleBar(v.getId());
+                    }
+                });
                 break;
             case R.id.indicator_me:
-                if (isLogin(Constants.FROM_ME)) {
-                    mViewPager.setCurrentItem(4, false);
-                    showTitleBar(v.getId());
-                }
+                LoginContext.getLoginContext().tabChange(this, Constants.FROM_ME, new LoginCallback() {
+                    @Override
+                    public void setCurrent() {
+                        mViewPager.setCurrentItem(4, false);
+                        showTitleBar(v.getId());
+                    }
+                });
                 break;
             case R.id.iv_toInteractive://圈子
                 mViewPager.setCurrentItem(2, false);
@@ -443,15 +448,6 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
 
     }
 
-    @Override
-    public boolean isLogin(String from) {
-        if (TextUtils.isEmpty(new Preferences(MainApplication.getContext()).getToken())) {
-            toLogin(from);
-            return false;
-        }
-        return true;
-    }
-
     public void toLogin(String from) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, from);
@@ -471,7 +467,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
      */
     @Override
     public void toInteract() {
-        if (isLogin(Constants.FROM_LOGIN_BACK)) {
+        if(LoginContext.getLoginContext().forward(MainActivity.this)){
             Intent intent = new Intent(this, InteractivePlatformActivity.class);
             startActivity(intent);
         }
@@ -492,7 +488,7 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
     @Override
     public void toTaskList() {
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, Constants.TASK_AD_TYPE + "");
+        intent.putExtra(Constants.EXTRA_KEY, Constants.TASK_AD_TYPE);
         startActivity(intent);
     }
 
@@ -541,7 +537,11 @@ public class MainActivity extends BaseActivity implements IMainView, View.OnClic
             mMeFragment.getData();
             mInteractiveFragment.getAllData();
             showTitleBar(R.id.indicator_me);
-        } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
+        }else if(Constants.FROM_COMMENT.equals(event.getMsg())){
+            mMeFragment.getData();
+            mInteractiveFragment.getAllData();
+        }
+        else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
         } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//追加
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);

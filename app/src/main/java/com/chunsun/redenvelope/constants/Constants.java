@@ -36,16 +36,20 @@ public interface Constants {
     int RED_DETAIL_TYPE_CIRCLE = 7;
     //圈子链接
     int RED_DETAIL_TYPE_CIRCLE_LINK = 8;
+    //拼手气图文
+    int RED_DETAIL_TYPE_lUCK = 9;
+    //拼手气链接
+    int RED_DETAIL_TYPE_lUCK_LINK = 10;
 
     /**
      * 循环广告类型
      */
     //圈子
-    String SCROLL_AD_TYPE = "1";
+    int SCROLL_AD_TYPE = 1;
     //任务
-    String TASK_AD_TYPE = "2";
+    int TASK_AD_TYPE = 2;
     //红包
-    String RED_AD_TYPE = "3";
+    int RED_AD_TYPE = 3;
 
     /**
      * 圈子排序类别
@@ -65,7 +69,7 @@ public interface Constants {
 //    String HOST_URL = "http://cssv.chunsunkeji.com";
     String HOST_URL = "http://192.168.1.109:9101";// 外网
 
-    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    //            String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
     String IMG_HOST_URL = "http://192.168.1.109:9101";//外网
 
     /**
@@ -86,6 +90,8 @@ public interface Constants {
     int TITLE_TYPE_NONE = 0x1002;
     int TITLE_TYPE_AD = 0x1003;
     int TITLE_TYPE_CIRCLE = 0x1004;
+    int TITLE_TYPE_SAMPLE_WEB = 0x1005;
+    int TITLE_TYPE_SAMPLE_NO_BACK = 0x1006;
 
     /**
      * web service地址接口
@@ -163,6 +169,8 @@ public interface Constants {
     String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_9";
     //创建圈子
     String CREATE_CIRCLE_JSON_REQUEST_URL = NEW_URL + "hb_create_circle";
+    //创建拼手气红包
+    String CREATE_LUCK_JSON_REQUEST_URL = NEW_URL + "hb_create_fight";
     //获取红包支付明细
     String GET_AD_AMOUNT_DETAIL = "hb_send_amount_bill_detail";
     //余额支付广告费用
@@ -197,6 +205,8 @@ public interface Constants {
     String USE_CHUNSUN_COUPON = "use_chunsun_ticket";
     //圈子记录操作
     String CIRCLE_OPERATOR = "user_operate_circle";
+    //获取拼手气套餐列表
+    String GET_FIGHT_LUCK_PACKAGE_LIST = "get_fight_luck_package_list";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -306,6 +316,11 @@ public interface Constants {
      * 标示从tab3的fragment跳转到登录
      */
     String FROM_TAB3 = "from_tab3";
+
+    /**
+     * 圈子评论
+     */
+    String FROM_COMMENT = "from_comment";
 
     /**
      * 标示登录页点击了返回
@@ -432,6 +447,8 @@ public interface Constants {
     int LISTENER_USE_CHUNSUN_COUPON = 0x2037;
     int LISTENER_TYPE_GET_USER_INVITE_INFO = 0x2038;
     int LISTENER_TYPE_COMMIT_CIRCLE = 0x2039;
+    int LISTENER_TYPE_GET_FIGHT_LUCK_PACKAGE_LIST = 0x2040;
+    int LISTENER_TYPE_COMMIT_LUCK = 0x20419;
 
     /**
      * 发广告默认数据

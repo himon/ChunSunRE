@@ -22,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class CreateCircleResultActivity extends BaseActivity implements View.OnClickListener {
+public class CreateCircleResultActivity extends BaseActivity {
 
     @Bind(R.id.rl_success_msg)
     RelativeLayout mRlSuccessMsg;
@@ -88,7 +88,7 @@ public class CreateCircleResultActivity extends BaseActivity implements View.OnC
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
             case R.id.btn_to_circle:
             case R.id.btn_error_to_circle:

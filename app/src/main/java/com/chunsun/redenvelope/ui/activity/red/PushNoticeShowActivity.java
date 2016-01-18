@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class PushNoticeShowActivity extends BaseActivity implements View.OnClickListener {
+public class PushNoticeShowActivity extends BaseActivity {
 
     @Bind(R.id.tv_content)
     TextView mContent;
@@ -46,12 +46,7 @@ public class PushNoticeShowActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
+    protected void click(View v) {
+
     }
 }

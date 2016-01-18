@@ -8,27 +8,27 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.CreateAdContentMode;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.CreateAdContentMode;
 import com.chunsun.redenvelope.model.impl.CreateAdContentModeImpl;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
 import com.chunsun.redenvelope.utils.Base64Utils;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.iwf.photopicker.entity.Photo;
 
 /**
  * Created by Administrator on 2015/9/2.
  */
-public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContentView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private ICreateAdContentView mICreateAdContentView;
     private CreateAdContentMode mCreateAdContentMode;
@@ -48,14 +48,20 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         mICreateAdContentView.hideLoading();
+
+        CreateAdResultEntity entity = null;
         switch (event_tag) {
             case Constants.LISTENER_TYPE_COMMIT_AD:
-                CreateAdResultEntity entity1 = (CreateAdResultEntity) data;
-                mICreateAdContentView.toAdPayActivity(entity1.getResult());
+                entity = (CreateAdResultEntity) data;
+                mICreateAdContentView.toAdPayActivity(entity.getResult());
                 break;
             case Constants.LISTENER_TYPE_COMMIT_CIRCLE:
-                CreateAdResultEntity entity2 = (CreateAdResultEntity) data;
-                mICreateAdContentView.toCreateCircleSuccess(entity2.getResult());
+                entity = (CreateAdResultEntity) data;
+                mICreateAdContentView.toCreateCircleSuccess(entity.getResult());
+                break;
+            case Constants.LISTENER_TYPE_COMMIT_LUCK:
+                entity = (CreateAdResultEntity) data;
+                mICreateAdContentView.toLuckAdPayActivity(entity.getResult());
                 break;
         }
     }
@@ -74,7 +80,7 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
 
     @Override
     public void onError(int event_tag, String msg) {
-        switch (event_tag){
+        switch (event_tag) {
             case Constants.LISTENER_TYPE_COMMIT_CIRCLE:
                 mICreateAdContentView.toCreateError();
                 break;
@@ -89,57 +95,12 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
      * @param content
      * @param mPhotos
      */
-    public void commit(String token, AdEntity mAdEntity, String title, String content, List<Photo> mPhotos) {
+    public void commit(String token, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
 
         if (validateBaseInfo(mAdEntity, title, content))
             return;
 
-        mICreateAdContentView.showLoading();
-
-        for (int i = 0; i < mPhotos.size(); i++) {
-
-            Photo item = mPhotos.get(i);
-
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(item.getPath(), options);
-
-            // Calculate inSampleSize
-            options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 800, 480);
-
-            // Decode bitmap with inSampleSize set
-            options.inJustDecodeBounds = false;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(item.getPath(), options);
-
-            switch (i) {
-                case 0:
-                    mAdEntity.setImagePath(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 1:
-                    mAdEntity.setImagePath2(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 2:
-                    mAdEntity.setImagePath3(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 3:
-                    mAdEntity.setImagePath4(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 4:
-                    mAdEntity.setImagePath5(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 5:
-                    mAdEntity.setImagePath6(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 6:
-                    mAdEntity.setImagePath7(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-                case 7:
-                    mAdEntity.setImagePath8(Base64Utils.bitmapToBase64(bitmap));
-                    break;
-            }
-        }
+        convertBitmap(mAdEntity, mPhotos);
         mCreateAdContentMode.commitAdCreate(token, mAdEntity, title, content, this);
     }
 
@@ -152,7 +113,7 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
      * @param content
      * @param selectedPhotos
      */
-    public void commit(final String token, final AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos) {
+    public void superadditionCommit(final String token, final AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos) {
 
         if (validateBaseInfo(adEntity, title, content)) {
             return;
@@ -183,6 +144,22 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
     }
 
     /**
+     * 拼手气红包创建
+     * @param mToken
+     * @param mAdEntity
+     * @param title
+     * @param content
+     * @param mPhotos
+     */
+    public void commitLuck(String mToken, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
+        if (validateBaseInfo(mAdEntity, title, content))
+            return;
+
+        convertBitmap(mAdEntity, mPhotos);
+        mCreateAdContentMode.commitLuckCreate(mToken, mAdEntity, title, content, this);
+    }
+
+    /**
      * 圈子提交
      *
      * @param mToken
@@ -195,6 +172,17 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
         if (validateBaseInfo(mAdEntity, title, content))
             return;
 
+        convertBitmap(mAdEntity, mPhotos);
+        mCreateAdContentMode.commitCircleCreate(mToken, mAdEntity, title, content, this);
+    }
+
+    /**
+     * bitmap转换成base64格式
+     *
+     * @param mAdEntity
+     * @param mPhotos
+     */
+    private void convertBitmap(AdEntity mAdEntity, ArrayList<Photo> mPhotos) {
         mICreateAdContentView.showLoading();
 
         for (int i = 0; i < mPhotos.size(); i++) {
@@ -239,7 +227,6 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
                     break;
             }
         }
-        mCreateAdContentMode.commitCircleCreate(mToken, mAdEntity, title, content, this);
     }
 
     private void bitmapToString(String token, AdEntity adEntity, String title, String content) {
@@ -312,4 +299,6 @@ public class CreateAdContentPresenter extends BaseMultiLoadedListenerImpl<BaseEn
 
         return false;
     }
+
+
 }

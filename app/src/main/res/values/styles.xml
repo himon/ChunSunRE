@@ -12,6 +12,15 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
+    <style name="Translucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Note that we use the base animation style here (that is no
+             animations) because we really have no idea how this kind of
+             activity will be used. -->
+
+    </style>
+
     <!--
     <style name="Animation.Activity.Style" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/base_slide_right_in</item>

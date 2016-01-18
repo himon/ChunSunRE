@@ -1,12 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/img_create_ad_bg"
-              android:orientation="vertical"
-              tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateAdCouponNextStepActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chunsun.redenvelope.ui.activity.ad.CreateAdCouponNextStepActivity">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,13 +35,13 @@
                     android:layout_weight="1"
                     android:hint="请设置开始时间"
                     android:textColor="@color/global_red"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <ImageView
                     android:layout_width="10dip"
                     android:layout_height="20dip"
                     android:layout_marginRight="5dip"
-                    android:src="@drawable/img_arrow"/>
+                    android:src="@drawable/img_arrow" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,13 +63,49 @@
                     android:layout_weight="1"
                     android:hint="请设置结束时间"
                     android:textColor="@color/global_red"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <ImageView
                     android:layout_width="10dip"
                     android:layout_height="20dip"
                     android:layout_marginRight="5dip"
-                    android:src="@drawable/img_arrow"/>
+                    android:src="@drawable/img_arrow" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_radius_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="78dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/num"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_sp_16" />
+
+                <EditText
+                    android:id="@+id/et_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparency"
+                    android:hint="@string/input_num"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:text="2000"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/font_hint_gray"
+                    android:textSize="@dimen/font_size_sp_16" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/price"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <EditText
                     android:id="@+id/et_price"
@@ -104,49 +139,14 @@
                     android:text="0.03"
                     android:textColor="@color/black"
                     android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <ImageView
                     android:id="@+id/iv_explain"
                     android:layout_width="20dip"
                     android:layout_height="20dip"
                     android:layout_marginRight="10dip"
-                    android:src="@drawable/img_price_explain"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/shape_radius_white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="78dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/num"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16"/>
-
-                <EditText
-                    android:id="@+id/et_num"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@color/transparency"
-                    android:hint="@string/input_num"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:text="2000"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/font_hint_gray"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:src="@drawable/img_price_explain" />
             </LinearLayout>
 
             <LinearLayout
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/show_time"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -186,7 +186,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_5s"
-                            android:button="@null"/>
+                            android:button="@null" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_10s"
@@ -195,7 +195,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_10s"
-                            android:button="@null"/>
+                            android:button="@null" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_15s"
@@ -204,7 +204,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_15s"
-                            android:button="@null"/>
+                            android:button="@null" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_20s"
@@ -214,7 +214,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_20s"
                             android:button="@null"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_25s"
@@ -224,7 +224,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_25s"
                             android:button="@null"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_30s"
@@ -234,7 +234,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_30s"
                             android:button="@null"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_35s"
@@ -244,7 +244,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_35s"
                             android:button="@null"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                         <RadioButton
                             android:id="@+id/rb_delayed_40s"
@@ -254,7 +254,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@drawable/selector_create_ad_radiobutton_delayed_40s"
                             android:button="@null"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
                     </RadioGroup>
                 </HorizontalScrollView>
             </LinearLayout>
@@ -276,7 +276,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/invoice"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -285,7 +285,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:textColor="@color/font_gray2"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <ToggleButton
                     android:id="@+id/tb_need_invoice"
@@ -295,7 +295,7 @@
                     android:background="@drawable/selector_toogle_btn"
                     android:checked="false"
                     android:textOff=""
-                    android:textOn=""/>
+                    android:textOn="" />
             </LinearLayout>
 
             <LinearLayout
@@ -315,7 +315,7 @@
                     android:layout_weight="1"
                     android:text="@string/ad_price"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
 
                 <TextView
                     android:id="@+id/tv_total_price"
@@ -324,7 +324,7 @@
                     android:layout_marginRight="10dp"
                     android:text="@string/zero_yuan"
                     android:textColor="@color/global_red"
-                    android:textSize="@dimen/font_size_sp_16"/>
+                    android:textSize="@dimen/font_size_sp_16" />
             </LinearLayout>
 
             <Button
@@ -338,7 +338,7 @@
                 android:gravity="center"
                 android:text="@string/next_step"
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_size_sp_18"/>
+                android:textSize="@dimen/font_size_sp_18" />
         </LinearLayout>
     </ScrollView>
 

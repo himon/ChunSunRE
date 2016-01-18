@@ -26,7 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.iwf.photopicker.entity.Photo;
 
-public class PreviewRepeatRedDetailActivity extends BaseActivity implements View.OnClickListener {
+public class PreviewRepeatRedDetailActivity extends BaseActivity {
 
     @Bind(R.id.tv_price)
     TextView mTvPrice;
@@ -88,6 +88,11 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity implements View
         }
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     public void getRedDetailSuccess() {
 
         Date date = new Date();
@@ -139,15 +144,5 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity implements View
         }
 
         return urls;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 }

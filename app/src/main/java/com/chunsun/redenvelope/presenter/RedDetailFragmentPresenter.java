@@ -8,6 +8,7 @@ import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailFragmentMode;
@@ -67,7 +68,14 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
      * @param comment
      */
     public void sendComment(String comment, String token, String id) {
-        if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
+        UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
+
+        if(userEntity == null){
+            ShowToast.Short("正在获取用户信息，请稍后发送！");
+            return;
+        }
+
+        if ("4".equals(userEntity.getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
         }

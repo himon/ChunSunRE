@@ -142,7 +142,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         try {
             type = objCustom.getString("type");
 
-            if (type.equals("hb")) {
+            if (type.equals("wdhb")) {
                 intent = new Intent(context,
                         SendRedEnvelopeRecordClassifyActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

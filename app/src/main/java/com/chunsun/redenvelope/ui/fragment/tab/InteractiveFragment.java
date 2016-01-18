@@ -194,7 +194,14 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
 
     @Override
     protected void initData() {
-
+        String country = new Preferences(getActivity()).getInteractivePlatformCountryData();
+        String local = new Preferences(getActivity()).getInteractivePlatformLocalData();
+        if(!TextUtils.isEmpty(country)){
+            mPresenter.setCountryCash(country);
+        }
+        if(!TextUtils.isEmpty(local)){
+            mPresenter.setLocalCash(local);
+        }
     }
 
     public void getAllData() {
@@ -209,7 +216,6 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
         mPresenter.getCountryList(mToken, mCurrentCountryPage);
         mPresenter.getLocalList(mToken, mCurrentLocalPage);
     }
-
 
     @Override
     public void showLoading() {

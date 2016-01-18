@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,10 +25,16 @@ import com.chunsun.redenvelope.scanlibrary.constants.Constants;
 import com.chunsun.redenvelope.scanlibrary.scan.ScanUtil;
 import com.chunsun.redenvelope.scanlibrary.scan.decode.BitmapDecoder;
 import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,9 +49,11 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
     @Bind(R.id.iv_pic)
     ImageView mIvPicture;
     @Bind(R.id.ll_exit)
-    LinearLayout mLLExit;
+    RelativeLayout mLLExit;
     @Bind(R.id.tv_exit)
     TextView mTvExit;
+    @Bind(R.id.tv_enter)
+    TextView mTvEnter;
     @Bind(R.id.ll_other)
     LinearLayout mLLOther;
     @Bind(R.id.tv_download_pic)
@@ -79,6 +90,7 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
     private void initEvent() {
         mIvPicture.setOnClickListener(this);
         mTvExit.setOnClickListener(this);
+        mTvEnter.setOnClickListener(this);
         mTvDownloadPic.setOnClickListener(this);
         mTvScan.setOnClickListener(this);
     }
@@ -108,9 +120,34 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
             case R.id.tv_scanf:
                 scan();
             case R.id.tv_download_pic:
-
+                downloadPic();
+                break;
+            case R.id.tv_enter:
+                EventBus.getDefault().post(new RedDetailBackEvent("enter"));
                 break;
         }
+    }
+
+    /**
+     * 下载图片
+     */
+    private void downloadPic() {
+        OkHttpUtils.get().url(mUrl).build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), SystemClock.currentThreadTimeMillis() + ".jpg") {
+            @Override
+            public void inProgress(float progress) {
+
+            }
+
+            @Override
+            public void onError(Request request, Exception e) {
+                ShowToast.Short("下载到失败"   );
+            }
+
+            @Override
+            public void onResponse(File file) {
+                ShowToast.Short("下载到：" + file.getAbsolutePath());
+            }
+        });
     }
 
     /**

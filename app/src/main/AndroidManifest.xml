@@ -86,10 +86,10 @@
         <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
         <activity
             android:name=".ui.activity.red.RedDetailActivity"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/Translucent" />
         <activity
             android:name=".ui.activity.red.web.WebRedDetailActivity"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/Translucent" />
         <activity android:name=".ui.activity.EditInfoActivity" />
         <activity android:name=".ui.activity.personal.NotReceivingRedActivity" />
         <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity" />
@@ -121,7 +121,7 @@
         <activity android:name=".clip.PicClipActivity" />
         <activity
             android:name=".ui.activity.red.RepeatRedDetailActivity"
-            android:theme="@style/ActivityTheme" />
+            android:theme="@style/Translucent" />
         <activity android:name=".ui.activity.personal.WalletActivity" />
         <activity android:name=".ui.activity.personal.WithdrawCashActivity" />
         <activity android:name=".ui.activity.ad.CreateAdActivity" />
@@ -134,9 +134,9 @@
         <activity
             android:name=".ui.activity.personal.MineInviteCodeWebActivity"
             android:theme="@style/ActivityTheme" />
-        <activity android:name=".ui.activity.red.PreviewRedDetailActivity" />
-        <activity android:name=".ui.activity.red.PreviewWebRedDetailActivity" />
-        <activity android:name=".ui.activity.red.PreviewRepeatRedDetailActivity" />
+        <activity android:name=".ui.activity.red.preview.PreviewRedDetailActivity" />
+        <activity android:name=".ui.activity.red.preview.PreviewWebRedDetailActivity" />
+        <activity android:name=".ui.activity.red.preview.PreviewRepeatRedDetailActivity" />
 
         <!-- 图片选择 -->
         <activity
@@ -310,6 +310,14 @@
         <activity
             android:name=".ui.activity.red.SearchCircleActivity"
             android:label="@string/title_activity_search_circle" >
+        </activity>
+        <activity
+            android:name=".ui.activity.ad.CreateLuckNextActivity"
+            android:label="@string/title_activity_create_luck_next" >
+        </activity>
+        <activity
+            android:name=".ui.activity.ad.LuckAdPayActivity"
+            android:label="@string/title_activity_luck_ad_pay" >
         </activity>
     </application>
 

@@ -23,7 +23,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class InviteRecordListActivity extends BaseActivity implements IInviteRecordListView, View.OnClickListener {
+public class InviteRecordListActivity extends BaseActivity implements IInviteRecordListView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -82,19 +82,14 @@ public class InviteRecordListActivity extends BaseActivity implements IInviteRec
         }
     }
 
+    @Override
+    protected void click(View v) {
+
+    }
+
     public void getData() {
         mList.clear();
         mPresenter.initData(mEntity);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
-        }
     }
 
     @Override

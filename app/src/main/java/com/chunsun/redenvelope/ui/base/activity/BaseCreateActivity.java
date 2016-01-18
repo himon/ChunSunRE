@@ -87,8 +87,7 @@ public abstract class BaseCreateActivity<V, T extends BasePresenter<V>> extends 
      * 初始化TitleBar
      */
     protected void initTitle() {
-        initTitleBar("", "首页", "", Constants.TITLE_TYPE_SAMPLE);
-        mToolsBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        initTitleBar("类型范围", "", "", Constants.TITLE_TYPE_SAMPLE);
     }
 
     /**

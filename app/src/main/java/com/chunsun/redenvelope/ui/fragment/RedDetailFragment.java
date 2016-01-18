@@ -31,6 +31,7 @@ import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
+import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
@@ -75,6 +76,8 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
+    @Bind(R.id.view_bg)
+    View mViewBg;
     @Bind(R.id.ll_comment_input_container)
     LinearLayout mLLInputComment;
     @Bind(R.id.et_comment)
@@ -424,6 +427,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
                 EventBus.getDefault().post(new RedDetailBackEvent(""));
                 break;
             case R.id.ib_nav_right:
+                mViewBg.setVisibility(View.VISIBLE);
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail);
                 noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -441,6 +445,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
                 changerDataList();
                 break;
             case R.id.btn_open_red://打开红包
+                mViewBg.setVisibility(View.VISIBLE);
                 ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult, Constants.SHARE_FROM_RED);
                 menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -546,6 +551,10 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
         } else if ("no_share".equals(event.getMsg())) {//直接领钱
             mPresenter.justOpen(mToken, mDetail.getHg_id());
         }
+    }
+
+    public void onEvent(ShareRedEnvelopeEvent event) {
+        mViewBg.setVisibility(View.GONE);
     }
 
     @Override

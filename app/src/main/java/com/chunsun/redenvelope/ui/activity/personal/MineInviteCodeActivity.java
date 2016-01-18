@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * 我的邀请码Activity
  */
-public class MineInviteCodeActivity extends BaseActivity implements IMineInviteCodeView, View.OnClickListener {
+public class MineInviteCodeActivity extends BaseActivity implements IMineInviteCodeView {
 
     @Bind(R.id.tv_code)
     TextView mTvInviteCode;
@@ -67,13 +67,10 @@ public class MineInviteCodeActivity extends BaseActivity implements IMineInviteC
         mPresenter.getInviteRecord(mToken);
     }
 
+
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
-                back();
-                break;
             case R.id.btn_invite:
                 break;
             case R.id.btn_invite_record:

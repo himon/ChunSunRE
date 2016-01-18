@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * 支付结果
  */
-public class PayResultActivity extends BaseActivity implements View.OnClickListener {
+public class PayResultActivity extends BaseActivity {
 
     @Bind(R.id.ll_success_container)
     LinearLayout mLLSuccess;
@@ -73,10 +73,8 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
+    protected void click(View v) {
         switch (v.getId()) {
-            case R.id.iv_nav_icon:
-            case R.id.tv_nav_left:
             case R.id.btn_complete_fail:
                 back();
                 break;
@@ -84,12 +82,14 @@ public class PayResultActivity extends BaseActivity implements View.OnClickListe
                 AppManager appManager = AppManager.getAppManager();
                 appManager.finishActivity(PayResultActivity.class);
                 appManager.finishActivity(AdPayActivity.class);
+                appManager.finishActivity(LuckAdPayActivity.class);
                 appManager.finishActivity(CreateAdContentActivity.class);
                 appManager.finishActivity(CreateAdRepeatNextStepActivity.class);
                 appManager.finishActivity(CreateAdCouponNextStepActivity.class);
                 appManager.finishActivity(CreateAdNextStepActivity.class);
+                appManager.finishActivity(CreateLuckNextActivity.class);
                 appManager.finishActivity(CreateAdActivity.class);
-
+                appManager.finishActivity(CreateCircleActivity.class);
                 break;
         }
     }

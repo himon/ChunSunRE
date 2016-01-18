@@ -11,6 +11,7 @@ import com.chunsun.redenvelope.ui.activity.InteractivePlatformActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.google.gson.Gson;
 
 /**
  * Created by Administrator on 2015/9/12.
@@ -19,6 +20,7 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
 
     private IInteractivePlatformView mIInteractivePlatformView;
     private InteractivePlatformMode mInteractivePlatformMode;
+    private Gson mGson;
 
     public InteractivePlatformPresenter(IInteractivePlatformView iInteractivePlatformView) {
         mIInteractivePlatformView = iInteractivePlatformView;
@@ -27,7 +29,7 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
         } else {
             mInteractivePlatformMode = new InteractivePlatformModeImpl(null, (InteractiveFragment) iInteractivePlatformView);
         }
-
+        mGson = new Gson();
     }
 
     public void getCountryList(String token, int page_index) {
@@ -73,6 +75,20 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
                 mIInteractivePlatformView.hideLoading();
                 mIInteractivePlatformView.commentSuccess();
                 break;
+        }
+    }
+
+    public void setCountryCash(String country) {
+        InteractiveEntity entity = mGson.fromJson(country, InteractiveEntity.class);
+        if (entity.isSuccess()) {
+            mIInteractivePlatformView.setCountryList(entity);
+        }
+    }
+
+    public void setLocalCash(String local) {
+        InteractiveEntity entity = mGson.fromJson(local, InteractiveEntity.class);
+        if (entity.isSuccess()) {
+            mIInteractivePlatformView.setLocalList(entity);
         }
     }
 }
