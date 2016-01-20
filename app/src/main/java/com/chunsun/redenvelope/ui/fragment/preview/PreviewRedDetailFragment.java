@@ -17,7 +17,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;

@@ -46,8 +46,8 @@ public class LoginContext {
      *
      * @param context
      */
-    public boolean forward(Context context) {
-        return this.mState.forward(context);
+    public boolean forward(Context context, String from) {
+        return this.mState.forward(context, from);
     }
 
     /**

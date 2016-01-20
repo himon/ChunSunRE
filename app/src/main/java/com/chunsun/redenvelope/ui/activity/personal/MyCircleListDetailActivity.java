@@ -28,7 +28,8 @@ import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MyCircleListDetailPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IMyCircleListDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
@@ -46,7 +47,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class MyCircleListDetailActivity extends BaseActivity implements IMyCircleListDetailView {
+public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDetailView, MyCircleListDetailPresenter> implements IMyCircleListDetailView {
 
     @Bind(R.id.iv_nav_icon)
     ImageView mNavIcon;
@@ -104,6 +105,10 @@ public class MyCircleListDetailActivity extends BaseActivity implements IMyCircl
     private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<>();
     private String mToken;
     /**
+     * 回复@用户的id
+     */
+    private String at = "0";
+    /**
      * 红包帮助类
      */
     RedDetailHelper mRedDetailHelper;
@@ -113,10 +118,15 @@ public class MyCircleListDetailActivity extends BaseActivity implements IMyCircl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_circle_list_detail);
         ButterKnife.bind(this);
-        mPresenter = new MyCircleListDetailPresenter(this);
+        mPresenter = (MyCircleListDetailPresenter) mMPresenter;
         mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return  new MyCircleListDetailPresenter(this);
     }
 
     private void initTitle() {
@@ -169,11 +179,11 @@ public class MyCircleListDetailActivity extends BaseActivity implements IMyCircl
                 switch (v.getId()) {
                     case R.id.iv_head_logo:
                         Object tag = v.getTag();
-                        //toUserRewardActivity(tag.toString());
+                        toUserRewardActivity(tag.toString());
                         break;
                 }
             }
-        });
+        }, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -356,7 +366,7 @@ public class MyCircleListDetailActivity extends BaseActivity implements IMyCircl
                 toComplaintActivity();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
                 break;
         }
     }

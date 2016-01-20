@@ -35,7 +35,7 @@ import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.MBaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseAtFragment;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -60,7 +60,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * A simple {@link Fragment} subclass.
  * 红包详情Fragment
  */
-public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, RedDetailFragmentPresenter> implements View.OnClickListener, IRedDetailFragmentView {
+public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, RedDetailFragmentPresenter> implements View.OnClickListener, IRedDetailFragmentView {
 
     @Bind(R.id.main)
     LinearLayout mMain;
@@ -128,6 +128,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
     //领取记录列表
     private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity>();
     private String mToken;
+
     /**
      * 红包帮助类
      */
@@ -141,7 +142,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_red_detail, container, false);
         ButterKnife.bind(this, view);
-        mPresenter = (RedDetailFragmentPresenter) super.mPresenter;
+        mPresenter = (RedDetailFragmentPresenter) mMPresenter;
         mRedDetailHelper = new RedDetailHelper(getActivity());
         EventBus.getDefault().register(this);
         initView();
@@ -197,18 +198,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.iv_head_logo:
-                        Object tag = v.getTag();
-                        toUserRewardActivity(tag.toString());
-                        break;
-                }
-            }
-        });
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -459,7 +449,7 @@ public class RedDetailFragment extends MBaseFragment<IRedDetailFragmentView, Red
                 toGuaranteeActivity();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
                 break;
         }
     }

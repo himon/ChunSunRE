@@ -29,7 +29,7 @@ import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
-import com.chunsun.redenvelope.ui.base.activity.SwipeBackActivity;
+import com.chunsun.redenvelope.ui.base.activity.at.BaseSwipeBackAtActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IRepeatRedDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -53,7 +53,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 转发红包详情
  */
-public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailView, RepeatRedDetailPresenter> implements IRepeatRedDetailView {
+public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedDetailView, RepeatRedDetailPresenter> implements IRepeatRedDetailView {
 
     @Bind(R.id.main)
     LinearLayout mMain;
@@ -102,6 +102,7 @@ public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailV
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
     private ArrayList<String> mUrls;
     private ShareRedEnvelopePopupWindow mMenuWindow;
+
     /**
      * 红包帮助类
      */
@@ -155,13 +156,7 @@ public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailV
                 //getData();
             }
         });
-        mDataAdapter = new RepeatRedDetailAdapter(this, mListComment, R.layout.adapter_red_detail_comment_item, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Object tag = v.getTag();
-                toUserRewardActivity(tag.toString());
-            }
-        });
+        mDataAdapter = new RepeatRedDetailAdapter(this, mListComment, R.layout.adapter_red_detail_comment_item, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -251,7 +246,8 @@ public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailV
     /**
      * 跳转用户奖励页面
      */
-    private void toUserRewardActivity(String id) {
+    @Override
+    public void toUserRewardActivity(String id) {
         mRedDetailHelper.toUserRewardActivity(id, mDetail.getId());
     }
 
@@ -265,7 +261,7 @@ public class RepeatRedDetailActivity extends SwipeBackActivity<IRepeatRedDetailV
                 toComplaintActivity();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
                 break;
             case R.id.iv_head_logo:
                 toUserRewardActivity(mDetail.getUser_id());

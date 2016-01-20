@@ -32,7 +32,7 @@ public class InteractivePlatformModeImpl implements InteractivePlatformMode {
     }
 
     @Override
-    public void sendComment(final String token, final String comment, final String province, final String city, final UserLoseMultiLoadedListener listener) {
-        mManager.sendComment(token, comment, province, city, listener, mActivity);
+    public void sendComment(final String token, final String comment, final String province, final String city, String at, final UserLoseMultiLoadedListener listener) {
+        mManager.sendComment(token, comment, province, city, at, listener, mActivity);
     }
 }

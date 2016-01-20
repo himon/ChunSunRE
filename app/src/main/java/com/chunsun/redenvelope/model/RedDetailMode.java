@@ -11,4 +11,6 @@ public interface RedDetailMode {
     void getRedData(String token, String id, UserLoseMultiLoadedListener listener);
 
     void getShareLimit(String token, UserLoseMultiLoadedListener listener);
+
+    void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener);
 }

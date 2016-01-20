@@ -207,6 +207,10 @@ public interface Constants {
     String CIRCLE_OPERATOR = "user_operate_circle";
     //获取拼手气套餐列表
     String GET_FIGHT_LUCK_PACKAGE_LIST = "get_fight_luck_package_list";
+    //获取用户未读消息
+    String RELATED_TO_ME_MESSAGE = "related_to_me_message";
+    //获取grab
+    String GET_USER_GRAB_BY_TOKEN = "hb_user_grab_bytoken_v_1_3_1";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -408,7 +412,6 @@ public interface Constants {
      * listener返回类型
      */
     int LISTENER_TYPE_COLLECT_RED_ENVELOPE_LIST = 0x2000;
-    int LISTENER_TYPE_GRAD_RED_ENVELOPE = 0x2001;
     int LISTENER_TYPE_RED_ENVELOPE_LIST = 0x2002;
     int LISTENER_TYPE_AD = 0x2003;
     int LISTENER_TYPE_GET_CARRIER_OPERATOR = 0x2004;
@@ -448,7 +451,9 @@ public interface Constants {
     int LISTENER_TYPE_GET_USER_INVITE_INFO = 0x2038;
     int LISTENER_TYPE_COMMIT_CIRCLE = 0x2039;
     int LISTENER_TYPE_GET_FIGHT_LUCK_PACKAGE_LIST = 0x2040;
-    int LISTENER_TYPE_COMMIT_LUCK = 0x20419;
+    int LISTENER_TYPE_COMMIT_LUCK = 0x2041;
+    int LISTENER_TYPE_GET_USER_NO_READ_MESSAGE = 0x2042;
+    int LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN = 0x2043;
 
     /**
      * 发广告默认数据

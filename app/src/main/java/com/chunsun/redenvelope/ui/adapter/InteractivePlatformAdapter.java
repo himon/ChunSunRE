@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class InteractivePlatformAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private DisplayImageOptions mOptions;
     private View.OnClickListener mOnClickListener;
+    private View.OnLongClickListener mOnLongClickListener;
 
     public void setData(List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType) {
         mListCountry = listCountry;
@@ -39,7 +41,7 @@ public class InteractivePlatformAdapter extends BaseAdapter {
         mCurrentCheckType = currentCheckType;
     }
 
-    public InteractivePlatformAdapter(Context context, List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType, View.OnClickListener onClickListener) {
+    public InteractivePlatformAdapter(Context context, List<InteractiveEntity.ResultEntity.ListEntity> listCountry, List<InteractiveEntity.ResultEntity.ListEntity> listLocal, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
         mListCountry = listCountry;
         mListLocal = listLocal;
         mCurrentCheckType = currentCheckType;
@@ -47,6 +49,7 @@ public class InteractivePlatformAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
         mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
         this.mOnClickListener = onClickListener;
+        this.mOnLongClickListener = onLongClickListener;
     }
 
     @Override
@@ -75,62 +78,54 @@ public class InteractivePlatformAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        ViewHolder2 holder2 = null;
+
+        InteractiveEntity.ResultEntity.ListEntity entity = null;
 
         switch (mCurrentCheckType) {
             case 0:
-                if (convertView == null || !(convertView.getTag() instanceof ViewHolder)) {
-                    convertView = mInflater.inflate(R.layout.adapter_red_detail_comment_item, null);
-                    holder = new ViewHolder(convertView);
-                    convertView.setTag(holder);
-                } else {
-                    holder = (ViewHolder) convertView.getTag();
-                }
-                InteractiveEntity.ResultEntity.ListEntity country = mListCountry.get(position);
-                holder.tvName.setText(country.getNick_name());
-                holder.tvContent.setText(country.getContent());
-                holder.tvTime.setText(country.getAdd_time());
-                holder.tvFloor.setText(country.getFloor() + "楼");
-                /**
-                 * 判断是否是系统用户
-                 */
-                if (Constants.SYSTEM_USER_ID.equals(country.getId() + "")) {
-                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
-                    holder.ivLogo.setOnClickListener(null);
-                } else {
-                    holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
-                    holder.ivLogo.setOnClickListener(mOnClickListener);
-                    holder.ivLogo.setTag(country.getId() + "");
-                }
-                ImageLoader.getInstance().displayImage(country.getThumb_img_url(), holder.ivLogo, mOptions);
+                entity = mListCountry.get(position);
                 break;
             case 1:
-                if (convertView == null || !(convertView.getTag() instanceof ViewHolder2)) {
-                    convertView = mInflater.inflate(R.layout.adapter_red_detail_comment_item, null);
-                    holder2 = new ViewHolder2(convertView);
-                    convertView.setTag(holder2);
-                } else {
-                    holder2 = (ViewHolder2) convertView.getTag();
-                }
-                InteractiveEntity.ResultEntity.ListEntity local = mListLocal.get(position);
-                holder2.tvName.setText(local.getNick_name());
-                holder2.tvContent.setText(local.getContent());
-                holder2.tvTime.setText(local.getAdd_time());
-                holder2.tvFloor.setText(local.getFloor() + "楼");
-                /**
-                 * 判断是否是系统用户
-                 */
-                if (Constants.SYSTEM_USER_ID.equals(local.getId() + "")) {
-                    holder2.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
-                    holder2.ivLogo.setOnClickListener(null);
-                } else {
-                    holder2.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
-                    holder2.ivLogo.setOnClickListener(mOnClickListener);
-                    holder2.ivLogo.setTag(local.getId() + "");
-                }
-                ImageLoader.getInstance().displayImage(local.getThumb_img_url(), holder2.ivLogo, mOptions);
+                entity = mListLocal.get(position);
                 break;
         }
+
+        if (convertView == null || !(convertView.getTag() instanceof ViewHolder)) {
+            convertView = mInflater.inflate(R.layout.adapter_red_detail_comment_item, null);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.tvName.setText(entity.getNick_name());
+        holder.tvContent.setText(entity.getContent());
+        holder.tvTime.setText(entity.getAdd_time());
+        holder.tvFloor.setText(entity.getFloor() + "楼");
+        if(TextUtils.isEmpty(entity.getAt_user_name())){
+            holder.tvAt.setVisibility(View.GONE);
+            holder.tvAtUser.setVisibility(View.GONE);
+        }else{
+            holder.tvAt.setVisibility(View.VISIBLE);
+            holder.tvAtUser.setVisibility(View.VISIBLE);
+            holder.tvAt.setText("@了");
+            holder.tvAtUser.setText(entity.getAt_user_name());
+        }
+
+        /**
+         * 判断是否是系统用户
+         */
+        if (Constants.SYSTEM_USER_ID.equals(entity.getId() + "")) {
+            holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.global_red));
+            holder.ivLogo.setOnClickListener(null);
+        } else {
+            holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
+            holder.ivLogo.setOnClickListener(mOnClickListener);
+            holder.ivLogo.setOnLongClickListener(mOnLongClickListener);
+            holder.ivLogo.setTag(R.id.tag_first, entity.getId() + "");
+            holder.ivLogo.setTag(R.id.tag_second, entity.getNick_name());
+        }
+        ImageLoader.getInstance().displayImage(entity.getThumb_img_url(), holder.ivLogo, mOptions);
+
         return convertView;
     }
 
@@ -146,26 +141,12 @@ public class InteractivePlatformAdapter extends BaseAdapter {
         TextView tvTime;
         @Bind(R.id.tv_floor)
         TextView tvFloor;
+        @Bind(R.id.tv_at)
+        TextView tvAt;
+        @Bind(R.id.tv_at_user)
+        TextView tvAtUser;
 
         public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
-
-    static class ViewHolder2 {
-
-        @Bind(R.id.iv_head_logo)
-        ImageView ivLogo;
-        @Bind(R.id.tv_name)
-        TextView tvName;
-        @Bind(R.id.tv_content)
-        TextView tvContent;
-        @Bind(R.id.tv_time)
-        TextView tvTime;
-        @Bind(R.id.tv_floor)
-        TextView tvFloor;
-
-        public ViewHolder2(View view) {
             ButterKnife.bind(this, view);
         }
     }

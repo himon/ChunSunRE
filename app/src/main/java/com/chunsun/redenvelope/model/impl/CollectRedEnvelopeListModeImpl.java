@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.CollectRedEnvelopeListMode;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
@@ -22,10 +21,5 @@ public class CollectRedEnvelopeListModeImpl implements CollectRedEnvelopeListMod
     @Override
     public void loadData(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.loadData(token, listener, mActivity);
-    }
-
-    @Override
-    public void grabRedEnvelope(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
-        mManager.grabRedEnvelope(token, hb_id, listener, null, mActivity);
     }
 }

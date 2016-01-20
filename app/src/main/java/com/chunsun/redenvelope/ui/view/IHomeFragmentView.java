@@ -40,26 +40,12 @@ public interface IHomeFragmentView extends LoadingView {
     void toWebRedDetail(String id);
 
     /**
-     * 跳转券类红包
-     *
-     * @param id
-     */
-    void toForwardRedDetail(String id);
-
-    /**
      * 跳转web广告页面
      *
      * @param title
      * @param url
      */
     void toAdWebView(String title, String url);
-
-    /**
-     * 获取占位id
-     *
-     * @param id
-     */
-    void gradRedEnvelopeSuccess(String id);
 
     /**
      * 跳转登录

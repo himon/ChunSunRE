@@ -76,6 +76,7 @@ public class InteractiveEntity extends BaseEntity {
             private int floor;
             private String add_time;
             private String thumb_img_url;
+            private String at_user_name;
 
             public void setContent(String content) {
                 this.content = content;
@@ -139,6 +140,14 @@ public class InteractiveEntity extends BaseEntity {
 
             public String getThumb_img_url() {
                 return Constants.IMG_HOST_URL + thumb_img_url;
+            }
+
+            public String getAt_user_name() {
+                return at_user_name;
+            }
+
+            public void setAt_user_name(String at_user_name) {
+                this.at_user_name = at_user_name;
             }
         }
 

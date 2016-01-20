@@ -1,10 +1,12 @@
 package com.chunsun.redenvelope.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -21,7 +23,8 @@ import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.helper.InteractiveHelper;
@@ -39,7 +42,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 互动平台
  */
-public class InteractivePlatformActivity extends BaseActivity implements IInteractivePlatformView {
+public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlatformView, InteractivePlatformPresenter> implements IInteractivePlatformView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -81,6 +84,10 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
 
     private String mToken;
     /**
+     * 回复@用户的id
+     */
+    private String at = "0";
+    /**
      * 互动平台帮助类
      */
     private InteractiveHelper mInteractiveHelper;
@@ -90,10 +97,15 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interactive_platform);
         ButterKnife.bind(this);
-        mPresenter = new InteractivePlatformPresenter(this);
+        mPresenter = (InteractivePlatformPresenter) mMPresenter;
         mInteractiveHelper = new InteractiveHelper(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new InteractivePlatformPresenter(this);
     }
 
     @Override
@@ -125,10 +137,19 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.iv_head_logo:
-                        Object tag = v.getTag();
+                        Object tag = v.getTag(R.id.tag_first);
                         toUserRewardActivity(tag.toString());
                         break;
                 }
+            }
+        }, new View.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View v) {
+                at = v.getTag(R.id.tag_first).toString();
+                String tag = v.getTag(R.id.tag_second).toString();
+                mEtComment.setHint("@" + tag + "：");
+                return true;
             }
         });
         mListView.setAdapter(mDataAdapter);
@@ -159,7 +180,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
-               int[] location = new int[2];
+                int[] location = new int[2];
                 mRgType.getLocationOnScreen(location);
                 System.out.println("top：" + location[0]);
             }
@@ -205,11 +226,32 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
 
             }
         });
+
+        mEtComment.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (!at.equals("0")) {
+                        at = "0";
+                        mEtComment.setHint("请输入评论内容...");
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     protected void initData() {
         mToken = new Preferences(this).getToken();
+
+        Intent intent = getIntent();
+        if(intent != null){
+            String data = intent.getStringExtra(Constants.EXTRA_KEY);
+            if(!TextUtils.isEmpty(data)){
+                mCurrentCheckType = 1;
+            }
+        }
     }
 
 
@@ -228,7 +270,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
     /**
      * 跳转用户奖励页面
      */
-    @Override
+    //@Override
     public void toUserRewardActivity(String id) {
         mInteractiveHelper.toUserRewardActivity(id, mCurrentCountryPage);
     }
@@ -262,7 +304,7 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
                 changerDataList();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment));
+                mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
                 mEtComment.setText("");
                 break;
         }
@@ -319,15 +361,6 @@ public class InteractivePlatformActivity extends BaseActivity implements IIntera
                 mPresenter.getLocalList(mToken, mCurrentLocalPage);
                 break;
         }
-    }
-
-    /**
-     * 用户信息失效
-     */
-    @Override
-    public void toLogin() {
-        mInteractiveHelper.toLogin();
-        back();
     }
 
     /**

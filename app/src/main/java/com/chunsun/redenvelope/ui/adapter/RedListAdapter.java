@@ -24,21 +24,24 @@ import java.util.Locale;
 public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEntity.PoolEntity> {
 
     private Context mContext;
+    private final SimpleDateFormat timeFormat;
+    private final SimpleDateFormat dateFormat;
 
     public RedListAdapter(Context context, List<RedListDetailEntity.ResultEntity.PoolEntity> datas, int layoutId) {
         super(context, datas, layoutId);
         this.mContext = context;
+        timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        dateFormat = new SimpleDateFormat("MM-dd", Locale.getDefault());
     }
 
     @Override
     public void convert(ViewHolder holder, RedListDetailEntity.ResultEntity.PoolEntity poolEntity) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        SimpleDateFormat DateFormat = new SimpleDateFormat("MM-dd", Locale.getDefault());
+
         Date date = new Date(poolEntity.getBegin_time());
         Date curDate = new Date();
 
-        String curDateStr = DateFormat.format(curDate);
-        String dateStr = DateFormat.format(date);
+        String curDateStr = dateFormat.format(curDate);
+        String dateStr = dateFormat.format(date);
         String time = "";
         if (curDateStr.equals(dateStr)) {
             time = timeFormat.format(date);
@@ -68,7 +71,8 @@ public class RedListAdapter extends CommonAdapter<RedListDetailEntity.ResultEnti
             type.setText(poolEntity.getRangeString());
             icon.setVisibility(View.VISIBLE);
         }else if(Constants.RED_DETAIL_TYPE_lUCK == poolEntity.getType() || Constants.RED_DETAIL_TYPE_lUCK_LINK == poolEntity.getType()){
-            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_juan);
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_luck);
+            icon.setVisibility(View.GONE);
         }
 
         //判断总金额是否大于500

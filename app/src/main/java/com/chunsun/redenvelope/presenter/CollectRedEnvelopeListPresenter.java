@@ -32,26 +32,12 @@ public class CollectRedEnvelopeListPresenter extends BaseMultiLoadedListenerImpl
         mCollectRedEnvelopeListMode.loadData(token, this);
     }
 
-    /**
-     * 抢红包
-     *
-     * @param token
-     * @param entity
-     */
-    public void grabRedEnvelope(String token, RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
-        mCurrentEntity = entity;
-        mCollectRedEnvelopeListMode.grabRedEnvelope(token, entity.getId() + "", this);
-    }
-
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
             case Constants.LISTENER_TYPE_COLLECT_RED_ENVELOPE_LIST:
                 RedDetailUnReceiveAndCollectEntity entity = (RedDetailUnReceiveAndCollectEntity) data;
                 mICollectRedEnvelopeListView.setData(entity.getResult());
-                break;
-            case Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE:
-                mICollectRedEnvelopeListView.grabRedEnvelopeSuccess(mCurrentEntity);
                 break;
         }
     }

@@ -44,11 +44,6 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
         mHomeFragmentMode.getAdData(type, this);
     }
 
-    public void grabRedEnvelope(String mToken, String id) {
-        mCurrentRedId = id;
-        mHomeFragmentMode.grabRedEnvelope(mToken, id, this);
-    }
-
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         mHomeFragmentView.hideLoading();
@@ -60,9 +55,6 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
             case Constants.LISTENER_TYPE_AD:
                 RedAutoAdEntity entity2 = (RedAutoAdEntity) data;
                 mHomeFragmentView.setAdData(entity2.getResult().getAdvert());
-                break;
-            case Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE:
-                mHomeFragmentView.gradRedEnvelopeSuccess(mCurrentRedId);
                 break;
         }
     }

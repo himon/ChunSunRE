@@ -12,7 +12,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateCircleActivity;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

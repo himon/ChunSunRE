@@ -118,7 +118,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
                 if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {
                     toRepeatRedDetail(mEntity.getId());
                 } else {
-                    mPresenter.grabRedEnvelope(new Preferences(TaskListActivity.this).getToken(), mEntity.getId());
+                    toJump(mEntity.getId());
                 }
             }
         });
@@ -253,32 +253,25 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
         mRedEvenlopeListHelper.toAdWebView(title, url);
     }
 
-    @Override
-    public void toForwardRedDetail(String id) {
-        mRedEvenlopeListHelper.toForwardRedDetail(id);
-    }
-
-    @Override
-    public void gradRedEnvelopeSuccess(String id) {
+    public void toJump(String id) {
         hideLoading();
         if (mEntity != null) {
             switch (mEntity.getType()) {
                 case 1:
                 case 2:
                 case 3:
+                case 6:
+                case 7:
                     toRedDetail(id);
                     break;
                 case 4:
+                case 8:
                     toWebRedDetail(id);
                     break;
                 case 5:
                     toRepeatRedDetail(mEntity.getId());
                     break;
-                case 6:
-                    toForwardRedDetail(id);
-                    break;
             }
-
         }
     }
 

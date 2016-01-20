@@ -4,7 +4,7 @@ import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MyCircleListDetailMode;
 import com.chunsun.redenvelope.ui.activity.personal.MyCircleListDetailActivity;
-import com.chunsun.redenvelope.utils.manager.HttpManager;
+import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 
 /**
  * @author Administrator
@@ -12,14 +12,12 @@ import com.chunsun.redenvelope.utils.manager.HttpManager;
  * @time 2015/12/25 14:03
  * @des
  */
-public class MyCircleListDetailModeImpl implements MyCircleListDetailMode {
+public class MyCircleListDetailModeImpl extends BaseModeImpl implements MyCircleListDetailMode {
 
     private MyCircleListDetailActivity mActivity;
-    private HttpManager mManager;
 
     public MyCircleListDetailModeImpl(MyCircleListDetailActivity activity) {
         this.mActivity = activity;
-        this.mManager = new HttpManager();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class MyCircleListDetailModeImpl implements MyCircleListDetailMode {
     }
 
     @Override
-    public void sendComment(String token, String hb_id, String content, UserLoseMultiLoadedListener listener) {
-        mManager.sendComment(token, hb_id, content, listener, null, mActivity);
+    public void sendComment(String token, String hb_id, String content, String at, UserLoseMultiLoadedListener listener) {
+        mManager.sendComment(token, hb_id, content, at, listener, null, mActivity);
     }
 }

@@ -33,7 +33,7 @@ import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.MBaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseAtFragment;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IRedDetailFragmentView;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -54,7 +54,7 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, RedDetailFragmentPresenter> implements IRedDetailFragmentView, View.OnClickListener {
+public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView, RedDetailFragmentPresenter> implements IRedDetailFragmentView, View.OnClickListener {
 
     @Bind(R.id.main)
     LinearLayout mMain;
@@ -124,7 +124,7 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_red_detail, container, false);
         ButterKnife.bind(this, view);
-        mPresenter = (RedDetailFragmentPresenter) super.mPresenter;
+        mPresenter = (RedDetailFragmentPresenter) mMPresenter;
         EventBus.getDefault().register(this);
         mRedDetailHelper = new RedDetailHelper(getActivity());
         initView();
@@ -182,18 +182,7 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.iv_head_logo:
-                        Object tag = v.getTag();
-                        toUserRewardActivity(tag.toString());
-                        break;
-                }
-            }
-        });
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -352,8 +341,8 @@ public class CircleDetailFragment extends MBaseFragment<IRedDetailFragmentView, 
                 break;
             case R.id.btn_send_comment://评论
                 mToken = new Preferences(getActivity()).getToken();
-                if(LoginContext.getLoginContext().comment(getActivity(), Constants.FROM_COMMENT)) {
-                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId());
+                if (LoginContext.getLoginContext().comment(getActivity(), Constants.FROM_COMMENT)) {
+                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
                 }
                 break;
         }

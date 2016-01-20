@@ -13,11 +13,13 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
+import com.chunsun.redenvelope.entities.json.AtMessageEntity;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.entities.json.BalanceListEntity;
 import com.chunsun.redenvelope.entities.json.BalanceRechargeEntity;
 import com.chunsun.redenvelope.entities.json.CarrierOperatorEntity;
 import com.chunsun.redenvelope.entities.json.CreateAdResultEntity;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.entities.json.InviteRecordEntity;
 import com.chunsun.redenvelope.entities.json.LuckMealsEntity;
@@ -158,6 +160,8 @@ public class HttpManager {
      * @param hb_id    红包id
      * @param listener 回调监听
      */
+    //废弃了
+    /*
     public void grabRedEnvelope(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
@@ -204,6 +208,7 @@ public class HttpManager {
             RequestManager.addRequest(request, activity);
         }
     }
+    */
 
     /**
      * 支付广告金额时获取广告金额信息
@@ -604,7 +609,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void sendComment(final String token, final String hb_id, final String content, final String at, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -636,7 +641,7 @@ public class HttpManager {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.HB_DETAIL_COMMENT_JSON_REQUEST_URL);
-                params.put("parames", JsonManager.initDataRedEnvelopeDetailCommentToJson(token, hb_id, content));
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailCommentToJson(token, hb_id, content, at));
                 return params;
             }
         };
@@ -1227,7 +1232,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void sendComment(final String token, final String comment, final String province, final String city, final UserLoseMultiLoadedListener listener, final Activity activity) {
+    public void sendComment(final String token, final String comment, final String province, final String city, final String at, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
@@ -1255,7 +1260,7 @@ public class HttpManager {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("methodName", Constants.INTERACTION_COMMENT_LIST_COMMENT);
-                params.put("parames", JsonManager.initInterractiveCommentDataToJson(token, province, city, comment));
+                params.put("parames", JsonManager.initInterractiveCommentDataToJson(token, province, city, comment, at));
                 return params;
             }
         };
@@ -2525,5 +2530,71 @@ public class HttpManager {
         RequestManager.addRequest(request, activity);
     }
 
+    /**
+     * 获取用户未读消息
+     *
+     * @param token
+     * @param page_index
+     * @param listener
+     * @param activity
+     */
+    public void getUserNoReadMessage(final String token, final int page_index, final UserLoseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<AtMessageEntity> request = new GsonRequest<AtMessageEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                AtMessageEntity.class, null, new Response.Listener<AtMessageEntity>() {
 
+            @Override
+            public void onResponse(AtMessageEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_NO_READ_MESSAGE, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                byte[] data = error.networkResponse.data;
+//                String errors = new String(data);
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.RELATED_TO_ME_MESSAGE);
+                params.put("parames", JsonManager.initDataUserNoReadMessageToJson(token, page_index));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    public void getGrabByToken(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<GrabEntity> request = new GsonRequest<GrabEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                GrabEntity.class, null, new Response.Listener<GrabEntity>() {
+
+            @Override
+            public void onResponse(GrabEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.GET_USER_GRAB_BY_TOKEN);
+                params.put("parames", JsonManager.initDataRedEnvelopeDetailToJson(token, hb_id));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
 }

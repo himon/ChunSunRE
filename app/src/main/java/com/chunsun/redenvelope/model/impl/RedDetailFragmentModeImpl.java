@@ -36,8 +36,8 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
     }
 
     @Override
-    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener) {
-        mManager.sendComment(token, hb_id, content, listener, mFragment, null);
+    public void sendComment(final String token, final String hb_id, final String content, String at, final UserLoseMultiLoadedListener listener) {
+        mManager.sendComment(token, hb_id, content, at, listener, mFragment, null);
     }
 
     @Override

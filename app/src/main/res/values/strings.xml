@@ -64,6 +64,7 @@
     <string name="chunsun_coupon">春笋券</string>
     <string name="novice_guidelines">新手指引</string>
     <string name="circle">圈子</string>
+    <string name="at_me">与我相关</string>
 
     <!-- 发广告记录 -->
     <string name="range">范  围：</string>
@@ -110,7 +111,7 @@
     <string name="alipay_pay">支付宝付款</string>
     <string name="bank_pay">银行卡付款</string>
     <string name="bank_pay_remind">（支持15元以上）</string>
-    <string name="accumulated_income">累计收益（元）</string>
+    <string name="accumulated_income">我的钱包</string>
     <string name="invite_accumulated_income">邀请累计收益（元）</string>
     <string name="available_balance">可用余额（元）</string>
     <string name="withdraw_cash">提现</string>
@@ -265,5 +266,6 @@
     <string name="title_activity_create_luck">CreateLuckActivity</string>
     <string name="title_activity_create_luck_next">CreateLuckNextActivity</string>
     <string name="title_activity_luck_ad_pay">LuckAdPayActivity</string>
+    <string name="title_activity_at_me">AtMeActivity</string>
 
 </resources>

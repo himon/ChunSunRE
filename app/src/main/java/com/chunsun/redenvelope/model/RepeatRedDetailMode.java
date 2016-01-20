@@ -45,7 +45,7 @@ public interface RepeatRedDetailMode {
      * @param comment
      * @param listener
      */
-    void sendComment(String token, String id, String comment, UserLoseMultiLoadedListener listener);
+    void sendComment(String token, String id, String comment, String at, UserLoseMultiLoadedListener listener);
 
     /**
      * 转发类获取host

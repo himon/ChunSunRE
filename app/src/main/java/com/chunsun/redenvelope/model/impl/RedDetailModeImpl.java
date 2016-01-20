@@ -1,23 +1,22 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import android.app.Activity;
+
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
-import com.chunsun.redenvelope.utils.manager.HttpManager;
+import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 
 
 /**
  * Created by Administrator on 2015/8/10.
  */
-public class RedDetailModeImpl implements RedDetailMode {
+public class RedDetailModeImpl extends BaseModeImpl implements RedDetailMode {
 
-    private RedDetailActivity mActivity;
-    private HttpManager mManager;
+    private Activity mActivity;
 
     public RedDetailModeImpl(RedDetailActivity redDetailActivity) {
         this.mActivity = redDetailActivity;
-        this.mManager = new HttpManager();
     }
 
     @Override
@@ -28,5 +27,10 @@ public class RedDetailModeImpl implements RedDetailMode {
     @Override
     public void getShareLimit(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getShareLimit(token, listener, mActivity);
+    }
+
+    @Override
+    public void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener) {
+        mManager.getGrabByToken(token, id, listener, mActivity);
     }
 }

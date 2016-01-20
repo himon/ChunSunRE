@@ -19,7 +19,7 @@ public class LoginState implements UserState {
     }
 
     @Override
-    public boolean forward(Context context) {
+    public boolean forward(Context context, String from) {
         return true;
     }
 

@@ -24,7 +24,7 @@ import com.chunsun.redenvelope.scanlibrary.ScanResultActivity;
 import com.chunsun.redenvelope.scanlibrary.constants.Constants;
 import com.chunsun.redenvelope.scanlibrary.scan.ScanUtil;
 import com.chunsun.redenvelope.scanlibrary.scan.decode.BitmapDecoder;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.google.zxing.Result;

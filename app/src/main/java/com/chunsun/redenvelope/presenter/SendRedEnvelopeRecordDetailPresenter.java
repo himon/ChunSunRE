@@ -3,15 +3,16 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2015/8/18.
  */
-public class SendRedEnvelopeRecordDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class SendRedEnvelopeRecordDetailPresenter extends UserLosePresenter<ISendRedEnvelopeRecordDetailView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private ISendRedEnvelopeRecordDetailView mISendRedEnvelopeRecordDetailView;
     private SendRedEnvelopeRecordDetailMode mSendRedEnvelopeRecordDetailMode;

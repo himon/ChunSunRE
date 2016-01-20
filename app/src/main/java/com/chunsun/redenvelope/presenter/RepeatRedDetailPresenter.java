@@ -100,12 +100,12 @@ public class RepeatRedDetailPresenter extends UserLosePresenter<IRepeatRedDetail
      * @param token
      * @param id
      */
-    public void sendComment(String comment, String token, String id) {
+    public void sendComment(String comment, String token, String id, String at) {
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
         }
-        mRepeatRedDetailMode.sendComment(token, id, comment, this);
+        mRepeatRedDetailMode.sendComment(token, id, comment, at, this);
     }
 
     /**

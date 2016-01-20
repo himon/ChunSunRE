@@ -29,7 +29,8 @@ import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.manager.AppManager;
@@ -50,7 +51,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 发广告记录详情Activity
  */
-public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements ISendRedEnvelopeRecordDetailView {
+public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRedEnvelopeRecordDetailView, SendRedEnvelopeRecordDetailPresenter> implements ISendRedEnvelopeRecordDetailView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -120,9 +121,14 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_red_envelope_record_detail);
         ButterKnife.bind(this);
-        mPresenter = new SendRedEnvelopeRecordDetailPresenter(this);
+        mPresenter = (SendRedEnvelopeRecordDetailPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new SendRedEnvelopeRecordDetailPresenter(this);
     }
 
     private void initTitle() {
@@ -169,11 +175,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -430,4 +432,8 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseActivity implements
         mViewPager.startAutoScroll();
     }
 
+    @Override
+    protected void toUserRewardActivity(String id) {
+
+    }
 }

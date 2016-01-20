@@ -38,8 +38,8 @@ public class RepeatRedDetailModeImpl implements RepeatRedDetailMode {
     }
 
     @Override
-    public void sendComment(final String token, final String hb_id, final String content, final UserLoseMultiLoadedListener listener) {
-        mManager.sendComment(token, hb_id, content, listener, null, mActivity);
+    public void sendComment(final String token, final String hb_id, final String content, String at, final UserLoseMultiLoadedListener listener) {
+        mManager.sendComment(token, hb_id, content, at, listener, null, mActivity);
     }
 
     @Override

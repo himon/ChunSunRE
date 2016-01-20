@@ -22,6 +22,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.personal.AtMeActivity;
 import com.chunsun.redenvelope.ui.activity.personal.ChunsunCouponWebActivity;
 import com.chunsun.redenvelope.ui.activity.personal.CollectRedEnvelopeListActivity;
 import com.chunsun.redenvelope.ui.activity.personal.MineInviteCodeWebActivity;
@@ -31,7 +32,7 @@ import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassif
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
 import com.chunsun.redenvelope.widget.CircleTransform;
 
@@ -56,6 +57,8 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     ImageView mIvProxyIcon;
     @Bind(R.id.tv_name)
     TextView mTvName;
+    @Bind(R.id.ll_my_wallet)
+    LinearLayout mLLMyWallet;
     @Bind(R.id.ll_invite_code)
     LinearLayout mLLInviteCode;
     @Bind(R.id.tv_account)
@@ -64,8 +67,8 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     TextView mTvPayOff;
     @Bind(R.id.tv_invite_code)
     TextView mTvInviteCode;
-    @Bind(R.id.ib_wallet)
-    ImageButton mIbWallet;
+    @Bind(R.id.ib_at_me)
+    ImageButton mIbAtMe;
     @Bind(R.id.ib_send_ad_record)
     ImageButton mIbSendAdRecord;
     @Bind(R.id.ib_not_receiving)
@@ -123,8 +126,9 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
 
     private void initEvent() {
         mIvHeadLogo.setOnClickListener(this);
+        mLLMyWallet.setOnClickListener(this);
         mLLInviteCode.setOnClickListener(this);
-        mIbWallet.setOnClickListener(this);
+        mIbAtMe.setOnClickListener(this);
         mIbSendAdRecord.setOnClickListener(this);
         mIbNotReceiving.setOnClickListener(this);
         mIbRecharge.setOnClickListener(this);
@@ -187,8 +191,13 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     public void toMineInviteCode() {
         //Intent intent = new Intent(getActivity(), MineInviteCodeActivity.class);
         //startActivity(intent);
-
         Intent intent = new Intent(getActivity(), MineInviteCodeWebActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void toAtMe() {
+        Intent intent = new Intent(getActivity(), AtMeActivity.class);
         startActivity(intent);
     }
 
@@ -295,8 +304,11 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             case R.id.ll_invite_code:
                 toMineInviteCode();
                 break;
-            case R.id.ib_wallet:
+            case R.id.ll_my_wallet:
                 toBalance();
+                break;
+            case R.id.ib_at_me:
+                toAtMe();
                 break;
             case R.id.ib_send_ad_record:
                 toAdRecord();
@@ -324,4 +336,5 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                 break;
         }
     }
+
 }

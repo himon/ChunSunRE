@@ -11,5 +11,14 @@ public interface InteractivePlatformMode {
 
     void getLocalCommentList(String token, int page_index, UserLoseMultiLoadedListener listener);
 
-    void sendComment(String token, String comment, String province, String city, UserLoseMultiLoadedListener listener);
+    /**
+     * 评论
+     * @param token
+     * @param comment
+     * @param province
+     * @param city
+     * @param at
+     * @param listener
+     */
+    void sendComment(String token, String comment, String province, String city, String at, UserLoseMultiLoadedListener listener);
 }

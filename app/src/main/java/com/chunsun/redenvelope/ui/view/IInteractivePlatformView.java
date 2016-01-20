@@ -30,15 +30,8 @@ public interface IInteractivePlatformView extends LoadingView {
     void commentSuccess();
 
     /**
-     * 跳转用户奖励页面
-     */
-    void toUserRewardActivity(String id);
-
-    /**
      * 设置系统公告
      * @param notice
      */
     void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice);
-
-    void toLogin();
 }

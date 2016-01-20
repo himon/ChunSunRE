@@ -60,7 +60,7 @@ public class CollectRedEnvelopeListActivity extends BaseActivity implements ICol
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RedDetailUnReceiveAndCollectEntity.ResultEntity entity = (RedDetailUnReceiveAndCollectEntity.ResultEntity) parent.getAdapter().getItem(position);
-                mPresenter.grabRedEnvelope(mToken, entity);
+                toRedDetail(entity.getId() + "");
             }
         });
 
@@ -102,11 +102,6 @@ public class CollectRedEnvelopeListActivity extends BaseActivity implements ICol
         mList.addAll(result);
         mAdapter.notifyDataSetChanged();
         mPtr.refreshComplete();
-    }
-
-    @Override
-    public void grabRedEnvelopeSuccess(RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
-        toRedDetail(entity.getId() + "");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.ui.base;
+package com.chunsun.redenvelope.ui.base.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,19 +19,19 @@ public abstract class MVPBaseFragment<V, T extends BasePresenter<V>> extends Fra
     /**
      * Presenter对象
      */
-    protected T mPresenter;
+    protected T mMPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = createPresenter();
-        mPresenter.attachView((V)this);
+        mMPresenter = createPresenter();
+        mMPresenter.attachView((V)this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detachView();
+        mMPresenter.detachView();
     }
 
     /**

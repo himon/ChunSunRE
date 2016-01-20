@@ -39,9 +39,4 @@ public class HomeFragmentModeImpl implements HomeFragmentMode {
     public void getAdData(final int type, final BaseMultiLoadedListener listener) {
         mManager.getAdData(type, listener, mFragment, mActivity);
     }
-
-    @Override
-    public void grabRedEnvelope(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
-        mManager.grabRedEnvelope(token, hb_id, listener, mFragment, null);
-    }
 }

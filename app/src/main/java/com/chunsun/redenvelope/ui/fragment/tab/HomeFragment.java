@@ -19,7 +19,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 import com.chunsun.redenvelope.ui.base.view.LoadingView;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
 import com.chunsun.redenvelope.utils.DensityUtils;
@@ -130,18 +130,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(getActivity())) {
+                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(getActivity(), Constants.FROM_TAB1)) {
                     showLoading();
                     mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                    if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {//转发
-                        toRepeatRedDetail(mEntity.getId());
-                    } else if (Constants.RED_DETAIL_TYPE_CIRCLE == mEntity.getType()) {//圈子
-                        toRedDetail(mEntity.getId());
-                    } else if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mEntity.getType()) {//链接圈子
-                        toWebRedDetail(mEntity.getId());
-                    } else {
-                        mPresenter.grabRedEnvelope(new Preferences(getActivity()).getToken(), mEntity.getId());
-                    }
+                    toJump();
                 }
             }
         });
@@ -180,6 +172,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
 
         initEvent();
     }
+
 
     private void initEvent() {
         mIvTop.setOnClickListener(this);
@@ -287,28 +280,25 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mRedEvenlopeListHelper.toAdWebView(title, url);
     }
 
-    @Override
-    public void toForwardRedDetail(String id) {
-        mRedEvenlopeListHelper.toForwardRedDetail(id);
-    }
-
-    @Override
-    public void gradRedEnvelopeSuccess(String id) {
+    //TODO
+    private void toJump() {
         if (mEntity != null) {
             switch (mEntity.getType()) {
                 case 1:
                 case 2:
                 case 3:
-                    toRedDetail(id);
+                case 6:
+                case 7:
+                case 9:
+                    toRedDetail(mEntity.getId());
                     break;
                 case 4:
-                    toWebRedDetail(id);
+                case 8:
+                case 10:
+                    toWebRedDetail(mEntity.getId());
                     break;
                 case 5:
                     toRepeatRedDetail(mEntity.getId());
-                    break;
-                case 6:
-                    toForwardRedDetail(id);
                     break;
             }
         }

@@ -11,8 +11,6 @@ public interface INotReceivingRedView {
 
     void setData(List<RedDetailUnReceiveAndCollectEntity.ResultEntity> result);
 
-    void grabRedEnvelopeSuccess(RedDetailUnReceiveAndCollectEntity.ResultEntity entity);
-
     void toWebRedDetail(String id);
 
     void toRedDetail(String id);

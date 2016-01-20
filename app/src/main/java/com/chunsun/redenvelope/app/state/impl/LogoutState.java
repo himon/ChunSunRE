@@ -22,8 +22,8 @@ public class LogoutState implements UserState {
     }
 
     @Override
-    public boolean forward(Context context) {
-        gotoLoginActivity(context);
+    public boolean forward(Context context, String from) {
+        gotoLoginActivity(context, from);
         return false;
     }
 

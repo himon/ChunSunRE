@@ -35,6 +35,26 @@
                 android:textSize="@dimen/font_size_sp_16" />
 
             <TextView
+                android:id="@+id/tv_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_name"
+                android:singleLine="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#c8c8c8"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
+                android:id="@+id/tv_at_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_at"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_sp_16" />
+
+            <TextView
                 android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

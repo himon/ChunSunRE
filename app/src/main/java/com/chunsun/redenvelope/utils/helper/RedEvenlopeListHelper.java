@@ -51,13 +51,6 @@ public class RedEvenlopeListHelper {
         mContext.startActivity(intent);
     }
 
-    public void toForwardRedDetail(String id) {
-        Intent intent = new Intent(mContext, RedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_COUPON);
-        mContext.startActivity(intent);
-    }
-
     public void toLogin() {
         Intent intent = new Intent(mContext, LoginActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_TAB1);

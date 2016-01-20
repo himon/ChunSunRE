@@ -24,9 +24,4 @@ public interface IRedDetailFragmentView extends IBaseRedDetailView{
      * 分享成功
      */
     void shareSuccess();
-
-    /**
-     * 跳转用户奖励页面
-     */
-    void toUserRewardActivity(String id);
 }

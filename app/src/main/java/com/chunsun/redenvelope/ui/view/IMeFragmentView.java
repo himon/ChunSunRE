@@ -18,7 +18,12 @@ public interface IMeFragmentView {
     void toMineInviteCode();
 
     /**
-     * 余额
+     * 与我相关
+     */
+    void toAtMe();
+
+    /**
+     * 钱包
      */
     void toBalance();
 

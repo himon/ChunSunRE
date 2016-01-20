@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.ui.base;
+package com.chunsun.redenvelope.ui.base.fragment;
 
 
 import android.support.v4.app.Fragment;

@@ -2,21 +2,22 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.WebRedDetailCommentMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.WebRedDetailCommentMode;
 import com.chunsun.redenvelope.model.impl.WebRedDetailCommentModeImpl;
 import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailCommentActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailCommentView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 /**
  * Created by Administrator on 2015/9/14.
  */
-public class WebRedDetailCommentPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class WebRedDetailCommentPresenter extends UserLosePresenter<IWebRedDetailCommentView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IWebRedDetailCommentView mIWebRedDetailCommentView;
     private WebRedDetailCommentMode mWebRedDetailCommentMode;
@@ -51,12 +52,12 @@ public class WebRedDetailCommentPresenter extends BaseMultiLoadedListenerImpl<Ba
      *
      * @param comment
      */
-    public void sendComment(String comment, String token, String id) {
+    public void sendComment(String comment, String token, String id, String at) {
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
         }
-        mWebRedDetailCommentMode.sendComment(token, id, comment, this);
+        mWebRedDetailCommentMode.sendComment(token, id, comment, at, this);
     }
 
     @Override

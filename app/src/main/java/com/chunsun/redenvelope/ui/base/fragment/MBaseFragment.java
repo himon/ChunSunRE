@@ -1,4 +1,4 @@
-package com.chunsun.redenvelope.ui.base;
+package com.chunsun.redenvelope.ui.base.fragment;
 
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;

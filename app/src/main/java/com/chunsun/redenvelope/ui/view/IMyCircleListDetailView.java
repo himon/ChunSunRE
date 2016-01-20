@@ -23,8 +23,6 @@ public interface IMyCircleListDetailView {
      */
     void setCommentData(RedDetailCommentEntity.ResultEntity result);
 
-    void toUserRewardActivity(String id);
-
     void toComplaintActivity();
 
     /**

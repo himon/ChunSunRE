@@ -23,7 +23,8 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WebRedDetailCommentPresenter;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.WebRedDetailCommentAdapter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailCommentView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.widget.GetMoreListView;
@@ -41,7 +42,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * 链接红包评论界面
  */
-public class WebRedDetailCommentActivity extends BaseActivity implements IWebRedDetailCommentView {
+public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCommentView, WebRedDetailCommentPresenter> implements IWebRedDetailCommentView {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -86,9 +87,14 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_red_detail_comment);
         ButterKnife.bind(this);
-        mPresenter = new WebRedDetailCommentPresenter(this);
+        mPresenter = (WebRedDetailCommentPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new WebRedDetailCommentPresenter(this);
     }
 
     @Override
@@ -106,18 +112,7 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
                 getData();
             }
         });
-        mDataAdapter = new WebRedDetailCommentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.iv_head_logo:
-                        Object tag = v.getTag();
-                        toUserRewardActivity(tag.toString());
-                        break;
-                }
-            }
-        });
+        mDataAdapter = new WebRedDetailCommentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -223,16 +218,6 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
         }
     }
 
-    /**
-     * 跳转用户奖励页面
-     */
-    private void toUserRewardActivity(String id) {
-        Intent intent = new Intent(this, UserRewardActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        intent.putExtra(Constants.EXTRA_KEY2, mRedId);
-        startActivity(intent);
-    }
-
     @Override
     protected void click(View v) {
         switch (v.getId()) {
@@ -258,7 +243,7 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
                 break;
             case R.id.btn_send_comment:
                 if(LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
-                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId);
+                    mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId, at);
                 }
                 break;
         }
@@ -323,5 +308,13 @@ public class WebRedDetailCommentActivity extends BaseActivity implements IWebRed
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mRedId, mCurrentCommentPage);
+    }
+
+    @Override
+    protected void toUserRewardActivity(String id) {
+        Intent intent = new Intent(this, UserRewardActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, id);
+        intent.putExtra(Constants.EXTRA_KEY2, mRedId);
+        startActivity(intent);
     }
 }

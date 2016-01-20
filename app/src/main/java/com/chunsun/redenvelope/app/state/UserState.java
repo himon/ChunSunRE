@@ -23,7 +23,7 @@ public interface UserState {
      * 跳转
      * @param context
      */
-    boolean forward(Context context);
+    boolean forward(Context context, String from);
 
     /**
      * 评论

@@ -61,7 +61,7 @@ public class NotReceivingRedActivity extends BaseActivity implements INotReceivi
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RedDetailUnReceiveAndCollectEntity.ResultEntity entity = (RedDetailUnReceiveAndCollectEntity.ResultEntity) parent.getAdapter().getItem(position);
-                mPresenter.grabRedEnvelope(mToken, entity);
+                toJump(entity);
             }
         });
 
@@ -106,8 +106,7 @@ public class NotReceivingRedActivity extends BaseActivity implements INotReceivi
         mPtr.refreshComplete();
     }
 
-    @Override
-    public void grabRedEnvelopeSuccess(RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
+    public void toJump(RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
         if (Constants.RED_DETAIL_TYPE_LINK == entity.getType()) {
             toWebRedDetail(entity.getId() + "");
         } else {

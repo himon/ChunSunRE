@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.ui.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,9 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private DisplayImageOptions mOptions;
     private View.OnClickListener mOnClickListener;
+    private View.OnLongClickListener mOnLongClickListener;
 
-    public RedDetailFragmentAdapter(Context context, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener) {
+    public RedDetailFragmentAdapter(Context context, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
         this.mListComment = listComment;
         this.mListRedRecord = listRedRecord;
         this.mCurrentCheckType = currentCheckType;
@@ -42,6 +44,7 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
         mInflater = LayoutInflater.from(context);
         mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
         this.mOnClickListener = onClickListener;
+        this.mOnLongClickListener = onLongClickListener;
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {
@@ -93,6 +96,15 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 holder.tvContent.setText(comment.getContent());
                 holder.tvTime.setText(comment.getAdd_time());
                 holder.tvFloor.setText(comment.getFloor() + "楼");
+                if (TextUtils.isEmpty(comment.getAt_user_name())) {
+                    holder.tvAt.setVisibility(View.GONE);
+                    holder.tvAtUser.setVisibility(View.GONE);
+                } else {
+                    holder.tvAt.setVisibility(View.VISIBLE);
+                    holder.tvAtUser.setVisibility(View.VISIBLE);
+                    holder.tvAt.setText("@了");
+                    holder.tvAtUser.setText(comment.getAt_user_name());
+                }
                 /**
                  * 判断是否是系统用户
                  */
@@ -102,7 +114,9 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 } else {
                     holder.tvContent.setTextColor(mContext.getResources().getColor(R.color.red_detail_comment_font_gray));
                     holder.ivLogo.setOnClickListener(mOnClickListener);
-                    holder.ivLogo.setTag(comment.getId() + "");
+                    holder.ivLogo.setOnLongClickListener(mOnLongClickListener);
+                    holder.ivLogo.setTag(R.id.tag_first, comment.getId() + "");
+                    holder.ivLogo.setTag(R.id.tag_second, comment.getNick_name());
                 }
                 ImageLoader.getInstance().displayImage(comment.getThumb_img_url(), holder.ivLogo, mOptions);
                 break;
@@ -125,13 +139,11 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                     holder2.ivLogo.setOnClickListener(null);
                 } else {
                     holder2.ivLogo.setOnClickListener(mOnClickListener);
-                    holder2.ivLogo.setTag(record.getId() + "");
+                    holder2.ivLogo.setTag(R.id.tag_first, record.getId() + "");
                 }
                 ImageLoader.getInstance().displayImage(record.getThumb_img_url(), holder2.ivLogo, mOptions);
                 break;
         }
-
-
         return convertView;
     }
 
@@ -147,6 +159,10 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
         TextView tvTime;
         @Bind(R.id.tv_floor)
         TextView tvFloor;
+        @Bind(R.id.tv_at)
+        TextView tvAt;
+        @Bind(R.id.tv_at_user)
+        TextView tvAtUser;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -55,12 +55,13 @@ public class JsonManager {
      * @param hb_id
      * @return
      */
-    public static String initDataRedEnvelopeDetailCommentToJson(String token, String hb_id, String content) {
+    public static String initDataRedEnvelopeDetailCommentToJson(String token, String hb_id, String content, String at_user_id) {
         JSONObject object = new JSONObject();
         try {
             object.put("token", token);
             object.put("hb_id", hb_id);
             object.put("content", content);
+            object.put("at_user_id", at_user_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -483,13 +484,14 @@ public class JsonManager {
      * @param content
      * @return
      */
-    public static String initInterractiveCommentDataToJson(String token, String province, String city, String content) {
+    public static String initInterractiveCommentDataToJson(String token, String province, String city, String content, String at_user_id) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("token", token);
             jsonObject.put("province", province);
             jsonObject.put("city", city);
             jsonObject.put("content", content);
+            jsonObject.put("at_user_id", at_user_id);
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
@@ -639,6 +641,25 @@ public class JsonManager {
             jsonObject.put("latitude", latitude);
             jsonObject.put("operate_type", operate_type);
             jsonObject.put("hb_id", hb_id);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 用户未读消息操作
+     *
+     * @param token
+     * @param page_index
+     * @return
+     */
+    public static String initDataUserNoReadMessageToJson(String token, int page_index) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("page_index", page_index);
+            jsonObject.put("page_size", Constants.PAGE_NUM);
         } catch (JSONException e1) {
             e1.printStackTrace();
         }

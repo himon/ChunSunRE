@@ -67,7 +67,7 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
      *
      * @param comment
      */
-    public void sendComment(String comment, String token, String id) {
+    public void sendComment(String comment, String token, String id, String at) {
         UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
 
         if(userEntity == null){
@@ -79,7 +79,7 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
         }
-        redDetailFragmentMode.sendComment(token, id, comment, this);
+        redDetailFragmentMode.sendComment(token, id, comment, at, this);
     }
 
     /**

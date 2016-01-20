@@ -9,5 +9,4 @@ public interface NotReceivingRedMode {
 
     void loadData(String token, UserLoseMultiLoadedListener listener);
 
-    void grabRedEnvelope(String token, String hb_id, UserLoseMultiLoadedListener listener);
 }

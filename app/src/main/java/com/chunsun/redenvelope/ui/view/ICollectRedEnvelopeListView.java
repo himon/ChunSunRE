@@ -11,8 +11,6 @@ public interface ICollectRedEnvelopeListView {
 
     void setData(List<RedDetailUnReceiveAndCollectEntity.ResultEntity> result);
 
-    void grabRedEnvelopeSuccess(RedDetailUnReceiveAndCollectEntity.ResultEntity entity);
-
     void toRedDetail(String id);
 
 }

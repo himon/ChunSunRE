@@ -8,10 +8,11 @@ import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MyCircleListDetailMode;
 import com.chunsun.redenvelope.model.impl.MyCircleListDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.MyCircleListDetailActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IMyCircleListDetailView;
 import com.chunsun.redenvelope.utils.ShowToast;
 
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  * @time 2015/12/25 13:58
  * @des
  */
-public class MyCircleListDetailPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>{
+public class MyCircleListDetailPresenter extends UserLosePresenter<IMyCircleListDetailView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IMyCircleListDetailView mIMyCircleListDetailView;
     private MyCircleListDetailMode mMyCircleListDetailMode;
@@ -62,12 +63,12 @@ public class MyCircleListDetailPresenter extends BaseMultiLoadedListenerImpl<Bas
      *
      * @param comment
      */
-    public void sendComment(String comment, String token, String id) {
+    public void sendComment(String comment, String token, String id, String at) {
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
         }
-        mMyCircleListDetailMode.sendComment(token, id, comment, this);
+        mMyCircleListDetailMode.sendComment(token, id, comment, at, this);
     }
 
     @Override

@@ -230,17 +230,7 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
     }
 
     @Override
-    public void toForwardRedDetail(String id) {
-
-    }
-
-    @Override
     public void toAdWebView(String title, String url) {
-
-    }
-
-    @Override
-    public void gradRedEnvelopeSuccess(String id) {
 
     }
 

@@ -18,7 +18,6 @@ public class NotReceivingRedPresenter extends BaseMultiLoadedListenerImpl<BaseEn
 
     private INotReceivingRedView mINotReceivingRedView;
     private NotReceivingRedMode mNotReceivingRedMode;
-    private RedDetailUnReceiveAndCollectEntity.ResultEntity mCurrentRed;
 
     public NotReceivingRedPresenter(INotReceivingRedView notReceivingRedView) {
         this.mINotReceivingRedView = notReceivingRedView;
@@ -29,11 +28,6 @@ public class NotReceivingRedPresenter extends BaseMultiLoadedListenerImpl<BaseEn
         mNotReceivingRedMode.loadData(token, this);
     }
 
-    public void grabRedEnvelope(String token, RedDetailUnReceiveAndCollectEntity.ResultEntity entity) {
-        mCurrentRed = entity;
-        mNotReceivingRedMode.grabRedEnvelope(token, entity.getId() + "", this);
-    }
-
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
@@ -41,9 +35,6 @@ public class NotReceivingRedPresenter extends BaseMultiLoadedListenerImpl<BaseEn
                 RedDetailUnReceiveAndCollectEntity entity = (RedDetailUnReceiveAndCollectEntity) data;
                 List<RedDetailUnReceiveAndCollectEntity.ResultEntity> result = entity.getResult();
                 mINotReceivingRedView.setData(result);
-                break;
-            case Constants.LISTENER_TYPE_GRAD_RED_ENVELOPE:
-                mINotReceivingRedView.grabRedEnvelopeSuccess(mCurrentRed);
                 break;
         }
     }

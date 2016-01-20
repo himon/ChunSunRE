@@ -25,13 +25,4 @@ public interface HomeFragmentMode {
      * @param listener
      */
     void getAdData(int type, BaseMultiLoadedListener listener);
-
-    /**
-     * 抢红包
-     *
-     * @param mToken
-     * @param id
-     * @param listener
-     */
-    void grabRedEnvelope(String mToken, String id, UserLoseMultiLoadedListener listener);
 }

@@ -19,7 +19,7 @@ import com.chunsun.redenvelope.event.RedDetailShowPicBackEvent;
 import com.chunsun.redenvelope.scanlibrary.ScanResultActivity;
 import com.chunsun.redenvelope.scanlibrary.scan.ScanUtil;
 import com.chunsun.redenvelope.scanlibrary.scan.decode.BitmapDecoder;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;

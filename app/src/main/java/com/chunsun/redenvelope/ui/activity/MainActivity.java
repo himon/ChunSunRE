@@ -467,7 +467,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
      */
     @Override
     public void toInteract() {
-        if(LoginContext.getLoginContext().forward(MainActivity.this)){
+        if(LoginContext.getLoginContext().forward(MainActivity.this, Constants.FROM_TAB1)){
             Intent intent = new Intent(this, InteractivePlatformActivity.class);
             startActivity(intent);
         }
@@ -516,6 +516,8 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             mViewPager.setCurrentItem(0, false);
             //刷新MeFragment页面
             mMeFragment.getData();
+            mInteractiveFragment.getAllData();
+            showTitleBar(R.id.indicator_home);
         } else if (Constants.FROM_AD.equals(event.getMsg())) {
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
@@ -540,8 +542,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         }else if(Constants.FROM_COMMENT.equals(event.getMsg())){
             mMeFragment.getData();
             mInteractiveFragment.getAllData();
-        }
-        else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
+        }else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
         } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//追加
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);

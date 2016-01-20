@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -22,6 +22,7 @@ public class ViewHolder {
     private int mPosition;
     private View mConvertView;
     private DisplayImageOptions mOptions;
+    private DisplayImageOptions mHeadOptions;
 
     public int getmPosition() {
         return mPosition;
@@ -33,13 +34,8 @@ public class ViewHolder {
             this.mViews = new SparseArray<>();
             mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
             mConvertView.setTag(this);
-
-            mOptions = new DisplayImageOptions.Builder()
-                    .showImageOnLoading(R.drawable.img_default_capture)
-                    .showImageForEmptyUri(R.drawable.img_default_unlink)
-                    .showImageOnFail(R.drawable.img_default_error)
-                    .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true)
-                    .bitmapConfig(Bitmap.Config.RGB_565).build();
+            mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions();
+            mHeadOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -103,6 +99,12 @@ public class ViewHolder {
     public ViewHolder setImageResource(int viewId, String url) {
         ImageView iv = getView(viewId);
         ImageLoader.getInstance().displayImage(url, iv, mOptions);
+        return this;
+    }
+
+    public ViewHolder setHeadImageResource(int viewId, String url) {
+        ImageView iv = getView(viewId);
+        ImageLoader.getInstance().displayImage(url, iv,  mHeadOptions);
         return this;
     }
 }

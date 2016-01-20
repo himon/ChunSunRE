@@ -22,7 +22,7 @@ import butterknife.Bind;
  * @author Administrator
  * @version $Rev$
  * @time 2015/12/23 16:28
- * @des 创建红包和圈子的父类
+ * @des 创建红包和圈子省市、范围页面的父类
  */
 public abstract class BaseCreateActivity<V, T extends BasePresenter<V>> extends MBaseActivity {
 

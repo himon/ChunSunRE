@@ -42,7 +42,7 @@ public interface RedDetailFragmentMode {
      * @param hb_id
      * @param content
      */
-    void sendComment(String token, String hb_id, String content, UserLoseMultiLoadedListener listener);
+    void sendComment(String token, String hb_id, String content, String at, UserLoseMultiLoadedListener listener);
 
     /**
      * 拆红包

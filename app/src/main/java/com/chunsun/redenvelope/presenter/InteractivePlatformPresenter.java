@@ -2,12 +2,13 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
-import com.chunsun.redenvelope.model.InteractivePlatformMode;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.InteractiveEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.InteractivePlatformMode;
 import com.chunsun.redenvelope.model.impl.InteractivePlatformModeImpl;
 import com.chunsun.redenvelope.ui.activity.InteractivePlatformActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.ShowToast;
@@ -16,7 +17,7 @@ import com.google.gson.Gson;
 /**
  * Created by Administrator on 2015/9/12.
  */
-public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
+public class InteractivePlatformPresenter extends UserLosePresenter<IInteractivePlatformView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IInteractivePlatformView mIInteractivePlatformView;
     private InteractivePlatformMode mInteractivePlatformMode;
@@ -42,11 +43,11 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
 
     /**
      * 评论
-     *
-     * @param currentCheckType
+     *  @param currentCheckType
      * @param comment
+     * @param at
      */
-    public void sendComment(String token, int currentCheckType, String comment) {
+    public void sendComment(String token, int currentCheckType, String comment, String at) {
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;
@@ -54,10 +55,10 @@ public class InteractivePlatformPresenter extends BaseMultiLoadedListenerImpl<Ba
         mIInteractivePlatformView.showLoading();
         switch (currentCheckType) {
             case 0:
-                mInteractivePlatformMode.sendComment(token, comment, "全国", "全国", this);
+                mInteractivePlatformMode.sendComment(token, comment, "全国", "全国", at, this);
                 break;
             case 1:
-                mInteractivePlatformMode.sendComment(token, comment, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity(), this);
+                mInteractivePlatformMode.sendComment(token, comment, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity(), at, this);
                 break;
         }
     }

@@ -7,11 +7,11 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,7 +24,8 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
-import com.chunsun.redenvelope.ui.base.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.BaseAtFragment;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IInteractivePlatformView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.utils.helper.InteractiveHelper;
@@ -42,14 +43,12 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InteractiveFragment extends BaseFragment implements IInteractivePlatformView, View.OnClickListener {
+public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView, InteractivePlatformPresenter> implements IInteractivePlatformView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
-    @Bind(R.id.et_comment)
-    EditText mEtComment;
     @Bind(R.id.btn_send_comment)
     Button mBtnSendComment;
 
@@ -92,11 +91,16 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_interaction, container, false);
         ButterKnife.bind(this, view);
-        mPresenter = new InteractivePlatformPresenter(this);
+        mPresenter = (InteractivePlatformPresenter) mMPresenter;
         mInteractiveHelper = new InteractiveHelper(getActivity());
         initView();
         initData();
         return view;
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new InteractivePlatformPresenter(this);
     }
 
 
@@ -122,18 +126,7 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
             }
         });
 
-        mDataAdapter = new InteractivePlatformAdapter(getActivity(), mListCountry, mListLocal, mCurrentCheckType, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.iv_head_logo:
-                        Object tag = v.getTag();
-                        toUserRewardActivity(tag.toString());
-                        break;
-                }
-            }
-        });
+        mDataAdapter = new InteractivePlatformAdapter(getActivity(), mListCountry, mListLocal, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -188,6 +181,19 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        mEtComment.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (!at.equals("0")) {
+                        at = "0";
+                        mEtComment.setHint("请输入评论内容...");
+                    }
+                }
+                return false;
             }
         });
     }
@@ -245,7 +251,7 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
                 changerDataList();
                 break;
             case R.id.btn_send_comment://评论
-                mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment));
+                mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
                 mEtComment.setText("");
                 break;
         }
@@ -323,11 +329,6 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
         mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
     }
 
-    @Override
-    public void toLogin() {
-        mInteractiveHelper.toLogin();
-    }
-
     /**
      * 切换列表
      */
@@ -353,4 +354,6 @@ public class InteractiveFragment extends BaseFragment implements IInteractivePla
             mPresenter.getLocalList(mToken, mCurrentLocalPage);
         }
     }
+
+
 }

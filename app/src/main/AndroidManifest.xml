@@ -319,6 +319,10 @@
             android:name=".ui.activity.ad.LuckAdPayActivity"
             android:label="@string/title_activity_luck_ad_pay" >
         </activity>
+        <activity
+            android:name=".ui.activity.personal.AtMeActivity"
+            android:label="@string/title_activity_at_me" >
+        </activity>
     </application>
 
 </manifest>
