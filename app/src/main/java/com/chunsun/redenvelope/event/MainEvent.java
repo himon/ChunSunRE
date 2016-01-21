@@ -7,6 +7,7 @@ import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
  */
 public class MainEvent {
     private String msg;
+    private int count;
     private RedSuperadditionEntity.ResultEntity mEntity;
 
     public String getMsg() {
@@ -17,15 +18,28 @@ public class MainEvent {
         this.msg = msg;
     }
 
-    public RedSuperadditionEntity.ResultEntity getEntity() {
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public RedSuperadditionEntity.ResultEntity getmEntity() {
         return mEntity;
     }
 
-    public void setEntity(RedSuperadditionEntity.ResultEntity entity) {
-        mEntity = entity;
+    public void setmEntity(RedSuperadditionEntity.ResultEntity mEntity) {
+        this.mEntity = mEntity;
     }
 
     public MainEvent(String msg) {
         this.msg = msg;
+    }
+
+    public MainEvent(String msg, int count) {
+        this.msg = msg;
+        this.count = count;
     }
 }

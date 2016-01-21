@@ -29,6 +29,7 @@ import com.chunsun.redenvelope.ui.view.IWebRedDetailCommentView;
 import com.chunsun.redenvelope.utils.StringUtil;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +82,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
 
     private boolean isCommentFinished;
     private boolean isRecordtFinished;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,8 +114,6 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
                 getData();
             }
         });
-        mDataAdapter = new WebRedDetailCommentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
-        mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -181,10 +181,13 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
         Intent intent = getIntent();
         if (intent != null) {
             mRedId = intent.getStringExtra(Constants.EXTRA_KEY);
-            String type = intent.getStringExtra(Constants.EXTRA_KEY2);
-            if ((Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "").equals(type)) {
+            mType = intent.getIntExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_LINK);
+            BigDecimal shareMinAmount = (BigDecimal) intent.getSerializableExtra(Constants.EXTRA_KEY3);
+            if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mType) {
                 mRbGetRedRecord.setVisibility(View.GONE);
             }
+            mDataAdapter = new WebRedDetailCommentAdapter(this, mType, shareMinAmount, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+            mListView.setAdapter(mDataAdapter);
         }
     }
 
@@ -242,7 +245,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
                 changerDataList();
                 break;
             case R.id.btn_send_comment:
-                if(LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
+                if (LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
                     mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId, at);
                 }
                 break;

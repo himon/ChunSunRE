@@ -120,7 +120,7 @@ public class RedDetailEntity extends BaseEntity {
             /**
              * 红包类型
              */
-            private String hb_type;
+            private int hb_type;
             private String total_amount;
             private String u_img_url;
             private String status;
@@ -323,11 +323,11 @@ public class RedDetailEntity extends BaseEntity {
                 this.current_u_amount = current_u_amount;
             }
 
-            public String getHb_type() {
+            public int getHb_type() {
                 return hb_type;
             }
 
-            public void setHb_type(String hb_type) {
+            public void setHb_type(int hb_type) {
                 this.hb_type = hb_type;
             }
 
@@ -664,7 +664,7 @@ public class RedDetailEntity extends BaseEntity {
                 dest.writeString(this.age);
                 dest.writeString(this.type_title);
                 dest.writeString(this.current_u_amount);
-                dest.writeString(this.hb_type);
+                dest.writeInt(this.hb_type);
                 dest.writeString(this.total_amount);
                 dest.writeString(this.u_img_url);
                 dest.writeString(this.status);
@@ -724,7 +724,7 @@ public class RedDetailEntity extends BaseEntity {
                 this.age = in.readString();
                 this.type_title = in.readString();
                 this.current_u_amount = in.readString();
-                this.hb_type = in.readString();
+                this.hb_type = in.readInt();
                 this.total_amount = in.readString();
                 this.u_img_url = in.readString();
                 this.status = in.readString();

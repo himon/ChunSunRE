@@ -172,7 +172,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+        mDataAdapter = new RedDetailFragmentAdapter(this, mDetail.getHb_type(), null, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

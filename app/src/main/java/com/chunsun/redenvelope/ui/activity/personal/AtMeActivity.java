@@ -170,4 +170,9 @@ public class AtMeActivity extends MBaseActivity<IAtMeView, AtMePresenter> implem
 
         mPtr.refreshComplete();
     }
+
+    @Override
+    public void clearNoReadCount() {
+        mPresenter.userReadMessage(mToken, -1);
+    }
 }

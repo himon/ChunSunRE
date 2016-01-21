@@ -39,6 +39,7 @@ import com.chunsun.redenvelope.entities.json.SampleResponseObjectEntity;
 import com.chunsun.redenvelope.entities.json.ScanCouponResultEntity;
 import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.entities.json.UserEntity;
+import com.chunsun.redenvelope.entities.json.UserNoReadCountEntity;
 import com.chunsun.redenvelope.entities.json.UserPublicInfoEntity;
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
@@ -2592,6 +2593,74 @@ public class HttpManager {
                 Map<String, String> params = new HashMap<>();
                 params.put("methodName", Constants.GET_USER_GRAB_BY_TOKEN);
                 params.put("parames", JsonManager.initDataRedEnvelopeDetailToJson(token, hb_id));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 获取用户未读消息数量
+     *
+     * @param token
+     * @param listener
+     * @param activity
+     */
+    public void getUserNoReadCount(final String token, final BaseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<UserNoReadCountEntity> request = new GsonRequest<UserNoReadCountEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                UserNoReadCountEntity.class, null, new Response.Listener<UserNoReadCountEntity>() {
+
+            @Override
+            public void onResponse(UserNoReadCountEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_NO_READ_COUNT, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.GET_USER_NO_READ_COUNT);
+                params.put("parames", JsonManager.initDataTokenToJson(token));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 清空未读消息
+     * @param token
+     * @param type
+     * @param listener
+     * @param activity
+     */
+    public void userReadMessage(final String token, final int type, final UserLoseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<SampleResponseObjectEntity> request = new GsonRequest<SampleResponseObjectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseObjectEntity.class, null, new Response.Listener<SampleResponseObjectEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseObjectEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_READ, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.USER_READ_MESSAGE);
+                params.put("parames", JsonManager.initDataReadMessageToJson(token, type));
                 return params;
             }
         };

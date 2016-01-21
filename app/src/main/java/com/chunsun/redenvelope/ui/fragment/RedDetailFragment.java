@@ -24,11 +24,11 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
@@ -108,7 +108,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     //activity传递过来的红包信息
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
     //分享的限制信息
-    private ShareLimitEntity.ResultEntity mShareLimitResult;
+    //private ShareLimitEntity.ResultEntity mShareLimitResult;
     //图片的路径
     private ArrayList mUrls;
     //是否是下拉刷新
@@ -129,6 +129,10 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity>();
     private String mToken;
 
+    /**
+     * grab信息
+     */
+    private GrabEntity mGrabEntity;
     /**
      * 红包帮助类
      */
@@ -198,8 +202,6 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
-        mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -277,7 +279,16 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         Bundle bundle = getArguments();
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
         mUrls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
-        mShareLimitResult = bundle.getParcelable(Constants.EXTRA_KEY3);
+        mGrabEntity = bundle.getParcelable(Constants.EXTRA_KEY3);
+
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), mGrabEntity.getResult().getShare_limit().getShare_min_amount(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mListView.setAdapter(mDataAdapter);
+
+        if(mGrabEntity != null && mGrabEntity.isSuccess()){
+        }else{
+            mIbRepeat.setVisibility(View.GONE);
+        }
+
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(mDetail.getNick_name());
         //判断是否是代理
@@ -322,11 +333,16 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
      */
     private void setRedEnvelopeStatus() {
 
+        if(mDetail.getHb_type() == Constants.RED_DETAIL_TYPE_COUPON){
+            mTvRedPrice.setText("红包礼券");
+        }else {
+            mTvRedPrice.setText("现金红包");
+        }
         if (mDetail.isGrab_status()) {
             if (mDetail.is_open()) {
                 mBtnOpenRed.setText("您已经领取红包");
                 mBtnOpenRed.setTextColor(getResources().getColor(R.color.font_white));
-                mTvRedPrice.setText(mDetail.getPrice() + "元");
+                //mTvRedPrice.setText(mDetail.getPrice() + "元");
             } else {
                 mPresenter.countDown(mDetail.getDelay_seconds());
             }
@@ -335,7 +351,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 mBtnOpenRed.setText("红包已领空");
                 mBtnOpenRed.setTextColor(getResources().getColor(R.color.font_white));
                 mBtnOpenRed.setEnabled(false);
-                mTvRedPrice.setText(mDetail.getPrice() + "元");
+                //mTvRedPrice.setText(mDetail.getPrice() + "元");
                 mTvRedPrice.setTextColor(getResources().getColor(R.color.font_gray_red_envelope));
             } else {
                 mPresenter.countDown(mDetail.getDelay_seconds());
@@ -400,12 +416,15 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
 
     private void refreshDelaySeconds(int delaySeconds) {
         if (delaySeconds > 0) {
-            mTvRedPrice.setText("现金红包");
             mBtnOpenRed.setText(delaySeconds + "秒后可领取红包");
         } else {
             mTvRedPrice.setText("点击领取");
-            mBtnOpenRed.setText(mDetail.getPrice() + "元");
-            mBtnOpenRed.setOnClickListener(this);
+            if(mGrabEntity != null && !"0.00".equals(mGrabEntity.getResult().getHb_price())) {
+                mBtnOpenRed.setText(mGrabEntity.getResult().getHb_price() + "元");
+                mBtnOpenRed.setOnClickListener(this);
+            }else{
+                mTvRedPrice.setText("谢谢阅读");
+            }
         }
     }
 
@@ -436,7 +455,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 break;
             case R.id.btn_open_red://打开红包
                 mViewBg.setVisibility(View.VISIBLE);
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mShareLimitResult, Constants.SHARE_FROM_RED);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mGrabEntity, Constants.SHARE_FROM_RED);
                 menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.ll_collect_container://收藏
@@ -537,9 +556,13 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         if (TextUtils.isEmpty(event.getMsg())) {//倒计时
             refreshDelaySeconds(event.getSecond());
         } else if ("share".equals(event.getMsg())) {//分享
-            mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
+            if(TextUtils.isEmpty(mDetail.getHg_id())){
+                mPresenter.shareOpen(mToken, mGrabEntity.getResult().getHb_grab_id(), event.getContent());
+            }else {
+                mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
+            }
         } else if ("no_share".equals(event.getMsg())) {//直接领钱
-            mPresenter.justOpen(mToken, mDetail.getHg_id());
+            mPresenter.justOpen(mToken, mGrabEntity.getResult().getHb_grab_id());
         }
     }
 

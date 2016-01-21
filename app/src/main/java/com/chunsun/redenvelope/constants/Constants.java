@@ -211,6 +211,10 @@ public interface Constants {
     String RELATED_TO_ME_MESSAGE = "related_to_me_message";
     //获取grab
     String GET_USER_GRAB_BY_TOKEN = "hb_user_grab_bytoken_v_1_3_1";
+    //获取用户未读消息数量
+    String GET_USER_NO_READ_COUNT = "get_user_no_read_count";
+    //清空用户消息
+    String USER_READ_MESSAGE = "user_read_message";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -454,6 +458,8 @@ public interface Constants {
     int LISTENER_TYPE_COMMIT_LUCK = 0x2041;
     int LISTENER_TYPE_GET_USER_NO_READ_MESSAGE = 0x2042;
     int LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN = 0x2043;
+    int LISTENER_TYPE_GET_USER_NO_READ_COUNT = 0x2044;
+    int LISTENER_TYPE_GET_USER_READ = 0x2045;
 
     /**
      * 发广告默认数据

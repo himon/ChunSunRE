@@ -26,7 +26,7 @@ import de.greenrobot.event.EventBus;
  */
 public class RedDetailPicShowActivity extends BaseActivity {
 
-    @Bind(R.id.toolsbar)
+    @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
     @Bind(R.id.viewpager)
     ViewPager mViewPager;

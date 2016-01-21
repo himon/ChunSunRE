@@ -665,4 +665,22 @@ public class JsonManager {
         }
         return jsonObject.toString();
     }
+
+    /**
+     * 清空用户未读消息
+     *
+     * @param token
+     * @param type
+     * @return
+     */
+    public static String initDataReadMessageToJson(String token, int type) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("type", type);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 }

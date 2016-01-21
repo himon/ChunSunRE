@@ -1,8 +1,8 @@
 package com.chunsun.redenvelope.ui.view;
 
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.ui.base.view.LoadingView;
 
 /**
@@ -17,12 +17,7 @@ public interface IWebRedDetailView extends LoadingView {
      */
     void loadUrl(RedDetailEntity.ResultEntity.DetailEntity entity);
 
-    /**
-     * 获取分享次数限制
-     *
-     * @param result
-     */
-    void getShareLimit(ShareLimitEntity.ResultEntity result);
+    void setGrab(GrabEntity entity);
 
     /**
      * 分享成功

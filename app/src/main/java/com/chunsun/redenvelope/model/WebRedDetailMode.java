@@ -9,7 +9,7 @@ public interface WebRedDetailMode {
 
     void getRedData(String token, String id, UserLoseMultiLoadedListener listener);
 
-    void getShareLimit(String token, UserLoseMultiLoadedListener listener);
+    void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener);
 
     void shareOpen(String token, String grab_id, String shareType, UserLoseMultiLoadedListener listener);
 

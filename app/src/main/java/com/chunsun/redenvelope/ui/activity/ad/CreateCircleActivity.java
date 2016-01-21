@@ -16,6 +16,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.SampleEntity;
 import com.chunsun.redenvelope.entities.json.DistrictEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.presenter.CreateAdPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseCreateActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -45,7 +46,10 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
     ImageView mIvCity;
     @Bind(R.id.btn_next_step)
     Button mBtnNextStep;
+
     private int mType;
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
 
 
     @Override
@@ -119,7 +123,11 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
         SampleEntity entity = new SampleEntity();
         Intent intent = getIntent();
         if (intent != null) {
-            mType = intent.getIntExtra(Constants.EXTRA_KEY, 7);
+            mType = intent.getIntExtra(Constants.EXTRA_KEY, 0);
+            if(mType == 0){
+                mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
+                mType = Integer.parseInt(mSuperadditionEntity.getType());
+            }
             if (mType == 7) {//圈子
                 entity.setKey(Constants.RED_DETAIL_TYPE_CIRCLE + "");
             } else if (mType == 9) {//拼手气红包

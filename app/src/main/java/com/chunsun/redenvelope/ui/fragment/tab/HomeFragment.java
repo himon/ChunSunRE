@@ -59,6 +59,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     private List<RedListDetailEntity.ResultEntity.PoolEntity> mList = new ArrayList<RedListDetailEntity.ResultEntity.PoolEntity>();
     //是否是下拉刷新
     private boolean isRefresh;
+    //轮播广告是否刷新
+    private boolean isAdRefresh;
     //红包列表总数
     private int mTotal = 0;
     //选中的Item的详情
@@ -79,6 +81,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
      * 帮助类
      */
     RedEvenlopeListHelper mRedEvenlopeListHelper;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,6 +124,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
             @Override
             public void onGetMore() {
                 isRefresh = false;
+                isAdRefresh = false;
                 getData();
             }
         });
@@ -142,6 +146,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
             @Override
             public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
                 isRefresh = true;
+                isAdRefresh = true;
                 getData();
             }
         });
@@ -206,11 +211,11 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     }
 
     public void getData() {
-
         if (isRefresh) {
             mCurrentPage = 1;
-
-            mPresenter.getAdData(mScrollAdType);
+            if(isAdRefresh) {
+                mPresenter.getAdData(mScrollAdType);
+            }
         }
         mPresenter.loadData(new Preferences(getActivity()).getToken(), mShowAdType, mCurrentPage, mOrderType, "");
     }
@@ -280,7 +285,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mRedEvenlopeListHelper.toAdWebView(title, url);
     }
 
-    //TODO
     private void toJump() {
         if (mEntity != null) {
             switch (mEntity.getType()) {
@@ -364,8 +368,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
                 mOrderType = Constants.CIRCLE_ORDER_TYPE_RANGE;
                 break;
         }
-        mList.clear();
-        mCurrentPage = 1;
+        isRefresh = true;
+        isAdRefresh = false;
         getData();
     }
 

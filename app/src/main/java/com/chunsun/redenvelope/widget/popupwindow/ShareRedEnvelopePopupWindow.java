@@ -19,13 +19,14 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.callback.GetRepeatHostCallback;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
+import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.utils.helper.ShareSdkHelper;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.helper.ShareSdkHelper;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -41,7 +42,8 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
     private Activity mContext;
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
-    private ShareLimitEntity.ResultEntity mShareLimitResult;
+    private GrabEntity.ResultEntity.ShareLimitEntity mShareLimitResult;
+    private GrabEntity mGrabEntity;
 
     private View mMenuView = null;
     private LinearLayout mLLWechat;
@@ -68,14 +70,15 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
      *
      * @param context
      * @param detail
-     * @param shareLimitResult
-     * @param shareFrom        标示从哪跳转过来的
+     * @param grabEntity
+     * @param shareFrom  标示从哪跳转过来的
      */
-    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, ShareLimitEntity.ResultEntity shareLimitResult, int shareFrom) {
+    public ShareRedEnvelopePopupWindow(Activity context, RedDetailEntity.ResultEntity.DetailEntity detail, GrabEntity grabEntity, int shareFrom) {
         super(context);
         this.mContext = context;
         this.mDetail = detail;
-        this.mShareLimitResult = shareLimitResult;
+        this.mGrabEntity = grabEntity;
+        this.mShareLimitResult = grabEntity.getResult().getShare_limit();
         this.mFrom = shareFrom;
 
         initView();
@@ -178,10 +181,8 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
      * 验证是否显示直接领取
      */
     private void validateIsCanOnceGet() {
-        double min = Double.parseDouble(mShareLimitResult.getShare_min_amount());
-        double price = Double.parseDouble(mDetail.getPrice());
 
-        if ((mDetail.isEnable_share() && mDetail.isMust_share()) || (mDetail.isEnable_share() && !mDetail.isMust_share() && price >= min)) {
+        if (mGrabEntity.getResult().isMust_share()) {
             mLLGetMoney.setVisibility(View.GONE);
             mBtnCancel.setVisibility(View.VISIBLE);
         } else {
@@ -252,17 +253,15 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
     private void initData(String shareHost) {
         if (mDetail != null) {
-            if ("4".equals(mDetail.getHb_type())) {
+            if (4 == mDetail.getHb_type() || 8 == mDetail.getHb_type()) {
                 mShowUrl = mDetail.getContent();
                 mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
-            } else if ("-1".equals(mDetail.getHb_type())) {// 邀请码分享
+            } else if (-1 == mDetail.getHb_type()) {// 邀请码分享
                 mShowUrl = shareHost + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
-            } else if ("7".equals(mDetail.getHb_type())) {
+            } else if (7 == mDetail.getHb_type()) {
                 mShowUrl = shareHost + "pages/circle/index.html?hbId=" + mDetail.getId();
-            } else if ("8".equals(mDetail.getHb_type())) {
-                mShowUrl = mDetail.getContent();
-            } else {
-                mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mDetail.getHg_id());
+            }  else {
+                mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mGrabEntity.getResult().getHb_grab_id());
             }
         }
         mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, shareHost, mFrom, mShareLimitResult != null);
@@ -303,7 +302,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
                 if (mFrom == Constants.SHARE_FROM_WEB_RED) {
                     EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
                 } else if (mFrom == Constants.SHARE_FROM_RED) {
-                    EventBus.getDefault().post(new WebRedDetailEvent("no_share"));
+                    EventBus.getDefault().post(new RedDetailEvent("no_share", ""));
                 }
                 break;
             case R.id.btn_cancel:

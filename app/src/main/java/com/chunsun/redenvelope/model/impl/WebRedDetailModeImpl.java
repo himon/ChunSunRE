@@ -24,8 +24,8 @@ public class WebRedDetailModeImpl implements WebRedDetailMode {
     }
 
     @Override
-    public void getShareLimit(final String token, final UserLoseMultiLoadedListener listener) {
-        mManager.getShareLimit(token, listener, mActivity);
+    public void getGrabByToken(final String token, String id, final UserLoseMultiLoadedListener listener) {
+        mManager.getGrabByToken(token, id, listener, mActivity);
     }
 
     @Override

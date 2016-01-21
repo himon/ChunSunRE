@@ -28,6 +28,7 @@ import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdActivity;
+import com.chunsun.redenvelope.ui.activity.ad.CreateCircleActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -175,8 +176,6 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
-        mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -341,6 +340,10 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
 
     @Override
     public void setRedEnvelopeDetail(ArrayList<String> list, RedDetailEntity.ResultEntity.DetailEntity detail) {
+
+        mDataAdapter = new RedDetailFragmentAdapter(this, detail.getHb_type(), null, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mListView.setAdapter(mDataAdapter);
+
         mTvTitle.setText(detail.getTitle());
         mTvUserName.setText(detail.getNick_name());
         mTvTime.setText(detail.getSend_time());
@@ -353,7 +356,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         mViewPager.setAdapter(mAdapter);
         mViewPager.startAutoScroll();
 
-        if (detail.getHb_type().equals(Constants.RED_DETAIL_TYPE_COUPON + "")) {
+        if (detail.getHb_type() == Constants.RED_DETAIL_TYPE_COUPON ) {
             mLLStatistics.setVisibility(View.VISIBLE);
         }
 
@@ -409,15 +412,19 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     public void getSuperaddition(RedSuperadditionEntity entity) {
         RedSuperadditionEntity.ResultEntity result = entity.getResult();
 
-        Intent intent = new Intent(this, CreateAdActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, result);
-        startActivity(intent);
+        if(("" + Constants.RED_DETAIL_TYPE_lUCK).equals(entity.getResult().getType()) || ("" + Constants.RED_DETAIL_TYPE_lUCK_LINK).equals(entity.getResult().getType())){
+            Intent intent = new Intent(this, CreateCircleActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY2, result);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, CreateAdActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY, result);
+            startActivity(intent);
+        }
 
         back();
         AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordListActivity.class);
         AppManager.getAppManager().finishActivity(SendRedEnvelopeRecordClassifyActivity.class);
-
-
     }
 
     @Override

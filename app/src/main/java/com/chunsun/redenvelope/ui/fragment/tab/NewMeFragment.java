@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
@@ -40,6 +41,7 @@ import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -69,6 +71,8 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     TextView mTvInviteCode;
     @Bind(R.id.ib_at_me)
     ImageButton mIbAtMe;
+    @Bind(R.id.tv_point)
+    TextView mTvPoint;
     @Bind(R.id.ib_send_ad_record)
     ImageButton mIbSendAdRecord;
     @Bind(R.id.ib_not_receiving)
@@ -89,6 +93,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     private MeFragmentPresenter mPresenter;
     private DecimalFormat mFormat;
     private UserInfoEntity mUserInfoEntity;
+    private String mToken;
 
     public NewMeFragment() {
         // Required empty public constructor
@@ -145,8 +150,8 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     }
 
     public void getData() {
-        mPresenter.getData(new Preferences(getActivity()).getToken());
-//        setData();
+        mToken = new Preferences(getActivity()).getToken();
+        mPresenter.getData(mToken);
     }
 
     @Override
@@ -261,6 +266,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     @Override
     public void refresh(UserInfoEntity entity) {
         mUserInfoEntity = entity;
+        EventBus.getDefault().post(new MainEvent("user_no_read_count"));
         setData();
     }
 
@@ -293,6 +299,19 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                 mUserInfoEntity.getShare_host() + "pages/ticket/list.html?token="
                         + new Preferences(getActivity()).getToken());
         startActivity(intent);
+    }
+
+    /**
+     * 设置用户未读消息数
+     * @param count
+     */
+    public void setPointCount(int count) {
+        if(count != 0){
+            mTvPoint.setVisibility(View.VISIBLE);
+            mTvPoint.setText(count + "");
+        }else{
+            mTvPoint.setVisibility(View.GONE);
+        }
     }
 
     @Override

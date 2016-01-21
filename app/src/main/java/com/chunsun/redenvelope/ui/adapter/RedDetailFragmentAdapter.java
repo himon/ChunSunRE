@@ -17,6 +17,7 @@ import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.Bind;
@@ -35,16 +36,20 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
     private DisplayImageOptions mOptions;
     private View.OnClickListener mOnClickListener;
     private View.OnLongClickListener mOnLongClickListener;
+    private int mHbType;
+    private BigDecimal mShareMinAmount;
 
-    public RedDetailFragmentAdapter(Context context, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
+    public RedDetailFragmentAdapter(Context context, int hb_type, BigDecimal shareMinAmount, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
         this.mListComment = listComment;
         this.mListRedRecord = listRedRecord;
         this.mCurrentCheckType = currentCheckType;
         this.mContext = context;
-        mInflater = LayoutInflater.from(context);
-        mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
+        this.mInflater = LayoutInflater.from(context);
+        this.mOptions = ImageLoaderHelper.getInstance(context).getDisplayOptions(8);
         this.mOnClickListener = onClickListener;
         this.mOnLongClickListener = onLongClickListener;
+        this.mHbType = hb_type;
+        this.mShareMinAmount = shareMinAmount;
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {
@@ -130,8 +135,19 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
                 }
                 RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity record = mListRedRecord.get(position);
                 holder2.tvName.setText(record.getNick_name());
-                holder2.tvPrice.setText(record.getPrice() + "");
-                holder2.tvTime.setText(record.getGrab_time());
+                //TODO
+                if(mShareMinAmount != null) {
+                    int compareTo = mShareMinAmount.compareTo(record.getPrice());
+                    if (compareTo == 1) {
+                        holder2.tvPrice.setText("（已读）");
+                    } else {
+                        if (mHbType == Constants.RED_DETAIL_TYPE_lUCK) {
+                            holder2.tvPrice.setText(record.getPrice() + "元（转发）");
+                        } else {
+                            holder2.tvPrice.setText("（已转发）");
+                        }
+                    }
+                }
                 /**
                  * 判断是否是系统用户
                  */

@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -94,7 +94,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
     private int mBottomSide;
 
     private String mToken;
-    private ShareLimitEntity.ResultEntity mShareLimit;
+    private GrabEntity mGrabEntity;
     //当前显示的webview是第几个
     private int mCurrentPage;
     //web红包类型
@@ -140,7 +140,6 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
                 return mFragments.size();
             }
         };
-
         initEvent();
     }
 
@@ -237,7 +236,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         Intent intent = getIntent();
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
-            mRedType = intent.getIntExtra(Constants.EXTRA_KEY2, 0);
+            mRedType = intent.getIntExtra(Constants.EXTRA_KEY2, Constants.RED_DETAIL_TYPE_LINK);
             if (Constants.RED_DETAIL_TYPE_CIRCLE_LINK == mRedType) {
                 mIbInfo.setVisibility(View.GONE);
                 mRlGetRed.setVisibility(View.GONE);
@@ -245,7 +244,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             }
         }
         mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);
-        mPresenter.getShareLimit(mToken);
+        mPresenter.getGrabByToken(mToken, mRedDetailId);
         showLoading();
     }
 
@@ -259,8 +258,8 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
     }
 
     @Override
-    public void getShareLimit(ShareLimitEntity.ResultEntity result) {
-        mShareLimit = result;
+    public void setGrab(GrabEntity result) {
+        mGrabEntity = result;
     }
 
     @Override
@@ -305,7 +304,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             case R.id.rl_get_red:
                 String path = mRed.getContent().split("，")[mCurrentPage];
                 mRed.setContent(path);
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mShareLimit, Constants.SHARE_FROM_WEB_RED);
+                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity, Constants.SHARE_FROM_WEB_RED);
                 menuWindow.showAtLocation(mLLMain, Gravity.BOTTOM
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -314,6 +313,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
                 Intent intent = new Intent(this, WebRedDetailCommentActivity.class);
                 intent.putExtra(Constants.EXTRA_KEY, mRed.getId());
                 intent.putExtra(Constants.EXTRA_KEY2, mRed.getHb_type());
+                intent.putExtra(Constants.EXTRA_KEY3, mGrabEntity.getResult().getShare_limit().getShare_min_amount());
                 startActivity(intent);
                 break;
             case R.id.rl_collect://收藏
@@ -424,9 +424,9 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         } else if ("hideLoading".equals(event.getMsg())) {//第一个page加载完成后hide loading
             hideLoading();
         } else if ("share".equals(event.getMsg())) {//分享后
-            mPresenter.shareOpen(mToken, mRed.getHg_id(), event.getContent());
+            mPresenter.shareOpen(mToken,  mGrabEntity.getResult().getHb_grab_id(), event.getContent());
         } else if ("no_share".equals(event.getMsg())) {//不分享，直接领钱
-            mPresenter.justOpen(mToken, mRed.getHg_id());
+            mPresenter.justOpen(mToken, mGrabEntity.getResult().getHb_grab_id());
         } else if ("add".equals(event.getMsg())) {
             mTvComment.setText("评论（" + event.getContent() + "）");
         } else {

@@ -2,9 +2,9 @@ package com.chunsun.redenvelope.presenter;
 
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.WebRedDetailMode;
@@ -49,13 +49,8 @@ public class WebRedDetailPresenter extends UserLosePresenter<IWebRedDetailView> 
         mWebRedDetailMode.setFavorite(mToken, id, this);
     }
 
-    /**
-     * 获取分享次数信息
-     *
-     * @param token
-     */
-    public void getShareLimit(String token) {
-        mWebRedDetailMode.getShareLimit(token, this);
+    public void getGrabByToken(String token, String id) {
+        mWebRedDetailMode.getGrabByToken(token, id, this);
     }
 
     /**
@@ -91,9 +86,9 @@ public class WebRedDetailPresenter extends UserLosePresenter<IWebRedDetailView> 
             case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL:
                 getDataSuccess((RedDetailEntity) data);
                 break;
-            case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT:
-                ShareLimitEntity entity = (ShareLimitEntity) data;
-                mIWebRedDetailView.getShareLimit(entity.getResult());
+            case Constants.LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN:
+                GrabEntity entity = (GrabEntity) data;
+                mIWebRedDetailView.setGrab(entity);
                 break;
             case Constants.LISTENER_TYPE_JUST_OPEN_RED:
             case Constants.LISTENER_TYPE_SHARE_OPEN_RED:

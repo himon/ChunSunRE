@@ -11,8 +11,8 @@ import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailPresenter;
@@ -52,9 +52,12 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
     //圈子Fragment
     private CircleDetailFragment mCircleDetailFragment;
     private String mToken;
-    private ShareLimitEntity.ResultEntity mShareLimit;
     //红包类型
     private int mType;
+    /**
+     * grab信息
+     */
+    private GrabEntity mGrabEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +137,8 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         if (mType == Constants.RED_DETAIL_TYPE_CIRCLE) {
             mPresenter.getData(mToken, mRedDetailId);
         } else {
-            //mPresenter.getShareLimit(mToken);
             mPresenter.getGrabByToken(mToken, mRedDetailId);
+            mPresenter.getData(mToken, mRedDetailId);
         }
     }
 
@@ -154,8 +157,8 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         Bundle data = new Bundle();
         data.putParcelable(Constants.EXTRA_KEY, detail);
         data.putStringArrayList(Constants.EXTRA_KEY2, urls);
-        data.putParcelable(Constants.EXTRA_KEY3, mShareLimit);
-        if ((Constants.RED_DETAIL_TYPE_CIRCLE + "").equals(detail.getHb_type())) {
+        data.putParcelable(Constants.EXTRA_KEY3, mGrabEntity);
+        if (Constants.RED_DETAIL_TYPE_CIRCLE == detail.getHb_type()) {
             mCircleDetailFragment = new CircleDetailFragment();
             mCircleDetailFragment.setArguments(data);
             mFragments.add(mCircleDetailFragment);
@@ -170,15 +173,14 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
     }
 
     @Override
-    public void getShareLimit(ShareLimitEntity.ResultEntity result) {
-        mShareLimit = result;
-        mPresenter.getData(mToken, mRedDetailId);
+    public void setGrab(GrabEntity entity) {
+        mGrabEntity = entity;
     }
 
     public void onEvent(RedDetailBackEvent event) {
-        if(TextUtils.isEmpty(event.getMsg())){
+        if (TextUtils.isEmpty(event.getMsg())) {
             back();
-        }else{
+        } else {
             mViewPager.setCurrentItem(mFragments.size() - 1);
         }
     }

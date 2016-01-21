@@ -65,4 +65,6 @@ public class MeFragmentPresenter implements BaseMultiLoadedListener {
     public void onException(String msg) {
         ShowToast.Short(msg);
     }
+
+
 }

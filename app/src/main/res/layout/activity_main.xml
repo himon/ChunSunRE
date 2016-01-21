@@ -94,4 +94,17 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/img_circle_icon_selected" />
 
+    <TextView
+        android:id="@+id/tv_point"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/img_no_read_point"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
 </RelativeLayout>

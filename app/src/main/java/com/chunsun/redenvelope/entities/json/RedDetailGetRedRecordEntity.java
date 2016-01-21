@@ -3,6 +3,7 @@ package com.chunsun.redenvelope.entities.json;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public class RedDetailGetRedRecordEntity extends BaseEntity {
          */
         private List<RecordsEntity> records;
         private int total_count;
+        private BigDecimal share_min_amount;
 
         public void setRecords(List<RecordsEntity> records) {
             this.records = records;
@@ -48,6 +50,14 @@ public class RedDetailGetRedRecordEntity extends BaseEntity {
             return total_count;
         }
 
+        public BigDecimal getShare_min_amount() {
+            return share_min_amount;
+        }
+
+        public void setShare_min_amount(BigDecimal share_min_amount) {
+            this.share_min_amount = share_min_amount;
+        }
+
         public static class RecordsEntity {
             /**
              * img_url :
@@ -61,7 +71,7 @@ public class RedDetailGetRedRecordEntity extends BaseEntity {
             private String nick_name;
             private int id;
             private String grab_time;
-            private double price;
+            private BigDecimal price;
             private String thumb_img_url;
 
             public void setImg_url(String img_url) {
@@ -80,9 +90,6 @@ public class RedDetailGetRedRecordEntity extends BaseEntity {
                 this.grab_time = grab_time;
             }
 
-            public void setPrice(double price) {
-                this.price = price;
-            }
 
             public void setThumb_img_url(String thumb_img_url) {
                 this.thumb_img_url = thumb_img_url;
@@ -104,8 +111,12 @@ public class RedDetailGetRedRecordEntity extends BaseEntity {
                 return grab_time;
             }
 
-            public double getPrice() {
+            public BigDecimal getPrice() {
                 return price;
+            }
+
+            public void setPrice(BigDecimal price) {
+                this.price = price;
             }
 
             public String getThumb_img_url() {

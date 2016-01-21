@@ -19,10 +19,11 @@ import java.util.List;
  * @time 2016/1/19 17:53
  * @des
  */
-public class AtMePresenter extends UserLosePresenter<IAtMeView> implements UserLoseMultiLoadedListener<BaseEntity>{
+public class AtMePresenter extends UserLosePresenter<IAtMeView> implements UserLoseMultiLoadedListener<BaseEntity> {
 
     private IAtMeView mIAtMeView;
     private AtMeMode mAtMeMode;
+    private boolean flag;
 
     public AtMePresenter(IAtMeView view) {
         super();
@@ -32,6 +33,7 @@ public class AtMePresenter extends UserLosePresenter<IAtMeView> implements UserL
 
     /**
      * 获取未读消息
+     *
      * @param token
      * @param page_index
      */
@@ -39,10 +41,24 @@ public class AtMePresenter extends UserLosePresenter<IAtMeView> implements UserL
         this.mAtMeMode.getUserNoReadMessage(token, page_index, this);
     }
 
+    /**
+     * 清空未读消息
+     *
+     * @param token
+     * @param type
+     */
+    public void userReadMessage(String token, int type) {
+        this.mAtMeMode.userReadMessage(token, type, this);
+    }
+
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
-        switch (event_tag){
+        switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_USER_NO_READ_MESSAGE:
+                if (!flag) {
+                    mIAtMeView.clearNoReadCount();
+                    flag = true;
+                }
                 List<AtMessageEntity.ResultEntity> list = ((AtMessageEntity) data).getResult();
                 mIAtMeView.setData(list);
                 break;

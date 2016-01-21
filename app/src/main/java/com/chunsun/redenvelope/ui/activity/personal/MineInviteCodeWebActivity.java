@@ -127,7 +127,7 @@ public class MineInviteCodeWebActivity extends BaseActivity implements IMineInvi
             detail.setCover_img_url(result.getImg_url());
         }
         detail.setShare_host(result.getShare_host());
-        detail.setHb_type("-1");//设置红包类型为-1，表示是分享邀请码
+        detail.setHb_type(-1);//设置红包类型为-1，表示是分享邀请码
         ShareRedEnvelopePopupWindow shareRedEnvelopePopupWindow = new ShareRedEnvelopePopupWindow(this, detail);
         shareRedEnvelopePopupWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }

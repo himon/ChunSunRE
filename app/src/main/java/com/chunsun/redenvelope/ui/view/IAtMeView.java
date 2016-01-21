@@ -13,4 +13,9 @@ import java.util.List;
 public interface IAtMeView {
 
     void setData(List<AtMessageEntity.ResultEntity> list);
+
+    /**
+     * 未读消息清空
+     */
+    void clearNoReadCount();
 }

@@ -6,7 +6,6 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailMode;
 import com.chunsun.redenvelope.model.impl.RedDetailModeImpl;
@@ -23,6 +22,7 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
     private IRedDetailView mIRedDetailView;
     private RedDetailMode mRedDetailMode;
 
+
     public RedDetailPresenter(IRedDetailView redDetailView) {
         this.mIRedDetailView = redDetailView;
         mRedDetailMode = new RedDetailModeImpl((RedDetailActivity) redDetailView);
@@ -30,15 +30,6 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
 
     public void getData(String token, String id) {
         mRedDetailMode.getRedData(token, id, this);
-    }
-
-    /**
-     * 获取分享次数信息
-     *
-     * @param token
-     */
-    public void getShareLimit(String token) {
-        mRedDetailMode.getShareLimit(token, this);
     }
 
     public void getGrabByToken(String token, String id) {
@@ -63,7 +54,7 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
     }
 
     private void grabData(GrabEntity entity) {
-
+        mIRedDetailView.setGrab(entity);
     }
 
     @Override
@@ -71,11 +62,6 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
         switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL:
                 getDataSuccess((RedDetailEntity) data);
-                break;
-            case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_LIMIT:
-                ShareLimitEntity entity = (ShareLimitEntity) data;
-                ShareLimitEntity.ResultEntity result = entity.getResult();
-                mIRedDetailView.getShareLimit(result);
                 break;
             case Constants.LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN:
                 grabData((GrabEntity) data);

@@ -182,8 +182,6 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
-        mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -260,6 +258,10 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
         mUrls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
         mShareLimitResult = bundle.getParcelable(Constants.EXTRA_KEY3);
+
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), null, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mListView.setAdapter(mDataAdapter);
+
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(mDetail.getNick_name());
         //判断是否是代理

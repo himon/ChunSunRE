@@ -311,7 +311,7 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
         detail.setTitle(mAdEntity.getTitle());
         detail.setContent(mAdEntity.getContent());
         detail.setCover_img_url(mCoverPath);
-        detail.setHb_type(mAdEntity.getType().getKey());
+        detail.setHb_type(Integer.parseInt(mAdEntity.getType().getKey()));
 
         Intent intent = new Intent(this, CreateCircleResultActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, detail);

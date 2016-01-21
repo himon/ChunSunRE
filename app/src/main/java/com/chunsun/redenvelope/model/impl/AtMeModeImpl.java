@@ -24,4 +24,9 @@ public class AtMeModeImpl extends BaseModeImpl implements AtMeMode{
     public void getUserNoReadMessage(String token, int page_index, UserLoseMultiLoadedListener listener) {
         mManager.getUserNoReadMessage(token, page_index, listener, mActivity);
     }
+
+    @Override
+    public void userReadMessage(String token, int type, UserLoseMultiLoadedListener listener) {
+        mManager.userReadMessage(token, type, listener, mActivity);
+    }
 }

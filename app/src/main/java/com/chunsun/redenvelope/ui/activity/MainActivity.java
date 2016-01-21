@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chunsun.redenvelope.R;
@@ -22,9 +23,11 @@ import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.callback.LoginCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.TitlePopupItemEntity;
+import com.chunsun.redenvelope.entities.json.UserNoReadCountEntity;
 import com.chunsun.redenvelope.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
+import com.chunsun.redenvelope.presenter.MainPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.ad.CreateCircleActivity;
@@ -47,6 +50,7 @@ import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -71,6 +75,8 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     ViewPager mViewPager;
     @Bind(R.id.iv_toInteractive)
     ImageView mIvInteractive;
+    @Bind(R.id.tv_point)
+    TextView mTvPoint;
 
 
     private ArrayList<ChangeColorIconWithText> mTabIndicators = new ArrayList<ChangeColorIconWithText>();
@@ -92,6 +98,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     private TitlePopup mTitlePopup;
     //圈子排序弹窗按钮
     private TitlePopup mOrderPopup;
+    private MainPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +106,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        mPresenter = new MainPresenter(this);
         initView();
         initData();
         initXinGe();
@@ -204,16 +212,16 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         mTitlePopup.setItemOnClickListener(new TitlePopup.OnItemOnClickListener() {
             @Override
             public void onItemClick(TitlePopupItemEntity item, int position) {
-                    switch (position) {
-                        case 0:
-                            toInteract();
-                            break;
-                        case 1:
-                            toScan();
-                        case 2:
-                            toTaskList();
-                            break;
-                    }
+                switch (position) {
+                    case 0:
+                        toInteract();
+                        break;
+                    case 1:
+                        toScan();
+                    case 2:
+                        toTaskList();
+                        break;
+                }
             }
         });
 
@@ -467,7 +475,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
      */
     @Override
     public void toInteract() {
-        if(LoginContext.getLoginContext().forward(MainActivity.this, Constants.FROM_TAB1)){
+        if (LoginContext.getLoginContext().forward(MainActivity.this, Constants.FROM_TAB1)) {
             Intent intent = new Intent(this, InteractivePlatformActivity.class);
             startActivity(intent);
         }
@@ -490,6 +498,18 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         Intent intent = new Intent(this, TaskListActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, Constants.TASK_AD_TYPE);
         startActivity(intent);
+    }
+
+    @Override
+    public void setUserNoReadCount(List<UserNoReadCountEntity.ResultEntity> list) {
+        UserNoReadCountEntity.ResultEntity entity = list.get(0);
+        if (entity.getNoReadCount() != 0) {
+            mTvPoint.setVisibility(View.VISIBLE);
+            mTvPoint.setText(entity.getNoReadCount() + "");
+            mMeFragment.setPointCount(entity.getNoReadCount());
+        } else {
+            mTvPoint.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -539,14 +559,16 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             mMeFragment.getData();
             mInteractiveFragment.getAllData();
             showTitleBar(R.id.indicator_me);
-        }else if(Constants.FROM_COMMENT.equals(event.getMsg())){
+        } else if (Constants.FROM_COMMENT.equals(event.getMsg())) {
             mMeFragment.getData();
             mInteractiveFragment.getAllData();
-        }else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
+        } else if (Constants.USER_INFO_PASS_FROM_ME.equals(event.getMsg())) {
             toLogin(Constants.FROM_ME);
         } else if (Constants.SUPERADDITION_AD.equals(event.getMsg())) {//追加
             mTabIndicators.get(1).setmIcon(bitmaps.get(5), mSelectedColor);
             mViewPager.setCurrentItem(1, false);
+        } else if ("user_no_read_count".equals(event.getMsg())) {//获取用户未读消息
+            mPresenter.getUserNoReadCount(new Preferences(this).getToken());
         }
     }
 

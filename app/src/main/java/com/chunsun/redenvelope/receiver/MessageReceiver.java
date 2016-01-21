@@ -11,11 +11,17 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
+import com.chunsun.redenvelope.ui.activity.InteractivePlatformActivity;
+import com.chunsun.redenvelope.ui.activity.personal.MyCircleListActivity;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassifyActivity;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
 import com.chunsun.redenvelope.ui.activity.red.PushNoticeShowActivity;
+import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -26,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Random;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author Administrator
@@ -104,9 +112,9 @@ public class MessageReceiver extends XGPushBaseReceiver {
                 e.printStackTrace();
             }
         } else {
-
             Intent intent = new Intent();
-
+            notification(context, intent, xgPushTextMessage.getTitle(),
+                    xgPushTextMessage.getContent());
         }
     }
 
@@ -142,9 +150,12 @@ public class MessageReceiver extends XGPushBaseReceiver {
         try {
             type = objCustom.getString("type");
 
-            if (type.equals("wdhb")) {
+            if ("wdhb".equals(type)) {
                 intent = new Intent(context,
                         SendRedEnvelopeRecordClassifyActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }else if("wdqz".equals(type)){//我的圈子
+                intent = new Intent(context, MyCircleListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             } else if (type.equals("v")) {
                 new Thread() {
@@ -180,6 +191,56 @@ public class MessageReceiver extends XGPushBaseReceiver {
                 intent.putExtra(
                         Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_CONTENT,
                         content);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            }else if (type.equals("hb")) {// 红包被@
+                String value = objCustom.getString("id");
+                String sub_type = objCustom.getString("sub_type");
+                if ("tw".equals(sub_type) || "q".equals(sub_type)
+                        || "ptw".equals(sub_type)) {
+                    intent = new Intent(context,
+                            RedDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, value);
+                    intent.putExtra(Constants.EXTRA_KEY2, sub_type);
+                } else if ("lj".equals(sub_type) || "plj".equals(sub_type)) {
+                    intent = new Intent(context,
+                            WebRedDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, value);
+                    intent.putExtra(Constants.EXTRA_KEY2, sub_type);
+                } else if ("zf".equals(sub_type)) {
+                    intent = new Intent(context,
+                            RepeatRedDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, value);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //
+                EventBus.getDefault().post(new MainEvent("user_no_read_count"));
+            } else if (type.equals("qz")) {// 圈子被@
+                String value = objCustom.getString("id");
+                String sub_type = objCustom.getString("sub_type");
+                if ("tw".equals(sub_type)) {
+                    intent = new Intent(context,
+                            RedDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, value);
+                    intent.putExtra(Constants.EXTRA_KEY2, sub_type);
+                } else if ("lj".equals(sub_type)) {
+                    intent = new Intent(context,
+                            WebRedDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, value);
+                    intent.putExtra(Constants.EXTRA_KEY2, sub_type);
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //
+                EventBus.getDefault().post(new MainEvent("user_no_read_count"));
+            } else if ("hdpt".equals(type)) {// 互动平台被@
+                String value = objCustom.getString("city");
+                if ("全国".equals(value)) {
+                    intent = new Intent(context,
+                            InteractivePlatformActivity.class);
+                } else {
+                    intent = new Intent(context,
+                            InteractivePlatformActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY, "city");
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
         } catch (JSONException e) {
