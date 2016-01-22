@@ -2438,7 +2438,7 @@ public class HttpManager {
                 params.put("img_byte_str8", adEntity.getImagePath8());
                 params.put("province", adEntity.getProvince().getP());
                 params.put("city", adEntity.getCity().getC());
-                params.put("range", adEntity.getDistance().getKey());
+                params.put("range", adEntity.getDistance().getCount());
                 params.put("longitude", MainApplication.getContext().getLongitude() + "");
                 params.put("latitude", MainApplication.getContext().getLatitude() + "");
                 params.put("everyday_count", adEntity.getNum());

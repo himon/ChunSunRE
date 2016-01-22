@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.LuckMealsEntity;
+import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.presenter.CreateLuckNextPresenter;
 import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -85,6 +86,8 @@ public class CreateLuckNextActivity extends MBaseActivity implements ICreateLuck
     @Bind(R.id.btn_next_step)
     Button mBtnNext;
 
+    //追加的广告信息
+    private RedSuperadditionEntity.ResultEntity mSuperadditionEntity;
     private CreateLuckNextPresenter mPresenter;
     private DecimalFormat format;
 
@@ -193,6 +196,7 @@ public class CreateLuckNextActivity extends MBaseActivity implements ICreateLuck
         Intent intent = getIntent();
         if (intent != null) {
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
+            mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
         }
         mPresenter.getFightLuckPackageList();
         format = new DecimalFormat("0.0");
@@ -272,7 +276,7 @@ public class CreateLuckNextActivity extends MBaseActivity implements ICreateLuck
         Intent intent = new Intent(this, CreateAdContentActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
         // 追加的数据
-        //intent.putExtra(Constants.MESSAGE_EXTRA2, mSuperadditionDetail);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
 
@@ -283,7 +287,46 @@ public class CreateLuckNextActivity extends MBaseActivity implements ICreateLuck
     }
 
     private void initMeals(List<LuckMealsEntity.ResultEntity> result) {
-        mEntity = mList.get(0);
+        if (mSuperadditionEntity != null) {
+            String id = mSuperadditionEntity.getFight_package_id();
+            for (int i = 0; i < mList.size(); i++) {
+                LuckMealsEntity.ResultEntity item = mList.get(i);
+                if (id.equals(item.getId())) {
+                    mEntity = item;
+                    switch (i) {
+                        case 0:
+                            mRbFirst.setChecked(true);
+                            break;
+                        case 1:
+                            mRbSecond.setChecked(true);
+                            break;
+                        case 2:
+                            mRbThird.setChecked(true);
+                            break;
+                        case 3:
+                            mRbForth.setChecked(true);
+                            break;
+                    }
+                    break;
+                }
+            }
+            //如果没有找到套餐id，就默认第一个
+            if (mEntity == null) {
+                mEntity = mList.get(0);
+            }
+            multiple = Integer.parseInt(mSuperadditionEntity.getFight_multiple());
+            mTvMultiple.setText(multiple + "");
+            num = Integer.parseInt(mSuperadditionEntity.getEveryday_count());
+            if (!TextUtils.isEmpty(mSuperadditionEntity.getTime())) {
+                mRbAtTime.setChecked(true);
+                mLLAtTime.setVisibility(View.VISIBLE);
+                String[] date = mSuperadditionEntity.getTime().split(":");
+                mTvHour.setText(date[0]);
+                mTvMinutes.setText(date[1]);
+            }
+        } else {
+            mEntity = mList.get(0);
+        }
         // 定时
         long now = System.currentTimeMillis() + 1800000;
         Calendar calendar = Calendar.getInstance();

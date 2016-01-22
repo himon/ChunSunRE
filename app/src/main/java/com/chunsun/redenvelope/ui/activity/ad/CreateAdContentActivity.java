@@ -196,15 +196,14 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
      * 初始化追加
      */
     private void initSuperaddition() {
+        selectedPhotos.clear();
+
         mEtTitle.setText(mSuperadditionEntity.getTitle());
         mEtContent.setText(mSuperadditionEntity.getContent());
         setCoverImage(Constants.IMG_HOST_URL + mSuperadditionEntity.getCover_img_url());
-        mAdEntity.setCoverImagePath(Constants.IMG_HOST_URL + mSuperadditionEntity.getCover_img_url());
 
-        selectedPhotos.clear();
         String[] split = mSuperadditionEntity.getImg_url().split(",");
-
-        if (split != null && split.length > 0) {
+        if (split != null && !TextUtils.isEmpty(split[0])) {
             for (int i = 0; i < split.length; i++) {
                 selectedPhotos.add(Constants.IMG_HOST_URL + split[i]);
                 switch (i) {
@@ -253,13 +252,18 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
                 selectCoverImage();
                 break;
             case R.id.btn_next_step://提交
+                showLoading();
                 if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "")) {
                     mPresenter.commitCircle(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                 } else if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK_LINK + "")) {
-                    mPresenter.commitLuck(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                    if (mSuperadditionEntity != null) {
+                        mPresenter.superadditionCommit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos, this);
+                    }else {
+                        mPresenter.commitLuck(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
+                    }
                 } else {
                     if (mSuperadditionEntity != null) {
-                        mPresenter.superadditionCommit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos);
+                        mPresenter.superadditionCommit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos, this);
                     } else {
                         mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                     }
@@ -293,6 +297,7 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
 
     /**
      * 拼手气支付界面
+     *
      * @param result
      */
     @Override
@@ -455,6 +460,50 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
             mAdEntity.setCoverImagePath(path);
         }
     }
+
+//    private void downloadBitmap(String path, final int index) {
+//        Glide.with(this)
+//                .load(path)
+//                .asBitmap()
+//                .toBytes()
+//                .centerCrop()
+//                .into(new SimpleTarget<byte[]>(800, 480) {
+//                    @Override
+//                    public void onResourceReady(byte[] data, GlideAnimation anim) {
+//                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+//                        String base64 = Base64Utils.bitmapToBase64(bitmap);
+//                        switch (index) {
+//                            case 0:
+//                                mAdEntity.setImagePath(base64);
+//                                break;
+//                            case 1:
+//                                mAdEntity.setImagePath2(base64);
+//                                break;
+//                            case 2:
+//                                mAdEntity.setImagePath3(base64);
+//                                break;
+//                            case 3:
+//                                mAdEntity.setImagePath4(base64);
+//                                break;
+//                            case 4:
+//                                mAdEntity.setImagePath5(base64);
+//                                break;
+//                            case 5:
+//                                mAdEntity.setImagePath6(base64);
+//                                break;
+//                            case 6:
+//                                mAdEntity.setImagePath7(base64);
+//                                break;
+//                            case 7:
+//                                mAdEntity.setImagePath8(base64);
+//                                break;
+//                            default:
+//                                mAdEntity.setCoverImagePath(base64);
+//                                break;
+//                        }
+//                    }
+//                });
+//    }
 
     @Override
     protected void onDestroy() {

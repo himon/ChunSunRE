@@ -243,7 +243,7 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
                     this.mAdEntity.setType(item);
                 }
             }
-            if (mSuperadditionEntity.getType().equals(Constants.RED_DETAIL_TYPE_NEAR)) {
+            if (mSuperadditionEntity.getType().equals(Constants.RED_DETAIL_TYPE_NEAR) || !"0.00".equals(mSuperadditionEntity.getRange())) {
                 //范围
                 for (SampleEntity item : mDistanceList) {
                     if (mSuperadditionEntity.getRange().equals(item.getCount())) {

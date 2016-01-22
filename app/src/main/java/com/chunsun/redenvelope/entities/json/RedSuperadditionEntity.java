@@ -65,6 +65,10 @@ public class RedSuperadditionEntity extends BaseEntity {
         private String delay_seconds_poundage_id;
         private String start_time;
         private String end_time;
+        //拼手气套餐ID
+        private String fight_package_id;
+        //拼手气套餐倍数
+        private String fight_multiple;
 
         public void setCover_img_url(String cover_img_url) {
             this.cover_img_url = cover_img_url;
@@ -226,6 +230,22 @@ public class RedSuperadditionEntity extends BaseEntity {
             this.end_time = end_time;
         }
 
+        public String getFight_package_id() {
+            return fight_package_id;
+        }
+
+        public void setFight_package_id(String fight_package_id) {
+            this.fight_package_id = fight_package_id;
+        }
+
+        public String getFight_multiple() {
+            return fight_multiple;
+        }
+
+        public void setFight_multiple(String fight_multiple) {
+            this.fight_multiple = fight_multiple;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -253,6 +273,8 @@ public class RedSuperadditionEntity extends BaseEntity {
             dest.writeString(this.delay_seconds_poundage_id);
             dest.writeString(this.start_time);
             dest.writeString(this.end_time);
+            dest.writeString(this.fight_package_id);
+            dest.writeString(this.fight_multiple);
         }
 
         public ResultEntity() {
@@ -279,6 +301,8 @@ public class RedSuperadditionEntity extends BaseEntity {
             this.delay_seconds_poundage_id = in.readString();
             this.start_time = in.readString();
             this.end_time = in.readString();
+            this.fight_package_id = in.readString();
+            this.fight_multiple = in.readString();
         }
 
         public static final Parcelable.Creator<ResultEntity> CREATOR = new Parcelable.Creator<ResultEntity>() {

@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
@@ -80,6 +81,7 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
 
     @Override
     public void onError(int event_tag, String msg) {
+        mICreateAdContentView.hideLoading();
         switch (event_tag) {
             case Constants.LISTENER_TYPE_COMMIT_CIRCLE:
                 mICreateAdContentView.toCreateError();
@@ -113,38 +115,41 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
      * @param content
      * @param selectedPhotos
      */
-    public void superadditionCommit(final String token, final AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos) {
+    public void superadditionCommit(final String token, final AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos, Context context) {
 
         if (validateBaseInfo(adEntity, title, content)) {
             return;
         }
-        mICreateAdContentView.showLoading();
-
         mBitmapList = new ArrayList<>();
         selectedPhotos.add(0, adEntity.getCoverImagePath());
-        final int length = selectedPhotos.size() < 8 ? selectedPhotos.size() - 1 : selectedPhotos.size();
+        final int length = selectedPhotos.size();
         for (int i = 0; i < length; i++) {
-            String path = selectedPhotos.get(i);
-            Glide.with((CreateAdContentActivity) mICreateAdContentView)
-                    .load(path)
-                    .asBitmap()
-                    .into(new SimpleTarget<Bitmap>(800, 480) {
-                        @Override
-                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
-                            mBitmapList.add(bitmap);
-                            toBitmapCount++;
-                            if (toBitmapCount == length) {
-                                bitmapToString(token, adEntity, title, content);
-                                toBitmapCount = 0;
-                                mBitmapList.clear();
-                            }
-                        }
-                    });
+            downloadBitmap(token, adEntity, title, content, selectedPhotos, context, length, i);
         }
+    }
+
+    private void downloadBitmap(final String token, final AdEntity adEntity, final String title, final String content, ArrayList<String> selectedPhotos, Context context, final int length, final int i) {
+        String path = selectedPhotos.get(i);
+        Glide.with(context)
+                .load(path)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>(800, 480) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                        mBitmapList.add(i, bitmap);
+                        toBitmapCount++;
+                        if (toBitmapCount == length) {
+                            bitmapToString(token, adEntity, title, content);
+                            toBitmapCount = 0;
+                            mBitmapList.clear();
+                        }
+                    }
+                });
     }
 
     /**
      * 拼手气红包创建
+     *
      * @param mToken
      * @param mAdEntity
      * @param title
@@ -183,7 +188,6 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
      * @param mPhotos
      */
     private void convertBitmap(AdEntity mAdEntity, ArrayList<Photo> mPhotos) {
-        mICreateAdContentView.showLoading();
 
         for (int i = 0; i < mPhotos.size(); i++) {
 
@@ -264,7 +268,11 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
                 }
             }
         }
-        mCreateAdContentMode.commitAdCreate(token, adEntity, title, content, this);
+        if(adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK)) || adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK_LINK))){
+            mCreateAdContentMode.commitLuckCreate(token, adEntity, title, content, this);
+        }else {
+            mCreateAdContentMode.commitAdCreate(token, adEntity, title, content, this);
+        }
     }
 
     /**

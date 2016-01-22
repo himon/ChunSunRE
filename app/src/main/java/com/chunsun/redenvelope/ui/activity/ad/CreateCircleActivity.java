@@ -136,7 +136,7 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
             }
         }
         mAdEntity.setType(entity);
-        mPresenter.getData(mAdEntity, null);
+        mPresenter.getData(mAdEntity, mSuperadditionEntity);
     }
 
     @Override
@@ -206,6 +206,7 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
             intent = new Intent(this, CreateAdContentActivity.class);
         }
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
+        intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
         startActivity(intent);
     }
 
@@ -216,5 +217,12 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
         mTvProvince.setText(mAdEntity.getProvince().getP());
         mTvCity.setText(mAdEntity.getCity().getC());
         mTvRange.setText(mAdEntity.getDistance().getValue());
+
+        String type = mAdEntity.getType().getKey();
+        if(("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(type) || ("" + Constants.RED_DETAIL_TYPE_lUCK).equals(type)){
+            mRbImageText.setChecked(true);
+        }else{
+            mRbImageText.setChecked(true);
+        }
     }
 }
