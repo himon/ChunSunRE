@@ -92,10 +92,11 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
      * @param context
      * @param detail
      */
-    public ShareRedEnvelopePopupWindow(FragmentActivity context, RedDetailEntity.ResultEntity.DetailEntity detail) {
+    public ShareRedEnvelopePopupWindow(FragmentActivity context, RedDetailEntity.ResultEntity.DetailEntity detail, GrabEntity grabEntity) {
         super(context);
         this.mContext = context;
         this.mDetail = detail;
+        this.mGrabEntity = grabEntity;
 
         initView();
         initShareSDK();
@@ -253,7 +254,7 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
 
     private void initData(String shareHost) {
         if (mDetail != null) {
-            if (4 == mDetail.getHb_type() || 8 == mDetail.getHb_type()) {
+            if (4 == mDetail.getHb_type() || 8 == mDetail.getHb_type() || 10 == mDetail.getHb_type()) {
                 mShowUrl = mDetail.getContent();
                 mDetail.setContent("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
             } else if (-1 == mDetail.getHb_type()) {// 邀请码分享

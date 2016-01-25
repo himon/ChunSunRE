@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
@@ -40,6 +41,10 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
      */
     public void getCommentList(String hb_id, int page_index) {
         redDetailFragmentMode.getCommentList(hb_id, page_index, this);
+    }
+
+    public void getGrabByToken(String token, String id) {
+        redDetailFragmentMode.getGrabByToken(token, id, this);
     }
 
     /**
@@ -150,8 +155,7 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
 
     /**
      * 分享
-     *
-     * @param token
+     *  @param token
      * @param grab_id
      * @param shareType
      */
@@ -189,6 +193,13 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
                 ShowToast.Short(((SampleResponseEntity) data).getMsg());
                 redDetailFragmentView.shareSuccess();
                 break;
+            case Constants.LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN:
+                grabData((GrabEntity) data);
+                break;
         }
+    }
+
+    private void grabData(GrabEntity entity) {
+        redDetailFragmentView.setGrab(entity);
     }
 }

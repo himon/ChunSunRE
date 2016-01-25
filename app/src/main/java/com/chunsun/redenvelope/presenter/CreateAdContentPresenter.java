@@ -99,8 +99,10 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
      */
     public void commit(String token, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
 
-        if (validateBaseInfo(mAdEntity, title, content))
+        if (validateBaseInfo(mAdEntity, title, content)) {
+            mICreateAdContentView.hideLoading();
             return;
+        }
 
         convertBitmap(mAdEntity, mPhotos);
         mCreateAdContentMode.commitAdCreate(token, mAdEntity, title, content, this);
@@ -118,6 +120,7 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
     public void superadditionCommit(final String token, final AdEntity adEntity, final String title, final String content, final ArrayList<String> selectedPhotos, Context context) {
 
         if (validateBaseInfo(adEntity, title, content)) {
+            mICreateAdContentView.hideLoading();
             return;
         }
         mBitmapList = new ArrayList<>();
@@ -157,8 +160,10 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
      * @param mPhotos
      */
     public void commitLuck(String mToken, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
-        if (validateBaseInfo(mAdEntity, title, content))
+        if (validateBaseInfo(mAdEntity, title, content)) {
+            mICreateAdContentView.hideLoading();
             return;
+        }
 
         convertBitmap(mAdEntity, mPhotos);
         mCreateAdContentMode.commitLuckCreate(mToken, mAdEntity, title, content, this);
@@ -174,8 +179,10 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
      * @param mPhotos
      */
     public void commitCircle(String mToken, AdEntity mAdEntity, String title, String content, ArrayList<Photo> mPhotos) {
-        if (validateBaseInfo(mAdEntity, title, content))
+        if (validateBaseInfo(mAdEntity, title, content)) {
+            mICreateAdContentView.hideLoading();
             return;
+        }
 
         convertBitmap(mAdEntity, mPhotos);
         mCreateAdContentMode.commitCircleCreate(mToken, mAdEntity, title, content, this);
@@ -268,9 +275,9 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
                 }
             }
         }
-        if(adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK)) || adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK_LINK))){
+        if (adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK)) || adEntity.getType().getKey().equals(("" + Constants.RED_DETAIL_TYPE_lUCK_LINK))) {
             mCreateAdContentMode.commitLuckCreate(token, adEntity, title, content, this);
-        }else {
+        } else {
             mCreateAdContentMode.commitAdCreate(token, adEntity, title, content, this);
         }
     }

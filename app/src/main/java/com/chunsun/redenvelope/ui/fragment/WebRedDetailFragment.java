@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -52,6 +53,20 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected void initView() {
+        // 不设置播放不了视频
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                System.out.println("newProgress：" + newProgress);
+                if (newProgress > 80) {
+                    if (mFlag) {
+                        EventBus.getDefault().post(new WebRedDetailEvent("hideLoading"));
+                    }
+                }
+            }
+        });
+
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedError(WebView view, int errorCode,
@@ -65,9 +80,6 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (mFlag) {
-                    EventBus.getDefault().post(new WebRedDetailEvent("hideLoading"));
-                }
                 if (mIsSuccessLoad) {
                     mWebView.setVisibility(View.VISIBLE);
                 } else {
@@ -77,6 +89,16 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
         });
         WebSettings setting = mWebView.getSettings();
         setting.setJavaScriptEnabled(true);
+        // 设置 缓存模式
+        setting.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 开启 DOM storage API 功能
+        setting.setDomStorageEnabled(true);
+        setting.setPluginState(WebSettings.PluginState.ON);
+        setting.setJavaScriptCanOpenWindowsAutomatically(true);
+        setting.setAllowFileAccess(true);
+        setting.setDefaultTextEncodingName("UTF-8");
+        setting.setLoadWithOverviewMode(true);
+        setting.setUseWideViewPort(true);
         initEvent();
     }
 

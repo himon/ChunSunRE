@@ -39,7 +39,7 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
     private int mHbType;
     private BigDecimal mShareMinAmount;
 
-    public RedDetailFragmentAdapter(Context context, int hb_type, BigDecimal shareMinAmount, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
+    public RedDetailFragmentAdapter(Context context, int hb_type, List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType, View.OnClickListener onClickListener, View.OnLongClickListener onLongClickListener) {
         this.mListComment = listComment;
         this.mListRedRecord = listRedRecord;
         this.mCurrentCheckType = currentCheckType;
@@ -49,7 +49,12 @@ public class RedDetailFragmentAdapter extends BaseAdapter {
         this.mOnClickListener = onClickListener;
         this.mOnLongClickListener = onLongClickListener;
         this.mHbType = hb_type;
-        this.mShareMinAmount = shareMinAmount;
+    }
+
+    public void setShareMinAmount(BigDecimal share_min_amount) {
+        if(mShareMinAmount == null){
+            mShareMinAmount = share_min_amount;
+        }
     }
 
     public void setData(List<RedDetailCommentEntity.ResultEntity.ListEntity> listComment, List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> listRedRecord, int currentCheckType) {

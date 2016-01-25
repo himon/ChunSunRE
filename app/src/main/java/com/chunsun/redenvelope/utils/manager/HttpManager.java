@@ -428,7 +428,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void loadData(final String token, final UserLoseMultiLoadedListener listener, final Activity activity) {
+    public void loadData(final String token, final String url, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<RedDetailUnReceiveAndCollectEntity> request = new GsonRequest<RedDetailUnReceiveAndCollectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 RedDetailUnReceiveAndCollectEntity.class, null, new Response.Listener<RedDetailUnReceiveAndCollectEntity>() {
 
@@ -455,7 +455,7 @@ public class HttpManager {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("methodName", Constants.HB_FAVORITE_JSON_REQUEST_URL);
+                params.put("methodName", url);
                 params.put("parames", JsonManager.initDataTokenToJson(token));
                 return params;
             }
@@ -2037,16 +2037,20 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void logout(final String token, final BaseSingleLoadedListener listener, Activity activity) {
+    public void logout(final String token, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
 
             @Override
             public void onResponse(SampleResponseEntity response) {
                 if (response.isSuccess()) {
-                    listener.onSuccess(response);
+                    listener.onSuccess(Constants.LISTENER_TYPE_LOGOUT, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -2539,7 +2543,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void getUserNoReadMessage(final String token, final int page_index, final UserLoseMultiLoadedListener listener, Activity activity) {
+    public void getUserNoReadMessage(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity) {
         GsonRequest<AtMessageEntity> request = new GsonRequest<AtMessageEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 AtMessageEntity.class, null, new Response.Listener<AtMessageEntity>() {
 
@@ -2548,7 +2552,11 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_NO_READ_MESSAGE, response);
                 } else {
-                    listener.onError(response.getMsg());
+                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
+                        listener.onError(response.getMsg(), activity, Constants.FROM_ME);
+                    } else {
+                        listener.onError(response.getMsg());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -2572,7 +2580,7 @@ public class HttpManager {
         RequestManager.addRequest(request, activity);
     }
 
-    public void getGrabByToken(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, Activity activity) {
+    public void getGrabByToken(final String token, final String hb_id, final UserLoseMultiLoadedListener listener, Activity activity, Fragment fragment) {
         GsonRequest<GrabEntity> request = new GsonRequest<GrabEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 GrabEntity.class, null, new Response.Listener<GrabEntity>() {
 
@@ -2596,7 +2604,11 @@ public class HttpManager {
                 return params;
             }
         };
-        RequestManager.addRequest(request, activity);
+        if (fragment == null) {
+            RequestManager.addRequest(request, activity);
+        } else {
+            RequestManager.addRequest(request, fragment);
+        }
     }
 
     /**
@@ -2635,6 +2647,7 @@ public class HttpManager {
 
     /**
      * 清空未读消息
+     *
      * @param token
      * @param type
      * @param listener

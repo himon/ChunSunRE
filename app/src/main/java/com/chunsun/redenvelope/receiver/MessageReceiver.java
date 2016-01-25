@@ -242,6 +242,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                     intent.putExtra(Constants.EXTRA_KEY, "city");
                 }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                EventBus.getDefault().post(new MainEvent("user_no_read_count"));
             }
         } catch (JSONException e) {
             e.printStackTrace();

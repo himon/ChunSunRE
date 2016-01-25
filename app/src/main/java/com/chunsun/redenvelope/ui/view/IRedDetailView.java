@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.ui.view;
 
-import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 
 import java.util.ArrayList;
@@ -11,6 +10,4 @@ import java.util.ArrayList;
 public interface IRedDetailView  {
 
     void setData(ArrayList<String> list,  RedDetailEntity.ResultEntity.DetailEntity detail);
-
-    void setGrab(GrabEntity entity);
 }

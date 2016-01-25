@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
-import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RedDetailMode;
@@ -32,10 +31,6 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
         mRedDetailMode.getRedData(token, id, this);
     }
 
-    public void getGrabByToken(String token, String id) {
-        mRedDetailMode.getGrabByToken(token, id, this);
-    }
-
     public void getDataSuccess(RedDetailEntity entity) {
         RedDetailEntity.ResultEntity.DetailEntity detail = entity.getResult().getDetail();
 
@@ -53,19 +48,13 @@ public class RedDetailPresenter extends UserLosePresenter<IRedDetailView> implem
         mIRedDetailView.setData(list, detail);
     }
 
-    private void grabData(GrabEntity entity) {
-        mIRedDetailView.setGrab(entity);
-    }
-
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_RED_ENVELOPE_DETAIL:
                 getDataSuccess((RedDetailEntity) data);
                 break;
-            case Constants.LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN:
-                grabData((GrabEntity) data);
-                break;
+
         }
     }
 

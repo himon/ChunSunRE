@@ -104,11 +104,14 @@ public class ShareSdkHelper implements PlatformActionListener {
         }
         //图片网络地址
         sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
+        //sp.setImageUrl("http://f1.sharesdk.cn/imgs/2014/05/21/oESpJ78_533x800.jpg");
+        sp.setImagePath(null);
         //发布分享的网站名称
         sp.setSite(mContext.getString(R.string.app_name));
         //发布分享网站的地址
         sp.setSiteUrl(url);
-
+        sp.setTitleUrl(url);
+        sp.setUrl(url);
         Platform qzone = ShareSDK.getPlatform(QZone.NAME);
         // 设置分享事件回调
         qzone.setPlatformActionListener(this);
@@ -208,7 +211,7 @@ public class ShareSdkHelper implements PlatformActionListener {
                             EventBus.getDefault().post(share);
                             break;
                         case Constants.SHARE_FROM_RED:
-                            if ((Constants.RED_DETAIL_TYPE_COUPON + "").equals(mDetailEntity.getHb_type())) {
+                            if (Constants.RED_DETAIL_TYPE_COUPON == mDetailEntity.getHb_type()) {
                                 CouponRedDetailEvent couponRedShare = new CouponRedDetailEvent("share", shareType);
                                 EventBus.getDefault().post(couponRedShare);
                             } else {
@@ -250,8 +253,13 @@ public class ShareSdkHelper implements PlatformActionListener {
                 if (mCircleShare) {
                     EventBus.getDefault().post(new CreateCircleResultEvent("cancel"));
                 } else {
-                    Toast.makeText(mContext, "取消分享，将领不到红包哦！", Toast.LENGTH_LONG)
-                            .show();
+                    if (mFlag) {
+                        Toast.makeText(mContext, "取消分享，将领不到红包哦！", Toast.LENGTH_LONG)
+                                .show();
+                    } else {
+                        Toast.makeText(mContext, "取消分享", Toast.LENGTH_LONG)
+                                .show();
+                    }
                 }
             }
         });

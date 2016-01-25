@@ -117,7 +117,7 @@
     <string name="withdraw_cash">提现</string>
 
     <!-- 我的邀请码 -->
-    <string name="my_invite">我的邀请码</string>
+    <string name="my_invite">分享邀请码</string>
     <string name="received_amount">已获得奖金</string>
     <string name="yuan">元</string>
     <string name="invite_remind">马上邀请好友再奖3元</string>

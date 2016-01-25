@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
 import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -48,8 +50,8 @@ public class PreviewRedDetailFragment extends BaseFragment {
     GuideGallery mViewPager;
     @Bind(R.id.tv_effective_date)
     TextView mTvEffectiveDate;
-    @Bind(R.id.tv_red_content)
-    TextView mTvContent;
+    @Bind(R.id.wv_red_content)
+    WebView mWvContent;
 
     //红包数据
     private AdEntity mDetail;
@@ -57,6 +59,11 @@ public class PreviewRedDetailFragment extends BaseFragment {
     private ArrayList<String> mUrls;
     //轮播图adapter
     private ImageAdapter mAdapter;
+
+    /**
+     * 红包帮助类
+     */
+    RedDetailHelper mRedDetailHelper;
 
     public PreviewRedDetailFragment() {
     }
@@ -67,6 +74,7 @@ public class PreviewRedDetailFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_preview_red_detail, container, false);
         ButterKnife.bind(this, view);
+        mRedDetailHelper = new RedDetailHelper(getActivity());
         initView();
         initData();
         return view;
@@ -101,7 +109,7 @@ public class PreviewRedDetailFragment extends BaseFragment {
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(userEntity.getNick_name());
         mTvTime.setText(currentTime);
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         ImageLoader.getInstance().displayImage(userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
         //判断是否是代理
         if (userEntity.getIs_v().equals("2")) {

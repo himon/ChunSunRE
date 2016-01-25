@@ -23,14 +23,4 @@ public class RedDetailModeImpl extends BaseModeImpl implements RedDetailMode {
     public void getRedData(final String token, final String hb_id, final UserLoseMultiLoadedListener listener) {
         mManager.getRedData(token, hb_id, listener, mActivity);
     }
-
-    @Override
-    public void getShareLimit(final String token, final UserLoseMultiLoadedListener listener) {
-        mManager.getShareLimit(token, listener, mActivity);
-    }
-
-    @Override
-    public void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener) {
-        mManager.getGrabByToken(token, id, listener, mActivity);
-    }
 }

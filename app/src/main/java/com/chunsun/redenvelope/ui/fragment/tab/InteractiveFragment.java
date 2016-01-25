@@ -252,8 +252,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
-                mEtComment.setText("");
-                mEtComment.setHint("请输入评论内容...");
+                clearAt();
                 break;
         }
     }

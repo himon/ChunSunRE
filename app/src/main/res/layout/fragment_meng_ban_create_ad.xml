@@ -5,7 +5,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="145dp"
         android:background="#e6000000">
     </View>
 
@@ -13,7 +13,7 @@
         android:id="@+id/iv_click"
         android:layout_width="match_parent"
         android:layout_height="230dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="145dp"
         android:scaleType="fitXY"
         android:src="@drawable/img_mengban_send_ad"/>
 

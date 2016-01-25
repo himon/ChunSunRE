@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,12 +24,13 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
-import com.chunsun.redenvelope.entities.json.ShareLimitEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
@@ -82,7 +84,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     ImageView mIvCompanyIcon;
     TextView mTvTime;
     GuideGallery mViewPager;
-    TextView mTvContent;
+    WebView mWvContent;
     LinearLayout mLLCollect;
     ImageView mIvCollect;
     LinearLayout mLLComplaint;
@@ -97,8 +99,6 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     private RedDetailFragmentPresenter mPresenter;
     //activity传递过来的红包信息
     private RedDetailEntity.ResultEntity.DetailEntity mDetail;
-    //分享的限制信息
-    private ShareLimitEntity.ResultEntity mShareLimitResult;
     //图片的路径
     private ArrayList mUrls;
     //是否是下拉刷新
@@ -158,7 +158,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         mIvCompanyIcon = (ImageView) view.findViewById(R.id.iv_company_v);
         mTvTime = (TextView) view.findViewById(R.id.tv_red_time);
         mViewPager = (GuideGallery) view.findViewById(R.id.vp_pictures);
-        mTvContent = (TextView) view.findViewById(R.id.tv_red_content);
+        mWvContent = (WebView) view.findViewById(R.id.wv_red_content);
         mLLCollect = (LinearLayout) view.findViewById(R.id.ll_collect_container);
         mIvCollect = (ImageView) view.findViewById(R.id.iv_collect);
         mLLComplaint = (LinearLayout) view.findViewById(R.id.ll_red_complaint);
@@ -257,9 +257,8 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         Bundle bundle = getArguments();
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
         mUrls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
-        mShareLimitResult = bundle.getParcelable(Constants.EXTRA_KEY3);
 
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), null, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mTvTitle.setText(mDetail.getTitle());
@@ -277,7 +276,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
             mLLGuarantee.setVisibility(View.GONE);
         }
         mTvTime.setText(mDetail.getSend_time());
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         /**
@@ -285,6 +284,8 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
          */
         mAdapter = new ImageAdapter(mUrls, getActivity());
         mViewPager.setAdapter(mAdapter);
+
+        mPresenter.getGrabByToken(mToken, mDetail.getId());
     }
 
     private void getAllData() {
@@ -329,7 +330,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
                 break;
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
-                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail);
+                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, new GrabEntity());
                 noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.iv_head_logo:
@@ -345,6 +346,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
                 mToken = new Preferences(getActivity()).getToken();
                 if (LoginContext.getLoginContext().comment(getActivity(), Constants.FROM_COMMENT)) {
                     mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
+                    clearAt();
                 }
                 break;
         }
@@ -408,12 +410,30 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     }
 
     @Override
+    public void setGrab(GrabEntity entity) {
+
+    }
+
+    @Override
     public void toUserRewardActivity(String id) {
         mRedDetailHelper.toUserRewardActivity(id, mDetail.getId());
     }
 
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+    }
+
     public void onEvent(ShareRedEnvelopeEvent event) {
         mViewBg.setVisibility(View.GONE);
+    }
+
+    public void onEvent(RewardEvent event) {
+        refreshCommentList();
     }
 
     @Override

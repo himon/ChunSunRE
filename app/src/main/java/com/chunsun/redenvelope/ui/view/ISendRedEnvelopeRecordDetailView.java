@@ -40,4 +40,9 @@ public interface ISendRedEnvelopeRecordDetailView {
      * @param entity
      */
     void getSuperaddition(RedSuperadditionEntity entity);
+
+    /**
+     * 评论成功
+     */
+    void commentSuccess();
 }

@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.NotReceivingRedMode;
 import com.chunsun.redenvelope.ui.activity.personal.NotReceivingRedActivity;
@@ -20,7 +21,7 @@ public class NotReceivingRedModeImpl implements NotReceivingRedMode {
 
     @Override
     public void loadData(final String token, final UserLoseMultiLoadedListener listener) {
-        mManager.loadData(token, listener, mActivity);
+        mManager.loadData(token, Constants.HB_UNRECEIVE_JSON_REQUEST_URL, listener, mActivity);
     }
 
 }

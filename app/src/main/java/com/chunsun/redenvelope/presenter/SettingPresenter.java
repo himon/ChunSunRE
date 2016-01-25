@@ -3,11 +3,12 @@ package com.chunsun.redenvelope.presenter;
 import android.os.Environment;
 
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
-import com.chunsun.redenvelope.model.SettingMode;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
+import com.chunsun.redenvelope.model.SettingMode;
 import com.chunsun.redenvelope.model.impl.SettingModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
+import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ISettingView;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,7 +18,7 @@ import java.io.File;
 /**
  * Created by Administrator on 2015/8/22.
  */
-public class SettingPresenter implements BaseSingleLoadedListener<SampleResponseEntity> {
+public class SettingPresenter extends UserLosePresenter<ISettingView> implements UserLoseMultiLoadedListener<SampleResponseEntity> {
 
     private ISettingView mISettingView;
     private SettingMode mSettingMode;
@@ -69,22 +70,12 @@ public class SettingPresenter implements BaseSingleLoadedListener<SampleResponse
     }
 
     @Override
-    public void onSuccess(SampleResponseEntity entity) {
-        if (entity.isSuccess()) {
-            ShowToast.Short(entity.getMsg());
-            mISettingView.toLogout();
-        } else {
-            ShowToast.Short(entity.getMsg());
+    public void onSuccess(int event_tag, SampleResponseEntity entity) {
+        switch (event_tag){
+            case Constants.LISTENER_TYPE_LOGOUT:
+                ShowToast.Short(entity.getMsg());
+                mISettingView.toLogout();
+                break;
         }
-    }
-
-    @Override
-    public void onError(String msg) {
-        ShowToast.Short(msg);
-    }
-
-    @Override
-    public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

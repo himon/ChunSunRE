@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +30,10 @@ import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.MeFragmentRefreshEvent;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
@@ -46,6 +49,7 @@ import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.chunsun.redenvelope.widget.popupwindow.ShareRedEnvelopePopupWindow;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +94,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     ImageView mIvCompanyIcon;
     TextView mTvTime;
     GuideGallery mViewPager;
-    TextView mTvContent;
+    WebView mWvContent;
     LinearLayout mLLCollect;
     ImageView mIvCollect;
     LinearLayout mLLComplaint;
@@ -180,7 +184,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         mIvCompanyIcon = (ImageView) view.findViewById(R.id.iv_company_v);
         mTvTime = (TextView) view.findViewById(R.id.tv_red_time);
         mViewPager = (GuideGallery) view.findViewById(R.id.vp_pictures);
-        mTvContent = (TextView) view.findViewById(R.id.tv_red_content);
+        mWvContent = (WebView) view.findViewById(R.id.wv_red_content);
         mLLCollect = (LinearLayout) view.findViewById(R.id.ll_collect_container);
         mIvCollect = (ImageView) view.findViewById(R.id.iv_collect);
         mLLComplaint = (LinearLayout) view.findViewById(R.id.ll_red_complaint);
@@ -279,13 +283,12 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         Bundle bundle = getArguments();
         mDetail = bundle.getParcelable(Constants.EXTRA_KEY);
         mUrls = bundle.getStringArrayList(Constants.EXTRA_KEY2);
-        mGrabEntity = bundle.getParcelable(Constants.EXTRA_KEY3);
 
-        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), mGrabEntity.getResult().getShare_limit().getShare_min_amount(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
-        if(mGrabEntity != null && mGrabEntity.isSuccess()){
-        }else{
+        if (mGrabEntity != null && mGrabEntity.isSuccess()) {
+        } else {
             mIbRepeat.setVisibility(View.GONE);
         }
 
@@ -304,7 +307,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
             mLLGuarantee.setVisibility(View.GONE);
         }
         mTvTime.setText(mDetail.getSend_time());
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         /**
@@ -312,6 +315,8 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
          */
         mAdapter = new ImageAdapter(mUrls, getActivity());
         mViewPager.setAdapter(mAdapter);
+
+        mPresenter.getGrabByToken(mToken, mDetail.getId());
     }
 
     private void getAllData() {
@@ -333,9 +338,9 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
      */
     private void setRedEnvelopeStatus() {
 
-        if(mDetail.getHb_type() == Constants.RED_DETAIL_TYPE_COUPON){
+        if (mDetail.getHb_type() == Constants.RED_DETAIL_TYPE_COUPON) {
             mTvRedPrice.setText("红包礼券");
-        }else {
+        } else {
             mTvRedPrice.setText("现金红包");
         }
         if (mDetail.isGrab_status()) {
@@ -419,10 +424,10 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
             mBtnOpenRed.setText(delaySeconds + "秒后可领取红包");
         } else {
             mTvRedPrice.setText("点击领取");
-            if(mGrabEntity != null && !"0.00".equals(mGrabEntity.getResult().getHb_price())) {
+            if (mGrabEntity != null && !"0.00".equals(mGrabEntity.getResult().getHb_price())) {
                 mBtnOpenRed.setText(mGrabEntity.getResult().getHb_price() + "元");
                 mBtnOpenRed.setOnClickListener(this);
-            }else{
+            } else {
                 mTvRedPrice.setText("谢谢阅读");
             }
         }
@@ -437,7 +442,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 break;
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
-                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail);
+                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mGrabEntity);
                 noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.iv_head_logo:
@@ -469,6 +474,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
+                clearAt();
                 break;
         }
     }
@@ -482,6 +488,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
 
     @Override
     public void setCommentData(RedDetailCommentEntity.ResultEntity result) {
+
         List<RedDetailCommentEntity.ResultEntity.ListEntity> list = result.getList();
         mTotalComment = Integer.parseInt(result.getTotal_count());
         mRbCommentRecord.setText("评论（" + mTotalComment + "）");
@@ -499,6 +506,10 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
 
     @Override
     public void setGetRedRecord(RedDetailGetRedRecordEntity.ResultEntity result) {
+
+        BigDecimal share_min_amount = result.getShare_min_amount();
+        mDataAdapter.setShareMinAmount(share_min_amount);
+
         List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> list = result.getRecords();
         mTotalGetRedRecord = result.getTotal_count();
 
@@ -532,15 +543,19 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     @Override
     public void commentSuccess() {
         mEtComment.setText("");
-        mCurrentCommentPage = 1;
-        mListComment.clear();
-        mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+        refreshCommentList();
     }
 
     @Override
     public void shareSuccess() {
+        EventBus.getDefault().post(new MeFragmentRefreshEvent(""));
         //关闭Activity
         EventBus.getDefault().post(new RedDetailBackEvent(""));
+    }
+
+    @Override
+    public void setGrab(GrabEntity entity) {
+        mGrabEntity = entity;
     }
 
     /**
@@ -556,9 +571,9 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         if (TextUtils.isEmpty(event.getMsg())) {//倒计时
             refreshDelaySeconds(event.getSecond());
         } else if ("share".equals(event.getMsg())) {//分享
-            if(TextUtils.isEmpty(mDetail.getHg_id())){
+            if (TextUtils.isEmpty(mDetail.getHg_id())) {
                 mPresenter.shareOpen(mToken, mGrabEntity.getResult().getHb_grab_id(), event.getContent());
-            }else {
+            } else {
                 mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
             }
         } else if ("no_share".equals(event.getMsg())) {//直接领钱
@@ -566,8 +581,21 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         }
     }
 
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+    }
+
     public void onEvent(ShareRedEnvelopeEvent event) {
         mViewBg.setVisibility(View.GONE);
+    }
+
+    public void onEvent(RewardEvent event) {
+        refreshCommentList();
     }
 
     @Override
@@ -575,6 +603,5 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
-
 
 }

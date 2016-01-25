@@ -79,6 +79,20 @@ public class BalanceEntity extends BaseEntity {
          */
         private String forward_amount;
 
+        /**
+         * 领红包收入
+         */
+        private String openhb_amount;
+
+        /**
+         * 奖励金额
+         */
+        private String reward_amount;
+
+        /**
+         * 提成收益
+         */
+        private String commission_amount;
 
         /**
          * 是否开启银联支付，用于控制，是否可以使用银联充值
@@ -87,10 +101,7 @@ public class BalanceEntity extends BaseEntity {
         private ArrayList<CzPoundageEntity> cz_poundage;
         private ArrayList<CashPoundageRateEntity> cash_poundage_rate;
         private ArrayList<ZfbPoundageEntity> zfb_poundage;
-        /**
-         * 领红包收入
-         */
-        private String openhb_amount;
+
 
         public void setCz_amount(String cz_amount) {
             this.cz_amount = cz_amount;
@@ -120,9 +131,6 @@ public class BalanceEntity extends BaseEntity {
             this.cash_amount = cash_amount;
         }
 
-        public void setEnable_unionpay(boolean enable_unionpay) {
-            this.enable_unionpay = enable_unionpay;
-        }
 
         public void setCash_poundage_rate(ArrayList<CashPoundageRateEntity> cash_poundage_rate) {
             this.cash_poundage_rate = cash_poundage_rate;
@@ -164,8 +172,12 @@ public class BalanceEntity extends BaseEntity {
             return cash_amount;
         }
 
-        public boolean getEnable_unionpay() {
+        public boolean isEnable_unionpay() {
             return enable_unionpay;
+        }
+
+        public void setEnable_unionpay(boolean enable_unionpay) {
+            this.enable_unionpay = enable_unionpay;
         }
 
         public ArrayList<CashPoundageRateEntity> getCash_poundage_rate() {
@@ -202,6 +214,22 @@ public class BalanceEntity extends BaseEntity {
 
         public void setForward_amount(String forward_amount) {
             this.forward_amount = forward_amount;
+        }
+
+        public String getCommission_amount() {
+            return commission_amount;
+        }
+
+        public void setCommission_amount(String commission_amount) {
+            this.commission_amount = commission_amount;
+        }
+
+        public String getReward_amount() {
+            return reward_amount;
+        }
+
+        public void setReward_amount(String reward_amount) {
+            this.reward_amount = reward_amount;
         }
 
         /**

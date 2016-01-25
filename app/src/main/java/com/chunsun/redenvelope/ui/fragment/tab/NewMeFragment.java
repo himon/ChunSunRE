@@ -19,6 +19,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.event.MainEvent;
+import com.chunsun.redenvelope.event.MeFragmentRefreshEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.MeFragmentPresenter;
 import com.chunsun.redenvelope.scanlibrary.CaptureActivity;
@@ -104,6 +105,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_me, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         mPresenter = new MeFragmentPresenter(this);
         initView();
         initData();
@@ -169,7 +171,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             }
             mTvName.setText(mUserInfoEntity.getNick_name());
             mTvAccount.setText("春笋号：" + mUserInfoEntity.getUser_name());
-            mTvInviteCode.setText(mUserInfoEntity.getInvitation_code());
+            mTvInviteCode.setText(mUserInfoEntity.getMobile());
             mTvPayOff.setText(mFormat.format(mUserInfoEntity.getCumulative_gain()));
             if (mUserInfoEntity.is_proxy()) {
                 mIvProxyIcon.setVisibility(View.VISIBLE);
@@ -356,4 +358,13 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         }
     }
 
+    public void onEvent(MeFragmentRefreshEvent event) {
+        mPresenter.getData(mToken);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

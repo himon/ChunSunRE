@@ -62,4 +62,6 @@ public interface RedDetailFragmentMode {
      * @param listener
      */
     void justOpen(String token, String grab_id, UserLoseMultiLoadedListener listener);
+
+    void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener);
 }

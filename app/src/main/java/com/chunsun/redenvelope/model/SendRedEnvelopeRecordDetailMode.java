@@ -41,4 +41,13 @@ public interface SendRedEnvelopeRecordDetailMode {
      * @param listener
      */
     void superaddition(String hb_id, BaseMultiLoadedListener listener);
+
+    /**
+     * 发送评论
+     *
+     * @param token
+     * @param hb_id
+     * @param content
+     */
+    void sendComment(String token, String hb_id, String content, String at, UserLoseMultiLoadedListener listener);
 }

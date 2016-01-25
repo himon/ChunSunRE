@@ -244,12 +244,12 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             }
         }
         mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);
-        mPresenter.getGrabByToken(mToken, mRedDetailId);
         showLoading();
     }
 
     @Override
     public void loadUrl(RedDetailEntity.ResultEntity.DetailEntity entity) {
+        mPresenter.getGrabByToken(mToken, mRedDetailId);
         mRed = entity;
         mTvComment.setText("评论（" + mRed.getComment_count() + "）");
         initFragment();
@@ -298,7 +298,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         switch (v.getId()) {
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
-                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed);
+                ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity);
                 noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.rl_get_red:
@@ -351,8 +351,12 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             EventBus.getDefault().post(new WebRedDetailEvent("louis"));
         } else {
             mIvIcon.setVisibility(View.GONE);
-            mTvContent.setText("点击领取");
-            mTvPrice.setText(mRed.getPrice());
+            if("0.00".equals(mRed.getPrice())){
+                mTvContent.setText("祝下次好运！");
+            }else {
+                mTvContent.setText("点击领取");
+                mTvPrice.setText(mRed.getPrice());
+            }
             mTvPrice.setVisibility(View.VISIBLE);
             mTvYuan.setVisibility(View.VISIBLE);
             mRlGetRed.setOnClickListener(this);

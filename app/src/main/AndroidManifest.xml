@@ -146,7 +146,8 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 二维码扫描 -->
-        <activity android:name=".scanlibrary.CaptureActivity" />
+        <activity android:name=".scanlibrary.CaptureActivity"
+            android:theme="@style/ActivityTheme"/>
         <activity android:name=".scanlibrary.ScanResultActivity" />
 
         <!-- alipay sdk begin -->

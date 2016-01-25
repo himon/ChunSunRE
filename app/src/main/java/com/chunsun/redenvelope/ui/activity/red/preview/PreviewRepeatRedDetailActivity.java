@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,8 +48,8 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity {
     TextView mTvTime;
     @Bind(R.id.vp_pictures)
     GuideGallery mViewPager;
-    @Bind(R.id.tv_red_content)
-    TextView mTvContent;
+    @Bind(R.id.wv_red_content)
+    WebView mWvContent;
 
     //轮播图adapter
     private ImageAdapter mAdapter;
@@ -56,12 +58,17 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity {
     //图片Url
     private ArrayList<Photo> mPhotos = new ArrayList<>();
 
+    /**
+     * 红包帮助类
+     */
+    RedDetailHelper mRedDetailHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_repeat_red_detail);
         ButterKnife.bind(this);
+        mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
     }
@@ -113,7 +120,7 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity {
             mIvCompanyIcon.setVisibility(View.GONE);
         }
         mTvTime.setText(currentTime);
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         ImageLoader.getInstance().displayImage(userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         ArrayList<String> list = initUrls();

@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.SettingMode;
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -19,7 +19,7 @@ public class SettingModeImpl implements SettingMode {
     }
 
     @Override
-    public void logout(final String token, final BaseSingleLoadedListener listener) {
+    public void logout(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.logout(token, listener, mActivity);
     }
 }

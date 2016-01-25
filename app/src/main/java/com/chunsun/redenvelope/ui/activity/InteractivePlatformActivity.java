@@ -142,7 +142,7 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
                         break;
                 }
             }
-        }, new View.OnLongClickListener(){
+        }, new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
@@ -246,9 +246,9 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
         mToken = new Preferences(this).getToken();
 
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             String data = intent.getStringExtra(Constants.EXTRA_KEY);
-            if(!TextUtils.isEmpty(data)){
+            if (!TextUtils.isEmpty(data)) {
                 mCurrentCheckType = 1;
             }
         }
@@ -305,7 +305,7 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
-                mEtComment.setText("");
+                clearAt();
                 break;
         }
     }

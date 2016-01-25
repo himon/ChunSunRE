@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SendRedEnvelopeRecordDetailPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
@@ -34,6 +36,7 @@ import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
@@ -45,6 +48,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -71,7 +75,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     private ImageView mIvCompanyIcon;
     private TextView mTvTime;
     private GuideGallery mViewPager;
-    private TextView mTvContent;
+    private WebView mWvContent;
     private RadioGroup mRgRecord;
     private RadioButton mRbCommentRecord;
     private RadioButton mRbGetRedRecord;
@@ -114,6 +118,11 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     private String mClassify;
     private String mClassifyValue;
 
+    /**
+     * 红包帮助类
+     */
+    RedDetailHelper mRedDetailHelper;
+
     private SendRedEnvelopeRecordDetailPresenter mPresenter;
 
 
@@ -122,6 +131,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_red_envelope_record_detail);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         mPresenter = (SendRedEnvelopeRecordDetailPresenter) mMPresenter;
         initView();
         initData();
@@ -151,7 +161,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         mIvCompanyIcon = (ImageView) view.findViewById(R.id.iv_company_v);
         mTvTime = (TextView) view.findViewById(R.id.tv_red_time);
         mViewPager = (GuideGallery) view.findViewById(R.id.vp_pictures);
-        mTvContent = (TextView) view.findViewById(R.id.tv_red_content);
+        mWvContent = (WebView) view.findViewById(R.id.wv_red_content);
         mRgRecord = (RadioGroup) view.findViewById(R.id.rg_record_type);
         mRbCommentRecord = (RadioButton) view.findViewById(R.id.rb_comment_record);
         mRbGetRedRecord = (RadioButton) view.findViewById(R.id.rb_get_red_record);
@@ -316,6 +326,10 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
             case R.id.ll_statistics:
                 toStatistics();
                 break;
+            case R.id.btn_send_comment:
+                mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedEnvelopeId, at);
+                clearAt();
+                break;
         }
     }
 
@@ -341,13 +355,13 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     @Override
     public void setRedEnvelopeDetail(ArrayList<String> list, RedDetailEntity.ResultEntity.DetailEntity detail) {
 
-        mDataAdapter = new RedDetailFragmentAdapter(this, detail.getHb_type(), null, mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
+        mDataAdapter = new RedDetailFragmentAdapter(this, detail.getHb_type(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
         mTvTitle.setText(detail.getTitle());
         mTvUserName.setText(detail.getNick_name());
         mTvTime.setText(detail.getSend_time());
-        mTvContent.setText(detail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, detail.getContent());
         ImageLoader.getInstance().displayImage(detail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
         /**
          * 轮播图
@@ -428,6 +442,13 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     }
 
     @Override
+    public void commentSuccess() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mRedEnvelopeId, mCurrentCommentPage);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mViewPager.stopAutoScroll();
@@ -442,5 +463,24 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     @Override
     protected void toUserRewardActivity(String id) {
 
+    }
+
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mRedEnvelopeId, mCurrentCommentPage);
+    }
+
+    public void onEvent(RewardEvent event) {
+        refreshCommentList();
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

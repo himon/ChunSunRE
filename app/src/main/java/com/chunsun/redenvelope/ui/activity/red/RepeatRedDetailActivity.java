@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RepeatRedEnvelopeGetHostEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
@@ -75,7 +77,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
     ImageView mIvCompanyIcon;
     TextView mTvTime;
     GuideGallery mViewPager;
-    TextView mTvContent;
+    WebView mWvContent;
     LinearLayout mLLCollect;
     ImageView mIvCollect;
     LinearLayout mLLComplaint;
@@ -136,7 +138,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         mIvCompanyIcon = (ImageView) view.findViewById(R.id.iv_company_v);
         mTvTime = (TextView) view.findViewById(R.id.tv_red_time);
         mViewPager = (GuideGallery) view.findViewById(R.id.vp_pictures);
-        mTvContent = (TextView) view.findViewById(R.id.tv_red_content);
+        mWvContent = (WebView) view.findViewById(R.id.wv_red_content);
         mLLCollect = (LinearLayout) view.findViewById(R.id.ll_collect_container);
         mIvCollect = (ImageView) view.findViewById(R.id.iv_collect);
         mLLComplaint = (LinearLayout) view.findViewById(R.id.ll_red_complaint);
@@ -262,6 +264,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
+                clearAt();
                 break;
             case R.id.iv_head_logo:
                 toUserRewardActivity(mDetail.getUser_id());
@@ -305,7 +308,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
             mIvCompanyIcon.setVisibility(View.GONE);
         }
         mTvTime.setText(mDetail.getSend_time());
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         ArrayList<String> list = new ArrayList<String>();
@@ -372,6 +375,19 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         if (mMenuWindow != null) {
             mMenuWindow.repeatShare(entity.getResult().getShare_url());
         }
+    }
+
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+    }
+
+    public void onEvent(RewardEvent event) {
+        refreshCommentList();
     }
 
     public void onEvent(ShareRedEnvelopeEvent event) {

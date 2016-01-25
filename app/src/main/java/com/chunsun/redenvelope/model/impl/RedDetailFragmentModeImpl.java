@@ -49,4 +49,9 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
     public void justOpen(final String token, final String grab_id, final UserLoseMultiLoadedListener listener) {
         mManager.justOpen(token, grab_id, listener, mFragment, null);
     }
+
+    @Override
+    public void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener) {
+        mManager.getGrabByToken(token, id, listener, null, mFragment);
+    }
 }

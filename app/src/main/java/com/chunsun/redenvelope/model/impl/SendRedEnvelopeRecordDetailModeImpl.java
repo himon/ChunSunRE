@@ -38,4 +38,9 @@ public class SendRedEnvelopeRecordDetailModeImpl implements SendRedEnvelopeRecor
     public void superaddition(final String hb_id, final BaseMultiLoadedListener listener) {
         mManager.superaddition(hb_id, listener, mActivity);
     }
+
+    @Override
+    public void sendComment(final String token, final String hb_id, final String content, String at, final UserLoseMultiLoadedListener listener) {
+        mManager.sendComment(token, hb_id, content, at, listener, null, mActivity);
+    }
 }

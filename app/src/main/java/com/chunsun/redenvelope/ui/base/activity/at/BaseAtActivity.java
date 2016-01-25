@@ -62,4 +62,10 @@ public abstract class BaseAtActivity<V, T extends BasePresenter<V>> extends MBas
      * 跳转用户奖励页面
      */
     protected abstract void toUserRewardActivity(String id);
+
+    protected  void clearAt(){
+        mEtComment.setText("");
+        mEtComment.setHint("请输入评论内容...");
+    }
+
 }

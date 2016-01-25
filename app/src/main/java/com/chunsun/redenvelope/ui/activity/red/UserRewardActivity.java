@@ -13,6 +13,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserPublicInfoEntity;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.UserRewardPresenter;
 import com.chunsun.redenvelope.ui.activity.personal.BalanceRechargeActivity;
@@ -25,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 用户奖励Activity
@@ -189,6 +191,7 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView 
 
     @Override
     public void paySuccess() {
+        EventBus.getDefault().post(new RewardEvent("success"));
         back();
     }
 }

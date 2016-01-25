@@ -66,11 +66,11 @@ public interface Constants {
     /**
      * 服务器地址
      */
-    //String HOST_URL = "http://cssv.chunsunkeji.com";
+//    String HOST_URL = "http://cssv.chunsunkeji.com";
     String HOST_URL = "http://192.168.1.109:9101";
     //String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-    //String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+//    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
     String IMG_HOST_URL = "http://192.168.1.109:9101";
     //String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
@@ -399,6 +399,11 @@ public interface Constants {
     String BALANCE_TYPE_OTHER = "other_amount";
     //转发红包收入
     String BALANCE_TYPE_FORWARD = "forward_amount";
+    //奖励金额
+    String BALANCE_TYPE_REWARD = "reward_amount";
+    //提成收益
+    String BALANCE_TYPE_COMMISSION = "commission_amount";
+
 
     /**
      * 用户余额充值方式
@@ -462,6 +467,7 @@ public interface Constants {
     int LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN = 0x2043;
     int LISTENER_TYPE_GET_USER_NO_READ_COUNT = 0x2044;
     int LISTENER_TYPE_GET_USER_READ = 0x2045;
+    int LISTENER_TYPE_LOGOUT = 0x20046;
 
     /**
      * 发广告默认数据

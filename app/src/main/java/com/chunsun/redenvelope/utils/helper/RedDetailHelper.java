@@ -2,6 +2,10 @@ package com.chunsun.redenvelope.utils.helper;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
@@ -11,6 +15,7 @@ import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
+import com.chunsun.redenvelope.utils.HtmlUtil;
 import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
@@ -102,5 +107,27 @@ public class RedDetailHelper {
         intent.putExtra(Constants.EXTRA_KEY_LINES, 5);
         intent.putExtra(Constants.EXTRA_KEY_TYPE, Constants.EDIT_TYPE_COMPLAINT);
         mContext.startActivity(intent);
+    }
+
+    /**
+     *
+     * @param content
+     */
+    public void webViewSetText(WebView webView, String content){
+        webView.setVerticalScrollBarEnabled(false);
+        WebSettings settings = webView.getSettings();
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Uri uri = Uri.parse(url);
+                // url为你要链接的地址
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                mContext.startActivity(intent);
+                return true;
+            }
+        });
+        webView.loadDataWithBaseURL("",
+                HtmlUtil.getHtml(content), "text/html", "utf-8", "");
     }
 }

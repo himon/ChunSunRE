@@ -3,6 +3,7 @@ package com.chunsun.redenvelope.ui.activity.scan;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.chunsun.redenvelope.presenter.ScanChunsunCodeResultPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IScanChunsunCodeResultView;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
+import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -69,8 +71,8 @@ public class ScanChunsunCodeResultActivity extends BaseActivity implements IScan
     GuideGallery mViewPager;//轮播图
     @Bind(R.id.tv_effective_date)
     TextView mTvEffectiveDate;// 有效期
-    @Bind(R.id.tv_red_content)
-    TextView mTvContent;
+    @Bind(R.id.wv_red_content)
+    WebView mWvContent;
 
     private ScanChunsunCodeResultPresenter mPresenter;
     //轮播图adapter
@@ -78,6 +80,11 @@ public class ScanChunsunCodeResultActivity extends BaseActivity implements IScan
     private String mToken;
     private String mCode;
     private ScanCouponResultEntity.ResultEntity mDetail;
+
+    /**
+     * 红包帮助类
+     */
+    RedDetailHelper mRedDetailHelper;
 
 
     @Override
@@ -157,7 +164,7 @@ public class ScanChunsunCodeResultActivity extends BaseActivity implements IScan
         mTvEffectiveDate.setVisibility(View.VISIBLE);
         mTvEffectiveDate.setText("有效期：" + mDetail.getStartTimeStr() + " -- "
                 + mDetail.getEndTimeStr());
-        mTvContent.setText(mDetail.getContent());
+        mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
         if (mDetail.isV()) {
             mIvCompanyV.setVisibility(View.VISIBLE);
         } else {

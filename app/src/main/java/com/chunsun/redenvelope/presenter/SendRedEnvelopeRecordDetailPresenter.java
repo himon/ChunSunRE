@@ -2,18 +2,21 @@ package com.chunsun.redenvelope.presenter;
 
 import android.text.TextUtils;
 
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.SendRedEnvelopeRecordDetailMode;
 import com.chunsun.redenvelope.model.impl.SendRedEnvelopeRecordDetailModeImpl;
 import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordDetailActivity;
 import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ISendRedEnvelopeRecordDetailView;
+import com.chunsun.redenvelope.utils.ShowToast;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,19 @@ public class SendRedEnvelopeRecordDetailPresenter extends UserLosePresenter<ISen
         mSendRedEnvelopeRecordDetailMode.getRedRecordList(hb_id, page_index, this);
     }
 
+    /**
+     * 发送评论
+     *
+     * @param comment
+     */
+    public void sendComment(String comment, String token, String id, String at) {
+        if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
+            ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
+            return;
+        }
+        mSendRedEnvelopeRecordDetailMode.sendComment(token, id, comment, at, this);
+    }
+
     public void onGetDetailSuccess(RedDetailEntity entity) {
         RedDetailEntity.ResultEntity.DetailEntity detail = entity.getResult().getDetail();
 
@@ -103,6 +119,9 @@ public class SendRedEnvelopeRecordDetailPresenter extends UserLosePresenter<ISen
             case Constants.LISTENER_TYPE_RED_ENVELOPE_SUPERADDITION:
                 mISendRedEnvelopeRecordDetailView.getSuperaddition((RedSuperadditionEntity) data);
                 break;
+            case Constants.LISTENER_TYPE_COMMENT:
+                onCommentSuccess((SampleResponseEntity) data);
+                break;
         }
     }
 
@@ -112,5 +131,13 @@ public class SendRedEnvelopeRecordDetailPresenter extends UserLosePresenter<ISen
      */
     public void superaddition(String hb_id) {
         mSendRedEnvelopeRecordDetailMode.superaddition(hb_id, this);
+    }
+
+    /**
+     * 评论成功
+     */
+    public void onCommentSuccess(SampleResponseEntity response) {
+        ShowToast.Short(response.getMsg());
+        mISendRedEnvelopeRecordDetailView.commentSuccess();
     }
 }

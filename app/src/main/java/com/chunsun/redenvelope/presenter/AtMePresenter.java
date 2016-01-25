@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.AtMessageEntity;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.AtMeMode;
 import com.chunsun.redenvelope.model.impl.AtMeModeImpl;
@@ -12,6 +13,8 @@ import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.IAtMeView;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author Administrator
@@ -61,6 +64,9 @@ public class AtMePresenter extends UserLosePresenter<IAtMeView> implements UserL
                 }
                 List<AtMessageEntity.ResultEntity> list = ((AtMessageEntity) data).getResult();
                 mIAtMeView.setData(list);
+                break;
+            case Constants.LISTENER_TYPE_GET_USER_READ:
+                EventBus.getDefault().post(new MainEvent("user_no_read_count"));
                 break;
         }
     }

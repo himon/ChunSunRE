@@ -25,7 +25,7 @@ public class WebRedDetailModeImpl implements WebRedDetailMode {
 
     @Override
     public void getGrabByToken(final String token, String id, final UserLoseMultiLoadedListener listener) {
-        mManager.getGrabByToken(token, id, listener, mActivity);
+        mManager.getGrabByToken(token, id, listener, mActivity, null);
     }
 
     @Override

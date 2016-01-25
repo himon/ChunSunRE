@@ -13,6 +13,8 @@ import com.chunsun.redenvelope.entities.json.RedDetailUnReceiveAndCollectEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CollectRedEnvelopeListPresenter;
 import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
+import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.NotReceivingAndCollectRedListAdapter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICollectRedEnvelopeListView;
@@ -60,7 +62,7 @@ public class CollectRedEnvelopeListActivity extends BaseActivity implements ICol
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RedDetailUnReceiveAndCollectEntity.ResultEntity entity = (RedDetailUnReceiveAndCollectEntity.ResultEntity) parent.getAdapter().getItem(position);
-                toRedDetail(entity.getId() + "");
+                toRedDetail(entity.getId() + "", entity.getType());
             }
         });
 
@@ -105,10 +107,22 @@ public class CollectRedEnvelopeListActivity extends BaseActivity implements ICol
     }
 
     @Override
-    public void toRedDetail(String id) {
-        Intent intent = new Intent(this, RedDetailActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, id);
-        startActivity(intent);
+    public void toRedDetail(String id, int type) {
+        if (Constants.RED_DETAIL_TYPE_LINK == type || Constants.RED_DETAIL_TYPE_CIRCLE_LINK == type || Constants.RED_DETAIL_TYPE_lUCK_LINK == type) {
+            Intent intent = new Intent(this, WebRedDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY, id);
+            intent.putExtra(Constants.EXTRA_KEY2, type);
+            startActivity(intent);
+        }else if(Constants.RED_DETAIL_TYPE_REPEAT == type){
+            Intent intent = new Intent(this, RepeatRedDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY, id);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, RedDetailActivity.class);
+            intent.putExtra(Constants.EXTRA_KEY, id);
+            startActivity(intent);
+        }
     }
 
     @Override

@@ -218,6 +218,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
                         break;
                     case 1:
                         toScan();
+                        break;
                     case 2:
                         toTaskList();
                         break;
@@ -308,7 +309,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         //给标题栏弹窗添加子类
         mTitlePopup.addAction(new TitlePopupItemEntity(this, "互动平台", R.drawable.img_dialog_platform));
         mTitlePopup.addAction(new TitlePopupItemEntity(this, "扫一扫", R.drawable.img_dialog_scan));
-        mTitlePopup.addAction(new TitlePopupItemEntity(this, "任务", R.drawable.img_dialog_scan));
+        mTitlePopup.addAction(new TitlePopupItemEntity(this, "任务", R.drawable.img_dialog_task));
 
         //给圈子排序弹窗添加子类
         mOrderPopup.addAction(new TitlePopupItemEntity("最新"));
@@ -509,6 +510,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             mMeFragment.setPointCount(entity.getNoReadCount());
         } else {
             mTvPoint.setVisibility(View.GONE);
+            mMeFragment.setPointCount(entity.getNoReadCount());
         }
     }
 

@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
-import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.event.RedDetailBackEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -54,10 +53,6 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
     private String mToken;
     //红包类型
     private int mType;
-    /**
-     * grab信息
-     */
-    private GrabEntity mGrabEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +132,6 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         if (mType == Constants.RED_DETAIL_TYPE_CIRCLE) {
             mPresenter.getData(mToken, mRedDetailId);
         } else {
-            mPresenter.getGrabByToken(mToken, mRedDetailId);
             mPresenter.getData(mToken, mRedDetailId);
         }
     }
@@ -157,7 +151,6 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         Bundle data = new Bundle();
         data.putParcelable(Constants.EXTRA_KEY, detail);
         data.putStringArrayList(Constants.EXTRA_KEY2, urls);
-        data.putParcelable(Constants.EXTRA_KEY3, mGrabEntity);
         if (Constants.RED_DETAIL_TYPE_CIRCLE == detail.getHb_type()) {
             mCircleDetailFragment = new CircleDetailFragment();
             mCircleDetailFragment.setArguments(data);
@@ -172,10 +165,7 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         mViewPager.setOffscreenPageLimit(urls.size() + 1);
     }
 
-    @Override
-    public void setGrab(GrabEntity entity) {
-        mGrabEntity = entity;
-    }
+
 
     public void onEvent(RedDetailBackEvent event) {
         if (TextUtils.isEmpty(event.getMsg())) {

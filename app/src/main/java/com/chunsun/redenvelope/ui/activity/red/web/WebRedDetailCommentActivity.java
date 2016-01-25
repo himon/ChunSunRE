@@ -18,6 +18,7 @@ import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WebRedDetailCommentPresenter;
@@ -89,6 +90,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_red_detail_comment);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         mPresenter = (WebRedDetailCommentPresenter) mMPresenter;
         initView();
         initData();
@@ -247,6 +249,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
             case R.id.btn_send_comment:
                 if (LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
                     mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId, at);
+                    clearAt();
                 }
                 break;
         }
@@ -319,5 +322,24 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
         intent.putExtra(Constants.EXTRA_KEY, id);
         intent.putExtra(Constants.EXTRA_KEY2, mRedId);
         startActivity(intent);
+    }
+
+    /**
+     * 刷新评论列表
+     */
+    private void refreshCommentList() {
+        mCurrentCommentPage = 1;
+        mListComment.clear();
+        mPresenter.getCommentList(mRedId, mCurrentCommentPage);
+    }
+
+    public void onEvent(RewardEvent event) {
+        refreshCommentList();
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

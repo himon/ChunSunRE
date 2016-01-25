@@ -40,14 +40,18 @@ public class NotReceivingAndCollectRedListAdapter extends CommonAdapter<RedDetai
         Date date = new Date(datetime);
         String time = timeFormat.format(date);
 
-        if (Constants.RED_DETAIL_TYPE_LINK == resultEntity.getType()) {
+        if (Constants.RED_DETAIL_TYPE_LINK == resultEntity.getType() || Constants.RED_DETAIL_TYPE_CIRCLE_LINK == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_link);
-        } else if (Constants.RED_DETAIL_TYPE_LEFT == resultEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == resultEntity.getType()) {
+        } else if (Constants.RED_DETAIL_TYPE_LEFT == resultEntity.getType() || Constants.RED_DETAIL_TYPE_COMPANY == resultEntity.getType() || Constants.RED_DETAIL_TYPE_CIRCLE == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_type);
         } else if (Constants.RED_DETAIL_TYPE_NEAR == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_range);
         } else if (Constants.RED_DETAIL_TYPE_REPEAT == resultEntity.getType()) {
             holder.setImageResource(R.id.iv_range, R.drawable.img_icon_repeat);
+        }else if (Constants.RED_DETAIL_TYPE_COUPON == resultEntity.getType()) {
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_juan);
+        }else if(Constants.RED_DETAIL_TYPE_lUCK == resultEntity.getType() || Constants.RED_DETAIL_TYPE_lUCK_LINK == resultEntity.getType()){
+            holder.setImageResource(R.id.iv_range, R.drawable.img_icon_luck);
         }
 
         //判断总金额是否大于500

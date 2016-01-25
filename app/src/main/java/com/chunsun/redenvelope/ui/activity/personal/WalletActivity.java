@@ -143,7 +143,7 @@ public class WalletActivity extends BaseActivity implements IBalanceView {
     @Override
     public void toBalanceRecharge() {
         Intent intent = new Intent(this, BalanceRechargeActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY, mResult.getEnable_unionpay());
+        intent.putExtra(Constants.EXTRA_KEY, mResult.isEnable_unionpay());
         startActivity(intent);
     }
 

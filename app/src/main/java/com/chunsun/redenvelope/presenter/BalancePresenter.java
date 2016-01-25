@@ -64,6 +64,18 @@ public class BalancePresenter extends BaseMultiLoadedListenerImpl<BalanceEntity>
         cz.setCount(Constants.BALANCE_TYPE_CZ_AMOUNT);
         list.add(cz);
 
+        SampleEntity jl = new SampleEntity();
+        jl.setKey("奖励金额");
+        jl.setValue("￥" + result.getReward_amount());
+        jl.setCount(Constants.BALANCE_TYPE_REWARD);
+        list.add(jl);
+
+        SampleEntity tc = new SampleEntity();
+        tc.setKey("提成收益");
+        tc.setValue("￥" + result.getCommission_amount());
+        tc.setCount(Constants.BALANCE_TYPE_COMMISSION);
+        list.add(tc);
+
         SampleEntity other = new SampleEntity();
         other.setKey("其他");
         other.setValue("￥" + result.getOther_amount());

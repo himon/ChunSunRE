@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
+import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.ui.base.view.IBaseRedDetailView;
 
@@ -24,4 +25,6 @@ public interface IRedDetailFragmentView extends IBaseRedDetailView{
      * 分享成功
      */
     void shareSuccess();
+
+    void setGrab(GrabEntity entity);
 }
