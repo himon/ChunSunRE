@@ -285,7 +285,6 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         mAdapter = new ImageAdapter(mUrls, getActivity());
         mViewPager.setAdapter(mAdapter);
 
-        mPresenter.getGrabByToken(mToken, mDetail.getId());
     }
 
     private void getAllData() {
@@ -346,7 +345,6 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
                 mToken = new Preferences(getActivity()).getToken();
                 if (LoginContext.getLoginContext().comment(getActivity(), Constants.FROM_COMMENT)) {
                     mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
-                    clearAt();
                 }
                 break;
         }
@@ -382,7 +380,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, true);
     }
 
     @Override
@@ -401,6 +399,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+        clearAt();
     }
 
     @Override

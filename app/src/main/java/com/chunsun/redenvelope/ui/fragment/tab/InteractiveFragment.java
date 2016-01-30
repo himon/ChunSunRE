@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.InteractiveEntity;
+import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -93,6 +95,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
         ButterKnife.bind(this, view);
         mPresenter = (InteractivePlatformPresenter) mMPresenter;
         mInteractiveHelper = new InteractiveHelper(getActivity());
+        EventBus.getDefault().register(this);
         initView();
         initData();
         return view;
@@ -202,10 +205,10 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
     protected void initData() {
         String country = new Preferences(getActivity()).getInteractivePlatformCountryData();
         String local = new Preferences(getActivity()).getInteractivePlatformLocalData();
-        if(!TextUtils.isEmpty(country)){
+        if (!TextUtils.isEmpty(country)) {
             mPresenter.setCountryCash(country);
         }
-        if(!TextUtils.isEmpty(local)){
+        if (!TextUtils.isEmpty(local)) {
             mPresenter.setLocalCash(local);
         }
     }
@@ -252,7 +255,6 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
-                clearAt();
                 break;
         }
     }
@@ -308,6 +310,11 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
                 mPresenter.getLocalList(mToken, mCurrentLocalPage);
                 break;
         }
+        clearAt();
+        if (isLocalFinished) {
+            isLocalFinished = false;
+            mListView.setHasMore();
+        }
     }
 
     /**
@@ -315,7 +322,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
      */
     @Override
     public void toUserRewardActivity(String id) {
-        mInteractiveHelper.toUserRewardActivity(id, mCurrentCountryPage);
+        mInteractiveHelper.toUserRewardActivity(id, mCurrentCheckType);
     }
 
     /**
@@ -355,5 +362,21 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
         }
     }
 
+    public void onEvent(RewardEvent event) {
+        if (mCurrentCheckType == 0) {
+            mCurrentCountryPage = 1;
+            mListCountry.clear();
+            mPresenter.getCountryList(mToken, mCurrentCountryPage);
+        } else {
+            mCurrentLocalPage = 1;
+            mListLocal.clear();
+            mPresenter.getLocalList(mToken, mCurrentLocalPage);
+        }
+    }
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

@@ -48,11 +48,6 @@ public interface IHomeFragmentView extends LoadingView {
     void toAdWebView(String title, String url);
 
     /**
-     * 跳转登录
-     */
-    void toLogin();
-
-    /**
      * 跳转转发类详情
      *
      * @param id

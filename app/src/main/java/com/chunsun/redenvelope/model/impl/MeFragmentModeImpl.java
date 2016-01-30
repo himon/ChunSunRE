@@ -1,6 +1,6 @@
 package com.chunsun.redenvelope.model.impl;
 
-import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MeFragmentMode;
 import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
@@ -17,7 +17,7 @@ public class MeFragmentModeImpl extends BaseModeImpl implements MeFragmentMode {
     }
 
     @Override
-    public void getUserInfomation(final String token, final BaseMultiLoadedListener listener) {
+    public void getUserInfomation(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getUserInfomation(token, listener, meFragment, null);
     }
 }

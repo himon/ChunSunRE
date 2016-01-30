@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.event.MainEvent;
@@ -34,7 +35,8 @@ import com.chunsun.redenvelope.ui.activity.personal.SendRedEnvelopeRecordClassif
 import com.chunsun.redenvelope.ui.activity.personal.SettingActivity;
 import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.activity.personal.WalletActivity;
-import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
+import com.chunsun.redenvelope.ui.base.fragment.MBaseFragment;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.IMeFragmentView;
 import com.chunsun.redenvelope.widget.CircleTransform;
 
@@ -50,7 +52,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewMeFragment extends BaseFragment implements IMeFragmentView, View.OnClickListener {
+public class NewMeFragment extends MBaseFragment<IMeFragmentView, MeFragmentPresenter> implements IMeFragmentView, View.OnClickListener {
 
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
@@ -106,10 +108,15 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         View view = inflater.inflate(R.layout.fragment_new_me, container, false);
         ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        mPresenter = new MeFragmentPresenter(this);
+        mPresenter = (MeFragmentPresenter) mMPresenter;
         initView();
         initData();
         return view;
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new MeFragmentPresenter(this);
     }
 
     @Override
@@ -161,6 +168,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         super.onOptionsMenuClosed(menu);
     }
 
+
     /**
      * 设置用户信息
      */
@@ -175,8 +183,10 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             mTvPayOff.setText(mFormat.format(mUserInfoEntity.getCumulative_gain()));
             if (mUserInfoEntity.is_proxy()) {
                 mIvProxyIcon.setVisibility(View.VISIBLE);
+            }else{
+                mIvProxyIcon.setVisibility(View.GONE);
             }
-            Glide.with(this).load(mUserInfoEntity.getThumb_img_url()).transform(new CircleTransform(getActivity())).into(mIvHeadLogo);
+            Glide.with(this).load(mUserInfoEntity.getThumb_img_url()).error(R.drawable.img_default_circle_head).transform(new CircleTransform(getActivity())).into(mIvHeadLogo);
             mPtr.refreshComplete();
         }
     }
@@ -268,6 +278,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
     @Override
     public void refresh(UserInfoEntity entity) {
         mUserInfoEntity = entity;
+        MainApplication.getContext().setmShareHost(entity.getShare_host());
         EventBus.getDefault().post(new MainEvent("user_no_read_count"));
         setData();
     }
@@ -305,13 +316,14 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
 
     /**
      * 设置用户未读消息数
+     *
      * @param count
      */
     public void setPointCount(int count) {
-        if(count != 0){
+        if (count != 0) {
             mTvPoint.setVisibility(View.VISIBLE);
             mTvPoint.setText(count + "");
-        }else{
+        } else {
             mTvPoint.setVisibility(View.GONE);
         }
     }
@@ -328,7 +340,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             case R.id.ll_my_wallet:
                 toBalance();
                 break;
-            case R.id.ib_at_me:
+            case R.id.ib_at_me://与我相关
                 toAtMe();
                 break;
             case R.id.ib_send_ad_record:
@@ -337,7 +349,7 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
             case R.id.ib_not_receiving:
                 toNotReceivingRed();
                 break;
-            case R.id.ib_phone_recharge:
+            case R.id.ib_phone_recharge://圈子
                 toMyCircle();
                 break;
             case R.id.ib_collect:
@@ -367,4 +379,6 @@ public class NewMeFragment extends BaseFragment implements IMeFragmentView, View
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+
 }

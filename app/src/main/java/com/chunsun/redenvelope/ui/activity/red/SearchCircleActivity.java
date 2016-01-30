@@ -23,6 +23,7 @@ import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IHomeFragmentView;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.helper.RedEvenlopeListHelper;
 import com.chunsun.redenvelope.widget.GetMoreListView;
 
@@ -65,6 +66,8 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
     //当前显示页数
     private int mCurrentPage = 1;
     private List<RedListDetailEntity.ResultEntity.PoolEntity> mList = new ArrayList<RedListDetailEntity.ResultEntity.PoolEntity>();
+    //选中的Item的详情
+    private RedListDetailEntity.ResultEntity.PoolEntity mEntity;
     //是否是下拉刷新
     private boolean isRefresh;
     //红包列表总数
@@ -104,7 +107,8 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
+                toRedDetail(mEntity.getId());
             }
         });
 
@@ -193,6 +197,12 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
 
         mTotal = Integer.parseInt(entity.getTotal_count());
 
+        if(mTotal == 0){
+            ShowToast.Short("暂无相关内容");
+            mCurrentPage = 1;
+            mList.clear();
+        }
+
         if (list.size() < Constants.PAGE_NUM) {
             mListView.setNoMore();
         }
@@ -221,7 +231,8 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
 
     @Override
     public void toRedDetail(String id) {
-
+        hideLoading();
+        mRedEvenlopeListHelper.toRedDetail(id, Constants.RED_DETAIL_TYPE_CIRCLE);
     }
 
     @Override
@@ -231,11 +242,6 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
 
     @Override
     public void toAdWebView(String title, String url) {
-
-    }
-
-    @Override
-    public void toLogin() {
 
     }
 

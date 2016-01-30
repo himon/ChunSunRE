@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * Created by Administrator on 2015/7/30.
@@ -30,5 +31,5 @@ public interface RegisterNextMode {
      * @param token
      * @param listener
      */
-    void getUserInfo(String token, BaseMultiLoadedListener listener);
+    void getUserInfo(String token, UserLoseMultiLoadedListener listener);
 }

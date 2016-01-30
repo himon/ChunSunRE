@@ -46,7 +46,7 @@ public class CreateAdNextStepPresenter extends BaseMultiLoadedListenerImpl<BaseE
         AdDelaySecondsRateEntity.ResultEntity result = response.getResult();
         mMinPrice = Float.parseFloat(result.getHb_min_price());
         mMinAmount = Float.parseFloat(result.getHb_min_amount());
-        mICreateAdNextStepView.setDelaySecondsRateData(result.getDelay_seconds_rate());
+        mICreateAdNextStepView.setDelaySecondsRateData(result);
     }
 
     @Override
@@ -88,11 +88,6 @@ public class CreateAdNextStepPresenter extends BaseMultiLoadedListenerImpl<BaseE
 
         if (TextUtils.isEmpty(mAdEntity.getNum()) || "0".equals(mAdEntity.getNum())) {
             ShowToast.Short("数量不能为空！");
-            return;
-        }
-
-        if (TextUtils.isEmpty(mAdEntity.getStartTime())) {
-            ShowToast.Short("显示时间不能为零, 请重新进入此页面加载数据");
             return;
         }
 

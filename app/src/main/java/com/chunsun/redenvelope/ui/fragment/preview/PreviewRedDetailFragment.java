@@ -110,7 +110,7 @@ public class PreviewRedDetailFragment extends BaseFragment {
         mTvUserName.setText(userEntity.getNick_name());
         mTvTime.setText(currentTime);
         mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
-        ImageLoader.getInstance().displayImage(userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
+        ImageLoader.getInstance().displayImage(Constants.IMG_HOST_URL + userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
         //判断是否是代理
         if (userEntity.getIs_v().equals("2")) {
             mIvCompanyIcon.setVisibility(View.VISIBLE);

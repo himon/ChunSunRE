@@ -43,7 +43,8 @@ public class InteractivePlatformPresenter extends UserLosePresenter<IInteractive
 
     /**
      * 评论
-     *  @param currentCheckType
+     *
+     * @param currentCheckType
      * @param comment
      * @param at
      */
@@ -77,6 +78,17 @@ public class InteractivePlatformPresenter extends UserLosePresenter<IInteractive
                 mIInteractivePlatformView.commentSuccess();
                 break;
         }
+    }
+
+    @Override
+    public void onError(String msg) {
+
+    }
+
+    @Override
+    public void onError(int event_tag, String msg) {
+        ShowToast.Short(msg);
+        mIInteractivePlatformView.hideLoading();
     }
 
     public void setCountryCash(String country) {

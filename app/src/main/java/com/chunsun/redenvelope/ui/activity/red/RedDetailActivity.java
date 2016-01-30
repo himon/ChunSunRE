@@ -148,6 +148,7 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
             RedDetailPicPreviewFragment fragment = new RedDetailPicPreviewFragment(str);
             mFragments.add(fragment);
         }
+
         Bundle data = new Bundle();
         data.putParcelable(Constants.EXTRA_KEY, detail);
         data.putStringArrayList(Constants.EXTRA_KEY2, urls);
@@ -163,8 +164,8 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         mViewPager.setAdapter(mAdapter);
         //设置预加载数
         mViewPager.setOffscreenPageLimit(urls.size() + 1);
-    }
 
+    }
 
 
     public void onEvent(RedDetailBackEvent event) {

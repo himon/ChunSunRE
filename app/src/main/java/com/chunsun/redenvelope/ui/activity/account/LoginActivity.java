@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.view.ILoginView;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.XgManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +51,7 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        XgManager.initXinGe(getApplicationContext(), true);
         ButterKnife.bind(this);
         mPresenter = (LoginPresenter) super.mMPresenter;
         initView();
@@ -88,7 +90,12 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
         switch (v.getId()) {
             case R.id.tv_nav_left:
             case R.id.iv_nav_icon:
-                EventBus.getDefault().post(new MainEvent(Constants.FROM_LOGIN_BACK));
+                if (mFrom.equals(Constants.FROM_WELCOME)) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    EventBus.getDefault().post(new MainEvent(Constants.FROM_LOGIN_BACK));
+                }
                 back();
                 break;
             case R.id.tv_nav_right:
@@ -130,7 +137,7 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
     public void success() {
         //更改UserState为登录状态
         LoginContext.getLoginContext().setState(new LoginState());
-        if(mFrom == null){
+        if (mFrom == null || mFrom.equals(Constants.FROM_WELCOME)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             back();
@@ -145,7 +152,7 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
             EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB1));
         } else if (mFrom.equals(Constants.FROM_TAB3)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB3));
-        }else if(mFrom.equals(Constants.FROM_COMMENT)){
+        } else if (mFrom.equals(Constants.FROM_COMMENT)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_COMMENT));
         }
         back();
@@ -153,7 +160,7 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
 
     @Override
     public void showLoading() {
-       super.showCircleLoading();
+        super.showCircleLoading();
     }
 
     @Override

@@ -54,4 +54,9 @@ public class RedDetailFragmentModeImpl implements RedDetailFragmentMode {
     public void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener) {
         mManager.getGrabByToken(token, id, listener, null, mFragment);
     }
+
+    @Override
+    public void createChunsunTicket(String token, String grab_id, UserLoseMultiLoadedListener listener) {
+        mManager.createChunsunTicket(token, grab_id, listener, mFragment);
+    }
 }

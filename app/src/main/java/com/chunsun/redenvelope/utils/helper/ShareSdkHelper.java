@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
-import com.chunsun.redenvelope.event.CouponRedDetailEvent;
 import com.chunsun.redenvelope.event.CreateCircleResultEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
@@ -110,7 +109,6 @@ public class ShareSdkHelper implements PlatformActionListener {
         sp.setSite(mContext.getString(R.string.app_name));
         //发布分享网站的地址
         sp.setSiteUrl(url);
-        sp.setTitleUrl(url);
         sp.setUrl(url);
         Platform qzone = ShareSDK.getPlatform(QZone.NAME);
         // 设置分享事件回调
@@ -141,7 +139,13 @@ public class ShareSdkHelper implements PlatformActionListener {
             mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
         }
         //分享图片
-        sp.setImageUrl(mDetailEntity.getCover_img_url());
+        if (TextUtils.isEmpty(mDetailEntity.getCover_img_url())) {
+            Bitmap bitmap = BitmapFactory.decodeResource(
+                    mContext.getResources(), R.mipmap.ic_launcher);
+            sp.setImageData(bitmap);
+        }else {
+            sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
+        }
         Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         weibo.setPlatformActionListener(this);
@@ -170,27 +174,32 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(mDetailEntity.getContent());
         }
         //图片网络地址
-        if (b) {
-            sp.setImageUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
-            sp.setUrl(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
-            //ShowToast.Long(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+        if (TextUtils.isEmpty(mDetailEntity.getCover_img_url())) {
+            Bitmap bitmap = BitmapFactory.decodeResource(
+                    mContext.getResources(), R.mipmap.ic_launcher);
+            sp.setImageData(bitmap);
         } else {
-            File file = new File(mDetailEntity.getCover_img_url());
-            if (file.exists()) {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 150, 150);
-                options.inJustDecodeBounds = false;
-                Bitmap bitmap = BitmapFactory.decodeFile(mDetailEntity.getCover_img_url(), options);
-                //Bitmap bitmap = BitmapClipUtils.createImageThumbnailScale(mDetailEntity.getCover_img_url(), 150);
-                if (bitmap != null) {
-                    ShowToast.Short("bitamp != null");
-                    sp.setImageData(bitmap);
-                } else {
-                    ShowToast.Short("bitamp == null");
+            if (b) {
+                sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
+                sp.setUrl(mShareHost + mDetailEntity.getCover_img_url());
+                //ShowToast.Long(Constants.IMG_HOST_URL + mDetailEntity.getCover_img_url());
+            } else {
+                File file = new File(mDetailEntity.getCover_img_url());
+                if (file.exists()) {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 150, 150);
+                    options.inJustDecodeBounds = false;
+                    Bitmap bitmap = BitmapFactory.decodeFile(mDetailEntity.getCover_img_url(), options);
+                    //Bitmap bitmap = BitmapClipUtils.createImageThumbnailScale(mDetailEntity.getCover_img_url(), 150);
+                    if (bitmap != null) {
+                        sp.setImageData(bitmap);
+                    }
                 }
             }
         }
+        sp.setSiteUrl(url);
+        sp.setUrl(url);
         Platform platform = ShareSDK.getPlatform(which);
         platform.setPlatformActionListener(this); // 设置分享事件回调
         // 执行图文分享
@@ -211,13 +220,13 @@ public class ShareSdkHelper implements PlatformActionListener {
                             EventBus.getDefault().post(share);
                             break;
                         case Constants.SHARE_FROM_RED:
-                            if (Constants.RED_DETAIL_TYPE_COUPON == mDetailEntity.getHb_type()) {
-                                CouponRedDetailEvent couponRedShare = new CouponRedDetailEvent("share", shareType);
-                                EventBus.getDefault().post(couponRedShare);
-                            } else {
+//                            if (Constants.RED_DETAIL_TYPE_COUPON == mDetailEntity.getHb_type()) {
+//                                CouponRedDetailEvent couponRedShare = new CouponRedDetailEvent("share", shareType);
+//                                EventBus.getDefault().post(couponRedShare);
+//                            } else {
                                 RedDetailEvent redShare = new RedDetailEvent("share", shareType);
                                 EventBus.getDefault().post(redShare);
-                            }
+//                            }
                             break;
                     }
                 } else {
@@ -237,8 +246,9 @@ public class ShareSdkHelper implements PlatformActionListener {
         mContext.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(mContext, "很遗憾，分享失败，请过会再试\n" + throwable.getMessage(), Toast.LENGTH_LONG)
-                        .show();
+                ShowToast.Long(throwable.getMessage());
+//                Toast.makeText(mContext, "很遗憾，分享失败，请过会再试\n" + throwable.getMessage(), Toast.LENGTH_LONG)
+//                        .show();
 
             }
         });

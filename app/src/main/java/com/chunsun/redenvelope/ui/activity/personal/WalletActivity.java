@@ -13,6 +13,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.SampleEntity;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.event.WalletEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.BalancePresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceAdapter;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -57,6 +59,7 @@ public class WalletActivity extends BaseActivity implements IBalanceView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         mPresenter = new BalancePresenter(this);
         initView();
         initData();
@@ -160,12 +163,22 @@ public class WalletActivity extends BaseActivity implements IBalanceView {
     @Override
     protected void click(View v) {
         switch (v.getId()) {
-            case R.id.btn_recharge:
+            case R.id.btn_recharge://充值
                 toBalanceRecharge();
                 break;
-            case R.id.btn_withdraw_cash:
+            case R.id.btn_withdraw_cash://提现
                 toWithdrawCash();
                 break;
         }
+    }
+
+    public void onEvent(WalletEvent event) {
+        getData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

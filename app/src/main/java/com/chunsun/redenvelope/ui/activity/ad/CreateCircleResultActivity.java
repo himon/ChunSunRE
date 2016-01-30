@@ -11,6 +11,7 @@ import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.event.CreateCircleResultEvent;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateCircleResultPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
@@ -109,6 +110,7 @@ public class CreateCircleResultActivity extends BaseActivity {
     }
 
     private void toCircle() {
+        EventBus.getDefault().post(new MainEvent(Constants.FROM_CIRCLE));
         back();
         AppManager.getAppManager().finishActivity(CreateAdContentActivity.class);
         AppManager.getAppManager().finishActivity(CreateCircleActivity.class);

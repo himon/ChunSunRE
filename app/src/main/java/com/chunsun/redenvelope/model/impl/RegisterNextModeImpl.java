@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model.impl;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.RegisterNextMode;
 import com.chunsun.redenvelope.ui.activity.account.RegisterNextActivity;
 import com.chunsun.redenvelope.utils.manager.HttpManager;
@@ -24,7 +25,7 @@ public class RegisterNextModeImpl implements RegisterNextMode {
     }
 
     @Override
-    public void getUserInfo(final String token, final BaseMultiLoadedListener listener) {
+    public void getUserInfo(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.getUserInfomation(token, listener, null, mActivity);
     }
 }

@@ -178,6 +178,14 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         initEvent();
     }
 
+    /**
+     * 刷新列表
+     */
+    public void refresh() {
+        isRefresh = true;
+        getData();
+    }
+
 
     private void initEvent() {
         mIvTop.setOnClickListener(this);
@@ -213,7 +221,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     public void getData() {
         if (isRefresh) {
             mCurrentPage = 1;
-            if(isAdRefresh) {
+            if (isAdRefresh) {
                 mPresenter.getAdData(mScrollAdType);
             }
         }
@@ -250,16 +258,20 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     @Override
     public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
         imageAdapter = new AdImageAdapter(advert, getActivity());
-        mViewPager.setSize(advert.size());
-        mViewPager.setAdapter(imageAdapter);
-        mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedAutoAdEntity.ResultEntity.AdvertEntity entity = (RedAutoAdEntity.ResultEntity.AdvertEntity) parent.getAdapter().getItem(position);
-                toAdWebView(entity.getTitle(), entity.getTarget_url());
-            }
-        });
-        mViewPager.startAutoScroll();
+        if (advert.size() == 0) {
+            mListView.removeHeaderView(mViewPager);
+        } else {
+            mViewPager.setSize(advert.size());
+            mViewPager.setAdapter(imageAdapter);
+            mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    RedAutoAdEntity.ResultEntity.AdvertEntity entity = (RedAutoAdEntity.ResultEntity.AdvertEntity) parent.getAdapter().getItem(position);
+                    toAdWebView(entity.getTitle(), entity.getTarget_url());
+                }
+            });
+            mViewPager.startAutoScroll();
+        }
     }
 
     @Override
@@ -308,10 +320,6 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         }
     }
 
-    @Override
-    public void toLogin() {
-        mRedEvenlopeListHelper.toLogin();
-    }
 
     @Override
     public void onPause() {

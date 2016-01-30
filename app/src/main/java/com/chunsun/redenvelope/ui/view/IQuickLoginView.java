@@ -10,4 +10,6 @@ public interface IQuickLoginView extends LoadingView {
     void success();
 
     void showServiceProtocol();
+
+     void getFocus();
 }

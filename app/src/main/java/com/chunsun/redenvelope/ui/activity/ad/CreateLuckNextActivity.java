@@ -232,6 +232,7 @@ public class CreateLuckNextActivity extends MBaseActivity implements ICreateLuck
             case R.id.tv_hour:
             case R.id.tv_minutes:
                 setTime();
+                break;
             case R.id.btn_next_step:
                 nextStep();
                 break;

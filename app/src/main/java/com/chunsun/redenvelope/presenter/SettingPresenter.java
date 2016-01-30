@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.presenter;
 
+import android.app.Activity;
 import android.os.Environment;
 
 import com.chunsun.redenvelope.constants.Constants;
@@ -35,14 +36,22 @@ public class SettingPresenter extends UserLosePresenter<ISettingView> implements
     public void clearCache() {
         ImageLoader.getInstance().clearMemoryCache();
         ImageLoader.getInstance().clearDiskCache();
+        ///storage/emulated/0/Chunsun/image/
         String path = Environment.getExternalStorageDirectory()
                 + Constants.CHUNSUN_IMAGE_FILE_PATH;
         File file = new File(path);
         if (file.exists()) {
             deleteChunsunFile(file);
         }
+        ///data/data/com.chunsun.redenvelope/cache
+        File cacheDir = ((Activity) mISettingView).getCacheDir();
+        if (cacheDir.exists()) {
+            deleteChunsunFile(cacheDir);
+        }
+
         ShowToast.Short("清除缓存成功");
     }
+
 
     /**
      * 退出
@@ -71,7 +80,7 @@ public class SettingPresenter extends UserLosePresenter<ISettingView> implements
 
     @Override
     public void onSuccess(int event_tag, SampleResponseEntity entity) {
-        switch (event_tag){
+        switch (event_tag) {
             case Constants.LISTENER_TYPE_LOGOUT:
                 ShowToast.Short(entity.getMsg());
                 mISettingView.toLogout();

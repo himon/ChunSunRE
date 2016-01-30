@@ -63,5 +63,21 @@ public interface RedDetailFragmentMode {
      */
     void justOpen(String token, String grab_id, UserLoseMultiLoadedListener listener);
 
+    /**
+     * 获取Grab
+     *
+     * @param token
+     * @param id
+     * @param listener
+     */
     void getGrabByToken(String token, String id, UserLoseMultiLoadedListener listener);
+
+    /**
+     * 创建春笋券
+     *
+     * @param token
+     * @param grab_id
+     * @param listener
+     */
+    void createChunsunTicket(String token, String grab_id, UserLoseMultiLoadedListener listener);
 }

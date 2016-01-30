@@ -154,7 +154,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                 intent = new Intent(context,
                         SendRedEnvelopeRecordClassifyActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }else if("wdqz".equals(type)){//我的圈子
+            } else if ("wdqz".equals(type)) {//我的圈子
                 intent = new Intent(context, MyCircleListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             } else if (type.equals("v")) {
@@ -192,7 +192,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                         Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_CONTENT,
                         content);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }else if (type.equals("hb")) {// 红包被@
+            } else if (type.equals("hb")) {// 红包被@
                 String value = objCustom.getString("id");
                 String sub_type = objCustom.getString("sub_type");
                 if ("tw".equals(sub_type) || "q".equals(sub_type)
@@ -265,7 +265,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
             Notification notification = null;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
                 notification = new Notification();
-                notification.icon = R.drawable.img_login_logo;
+                notification.icon = R.mipmap.ic_launcher;
                 notification.defaults = Notification.DEFAULT_LIGHTS;
                 notification.defaults |= Notification.DEFAULT_SOUND;
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -283,7 +283,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                                 Notification.DEFAULT_LIGHTS
                                         | Notification.DEFAULT_SOUND)
                         .setContentIntent(contentIntent)
-                        .setSmallIcon(R.drawable.img_login_logo)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setWhen(System.currentTimeMillis());
                 notification = builder.getNotification();
             } else {
@@ -296,7 +296,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
                                 Notification.DEFAULT_LIGHTS
                                         | Notification.DEFAULT_SOUND)
                         .setContentIntent(contentIntent)
-                        .setSmallIcon(R.drawable.img_login_logo)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setWhen(System.currentTimeMillis()).build();
             }
             notificationManager.notify(random.nextInt(), notification);

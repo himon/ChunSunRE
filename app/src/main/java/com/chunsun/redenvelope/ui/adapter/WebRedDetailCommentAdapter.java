@@ -156,6 +156,7 @@ public class WebRedDetailCommentAdapter extends BaseAdapter {
                     holder2.ivLogo.setOnClickListener(mOnClickListener);
                     holder2.ivLogo.setTag(R.id.tag_first, record.getId() + "");
                 }
+                holder2.tvTime.setText(record.getGrab_time());
                 ImageLoader.getInstance().displayImage(record.getThumb_img_url(), holder2.ivLogo, mOptions);
                 break;
         }

@@ -264,7 +264,6 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
-                clearAt();
                 break;
             case R.id.iv_head_logo:
                 toUserRewardActivity(mDetail.getUser_id());
@@ -359,7 +358,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, true);
     }
 
     @Override
@@ -368,6 +367,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+        clearAt();
     }
 
     @Override

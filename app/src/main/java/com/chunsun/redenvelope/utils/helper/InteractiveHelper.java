@@ -32,9 +32,9 @@ public class InteractiveHelper {
     public void toUserRewardActivity(String id, int currentCountryPage) {
         Intent intent = new Intent(mContext, UserRewardActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, id);
-        if (currentCountryPage == 1) {
+        if (currentCountryPage == 0) {
             intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_COUNTRY);
-        } else if (currentCountryPage == 2) {
+        } else if (currentCountryPage == 1) {
             intent.putExtra(Constants.EXTRA_KEY2, Constants.INTERACTIVE_PLATFORM_LOCAL);
         }
         mContext.startActivity(intent);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.WelcomeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WelcomePresenter;
@@ -20,6 +22,11 @@ import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.WelcomeAdapter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWelcomeView;
+import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.manager.XgManager;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 
 import java.util.ArrayList;
 
@@ -46,6 +53,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, ViewP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
+        XgManager.initXinGe(getApplicationContext(), true);
         mPresenter = new WelcomePresenter(this);
         EventBus.getDefault().register(this);
         initView();
@@ -63,6 +71,42 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, ViewP
     protected void initData() {
         String open = new Preferences(MainApplication.getContext()).getFirstOpen();
         mPresenter.isShowPager(open);
+    }
+
+    private static int XG_TOKEN_GET_TIMES = 5;
+
+    private void buildXGToken() {
+        XG_TOKEN_GET_TIMES--;
+
+        // 开启logcat输出，方便debug，发布时请关闭
+        XGPushConfig.enableDebug(this, false);
+
+        Context context = getApplicationContext();
+        if (new Preferences(this).getXGToken().equals("")) {
+            XGPushManager.registerPush(context, new XGIOperateCallback() {
+
+                @Override
+                public void onSuccess(Object arg0, int arg1) {
+                    String token = XGPushConfig
+                            .getToken(getApplicationContext());
+                    new Preferences(WelcomeActivity.this).setXGToken(token);
+
+                    if (TextUtils.isEmpty(token)
+                            && XG_TOKEN_GET_TIMES > 0) {
+                        buildXGToken();
+                    }
+
+                    ShowToast.Short("XG token：" + token);
+                }
+
+                @Override
+                public void onFail(Object arg0, int arg1, String arg2) {
+                    if (XG_TOKEN_GET_TIMES > 0) {
+                        buildXGToken();
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -144,6 +188,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView, ViewP
     private void toLoginActivity() {
         Intent intent = new Intent(WelcomeActivity.this,
                 LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_WELCOME);
         startActivity(intent);
         finish();
     }

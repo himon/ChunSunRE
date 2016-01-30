@@ -25,6 +25,11 @@ public class QuickLoginPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>
 
     private IQuickLoginView quickLoginView;
     private QuickLoginMode quickLoginMode;
+    private boolean loop = true;
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public QuickLoginPresenter(IQuickLoginView quickLoginView) {
         this.quickLoginView = quickLoginView;
@@ -37,9 +42,7 @@ public class QuickLoginPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>
      * @param phonenum
      */
     public void getValiCode(String phonenum) {
-
         if (!TextUtils.isEmpty(phonenum)) {
-            quickLoginView.showLoading();
             quickLoginMode.getCode(phonenum, this);
         }
     }
@@ -62,9 +65,10 @@ public class QuickLoginPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>
      * @param entity
      */
     public void onRegisterGetValidataSuccess(SampleResponseEntity entity) {
-        quickLoginView.hideLoading();
+        ShowToast.Short("验证码已发送！");
         if (entity.isSuccess()) {
             countDown();
+            quickLoginView.getFocus();
         } else {
             ShowToast.Short(entity.getMsg());
         }
@@ -80,7 +84,7 @@ public class QuickLoginPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>
             public void run() {
                 int time = Constants.COUNT_DONW;
 
-                while (time > 0 && time <= Constants.COUNT_DONW) {
+                while (loop && time > 0 && time <= Constants.COUNT_DONW) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -117,5 +121,11 @@ public class QuickLoginPresenter extends BaseMultiLoadedListenerImpl<BaseEntity>
                 onLoginSuccess(entity1);
                 break;
         }
+    }
+
+    @Override
+    public void onError(String msg) {
+        super.onError(msg);
+        quickLoginView.hideLoading();
     }
 }

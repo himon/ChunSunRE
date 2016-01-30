@@ -99,7 +99,7 @@ public class UserInfoEntity {
     }
 
     public String getImg_url() {
-        return Constants.IMG_HOST_URL + img_url;
+        return img_url;
     }
 
     public void setImg_url(String img_url) {

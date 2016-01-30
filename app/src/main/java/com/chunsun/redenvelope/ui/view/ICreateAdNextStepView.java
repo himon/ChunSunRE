@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ICreateAdNextStepView {
 
-    void setDelaySecondsRateData(List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> result);
+    void setDelaySecondsRateData(AdDelaySecondsRateEntity.ResultEntity result);
 
     void toSelectDelaySeconds();
 

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
@@ -108,16 +109,9 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (TextUtils.isEmpty(new Preferences(TaskListActivity.this).getToken()) && Constants.SCROLL_AD_TYPE == mScrollAdType) {
-                    toLogin();
-                    return;
-                }
-                showLoading();
-                mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
-                //如果是转发
-                if (Constants.RED_DETAIL_TYPE_REPEAT == mEntity.getType()) {
-                    toRepeatRedDetail(mEntity.getId());
-                } else {
+                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(TaskListActivity.this, Constants.FROM_TAB1)) {
+                    showLoading();
+                    mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                     toJump(mEntity.getId());
                 }
             }
@@ -220,16 +214,20 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
     @Override
     public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
         imageAdapter = new AdImageAdapter(advert, this);
-        mViewPager.setSize(advert.size());
-        mViewPager.setAdapter(imageAdapter);
-        mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedAutoAdEntity.ResultEntity.AdvertEntity entity = (RedAutoAdEntity.ResultEntity.AdvertEntity) parent.getAdapter().getItem(position);
-                toAdWebView(entity.getTitle(), entity.getTarget_url());
-            }
-        });
-        mViewPager.startAutoScroll();
+        if (advert.size() == 0) {
+            mListView.removeHeaderView(mViewPager);
+        } else {
+            mViewPager.setSize(advert.size());
+            mViewPager.setAdapter(imageAdapter);
+            mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    RedAutoAdEntity.ResultEntity.AdvertEntity entity = (RedAutoAdEntity.ResultEntity.AdvertEntity) parent.getAdapter().getItem(position);
+                    toAdWebView(entity.getTitle(), entity.getTarget_url());
+                }
+            });
+            mViewPager.startAutoScroll();
+        }
     }
 
     @Override
@@ -273,11 +271,6 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
                     break;
             }
         }
-    }
-
-    @Override
-    public void toLogin() {
-        mRedEvenlopeListHelper.toLogin();
     }
 
     @Override

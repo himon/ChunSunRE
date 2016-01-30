@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.RedSuperadditionEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.CreateAdContentPresenter;
+import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.preview.PreviewRepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.preview.PreviewWebRedDetailActivity;
@@ -72,6 +74,8 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
     EditText mEtContent;
     @Bind(R.id.recycler_view)
     RecyclerView mRvPic;
+    @Bind(R.id.tv_max_count)
+    TextView mTvMaxCount;
     @Bind(R.id.ll_agreement)
     LinearLayout mLLAgreement;
     @Bind(R.id.cb_agreement)
@@ -119,9 +123,6 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
     protected void initView() {
         initTitle();
         selectedPhotos.add("");
-        photoAdapter = new PhotoAdapter(this, selectedPhotos, mPhotos);
-        mRvPic.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        mRvPic.setAdapter(photoAdapter);
 
         initEvent();
     }
@@ -132,6 +133,17 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
         mNavRight.setOnClickListener(this);
         mIvCover.setOnClickListener(this);
         mBtnNextStep.setOnClickListener(this);
+        mTvAgreement.setOnClickListener(this);
+        mCbAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mAdEntity.setAgreement(true);
+                } else {
+                    mAdEntity.setAgreement(false);
+                }
+            }
+        });
     }
 
     private void initTitle() {
@@ -148,6 +160,17 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
         if (intent != null) {
             mAdEntity = intent.getParcelableExtra(Constants.EXTRA_KEY);
             mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
+
+            photoAdapter = new PhotoAdapter(this, selectedPhotos, mPhotos, mAdEntity.getPrice());
+            mRvPic.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
+            mRvPic.setAdapter(photoAdapter);
+            mAdEntity.setAgreement(true);
+
+            if ("0.01".equals(mAdEntity.getPrice())) {
+                mTvMaxCount.setText("（选填：最多3张）");
+            } else if ("0.02".equals(mAdEntity.getPrice())) {
+                mTvMaxCount.setText("（选填：最多5张）");
+            }
 
             if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(mAdEntity.getType().getKey()) || (Constants.RED_DETAIL_TYPE_lUCK_LINK + "").equals(mAdEntity.getType().getKey())) {
                 mTvContentPicTitle.setVisibility(View.GONE);
@@ -180,7 +203,7 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
                 mLLAgreement.setVisibility(View.GONE);
                 mNavTitle.setText("春笋圈子");
                 mEtTitle.setHint("写个主题吧");
-                mEtContent.setHint("http:// \\n(必选：只能输入http://开头的有效网址)");
+                mEtContent.setHint("http://(必选：只能输入http://开头的有效网址)");
                 mTvTitle.setText("标题");
                 mTvCoverPicTitle.setText("封面图片");
                 mTvContent.setText("链接地址");
@@ -258,7 +281,7 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
                 } else if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK_LINK + "")) {
                     if (mSuperadditionEntity != null) {
                         mPresenter.superadditionCommit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), selectedPhotos, this);
-                    }else {
+                    } else {
                         mPresenter.commitLuck(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                     }
                 } else {
@@ -268,6 +291,9 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
                         mPresenter.commit(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                     }
                 }
+                break;
+            case R.id.tv_agreement:
+                showAgreement();
                 break;
         }
     }
@@ -357,6 +383,18 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
     @Override
     public void hideLoading() {
         hideCircleLoading();
+    }
+
+    /**
+     * 跳转春笋红包发广告协议
+     */
+    private void showAgreement() {
+        Intent intentWeb = new Intent(this, CommonWebActivity.class);
+        intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
+                Constants.SEND_RED_AGREEMENT_URL);
+        intentWeb.putExtra(Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE,
+                "春笋红包发广告协议");
+        startActivity(intentWeb);
     }
 
     public void previewPhoto(Intent intent) {

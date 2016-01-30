@@ -124,9 +124,11 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
         Intent intent = getIntent();
         if (intent != null) {
             mType = intent.getIntExtra(Constants.EXTRA_KEY, 0);
-            if(mType == 0){
+            if (mType == 0) {
                 mSuperadditionEntity = intent.getParcelableExtra(Constants.EXTRA_KEY2);
-                mType = Integer.parseInt(mSuperadditionEntity.getType());
+                if (mSuperadditionEntity != null) {
+                    mType = Integer.parseInt(mSuperadditionEntity.getType());
+                }
             }
             if (mType == 7) {//圈子
                 entity.setKey(Constants.RED_DETAIL_TYPE_CIRCLE + "");
@@ -194,15 +196,15 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
     public void nextCreateActivity() {
 
         String province = MainApplication.getContext().getProvince();
-        if(TextUtils.isEmpty(province)){
+        if (TextUtils.isEmpty(province)) {
             ShowToast.Short("请开启GPS定位！");
             return;
         }
 
         Intent intent = null;
-        if(mType == 9){
+        if (mType == 9) {
             intent = new Intent(this, CreateLuckNextActivity.class);
-        }else {
+        } else {
             intent = new Intent(this, CreateAdContentActivity.class);
         }
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
@@ -219,9 +221,9 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
         mTvRange.setText(mAdEntity.getDistance().getValue());
 
         String type = mAdEntity.getType().getKey();
-        if(("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(type) || ("" + Constants.RED_DETAIL_TYPE_lUCK).equals(type)){
+        if (("" + Constants.RED_DETAIL_TYPE_CIRCLE).equals(type) || ("" + Constants.RED_DETAIL_TYPE_lUCK).equals(type)) {
             mRbImageText.setChecked(true);
-        }else{
+        } else {
             mRbImageText.setChecked(true);
         }
     }

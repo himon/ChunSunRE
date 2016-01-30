@@ -31,6 +31,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
     private ArrayList<String> photoPaths = new ArrayList<>();
     private List<Photo> mPhotos = new ArrayList<>();
     private LayoutInflater inflater;
+    private int maxPicCount = 8;
 
     private Context mContext;
 
@@ -38,11 +39,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
         this.mPhotos = photos;
     }
 
-    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, List<Photo> photos) {
+    public PhotoAdapter(Context mContext, ArrayList<String> photoPaths, List<Photo> photos, String price) {
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         this.mPhotos = photos;
-        inflater = LayoutInflater.from(mContext);
+        this.inflater = LayoutInflater.from(mContext);
+        if("0.01".equals(price)){
+            maxPicCount = 3;
+        }else if("0.02".equals(price)){
+            maxPicCount = 5;
+        }
     }
 
 
@@ -63,7 +69,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 @Override
                 public void onClick(View view) {
                     PhotoPickerIntent intent = new PhotoPickerIntent(mContext);
-                    intent.setPhotoCount(8);
+                    intent.setPhotoCount(maxPicCount);
                     intent.setShowCamera(true);
                     intent.setSelectedPhotos((ArrayList<Photo>) mPhotos);
                     ((CreateAdContentActivity) mContext).startActivityForResult(intent, Constants.REQUEST_CODE);

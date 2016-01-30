@@ -1,5 +1,8 @@
 package com.chunsun.redenvelope.ui.base.fragment;
 
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+
 import com.chunsun.redenvelope.net.RequestManager;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 
@@ -21,6 +24,19 @@ public abstract class MBaseFragment<V, T extends BasePresenter<V>> extends MVPBa
     public void onDestroy() {
         super.onDestroy();
         RequestManager.cancelAll(this);
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    public void hideKeyboard() {
+        if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+            if (getActivity().getCurrentFocus() != null) {
+                InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getActivity().getCurrentFocus()
+                        .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
     }
 
     protected abstract void initView();

@@ -129,6 +129,11 @@ public class AdEntity implements Parcelable {
      */
     private String content;
 
+    /**
+     * 是否同意发广告协议
+     */
+    private boolean agreement;
+
 
     public String getPrice() {
         return price;
@@ -374,6 +379,15 @@ public class AdEntity implements Parcelable {
         this.fight_multiple = fight_multiple;
     }
 
+    public boolean isAgreement() {
+        return agreement;
+    }
+
+    public void setAgreement(boolean agreement) {
+        this.agreement = agreement;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -403,12 +417,13 @@ public class AdEntity implements Parcelable {
         dest.writeString(this.imagePath8);
         dest.writeString(this.formula_multiple);
         dest.writeParcelable(this.meal, 0);
+        dest.writeString(this.fight_package_id);
+        dest.writeString(this.fight_multiple);
         dest.writeString(this.couponStartTime);
         dest.writeString(this.couponEndTime);
         dest.writeString(this.title);
         dest.writeString(this.content);
-        dest.writeString(this.fight_package_id);
-        dest.writeString(this.fight_multiple);
+        dest.writeByte(agreement ? (byte) 1 : (byte) 0);
     }
 
     public AdEntity() {
@@ -437,12 +452,13 @@ public class AdEntity implements Parcelable {
         this.imagePath8 = in.readString();
         this.formula_multiple = in.readString();
         this.meal = in.readParcelable(RepeatMealEntity.ResultEntity.class.getClassLoader());
+        this.fight_package_id = in.readString();
+        this.fight_multiple = in.readString();
         this.couponStartTime = in.readString();
         this.couponEndTime = in.readString();
         this.title = in.readString();
         this.content = in.readString();
-        this.fight_package_id = in.readString();
-        this.fight_multiple = in.readString();
+        this.agreement = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<AdEntity> CREATOR = new Parcelable.Creator<AdEntity>() {

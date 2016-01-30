@@ -79,7 +79,6 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, T
         switch (v.getId()) {
             case R.id.btn_get_code:
                 mPresenter.getValiCode(StringUtil.textview2String(etPhoneNum));
-                btnGetCode.setEnabled(false);
                 countdowning = true;
                 break;
             case R.id.btn_next_step:
@@ -129,6 +128,18 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, T
     }
 
     @Override
+    public void enableGetCode() {
+        btnGetCode.setEnabled(false);
+    }
+
+    @Override
+    public void getFocus() {
+        etCode.setFocusable(true);
+        etCode.setFocusableInTouchMode(true);
+        etCode.requestFocus();
+    }
+
+    @Override
     public void showLoading() {
         showCircleLoading();
     }
@@ -150,6 +161,7 @@ public class ForgetPwdActivity extends BaseActivity implements IForgetPwdView, T
     protected void onDestroy() {
         //取消注册EventBus
         EventBus.getDefault().unregister(this);
+        mPresenter.setLoop(false);
         super.onDestroy();
     }
 }

@@ -232,4 +232,30 @@ public class Preferences {
     public String getLatitude() {
         return mySetting.getString("latitude_data", "");
     }
+
+    /**
+     * 支付宝提现，支付宝账号
+     *
+     * @param data
+     */
+    public void setAlipayAcount(String data) {
+        mySetting.edit().putString("alipay_acount", data).commit();
+    }
+
+    public String getAlipayAccount() {
+        return mySetting.getString("alipay_acount", "");
+    }
+
+    /**
+     * 支付宝提现，支付宝姓名
+     *
+     * @param data
+     */
+    public void setAlipayName(String data) {
+        mySetting.edit().putString("alipay_name", data).commit();
+    }
+
+    public String getAlipayName() {
+        return mySetting.getString("alipay_name", "");
+    }
 }

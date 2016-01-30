@@ -305,7 +305,7 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(mToken, mCurrentCheckType, StringUtil.textview2String(mEtComment), at);
-                clearAt();
+
                 break;
         }
     }
@@ -360,6 +360,11 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
                 mListLocal.clear();
                 mPresenter.getLocalList(mToken, mCurrentLocalPage);
                 break;
+        }
+        clearAt();
+        if (isLocalFinished) {
+            isLocalFinished = false;
+            mListView.setHasMore();
         }
     }
 

@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceListEntity;
-import com.chunsun.redenvelope.entities.json.RedDetailSendRecordListEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.BalanceDetailListPresenter;
 import com.chunsun.redenvelope.ui.adapter.BalanceDetailListAdapter;
@@ -75,7 +74,7 @@ public class BalanceDetailListActivity extends BaseActivity implements IBalanceD
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RedDetailSendRecordListEntity.ResultEntity.LogsEntity entity = (RedDetailSendRecordListEntity.ResultEntity.LogsEntity) parent.getAdapter().getItem(position);
+                //RedDetailSendRecordListEntity.ResultEntity.LogsEntity entity = (RedDetailSendRecordListEntity.ResultEntity.LogsEntity) parent.getAdapter().getItem(position);
             }
         });
 

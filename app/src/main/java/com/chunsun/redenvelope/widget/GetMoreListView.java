@@ -204,6 +204,7 @@ public class GetMoreListView extends ListView {
         hasMoreDataFlag = false;
         if (footView != null) {
             footView.setVisibility(View.GONE);
+            removeFooterView(footView);
         }
     }
 

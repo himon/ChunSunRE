@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.chunsun.redenvelope.ui.activity.account.LoginActivity">
+    tools:context="com.chunsun.redenvelope.ui.activity.account.LoginActivity"
+   android:background="@color/global_gray">
 
     <include layout="@layout/layout_title_bar" />
 
@@ -41,6 +42,7 @@
                 android:hint="@string/input_account"
                 android:singleLine="true"
                 android:textColor="@android:color/black"
+                android:inputType="number"
                 android:textColorHint="@color/font_hint_gray"
                 android:textSize="@dimen/font_size_sp_16" />
         </LinearLayout>

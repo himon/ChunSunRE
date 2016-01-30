@@ -78,7 +78,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.account.RegisterActivity" />
-        <activity android:name=".ui.activity.account.LoginActivity" />
+        <activity
+            android:name=".ui.activity.account.LoginActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.activity.account.QuickLoginActivity" />
         <activity android:name=".ui.activity.account.ForgetPwdActivity" />
         <activity android:name=".ui.activity.account.RegisterNextActivity" />
@@ -86,7 +88,8 @@
         <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
         <activity
             android:name=".ui.activity.red.RedDetailActivity"
-            android:theme="@style/Translucent" />
+            android:theme="@style/Translucent"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.red.web.WebRedDetailActivity"
             android:theme="@style/Translucent" />
@@ -113,15 +116,20 @@
         <activity android:name=".ui.activity.ad.CreateAdContentActivity" />
         <activity android:name=".ui.activity.ad.AdPayActivity" />
         <activity android:name=".ui.activity.ad.PayResultActivity" />
-        <activity android:name=".ui.activity.InteractivePlatformActivity" />
-        <activity android:name=".ui.activity.red.web.WebRedDetailCommentActivity" />
+        <activity
+            android:name=".ui.activity.InteractivePlatformActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.activity.red.web.WebRedDetailCommentActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.personal.UserInfoActivity" />
         <activity android:name=".ui.activity.red.UserRewardActivity" />
         <activity android:name=".ui.activity.red.RedDetailPicShowActivity" />
         <activity android:name=".clip.PicClipActivity" />
         <activity
             android:name=".ui.activity.red.RepeatRedDetailActivity"
-            android:theme="@style/Translucent" />
+            android:theme="@style/Translucent"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.personal.WalletActivity" />
         <activity android:name=".ui.activity.personal.WithdrawCashActivity" />
         <activity android:name=".ui.activity.ad.CreateAdActivity" />
@@ -146,8 +154,9 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <!-- 二维码扫描 -->
-        <activity android:name=".scanlibrary.CaptureActivity"
-            android:theme="@style/ActivityTheme"/>
+        <activity
+            android:name=".scanlibrary.CaptureActivity"
+            android:theme="@style/ActivityTheme" />
         <activity android:name=".scanlibrary.ScanResultActivity" />
 
         <!-- alipay sdk begin -->
@@ -290,40 +299,31 @@
 
         <!-- 信鸽 end -->
 
-        <activity android:name=".ui.activity.red.TaskListActivity" >
-        </activity>
+        <activity android:name=".ui.activity.red.TaskListActivity" />
         <activity
             android:name=".ui.activity.ad.CreateCircleActivity"
-            android:label="@string/title_activity_create_circle" >
-        </activity>
+            android:label="@string/title_activity_create_circle" />
         <activity
             android:name=".ui.activity.ad.CreateCircleResultActivity"
-            android:label="@string/title_activity_create_circle_result" >
-        </activity>
+            android:label="@string/title_activity_create_circle_result" />
         <activity
             android:name=".ui.activity.personal.MyCircleListActivity"
-            android:label="@string/title_activity_my_circle_list" >
-        </activity>
+            android:label="@string/title_activity_my_circle_list" />
         <activity
             android:name=".ui.activity.personal.MyCircleListDetailActivity"
-            android:label="@string/title_activity_my_circle_list_detail" >
-        </activity>
+            android:label="@string/title_activity_my_circle_list_detail" />
         <activity
             android:name=".ui.activity.red.SearchCircleActivity"
-            android:label="@string/title_activity_search_circle" >
-        </activity>
+            android:label="@string/title_activity_search_circle" />
         <activity
             android:name=".ui.activity.ad.CreateLuckNextActivity"
-            android:label="@string/title_activity_create_luck_next" >
-        </activity>
+            android:label="@string/title_activity_create_luck_next" />
         <activity
             android:name=".ui.activity.ad.LuckAdPayActivity"
-            android:label="@string/title_activity_luck_ad_pay" >
-        </activity>
+            android:label="@string/title_activity_luck_ad_pay" />
         <activity
             android:name=".ui.activity.personal.AtMeActivity"
-            android:label="@string/title_activity_at_me" >
-        </activity>
+            android:label="@string/title_activity_at_me" />
     </application>
 
 </manifest>

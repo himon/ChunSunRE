@@ -35,6 +35,7 @@ public class RedDetailPicShowActivity extends BaseActivity {
     private ArrayList<String> mUrls;
     private List<Fragment> mFragments;
     private int mIndex;
+    private boolean isHead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class RedDetailPicShowActivity extends BaseActivity {
     protected void initView() {
         mToolsBar.setVisibility(View.GONE);
 
-        mFragments = new ArrayList<Fragment>();
+        mFragments = new ArrayList<>();
 
         mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -71,6 +72,7 @@ public class RedDetailPicShowActivity extends BaseActivity {
         if (intent != null) {
             mUrls = intent.getStringArrayListExtra(Constants.EXTRA_LIST_KEY);
             mIndex = intent.getIntExtra(Constants.EXTRA_KEY, 0);
+            isHead = intent.getBooleanExtra(Constants.EXTRA_KEY2, false);
         }
         initFragment();
     }
@@ -86,6 +88,7 @@ public class RedDetailPicShowActivity extends BaseActivity {
             RedDetailPicShowFragment fragment = new RedDetailPicShowFragment();
             Bundle data = new Bundle();
             data.putString(Constants.EXTRA_KEY, url);
+            data.putBoolean(Constants.EXTRA_KEY2, isHead);
             fragment.setArguments(data);
             mFragments.add(fragment);
         }

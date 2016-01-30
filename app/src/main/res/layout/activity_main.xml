@@ -77,14 +77,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.chunsun.redenvelope.widget.CustomViewPager
         android:id="@+id/vp_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ll_indicator"
         android:layout_below="@+id/toolsbar">
 
-    </android.support.v4.view.ViewPager>
+    </com.chunsun.redenvelope.widget.CustomViewPager>
 
     <ImageView
         android:id="@+id/iv_toInteractive"

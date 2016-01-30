@@ -25,6 +25,11 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
     private RegisterMode registerMode;
 
     private String mInviteCode = "";
+    private boolean loop = true;
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public RegisterPresenter(IRegisterView registerView) {
         this.registerView = registerView;
@@ -63,8 +68,8 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
      * @param phonenum
      */
     public void getValiCode(String phonenum) {
+        registerView.showLoading();
         if (valiPhonenum(phonenum)) {
-            registerView.showLoading();
             registerMode.registerGetCode(phonenum, this);
         }
     }
@@ -91,13 +96,12 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
      * 刷新页面倒计时
      */
     private void countDown() {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 int time = Constants.COUNT_DONW;
 
-                while (time > 0 && time <= Constants.COUNT_DONW) {
+                while (loop && time > 0 && time <= Constants.COUNT_DONW) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -106,7 +110,6 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
                     time--;
                     EventBus.getDefault().post(new ValiCodeEvent(time + "s"));
                 }
-
                 EventBus.getDefault().post(new ValiCodeEvent("获取验证码"));
             }
         }).start();
@@ -118,9 +121,10 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
      * @param entity
      */
     public void onRegisterGetValidataSuccess(SampleResponseEntity entity) {
-        registerView.hideLoading();
+        ShowToast.Short("验证码已发送！");
         if (entity.isSuccess()) {
             countDown();
+            registerView.getFocus();
         } else {
             ShowToast.Short(entity.getMsg());
         }
@@ -162,6 +166,7 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
+        registerView.hideLoading();
         switch (event_tag) {
             case Constants.LISTENER_TYPE_GET_CODE:
                 onRegisterGetValidataSuccess((SampleResponseEntity) data);
@@ -177,6 +182,7 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     @Override
     public void onError(String msg) {
+        registerView.getCodeEnabled(true);
         ShowToast.Short(msg);
         registerView.hideLoading();
     }

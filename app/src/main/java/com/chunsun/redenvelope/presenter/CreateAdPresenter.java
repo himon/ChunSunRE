@@ -90,63 +90,63 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
 
         distance = new SampleEntity();
         distance.setKey("1");
-        distance.setValue("100米");
+        distance.setValue("距离当前位置100米可见");
         distance.setCount("0.10");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("2");
-        distance.setValue("200米");
+        distance.setValue("距离当前位置200米可见");
         distance.setCount("0.20");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("3");
-        distance.setValue("500米");
+        distance.setValue("距离当前位置500米可见");
         distance.setCount("0.50");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("4");
-        distance.setValue("1千米");
+        distance.setValue("距离当前位置1千米可见");
         distance.setCount("1.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("5");
-        distance.setValue("2千米");
+        distance.setValue("距离当前位置2千米可见");
         distance.setCount("2.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("6");
-        distance.setValue("5千米");
+        distance.setValue("距离当前位置5千米可见");
         distance.setCount("5.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("7");
-        distance.setValue("10千米");
+        distance.setValue("距离当前位置10千米可见");
         distance.setCount("10.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("8");
-        distance.setValue("20千米");
+        distance.setValue("距离当前位置20千米可见");
         distance.setCount("20.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
 
         distance = new SampleEntity();
         distance.setKey("9");
-        distance.setValue("50千米");
+        distance.setValue("距离当前位置50千米可见");
         distance.setCount("50.00");
         distance.setType(Constants.AD_SELECT_LIST_DISTANCE);
         list.add(distance);
@@ -313,8 +313,8 @@ public class CreateAdPresenter extends UserLosePresenter<ICreateAdView> implemen
             this.mAdEntity.setProvince(defaultProvince);
             this.mAdEntity.setCity(defaultCity);
         }
-        this.mAdEntity.getCity().setCt(null);
-        this.mAdEntity.getProvince().setCc(null);
+        //this.mAdEntity.getCity().setCt(null);
+        //this.mAdEntity.getProvince().setCc(null);
 
         mICreateAdView.setInitData(mDistanceList, mTypeList, list, currentProvince, currentCity, defaultProvince, defaultCity, mAdEntity);
     }

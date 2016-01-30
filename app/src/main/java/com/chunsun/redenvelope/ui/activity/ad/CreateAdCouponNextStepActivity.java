@@ -30,9 +30,7 @@ import com.chunsun.redenvelope.ui.view.ICreateAdCouponNextStepView;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -295,11 +293,6 @@ public class CreateAdCouponNextStepActivity extends BaseActivity implements ICre
      * 初始化广告数据
      */
     private void initDefaultData() {
-
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String time = sdf.format(date);
-
         if (mSuperadditionEntity != null) {//追加
 
             for (AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity item : mDelaySecondsRate) {
@@ -320,7 +313,7 @@ public class CreateAdCouponNextStepActivity extends BaseActivity implements ICre
         } else {
 
             mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
-            mAdEntity.setStartTime(time);
+            mAdEntity.setStartTime("");
 
             calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM);
 

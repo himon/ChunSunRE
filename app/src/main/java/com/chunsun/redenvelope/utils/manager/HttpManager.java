@@ -2,6 +2,7 @@ package com.chunsun.redenvelope.utils.manager;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -47,6 +48,7 @@ import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.listeners.impl.BaseMultiLoadedListenerImpl;
 import com.chunsun.redenvelope.net.GsonRequest;
 import com.chunsun.redenvelope.net.RequestManager;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.utils.StringUtil;
@@ -811,7 +813,7 @@ public class HttpManager {
                 params.put("img_byte_str8", adEntity.getImagePath8());
                 params.put("province", adEntity.getProvince().getP());
                 params.put("city", adEntity.getCity().getC());
-                params.put("range", adEntity.getDistance().getKey());
+                params.put("range", adEntity.getDistance().getCount());
                 params.put("longitude", MainApplication.getContext().getLongitude() + "");
                 params.put("latitude", MainApplication.getContext().getLatitude() + "");
                 params.put("price", adEntity.getPrice());
@@ -1140,10 +1142,18 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_COUNTRY, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg()) && fragment == null) {
-                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    if (fragment != null) {
+                        if (!TextUtils.isEmpty(new Preferences(fragment.getActivity()).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB3);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     } else {
-                        listener.onError(response.getMsg());
+                        if (!TextUtils.isEmpty(new Preferences(activity).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB3);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     }
                 }
             }
@@ -1179,7 +1189,7 @@ public class HttpManager {
      * @param activity
      * @param fragment
      */
-    public void getLocalCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, InteractiveFragment fragment) {
+    public void getLocalCommentList(final String token, final int page_index, final UserLoseMultiLoadedListener listener, final Activity activity, final InteractiveFragment fragment) {
         int type = 0;
         if (page_index == 1) {
             type = 9;
@@ -1193,10 +1203,18 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_INTERACTIVE_LOCAL, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg()) && activity != null) {
-                        listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
+                    if (fragment != null) {
+                        if (!TextUtils.isEmpty(new Preferences(fragment.getActivity()).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB3);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     } else {
-                        listener.onError(response.getMsg());
+                        if (!TextUtils.isEmpty(new Preferences(activity).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB3);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     }
                 }
             }
@@ -1245,7 +1263,7 @@ public class HttpManager {
                     if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
                         listener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
                     } else {
-                        listener.onError(response.getMsg());
+                        listener.onError(Constants.LISTENER_TYPE_COMMENT, response.getMsg());
                     }
                 }
             }
@@ -1317,7 +1335,7 @@ public class HttpManager {
      * @param listener
      * @param fragment
      */
-    public void getUserInfomation(final String token, final BaseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
+    public void getUserInfomation(final String token, final UserLoseMultiLoadedListener listener, final Fragment fragment, final Activity activity) {
         GsonRequest<UserEntity> request = new GsonRequest<UserEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 UserEntity.class, null, new Response.Listener<UserEntity>() {
 
@@ -1326,24 +1344,23 @@ public class HttpManager {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_GET_USER_INFO, response);
                 } else {
-                    if (Constants.UN_LOGIN_MESSAGE.equals(response.getMsg())) {
-                        if (listener instanceof UserLoseMultiLoadedListener) {
-                            UserLoseMultiLoadedListener loseMultiLoadedListener = (UserLoseMultiLoadedListener) listener;
-                            if (fragment != null) {
-                                loseMultiLoadedListener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_TAB1);
-                            } else {
-                                loseMultiLoadedListener.onError(response.getMsg(), activity, Constants.FROM_TAB1);
-                            }
+
+                    if (fragment != null) {
+                        if (!TextUtils.isEmpty(new Preferences(fragment.getActivity()).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_ME);
                         } else {
-                            listener.onError(Constants.LISTENER_TYPE_GET_USER_INFO, response.getMsg());
+                            listener.onError(response.getMsg());
                         }
                     } else {
-                        listener.onError(response.getMsg());
+                        if (!TextUtils.isEmpty(new Preferences(activity).getToken())) {
+                            listener.onError(response.getMsg(), fragment.getContext(), Constants.FROM_ME);
+                        } else {
+                            listener.onError(response.getMsg());
+                        }
                     }
                 }
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 listener.onException(error.getMessage());
@@ -2678,5 +2695,39 @@ public class HttpManager {
             }
         };
         RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 创建春笋券
+     * @param token
+     * @param grab_id
+     * @param listener
+     * @param mFragment
+     */
+    public void createChunsunTicket(final String token, final String grab_id, final UserLoseMultiLoadedListener listener, Fragment mFragment) {
+        GsonRequest<SampleResponseObjectEntity> request = new GsonRequest<SampleResponseObjectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseObjectEntity.class, null, new Response.Listener<SampleResponseObjectEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseObjectEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_CREATE_CHUNSUN_COUPON, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.USER_READ_MESSAGE);
+                params.put("parames", JsonManager.initShareOpenDataToJson(token, grab_id));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, mFragment);
     }
 }

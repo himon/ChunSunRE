@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.activity.ad;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.chunsun.redenvelope.R;
@@ -25,6 +27,7 @@ import com.chunsun.redenvelope.presenter.CreateAdNextStepPresenter;
 import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ICreateAdNextStepView;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
 
 import java.text.DecimalFormat;
@@ -97,6 +100,10 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
      * 费率
      */
     private List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> mDelaySecondsRate;
+    private String mStartTime;
+    private String mHourOfDay;
+    private String mMinute;
+    private String mMinPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +137,15 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         mNavRight.setOnClickListener(this);
         mIvExplain.setOnClickListener(this);
         mBtnNextStep.setOnClickListener(this);
-
+        mLLTime.setOnClickListener(this);
+        mRbDelayed5.setOnClickListener(this);
+        mRbDelayed10.setOnClickListener(this);
+        mRbDelayed15.setOnClickListener(this);
+        mRbDelayed20.setOnClickListener(this);
+        mRbDelayed25.setOnClickListener(this);
+        mRbDelayed30.setOnClickListener(this);
+        mRbDelayed35.setOnClickListener(this);
+        mRbDelayed40.setOnClickListener(this);
 
         mRgSendType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -249,14 +264,57 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
                 toAdPriceExplain();
                 break;
             case R.id.btn_next_step:
+                if(TextUtils.isEmpty(mEtPrice.getText().toString().trim())){
+                    ShowToast.Short("请输入单个金额！");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(mEtNum.getText().toString().trim())){
+                    ShowToast.Short("请输入红包个数！");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(mEtDays.getText().toString().trim())){
+                    ShowToast.Short("请输入发放天数！");
+                    return;
+                }
+
                 mPresenter.toValidatePrice(mAdEntity);
+                break;
+            case R.id.ll_time_container:
+                setTime();
+                break;
+            case R.id.rb_delayed_5s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(0));
+                break;
+            case R.id.rb_delayed_10s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(1));
+                break;
+            case R.id.rb_delayed_15s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
+                break;
+            case R.id.rb_delayed_20s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(3));
+                break;
+            case R.id.rb_delayed_25s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(4));
+                break;
+            case R.id.rb_delayed_30s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(5));
+                break;
+            case R.id.rb_delayed_35s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(6));
+                break;
+            case R.id.rb_delayed_40s:
+                mAdEntity.setDelaySeconds(mDelaySecondsRate.get(7));
                 break;
         }
     }
 
     @Override
-    public void setDelaySecondsRateData(List<AdDelaySecondsRateEntity.ResultEntity.DelaySecondsRateEntity> result) {
-        mDelaySecondsRate = result;
+    public void setDelaySecondsRateData(AdDelaySecondsRateEntity.ResultEntity result) {
+        mMinPrice = result.getHb_min_price();
+        mDelaySecondsRate = result.getDelay_seconds_rate();
         initDefaultData();
     }
 
@@ -281,6 +339,20 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
      */
     @Override
     public void toNextStep() {
+
+        switch (mRgSendType.getCheckedRadioButtonId()) {
+            case R.id.rb_immediate_send:
+                mAdEntity.setStartTime("");
+                break;
+            case R.id.rb_time_send:
+                if(TextUtils.isEmpty(mHourOfDay)) {
+                    mAdEntity.setStartTime(mStartTime);
+                }else{
+                    mAdEntity.setStartTime(mHourOfDay + ":" + mMinute);
+                }
+                break;
+        }
+
         Intent intent = new Intent(this, CreateAdContentActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, mAdEntity);
         intent.putExtra(Constants.EXTRA_KEY2, mSuperadditionEntity);
@@ -302,6 +374,25 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
     }
 
     /**
+     * 设置定时
+     */
+    private void setTime() {
+        Calendar calendar = Calendar.getInstance();
+        new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                mHourOfDay = hourOfDay < 10 ? ("0" + hourOfDay)
+                        : ("" + hourOfDay);
+                mMinute = minute < 10 ? ("0" + minute) : ("" + minute);
+                mTvTime.setText(mHourOfDay + ":" + mMinute);
+                mAdEntity.setStartTime(mHourOfDay + ":" + mMinute);
+            }
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+                true).show();
+    }
+
+    /**
      * 计算总价
      *
      * @param priceStr
@@ -310,6 +401,19 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
      * @return
      */
     private void calcAdTotalPrice(String priceStr, String numStr, String daysStr) {
+
+        if(TextUtils.isEmpty(numStr)){
+            return;
+        }
+
+        if(TextUtils.isEmpty(daysStr)){
+            return;
+        }
+
+        if(TextUtils.isEmpty(priceStr)){
+            return;
+        }
+
         float price = Float.valueOf(priceStr);
         int num = Integer.valueOf(numStr);
         int days = Integer.valueOf(daysStr);
@@ -329,9 +433,9 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
      */
     private void initDefaultData() {
 
-        Date date = new Date();
+        Date date = new Date(System.currentTimeMillis() + 1800000);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String time = sdf.format(date);
+        mStartTime = sdf.format(date);
 
         if (mSuperadditionEntity != null) {//追加
 
@@ -357,14 +461,14 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
         } else {
 
             mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
-            mAdEntity.setStartTime(time);
+            mAdEntity.setStartTime(mStartTime);
 
-            calcAdTotalPrice(Constants.AD_DEFAULT_PRICE, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
+            calcAdTotalPrice(mMinPrice, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
 
-            mEtPrice.setText(Constants.AD_DEFAULT_PRICE);
+            mEtPrice.setText(mMinPrice);
             mEtNum.setText(Constants.AD_DEFAULT_NUM);
             mEtDays.setText(Constants.AD_DEFAULT_DAYS);
-            mTvTime.setText(time);
+            mTvTime.setText(mStartTime);
         }
     }
 

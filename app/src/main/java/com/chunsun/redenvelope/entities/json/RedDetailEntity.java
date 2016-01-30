@@ -3,6 +3,7 @@ package com.chunsun.redenvelope.entities.json;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 
 /**
@@ -340,7 +341,8 @@ public class RedDetailEntity extends BaseEntity {
             }
 
             public String getU_img_url() {
-                return u_img_url;
+                return Constants.IMG_HOST_URL
+                        + u_img_url;
             }
 
             public void setU_img_url(String u_img_url) {

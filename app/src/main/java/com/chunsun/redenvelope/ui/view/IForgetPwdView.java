@@ -9,4 +9,8 @@ public interface IForgetPwdView extends LoadingView {
 
     void nextStep();
 
+    void enableGetCode();
+
+    void getFocus();
+
 }

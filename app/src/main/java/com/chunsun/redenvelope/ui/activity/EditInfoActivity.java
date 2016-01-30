@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.event.MeFragmentRefreshEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.EditInfoPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IEditInfoView;
 import com.chunsun.redenvelope.utils.EditUtils;
+import com.chunsun.redenvelope.utils.RegexUtil;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.StringUtil;
 
@@ -73,6 +75,7 @@ public class EditInfoActivity extends BaseActivity implements IEditInfoView {
 
         mNavLeft.setOnClickListener(this);
         mNavRight.setOnClickListener(this);
+        mIvDeleteContent.setOnClickListener(this);
 
         mEtContent.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,7 +126,9 @@ public class EditInfoActivity extends BaseActivity implements IEditInfoView {
         if (Constants.EDIT_TYPE_COMPLAINT == mType) {
             mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
         } else if (Constants.EDIT_TYPE_CHUNSUN_ACCOUNT == mType) {
-            mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+            //禁止输入非字母数字
+            EditUtils.limitCharAndNumber(mEtContent);
+            //mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
         } else if (Constants.EDIT_TYPE_NICK_NAME == mType) {
             mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
         } else if (Constants.EDIT_TYPE_PHONE == mType) {
@@ -133,7 +138,7 @@ public class EditInfoActivity extends BaseActivity implements IEditInfoView {
             mEtContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
             mEtContent.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (Constants.EDIT_TYPE_WECHAT == mType) {
-            //限制输入字母数字
+            //禁止输入非字母数字
             EditUtils.limitCharAndNumber(mEtContent);
         } else if (Constants.EDIT_TYPE_QQ == mType) {
             mEtContent.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -153,11 +158,30 @@ public class EditInfoActivity extends BaseActivity implements IEditInfoView {
             case R.id.tv_nav_right:
                 submit();
                 break;
+            case R.id.iv_delete_text:
+                mEtContent.setText("");
+                break;
 
         }
     }
 
     private void submit() {
+
+        String content = mEtContent.getText().toString().trim();
+
+        if(Constants.EDIT_TYPE_CHUNSUN_ACCOUNT == mType && content.length() < 6){
+            ShowToast.Short("请输入6~20位字母数字组合！");
+            return;
+        }
+
+        if(Constants.EDIT_TYPE_ALIPAY == mType){
+            boolean b = RegexUtil.matcherPhoneAndEmail(content);
+            if(!b){
+                ShowToast.Short("不是正确的支付宝账号！");
+                return;
+            }
+        }
+
         if (mType == Constants.EDIT_TYPE_COMPLAINT) {
             mPresenter.complaintRedEnvelope(mToken, mId, StringUtil.textview2String(mEtContent));
         }else{
@@ -183,6 +207,9 @@ public class EditInfoActivity extends BaseActivity implements IEditInfoView {
 
     @Override
     public void editSuccess(int type) {
+        if(type == Constants.EDIT_TYPE_NICK_NAME || type == Constants.EDIT_TYPE_CHUNSUN_ACCOUNT){
+            EventBus.getDefault().post(new MeFragmentRefreshEvent("refresh"));
+        }
         EventBus.getDefault().post(new EditUserInfoEvent(type, StringUtil.textview2String(mEtContent)));
         back();
     }

@@ -14,6 +14,7 @@ public interface Constants {
     int PAGE_NUM = 30;
 
     String UN_LOGIN_MESSAGE = "用户信息已失效";
+    String NOT_LOGIN_MESSAGE = "会员信息不存在";
 
     /**
      * 红包类型
@@ -70,7 +71,7 @@ public interface Constants {
     String HOST_URL = "http://192.168.1.109:9101";
     //String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-//    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
     String IMG_HOST_URL = "http://192.168.1.109:9101";
     //String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
@@ -338,6 +339,16 @@ public interface Constants {
     String FROM_LOGIN_BACK = "from_login_back";
 
     /**
+     * 注册成功
+     */
+    String FROM_REGISTER = "from_register";
+
+    /**
+     * 标示从欢迎页跳转到登录
+     */
+    String FROM_WELCOME = "from_welcome";
+
+    /**
      * token过期
      */
     String USER_INFO_PASS_FROM_ME = "user_info_pass_from_me";
@@ -361,7 +372,9 @@ public interface Constants {
     // 转发类发广告的说明WebView
     String REPEAT_SEND_RED_INSTRUCTION_URL = "http://www.chunsunkeji.com/hbexplain/forwardshuoming.html";
     // 发广告的价格说明WebView
-    String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/help/price/dj.html";
+    String SEND_PRICE_EXPLAIN_URL = "http://chunsunkeji.com/hbhelp/price/dj.html";
+    // 发广告的协议WebView
+    String SEND_RED_AGREEMENT_URL = "http://chunsunkeji.com/agreement/sendadAgreement.html";
 
     /**
      * 分享url
@@ -467,7 +480,8 @@ public interface Constants {
     int LISTENER_TYPE_GET_USER_GRAB_BY_TOKEN = 0x2043;
     int LISTENER_TYPE_GET_USER_NO_READ_COUNT = 0x2044;
     int LISTENER_TYPE_GET_USER_READ = 0x2045;
-    int LISTENER_TYPE_LOGOUT = 0x20046;
+    int LISTENER_TYPE_LOGOUT = 0x2046;
+    int LISTENER_TYPE_CREATE_CHUNSUN_COUPON = 0x2047;
 
     /**
      * 发广告默认数据

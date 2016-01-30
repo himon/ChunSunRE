@@ -121,7 +121,7 @@ public class PreviewRepeatRedDetailActivity extends BaseActivity {
         }
         mTvTime.setText(currentTime);
         mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
-        ImageLoader.getInstance().displayImage(userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
+        ImageLoader.getInstance().displayImage(Constants.IMG_HOST_URL +userEntity.getImg_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         ArrayList<String> list = initUrls();
         if (list.size() > 0) {

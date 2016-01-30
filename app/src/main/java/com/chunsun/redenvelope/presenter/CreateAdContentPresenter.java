@@ -301,7 +301,7 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
             return true;
         }
 
-        if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_LINK + "")) {
+        if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_LINK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK_LINK + "")) {
             if (TextUtils.isEmpty(content)) {
                 ShowToast.Short("请输入链接网址！");
                 return true;
@@ -310,6 +310,11 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
                 ShowToast.Short("请输入已http或https开头的网址！");
                 return true;
             }
+        }
+
+        if(!mAdEntity.isAgreement()){
+            ShowToast.Short("请同意春笋红包发广告协议！");
+            return true;
         }
 
         return false;

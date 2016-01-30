@@ -9,14 +9,17 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.event.WalletEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WithdrawcashAlipayConfirmPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawcashAlipayConfirmView;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements IWithdrawcashAlipayConfirmView {
 
@@ -83,7 +86,7 @@ public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements I
                     ShowToast.Short("提现金额不正确");
                     return;
                 }
-                mDialog.show();
+                showLoading();
                 mPresenter.rechargeByAlipay(mToken, mAccount, mName, mEntity.getId());
                 break;
         }
@@ -91,6 +94,20 @@ public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements I
 
     @Override
     public void commitFinish() {
-        mDialog.dismiss();
+        hideCircleLoading();
+        EventBus.getDefault().post(new WalletEvent("refresh"));
+        AppManager.getAppManager().finishActivity(WithdrawcashAlipayConfirmActivity.class);
+        AppManager.getAppManager().finishActivity(WithdrawCashAlipayActivity.class);
+        AppManager.getAppManager().finishActivity(WithdrawCashActivity.class);
+    }
+
+    @Override
+    public void showLoading() {
+        showCircleLoading();
+    }
+
+    @Override
+    public void hideLoading() {
+        hideCircleLoading();
     }
 }

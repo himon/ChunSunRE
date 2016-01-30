@@ -41,11 +41,11 @@ public class EditUtils {
     }
 
     /**
-     * 禁止输入非字母数字
+     * 禁止输入非字母数字 且不长度不超过20个字符
      *
      * @param edit
      */
-    public static void limitCharAndNumber(EditText edit) {
+    public static void limitCharAndNumber(final EditText edit) {
         final String digitsFilter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         edit.setFilters(new InputFilter[]{new InputFilter() {
             @Override
@@ -61,6 +61,9 @@ public class EditUtils {
                                 break;
                             }
                         }
+                    }
+                    if(edit.getText().toString().length() > 20){
+                        isHasOther = true;
                     }
                 }
 

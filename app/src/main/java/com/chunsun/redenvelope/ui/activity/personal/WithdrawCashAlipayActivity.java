@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.entities.json.BalanceEntity.ResultEntity.ZfbPoundageEntity;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WithdrawCashAlipayPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawCashAlipayView;
@@ -42,6 +44,7 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
     private WithdrawCashAlipayPresenter mPresenter;
     private ArrayList<BalanceEntity.ResultEntity.ZfbPoundageEntity> mRateList;
     private ZfbPoundageEntity mAlipayRateEntity;
+    private Preferences mPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,15 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
             Bundle bundle = intent.getExtras();
             mRateList = bundle.getParcelableArrayList(Constants.EXTRA_KEY);
             buildMoneyGroup(mRateList);
+        }
+        mPreferences = new Preferences(this);
+        String account = mPreferences.getAlipayAccount();
+        String name = mPreferences.getAlipayName();
+        if (!TextUtils.isEmpty(account)) {
+            mEtAlipayAccount.setText(account);
+        }
+        if (!TextUtils.isEmpty(name)) {
+            mEtAlipayName.setText(name);
         }
     }
 
@@ -132,6 +144,10 @@ public class WithdrawCashAlipayActivity extends BaseActivity implements IWithdra
 
     @Override
     public void toWithdrawCashConfirm(String account, String name) {
+
+        mPreferences.setAlipayAcount(account);
+        mPreferences.setAlipayName(name);
+
         Intent intent = new Intent(this, WithdrawcashAlipayConfirmActivity.class);
         intent.putExtra(Constants.EXTRA_KEY, account);
         intent.putExtra(Constants.EXTRA_KEY2, name);

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LogoutState;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.AppManager;
@@ -26,6 +29,8 @@ public abstract class UserLosePresenter<T> extends BasePresenter<T> {
      */
     public void onError(String msg, Context context, String from) {
         ShowToast.Short(msg);
+        new Preferences(context).setToken("");
+        LoginContext.getLoginContext().setState(new LogoutState());
         Intent intent = new Intent(context, LoginActivity.class);
         if (!TextUtils.isEmpty(from)) {
             intent.putExtra(Constants.EXTRA_KEY, from);
@@ -39,7 +44,7 @@ public abstract class UserLosePresenter<T> extends BasePresenter<T> {
     }
 
     public void onError(int event_tag, String msg) {
-
+        ShowToast.Short(msg);
     }
 
     public void onException(String msg) {

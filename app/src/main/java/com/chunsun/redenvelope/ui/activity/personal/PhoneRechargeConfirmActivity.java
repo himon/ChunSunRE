@@ -9,13 +9,16 @@ import android.widget.TextView;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.event.WalletEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.PhoneRechargeConfirmPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IPhoneRechargeConfirmView;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 手机充值确认Activity
@@ -93,6 +96,9 @@ public class PhoneRechargeConfirmActivity extends BaseActivity implements IPhone
 
     @Override
     public void rechargeMobileFinish() {
-
+        EventBus.getDefault().post(new WalletEvent("refresh"));
+        AppManager.getAppManager().finishActivity(PhoneRechargeConfirmActivity.class);
+        AppManager.getAppManager().finishActivity(PhoneRechargeActivity.class);
+        AppManager.getAppManager().finishActivity(WithdrawCashActivity.class);
     }
 }

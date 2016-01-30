@@ -66,5 +66,7 @@ public abstract class BaseSwipeBackAtActivity<V, T extends BasePresenter<V>> ext
     protected  void clearAt(){
         mEtComment.setText("");
         mEtComment.setHint("请输入评论内容...");
+        at = "0";
+        hideKeyboard();
     }
 }

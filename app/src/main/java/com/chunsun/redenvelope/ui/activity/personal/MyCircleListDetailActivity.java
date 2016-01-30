@@ -176,7 +176,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, mDetail.getHb_type(),  mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+        mDataAdapter = new RedDetailFragmentAdapter(this, 7,  mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -188,6 +188,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
                 }
             }
         }, mHeadPortraitOnLongClickListener);
+
         mListView.setAdapter(mDataAdapter);
 
         mPtr.setPtrHandler(new PtrDefaultHandler() {
@@ -332,7 +333,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, true);
     }
 
     @Override
@@ -341,6 +342,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+        clearAt();
     }
 
     /**
@@ -371,7 +373,6 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
-                clearAt();
                 break;
         }
     }

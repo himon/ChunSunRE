@@ -34,11 +34,13 @@ public class WithdrawcashAlipayConfirmPresenter implements BaseSingleLoadedListe
 
     @Override
     public void onError(String msg) {
+        mIWithdrawcashAlipayConfirmView.hideLoading();
         ShowToast.Short(msg);
     }
 
     @Override
     public void onException(String msg) {
+        mIWithdrawcashAlipayConfirmView.hideLoading();
         ShowToast.Short(msg);
     }
 }

@@ -13,4 +13,10 @@ public interface IRegisterView extends LoadingView {
 
     void phoneNumError();
 
+    void getCodeEnabled(boolean enable);
+
+    /**
+     * 验证码EditText获取焦点
+     */
+    void getFocus();
 }

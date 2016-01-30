@@ -3,9 +3,9 @@ package com.chunsun.redenvelope.presenter;
 import android.text.TextUtils;
 
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.listeners.BaseSingleLoadedListener;
 import com.chunsun.redenvelope.model.LoginMode;
-import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.model.impl.LoginModeImpl;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
@@ -56,6 +56,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements BaseSin
     public boolean valiAccount(String account) {
 
         if (TextUtils.isEmpty(account)) {
+            ShowToast.Short("请输入账号！");
             return false;
         }
         return true;
@@ -69,6 +70,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements BaseSin
      */
     public boolean valiPwd(String pwd) {
         if (TextUtils.isEmpty(pwd)) {
+            ShowToast.Short("请输入密码！");
             return false;
         }
         return true;

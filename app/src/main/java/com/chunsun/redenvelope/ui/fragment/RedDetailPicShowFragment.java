@@ -4,8 +4,10 @@ package com.chunsun.redenvelope.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +92,16 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
     protected void initData() {
         Bundle bundle = getArguments();
         mUrl = bundle.getString(Constants.EXTRA_KEY);
-        ImageLoader.getInstance().displayImage(mUrl, mIvPicture, ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions());
-
+        boolean isHead = bundle.getBoolean(Constants.EXTRA_KEY2);
+        if (isHead) {
+            mLLExit.setVisibility(View.GONE);
+            mLLOther.setVisibility(View.GONE);
+            //默认头像
+            Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.img_default_head);
+            ImageLoader.getInstance().displayImage(mUrl, mIvPicture, ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions(drawable));
+        } else {
+            ImageLoader.getInstance().displayImage(mUrl, mIvPicture, ImageLoaderHelper.getInstance(getActivity()).getDisplayOptions());
+        }
         mIvPicture.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
             public void onViewTap(View view, float x, float y) {

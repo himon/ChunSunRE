@@ -44,6 +44,7 @@ public class MainApplication extends Application {
     private UserInfoEntity mUserEntity;
     private String mImei;
     private DisplayImageOptions mHeadOptions;
+    private String mShareHost;
 
     /**
      * 百度地图
@@ -63,6 +64,14 @@ public class MainApplication extends Application {
 
     public LocationClient getLocationClient() {
         return mLocationClient;
+    }
+
+    public String getmShareHost() {
+        return mShareHost;
+    }
+
+    public void setmShareHost(String mShareHost) {
+        this.mShareHost = mShareHost;
     }
 
     /**

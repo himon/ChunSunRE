@@ -132,6 +132,8 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     //领取记录列表
     private List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> mListRedRecord = new ArrayList<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity>();
     private String mToken;
+    //是否倒计时
+    private boolean isCountDown;
 
     /**
      * grab信息
@@ -287,11 +289,6 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         mDataAdapter = new RedDetailFragmentAdapter(getActivity(), mDetail.getHb_type(), mListComment, mListRedRecord, mCurrentCheckType, mHeadPortraitOnClickListener, mHeadPortraitOnLongClickListener);
         mListView.setAdapter(mDataAdapter);
 
-        if (mGrabEntity != null && mGrabEntity.isSuccess()) {
-        } else {
-            mIbRepeat.setVisibility(View.GONE);
-        }
-
         mTvTitle.setText(mDetail.getTitle());
         mTvUserName.setText(mDetail.getNick_name());
         //判断是否是代理
@@ -325,12 +322,21 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
             mListComment.clear();
             mCurrentGetPage = 1;
             mListRedRecord.clear();
-            mCurrentCheckType = 0;
         }
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
         mPresenter.getRedRecordList(mDetail.getId(), mCurrentGetPage);
 
         setRedEnvelopeStatus();
+    }
+
+    /**
+     * 开启倒计时
+     */
+    public void countDown() {
+        if (!isCountDown) {
+            mPresenter.countDown(mDetail.getDelay_seconds());
+            isCountDown = true;
+        }
     }
 
     /**
@@ -349,7 +355,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 mBtnOpenRed.setTextColor(getResources().getColor(R.color.font_white));
                 //mTvRedPrice.setText(mDetail.getPrice() + "元");
             } else {
-                mPresenter.countDown(mDetail.getDelay_seconds());
+                countDown();
             }
         } else {
             if (!mDetail.isHb_status()) {
@@ -359,7 +365,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 //mTvRedPrice.setText(mDetail.getPrice() + "元");
                 mTvRedPrice.setTextColor(getResources().getColor(R.color.font_gray_red_envelope));
             } else {
-                mPresenter.countDown(mDetail.getDelay_seconds());
+                countDown();
             }
         }
 
@@ -392,7 +398,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 mPtr.refreshComplete();
                 return;
             }
-            mPresenter.getRedRecordList(mDetail.getId(), mCurrentCommentPage);
+            mPresenter.getRedRecordList(mDetail.getId(), mCurrentGetPage);
         }
     }
 
@@ -426,10 +432,11 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
             mTvRedPrice.setText("点击领取");
             if (mGrabEntity != null && !"0.00".equals(mGrabEntity.getResult().getHb_price())) {
                 mBtnOpenRed.setText(mGrabEntity.getResult().getHb_price() + "元");
-                mBtnOpenRed.setOnClickListener(this);
             } else {
+                mBtnOpenRed.setText("祝下次好运！");
                 mTvRedPrice.setText("谢谢阅读");
             }
+            mBtnOpenRed.setOnClickListener(this);
         }
     }
 
@@ -459,9 +466,16 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 changerDataList();
                 break;
             case R.id.btn_open_red://打开红包
-                mViewBg.setVisibility(View.VISIBLE);
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mGrabEntity, Constants.SHARE_FROM_RED);
-                menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                if (mGrabEntity != null && !"0.00".equals(mGrabEntity.getResult().getHb_price())) {
+                    mViewBg.setVisibility(View.VISIBLE);
+                    if ("0".equals(mGrabEntity.getResult().getHb_grab_id())) {
+                        return;
+                    }
+                    ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, mGrabEntity, Constants.SHARE_FROM_RED);
+                    menuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                } else {
+                    EventBus.getDefault().post(new RedDetailBackEvent(""));
+                }
                 break;
             case R.id.ll_collect_container://收藏
                 mPresenter.favorite(mToken, mDetail.getId());
@@ -474,7 +488,6 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
                 break;
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
-                clearAt();
                 break;
         }
     }
@@ -516,6 +529,8 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         if (mCurrentCheckType == 1 && list.size() < Constants.PAGE_NUM) {
             //设置没有更多的数据了,不再显示加载更多按钮
             mListView.setNoMore();
+        }else{
+            mListView.setHasMore();
         }
 
         mCurrentGetPage++;
@@ -527,7 +542,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, true);
     }
 
     @Override
@@ -542,12 +557,13 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
 
     @Override
     public void commentSuccess() {
-        mEtComment.setText("");
         refreshCommentList();
+        clearAt();
     }
 
     @Override
     public void shareSuccess() {
+        //刷新余额
         EventBus.getDefault().post(new MeFragmentRefreshEvent(""));
         //关闭Activity
         EventBus.getDefault().post(new RedDetailBackEvent(""));
@@ -556,6 +572,15 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     @Override
     public void setGrab(GrabEntity entity) {
         mGrabEntity = entity;
+        if (mGrabEntity != null && mGrabEntity.isSuccess()) {
+            if ("0.00".equals(entity.getResult().getHb_price())) {
+                if (mDetail.getHb_type() == Constants.RED_DETAIL_TYPE_COUPON) {
+                    mPresenter.createChunsunTicket(mToken, mGrabEntity.getResult().getHb_grab_id());
+                }
+            }
+        } else {
+            mIbRepeat.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -571,11 +596,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         if (TextUtils.isEmpty(event.getMsg())) {//倒计时
             refreshDelaySeconds(event.getSecond());
         } else if ("share".equals(event.getMsg())) {//分享
-            if (TextUtils.isEmpty(mDetail.getHg_id())) {
-                mPresenter.shareOpen(mToken, mGrabEntity.getResult().getHb_grab_id(), event.getContent());
-            } else {
-                mPresenter.shareOpen(mToken, mDetail.getHg_id(), event.getContent());
-            }
+            mPresenter.shareOpen(mToken, mGrabEntity.getResult().getHb_grab_id(), event.getContent());
         } else if ("no_share".equals(event.getMsg())) {//直接领钱
             mPresenter.justOpen(mToken, mGrabEntity.getResult().getHb_grab_id());
         }
@@ -601,6 +622,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     @Override
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
+        mPresenter.setLoop(false);
         super.onDestroy();
     }
 

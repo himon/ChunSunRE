@@ -78,11 +78,6 @@ public class CreateAdCouponNextStepPresenter extends BaseMultiLoadedListenerImpl
             return;
         }
 
-        if (TextUtils.isEmpty(mAdEntity.getStartTime())) {
-            ShowToast.Short("显示时间不能为零, 请重新进入此页面加载数据");
-            return;
-        }
-
         mICreateAdCouponNextStepView.toNextStep();
     }
 

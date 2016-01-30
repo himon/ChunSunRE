@@ -241,33 +241,34 @@ public class BalanceEntity extends BaseEntity {
              * id : 2
              * real_amount : 22
              */
-            private float amount;
+            private String amount;
             private int id;
-            private float real_amount;
+            private String real_amount;
 
-            public void setAmount(float amount) {
-                this.amount = amount;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public void setReal_amount(float real_amount) {
-                this.real_amount = real_amount;
-            }
-
-            public float getAmount() {
+            public String getAmount() {
                 return amount;
+            }
+
+            public void setAmount(String amount) {
+                this.amount = amount;
             }
 
             public int getId() {
                 return id;
             }
 
-            public float getReal_amount() {
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getReal_amount() {
                 return real_amount;
             }
+
+            public void setReal_amount(String real_amount) {
+                this.real_amount = real_amount;
+            }
+
 
             @Override
             public int describeContents() {
@@ -276,18 +277,18 @@ public class BalanceEntity extends BaseEntity {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeFloat(this.amount);
+                dest.writeString(this.amount);
                 dest.writeInt(this.id);
-                dest.writeFloat(this.real_amount);
+                dest.writeString(this.real_amount);
             }
 
             public CzPoundageEntity() {
             }
 
             protected CzPoundageEntity(Parcel in) {
-                this.amount = in.readInt();
+                this.amount = in.readString();
                 this.id = in.readInt();
-                this.real_amount = in.readInt();
+                this.real_amount = in.readString();
             }
 
             public static final Parcelable.Creator<CzPoundageEntity> CREATOR = new Parcelable.Creator<CzPoundageEntity>() {
@@ -310,33 +311,34 @@ public class BalanceEntity extends BaseEntity {
              * id : 27
              * rate : 0.01
              */
-            private float amount;
+            private String amount;
             private int id;
-            private double rate;
+            private String rate;
 
-            public void setAmount(float amount) {
-                this.amount = amount;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public void setRate(double rate) {
-                this.rate = rate;
-            }
-
-            public float getAmount() {
+            public String getAmount() {
                 return amount;
+            }
+
+            public void setAmount(String amount) {
+                this.amount = amount;
             }
 
             public int getId() {
                 return id;
             }
 
-            public double getRate() {
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getRate() {
                 return rate;
             }
+
+            public void setRate(String rate) {
+                this.rate = rate;
+            }
+
 
             @Override
             public int describeContents() {
@@ -345,18 +347,18 @@ public class BalanceEntity extends BaseEntity {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeFloat(this.amount);
+                dest.writeString(this.amount);
                 dest.writeInt(this.id);
-                dest.writeDouble(this.rate);
+                dest.writeString(this.rate);
             }
 
             public CashPoundageRateEntity() {
             }
 
             protected CashPoundageRateEntity(Parcel in) {
-                this.amount = in.readFloat();
+                this.amount = in.readString();
                 this.id = in.readInt();
-                this.rate = in.readDouble();
+                this.rate = in.readString();
             }
 
             public static final Parcelable.Creator<CashPoundageRateEntity> CREATOR = new Parcelable.Creator<CashPoundageRateEntity>() {
@@ -379,36 +381,37 @@ public class BalanceEntity extends BaseEntity {
              * id : 2
              * poundage : 2
              */
-            private float amount;
+            private String amount;
             private int id;
             /**
              * 扣除的手续费
              */
-            private float poundage;
+            private String poundage;
 
-            public void setAmount(float amount) {
-                this.amount = amount;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public void setPoundage(float poundage) {
-                this.poundage = poundage;
-            }
-
-            public float getAmount() {
+            public String getAmount() {
                 return amount;
+            }
+
+            public void setAmount(String amount) {
+                this.amount = amount;
             }
 
             public int getId() {
                 return id;
             }
 
-            public float getPoundage() {
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getPoundage() {
                 return poundage;
             }
+
+            public void setPoundage(String poundage) {
+                this.poundage = poundage;
+            }
+
 
             @Override
             public int describeContents() {
@@ -417,18 +420,18 @@ public class BalanceEntity extends BaseEntity {
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeFloat(this.amount);
+                dest.writeString(this.amount);
                 dest.writeInt(this.id);
-                dest.writeFloat(this.poundage);
+                dest.writeString(this.poundage);
             }
 
             public ZfbPoundageEntity() {
             }
 
             protected ZfbPoundageEntity(Parcel in) {
-                this.amount = in.readInt();
+                this.amount = in.readString();
                 this.id = in.readInt();
-                this.poundage = in.readInt();
+                this.poundage = in.readString();
             }
 
             public static final Parcelable.Creator<ZfbPoundageEntity> CREATOR = new Parcelable.Creator<ZfbPoundageEntity>() {

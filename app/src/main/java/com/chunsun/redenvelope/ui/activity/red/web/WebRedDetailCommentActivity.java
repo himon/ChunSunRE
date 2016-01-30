@@ -219,7 +219,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
                 mPtr.refreshComplete();
                 return;
             }
-            mPresenter.getRedRecordList(mRedId, mCurrentCommentPage);
+            mPresenter.getRedRecordList(mRedId, mCurrentGetPage);
         }
     }
 
@@ -249,7 +249,6 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
             case R.id.btn_send_comment:
                 if (LoginContext.getLoginContext().comment(this, Constants.FROM_COMMENT)) {
                     mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedId, at);
-                    clearAt();
                 }
                 break;
         }
@@ -314,6 +313,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mRedId, mCurrentCommentPage);
+        clearAt();
     }
 
     @Override

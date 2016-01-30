@@ -92,10 +92,10 @@ public class SendRedEnvelopeRecordListActivity extends BaseActivity implements I
             }, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Integer p = (Integer) v.getTag();
+                    int p = (Integer) v.getTag();
                     int id = v.getId();
-                    if (id == R.id.bt_delete) {
-                        mPresenter.delRecord(mToken, p);
+                    if (id == R.id.front) {
+                        toClassifyListDetail(p + "");
                     }
                 }
             });

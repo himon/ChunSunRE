@@ -27,6 +27,11 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
 
     private IRedDetailFragmentView redDetailFragmentView;
     private RedDetailFragmentMode redDetailFragmentMode;
+    private boolean loop = true;
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public RedDetailFragmentPresenter(IRedDetailFragmentView redDetailFragmentView) {
         this.redDetailFragmentView = redDetailFragmentView;
@@ -98,7 +103,7 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
 
             @Override
             public void run() {
-                while (count > 0) {
+                while (loop && count > 0) {
                     try {
                         Thread.sleep(1000);
                         EventBus.getDefault().post(new RedDetailEvent(count));
@@ -173,6 +178,15 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
         redDetailFragmentMode.justOpen(token, grab_id, this);
     }
 
+    /**
+     * 创建春笋券
+     * @param token
+     * @param grab_id
+     */
+    public void createChunsunTicket(String token, String grab_id) {
+        redDetailFragmentMode.createChunsunTicket(token, grab_id, this);
+    }
+
     @Override
     public void onSuccess(int event_tag, BaseEntity data) {
         switch (event_tag) {
@@ -202,4 +216,6 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
     private void grabData(GrabEntity entity) {
         redDetailFragmentView.setGrab(entity);
     }
+
+
 }

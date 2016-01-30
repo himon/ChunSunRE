@@ -133,6 +133,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         mPresenter = (SendRedEnvelopeRecordDetailPresenter) mMPresenter;
+        mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
     }
@@ -328,7 +329,6 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
                 break;
             case R.id.btn_send_comment:
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mRedEnvelopeId, at);
-                clearAt();
                 break;
         }
     }
@@ -446,6 +446,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mRedEnvelopeId, mCurrentCommentPage);
+        clearAt();
     }
 
     @Override

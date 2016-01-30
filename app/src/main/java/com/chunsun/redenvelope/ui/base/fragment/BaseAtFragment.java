@@ -65,5 +65,7 @@ public abstract class BaseAtFragment<V, T extends BasePresenter<V>> extends MBas
     protected  void clearAt(){
         mEtComment.setText("");
         mEtComment.setHint("请输入评论内容...");
+        at = "0";
+        hideKeyboard();
     }
 }

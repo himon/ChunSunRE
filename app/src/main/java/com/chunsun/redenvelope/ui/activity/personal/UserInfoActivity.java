@@ -16,10 +16,12 @@ import com.chunsun.redenvelope.entities.SampleEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.UserInfoPresenter;
 import com.chunsun.redenvelope.ui.activity.EditInfoActivity;
 import com.chunsun.redenvelope.ui.activity.SelectListInfoActivity;
+import com.chunsun.redenvelope.ui.activity.red.RedDetailPicShowActivity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IUserInfoView;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
@@ -138,15 +140,16 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     protected void click(View v) {
         switch (v.getId()) {
             case R.id.ital_name:
-                toEdit(mMoreContentList[1], mSiName.getData(), "1", Constants.EDIT_TYPE_NICK_NAME);
+                toEdit(mMoreContentList[1], mSiName.getData(), 1, Constants.EDIT_TYPE_NICK_NAME);
                 break;
             case R.id.ital_logo_info://头像设置
                 selectHeadImage();
                 break;
             case R.id.iv_logo://头像查看
+                seeHead();
                 break;
             case R.id.ital_chunsun_account://春笋号
-                toEdit(mMoreContentList[2], mSiAccount.getData(), "1", Constants.EDIT_TYPE_CHUNSUN_ACCOUNT);
+                toEdit(mMoreContentList[2], mSiAccount.getData(), 1, Constants.EDIT_TYPE_CHUNSUN_ACCOUNT);
                 break;
             case R.id.ital_sex:
                 toEditSex();
@@ -158,29 +161,41 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 toEditJob();
                 break;
             case R.id.ital_phone:
-                toEdit(mMoreContentList[3], mSiPhone.getData(), "1", Constants.EDIT_TYPE_PHONE);
+                toEdit(mMoreContentList[3], mSiPhone.getData(), 1, Constants.EDIT_TYPE_PHONE);
                 break;
             case R.id.ital_tel:
-                toEdit(mMoreContentList[4], mSiTel.getData(), "1", Constants.EDIT_TYPE_TEL);
+                toEdit(mMoreContentList[4], mSiTel.getData(), 1, Constants.EDIT_TYPE_TEL);
                 break;
             case R.id.ital_weixin:
-                toEdit(mMoreContentList[4], mSiWechat.getData(), "1", Constants.EDIT_TYPE_WECHAT);
+                toEdit(mMoreContentList[5], mSiWechat.getData(), 1, Constants.EDIT_TYPE_WECHAT);
                 break;
             case R.id.ital_qq:
-                toEdit(mMoreContentList[13], mSiQQ.getData(), "1", Constants.EDIT_TYPE_QQ);
+                toEdit(mMoreContentList[13], mSiQQ.getData(), 1, Constants.EDIT_TYPE_QQ);
                 break;
             case R.id.ital_zhifubao:
-                toEdit(mMoreContentList[6], mSiAlipay.getData(), "1", Constants.EDIT_TYPE_ALIPAY);
+                toEdit(mMoreContentList[6], mSiAlipay.getData(), 1, Constants.EDIT_TYPE_ALIPAY);
                 break;
             case R.id.ital_identify_code:
-                toEdit(mMoreContentList[7], mSiId.getData(), "1", Constants.EDIT_TYPE_ID_CARD);
+                toEdit(mMoreContentList[7], mSiId.getData(), 1, Constants.EDIT_TYPE_ID_CARD);
                 break;
             case R.id.ital_description://个性签名
-                toEdit(mMoreContentList[7], mSiDesc.getData(), "1", Constants.EDIT_TYPE_DESC);
+                toEdit(mMoreContentList[8], mSiDesc.getData(), 4, Constants.EDIT_TYPE_DESC);
                 break;
             case R.id.ital_authentication://认证
                 break;
         }
+    }
+
+    private void seeHead() {
+
+        ArrayList<String> list = new ArrayList<>();
+        list.add(Constants.IMG_HOST_URL + mUserEntity.getImg_url());
+
+        Intent intent = new Intent(this, RedDetailPicShowActivity.class);
+        intent.putExtra(Constants.EXTRA_LIST_KEY, list);
+        intent.putExtra(Constants.EXTRA_KEY, 0);
+        intent.putExtra(Constants.EXTRA_KEY2, true);
+        startActivity(intent);
     }
 
     /**
@@ -215,7 +230,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         mPresenter.editBirthday(mToken);
     }
 
-    private void toEdit(String title, String content, String lines, int requestCode) {
+    private void toEdit(String title, String content, int lines, int requestCode) {
         Intent intent = new Intent(this, EditInfoActivity.class);
         intent.putExtra(Constants.EXTRA_KEY_LINES, lines);
         intent.putExtra(Constants.EXTRA_KEY_TITLE, title);
@@ -229,31 +244,31 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         mSexList = sexList;
         mJsoList = jobList;
 
-        setHeadImage(mUserEntity.getImg_url());
+        setHeadImage(Constants.IMG_HOST_URL + mUserEntity.getImg_url());
         //头像
         mTvLogoDesc.setText(mMoreContentList[0]);
         //名称
-        mSiName.setContent(mMoreContentList[1], mUserEntity.getNick_name());
+        mSiName.setContentTextBlack(mMoreContentList[1], mUserEntity.getNick_name());
         //春笋号
-        mSiAccount.setContent(mMoreContentList[2], mUserEntity.getUser_name());
+        mSiAccount.setContentTextBlack(mMoreContentList[2], mUserEntity.getUser_name());
         //手机
-        mSiPhone.setContent(mMoreContentList[3], mUserEntity.getMobile());
+        mSiPhone.setContentNoArrow(mMoreContentList[3], mUserEntity.getMobile());
         //电话
-        mSiTel.setContent(mMoreContentList[4], mUserEntity.getTelphone());
+        mSiTel.setContentTextBlack(mMoreContentList[4], mUserEntity.getTelphone());
         //微信
-        mSiWechat.setContent(mMoreContentList[5], mUserEntity.getWeixin());
+        mSiWechat.setContentTextBlack(mMoreContentList[5], mUserEntity.getWeixin());
         //支付宝
-        mSiAlipay.setContent(mMoreContentList[6], mUserEntity.getZhifubao());
+        mSiAlipay.setContentTextBlack(mMoreContentList[6], mUserEntity.getZhifubao());
         //身份证
         if (TextUtils.isEmpty(mMoreContentList[7])) {
             mSiId.setVisibility(View.GONE);
         } else {
-            mSiId.setContent(mMoreContentList[7], mUserEntity.getID_num());
+            mSiId.setContentTextBlack(mMoreContentList[7], mUserEntity.getID_num());
             mSiId.setOnClickListener(this);
             mSiId.setVisibility(View.VISIBLE);
         }
         //签名介绍
-        mSiDesc.setContent(mMoreContentList[8], mUserEntity.getRemark());
+        mSiDesc.setContentTextBlack(mMoreContentList[8], mUserEntity.getRemark());
         //认证
         if (TextUtils.isEmpty(mMoreContentList[9])) {
             mSiAuthentication.setVisibility(View.GONE);
@@ -268,7 +283,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             } else if ("3".equals(is_v)) {
                 is_v = "认证驳回";
             }
-            mSiAuthentication.setContent(mMoreContentList[9], is_v);
+            mSiAuthentication.setContentTextBlack(mMoreContentList[9], is_v);
             mSiAuthentication.setOnClickListener(this);
             mSiAuthentication.setVisibility(View.VISIBLE);
         }
@@ -276,7 +291,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         if (TextUtils.isEmpty(mMoreContentList[10])) {
             mSiSex.setVisibility(View.GONE);
         } else {
-            mSiSex.setContent(mMoreContentList[10], mUserEntity.getSex());
+            mSiSex.setContentTextBlack(mMoreContentList[10], mUserEntity.getSex());
             mSiSex.setOnClickListener(this);
             mSiSex.setVisibility(View.VISIBLE);
 
@@ -297,7 +312,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 Date date = new Date(mUserEntity.getBirthday());
                 birthday = simpleDateFormat.format(date);
             }
-            mSiBirthday.setContent(mMoreContentList[11], birthday);
+            mSiBirthday.setContentTextBlack(mMoreContentList[11], birthday);
             mSiBirthday.setOnClickListener(this);
             mSiBirthday.setVisibility(View.VISIBLE);
         }
@@ -305,7 +320,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         if (TextUtils.isEmpty(mMoreContentList[12])) {
             mSiJob.setVisibility(View.GONE);
         } else {
-            mSiJob.setContent(mMoreContentList[12], mUserEntity.getJob());
+            mSiJob.setContentTextBlack(mMoreContentList[12], mUserEntity.getJob());
             mSiJob.setOnClickListener(this);
             mSiJob.setVisibility(View.VISIBLE);
 
@@ -320,7 +335,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         if (TextUtils.isEmpty(mMoreContentList[13])) {
             mSiQQ.setVisibility(View.GONE);
         } else {
-            mSiQQ.setContent(mMoreContentList[13], mUserEntity.getQq());
+            mSiQQ.setContentTextBlack(mMoreContentList[13], mUserEntity.getQq());
             mSiQQ.setVisibility(View.VISIBLE);
             mSiQQ.setOnClickListener(this);
         }
@@ -334,6 +349,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
 
     @Override
     public void editUserHeadLogoSuccess(SampleResponseEntity entity) {
+        EventBus.getDefault().post(new MainEvent(Constants.FROM_ME));
         ShowToast.Short(entity.getMsg());
         String result = entity.getResult();
         //注意split
@@ -427,7 +443,9 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 toImageCutActivity(photos.get(0).getPath());
             }
         } else if (requestCode == Constants.REQUEST_CODE_IMAGE_CUT) {
-            mPresenter.saveHeadLogo(mToken, data);
+            if (data != null) {
+                mPresenter.saveHeadLogo(mToken, data);
+            }
         }
     }
 

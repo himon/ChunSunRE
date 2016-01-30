@@ -212,20 +212,35 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Tex
     private void getCodeIsEnable(String phoneNum) {
 
         if (StringUtil.isPhoneNum(phoneNum)) {
-            mGetCode.setEnabled(true);
+            getCodeEnabled(true);
+        } else {
+            getCodeEnabled(false);
+        }
+    }
+
+    @Override
+    public void getCodeEnabled(boolean enable) {
+        mGetCode.setEnabled(enable);
+        if (enable) {
             mGetCode.setTextColor(getResources()
                     .getColor(R.color.font_blue));
         } else {
-            mGetCode.setEnabled(false);
             mGetCode.setTextColor(getResources().getColor(
                     R.color.font_hint_gray));
         }
     }
 
+    @Override
+    public void getFocus() {
+        mInValiCode.setFocusable(true);
+        mInValiCode.setFocusableInTouchMode(true);
+        mInValiCode.requestFocus();
+    }
+
 
     public void onEventMainThread(ValiCodeEvent event) {
         if ("获取验证码".equals(event.getMsg())) {
-            mGetCode.setEnabled(true);
+            getCodeEnabled(true);
             countdowning = false;
         }
         mGetCode.setText(event.getMsg());
@@ -235,6 +250,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterView, Tex
     protected void onDestroy() {
         //取消注册EventBus
         EventBus.getDefault().unregister(this);
+        mPresenter.setLoop(false);
         super.onDestroy();
     }
 }

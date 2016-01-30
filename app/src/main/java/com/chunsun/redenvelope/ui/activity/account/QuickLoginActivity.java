@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LoginState;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.event.ValiCodeEvent;
@@ -64,7 +66,6 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
     @Override
     protected void initView() {
         initTitleBar("快捷登录", "返回", "", Constants.TITLE_TYPE_SAMPLE);
-
         initEvent();
     }
 
@@ -135,10 +136,18 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
 
     @Override
     public void success() {
+        //更改UserState为登录状态
+        LoginContext.getLoginContext().setState(new LoginState());
         if (mFrom.equals(Constants.FROM_AD)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_AD));
         } else if (mFrom.equals(Constants.FROM_ME)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_ME));
+        } else if (mFrom.equals(Constants.FROM_TAB1)) {
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB1));
+        } else if (mFrom.equals(Constants.FROM_TAB3)) {
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB3));
+        }else if(mFrom.equals(Constants.FROM_COMMENT)){
+            EventBus.getDefault().post(new MainEvent(Constants.FROM_COMMENT));
         }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -162,6 +171,13 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
         startActivity(intent);
     }
 
+    @Override
+    public void getFocus() {
+        etValiCode.setFocusable(true);
+        etValiCode.setFocusableInTouchMode(true);
+        etValiCode.requestFocus();
+    }
+
     public void onEventMainThread(ValiCodeEvent event) {
         if ("获取验证码".equals(event.getMsg())) {
             btnGetCode.setEnabled(true);
@@ -174,6 +190,7 @@ public class QuickLoginActivity extends BaseActivity implements IQuickLoginView,
     protected void onDestroy() {
         //取消注册EventBus
         EventBus.getDefault().unregister(this);
+        mPresenter.setLoop(false);
         super.onDestroy();
     }
 }

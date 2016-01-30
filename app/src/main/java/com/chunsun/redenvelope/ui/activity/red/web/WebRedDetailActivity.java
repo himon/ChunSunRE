@@ -20,6 +20,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.GrabEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
+import com.chunsun.redenvelope.event.MeFragmentRefreshEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
@@ -249,7 +250,9 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
 
     @Override
     public void loadUrl(RedDetailEntity.ResultEntity.DetailEntity entity) {
-        mPresenter.getGrabByToken(mToken, mRedDetailId);
+        if (entity.getHb_type() != Constants.RED_DETAIL_TYPE_CIRCLE_LINK) {
+            mPresenter.getGrabByToken(mToken, mRedDetailId);
+        }
         mRed = entity;
         mTvComment.setText("评论（" + mRed.getComment_count() + "）");
         initFragment();
@@ -264,6 +267,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
 
     @Override
     public void shareSuccess() {
+        EventBus.getDefault().post(new MeFragmentRefreshEvent(""));
         back();
     }
 
@@ -274,7 +278,11 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
 
     @Override
     public void setFavoriteSuccess(SampleResponseEntity entity) {
-        mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        if (mRed.getHb_type() == Constants.RED_DETAIL_TYPE_CIRCLE_LINK) {
+            mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, false);
+        } else {
+            mRedDetailHelper.setFavoriteSuccess(entity, mIvCollect, true);
+        }
     }
 
     /**
@@ -295,6 +303,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
 
     @Override
     protected void click(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
@@ -302,18 +311,27 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
                 noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.rl_get_red:
-                String path = mRed.getContent().split("，")[mCurrentPage];
-                mRed.setContent(path);
-                ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity, Constants.SHARE_FROM_WEB_RED);
-                menuWindow.showAtLocation(mLLMain, Gravity.BOTTOM
-                        | Gravity.CENTER_HORIZONTAL, 0, 0);
+                if (mGrabEntity == null || "0.00".equals(mGrabEntity.getResult().getHb_price())) {
+                    back();
+                } else {
+                    String path = mRed.getContent().split("，")[mCurrentPage];
+                    mRed.setContent(path);
+                    ShareRedEnvelopePopupWindow menuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity, Constants.SHARE_FROM_WEB_RED);
+                    menuWindow.showAtLocation(mLLMain, Gravity.BOTTOM
+                            | Gravity.CENTER_HORIZONTAL, 0, 0);
+                }
                 break;
             case R.id.ib_button:
-            case R.id.tv_comment:
-                Intent intent = new Intent(this, WebRedDetailCommentActivity.class);
+                intent = new Intent(this, WebRedDetailCommentActivity.class);
                 intent.putExtra(Constants.EXTRA_KEY, mRed.getId());
                 intent.putExtra(Constants.EXTRA_KEY2, mRed.getHb_type());
                 intent.putExtra(Constants.EXTRA_KEY3, mGrabEntity.getResult().getShare_limit().getShare_min_amount());
+                startActivity(intent);
+                break;
+            case R.id.tv_comment:
+                intent = new Intent(this, WebRedDetailCommentActivity.class);
+                intent.putExtra(Constants.EXTRA_KEY, mRed.getId());
+                intent.putExtra(Constants.EXTRA_KEY2, mRed.getHb_type());
                 startActivity(intent);
                 break;
             case R.id.rl_collect://收藏
@@ -351,14 +369,14 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             EventBus.getDefault().post(new WebRedDetailEvent("louis"));
         } else {
             mIvIcon.setVisibility(View.GONE);
-            if("0.00".equals(mRed.getPrice())){
+            if (mGrabEntity == null || "0.00".equals(mGrabEntity.getResult().getHb_price())) {
                 mTvContent.setText("祝下次好运！");
-            }else {
+            } else {
                 mTvContent.setText("点击领取");
-                mTvPrice.setText(mRed.getPrice());
+                mTvPrice.setText(mGrabEntity.getResult().getHb_price());
+                mTvPrice.setVisibility(View.VISIBLE);
+                mTvYuan.setVisibility(View.VISIBLE);
             }
-            mTvPrice.setVisibility(View.VISIBLE);
-            mTvYuan.setVisibility(View.VISIBLE);
             mRlGetRed.setOnClickListener(this);
         }
     }
@@ -411,7 +429,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
             } else {
                 countDown();
             }
-        } else if (mRed.isHb_status()) {
+        } else if (!mRed.isHb_status()) {
             mIvIcon.setVisibility(View.GONE);
             mTvContent.setText("来晚了，红包已抢空");
             mTvContent.setTextColor(getResources().getColor(R.color.font_web_red_detail));
@@ -419,6 +437,13 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         } else {
             countDown();
         }
+
+        if (mRed.isFavorite_status()) {
+            mIvCollect.setImageResource(R.drawable.img_circle_collected_icon);
+        } else {
+            mIvCollect.setImageResource(R.drawable.img_circle_collect_icon);
+        }
+
     }
 
     public void onEventMainThread(WebRedDetailEvent event) {
@@ -428,7 +453,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         } else if ("hideLoading".equals(event.getMsg())) {//第一个page加载完成后hide loading
             hideLoading();
         } else if ("share".equals(event.getMsg())) {//分享后
-            mPresenter.shareOpen(mToken,  mGrabEntity.getResult().getHb_grab_id(), event.getContent());
+            mPresenter.shareOpen(mToken, mGrabEntity.getResult().getHb_grab_id(), event.getContent());
         } else if ("no_share".equals(event.getMsg())) {//不分享，直接领钱
             mPresenter.justOpen(mToken, mGrabEntity.getResult().getHb_grab_id());
         } else if ("add".equals(event.getMsg())) {

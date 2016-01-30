@@ -2,23 +2,29 @@ package com.chunsun.redenvelope.ui.activity.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
+import com.chunsun.redenvelope.app.context.LoginContext;
+import com.chunsun.redenvelope.app.state.impl.LoginState;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.event.MainEvent;
+import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RegisterNextPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
+import com.chunsun.redenvelope.ui.activity.personal.UserInfoActivity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IRegisterNextView;
 import com.chunsun.redenvelope.utils.StringUtil;
+import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.TextButtonDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * 注册输入密码Activity
@@ -89,19 +95,19 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
 
     @Override
     public void hideLoading() {
-       showCircleLoading();
+        hideCircleLoading();
     }
 
     @Override
     public void successShowDialog(String content) {
+        //更改UserState为登录状态
+        LoginContext.getLoginContext().setState(new LoginState());
+        EventBus.getDefault().post(new MainEvent(Constants.FROM_REGISTER));
+
         isSuccess = true;
         mAlertDialog = new TextButtonDialog(this, R.style.progress_dialog, this);
         mAlertDialog.show();
-        if (TextUtils.isEmpty(mInviteCode)) {
-            mAlertDialog.setDialogContent(content);
-        } else {
-            mAlertDialog.setDialogContent(content + "，奖励1元，进入个人中心余额查看");
-        }
+        mAlertDialog.setDialogContent(content);
         mAlertDialog.diyGetRedDialog();
     }
 
@@ -118,13 +124,22 @@ public class RegisterNextActivity extends BaseActivity implements IRegisterNextV
     protected void click(View v) {
         switch (v.getId()) {
             case R.id.btn_register:
-                mPresenter.register(mTypeId, mPhone, mCode, StringUtil.textview2String(mPwd), StringUtil.textview2String(mRepwd), "asfasfsadfsadfsadfasdf", MainApplication.getContext().getPhoneInfomation(), mInviteCode);
+                String xgToken = new Preferences(this).getXGToken();
+                mPresenter.register(mTypeId, mPhone, mCode, StringUtil.textview2String(mPwd), StringUtil.textview2String(mRepwd), xgToken, MainApplication.getContext().getPhoneInfomation(), mInviteCode);
                 break;
             case R.id.btn_confirm_ok:
+                mAlertDialog.dismiss();
+                if (isSuccess) {
+                    Intent intent = new Intent(this, UserInfoActivity.class);
+                    startActivity(intent);
+                    AppManager.getAppManager().finishActivity(RegisterActivity.class);
+                    AppManager.getAppManager().finishActivity(LoginActivity.class);
+                    back();
+                }
                 break;
             case R.id.btn_confirm_cancel:
                 mAlertDialog.dismiss();
-                if(isSuccess){
+                if (isSuccess) {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     back();

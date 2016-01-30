@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -16,7 +17,7 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.net.RequestManager;
-import com.chunsun.redenvelope.utils.ProgressUtil;
+import com.chunsun.redenvelope.utils.DensityUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 import com.chunsun.redenvelope.widget.CustomProgressDialog;
@@ -139,22 +140,20 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     }
 
     protected void showCircleLoading() {
-//        if (mDialog != null) {
-//            mDialog.show();
-//            Window dialogWindow = mDialog.getWindow();
-//            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-//            lp.width = DensityUtils.dip2px(this, 180);
-//            lp.height = DensityUtils.dip2px(this, 180);
-//            dialogWindow.setAttributes(lp);
-//        }
-        ProgressUtil.showCircleLoading(this);
+        if (mDialog != null) {
+            mDialog.show();
+            Window dialogWindow = mDialog.getWindow();
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.width = DensityUtils.dip2px(this, 180);
+            lp.height = DensityUtils.dip2px(this, 180);
+            dialogWindow.setAttributes(lp);
+        }
     }
 
     protected void hideCircleLoading() {
-//        if (mDialog != null && mDialog.isShowing()) {
-//            mDialog.dismiss();
-//        }
-        ProgressUtil.hideCircleLoading();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 
     protected void back() {
