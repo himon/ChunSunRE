@@ -11,9 +11,10 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.event.WalletEvent;
 import com.chunsun.redenvelope.preference.Preferences;
-import com.chunsun.redenvelope.presenter.WithdrawcashAlipayConfirmPresenter;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
-import com.chunsun.redenvelope.ui.view.IWithdrawcashAlipayConfirmView;
+import com.chunsun.redenvelope.presenter.WithdrawcashConfirmPresenter;
+import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
+import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
+import com.chunsun.redenvelope.ui.view.IWithdrawcashConfirmView;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.AppManager;
 
@@ -21,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements IWithdrawcashAlipayConfirmView {
+public class WithdrawcashAlipayConfirmActivity extends MBaseActivity<IWithdrawcashConfirmView,WithdrawcashConfirmPresenter> implements IWithdrawcashConfirmView {
 
     @Bind(R.id.tv_account)
     TextView mTvAccount;
@@ -35,7 +36,7 @@ public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements I
     Button mBtnWithdrawCash;
 
     private BalanceEntity.ResultEntity.ZfbPoundageEntity mEntity;
-    private WithdrawcashAlipayConfirmPresenter mPresenter;
+    private WithdrawcashConfirmPresenter mPresenter;
     private String mToken;
     private String mAccount;
     private String mName;
@@ -45,9 +46,14 @@ public class WithdrawcashAlipayConfirmActivity extends BaseActivity implements I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_withdrawcash_confirm);
         ButterKnife.bind(this);
-        mPresenter = new WithdrawcashAlipayConfirmPresenter(this);
+        mPresenter = (WithdrawcashConfirmPresenter) mMPresenter;
         initView();
         initData();
+    }
+
+    @Override
+    protected BasePresenter createPresenter() {
+        return new WithdrawcashConfirmPresenter(this);
     }
 
     @Override

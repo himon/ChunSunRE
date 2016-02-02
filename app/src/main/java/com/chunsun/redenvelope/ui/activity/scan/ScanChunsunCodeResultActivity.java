@@ -93,6 +93,7 @@ public class ScanChunsunCodeResultActivity extends BaseActivity implements IScan
         setContentView(R.layout.activity_scan_chunsun_code_result);
         ButterKnife.bind(this);
         mPresenter = new ScanChunsunCodeResultPresenter(this);
+        mRedDetailHelper = new RedDetailHelper(this);
         initView();
         initData();
     }

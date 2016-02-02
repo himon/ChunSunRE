@@ -48,7 +48,7 @@ public class DistrictEntity extends BaseEntity{
             return cc;
         }
 
-        public static class CcEntity extends SelectListBase {
+        public static class CcEntity extends SelectListBase  {
             /**
              * c : 市辖区
              * ct : [{"n":"东城区"},{"n":"西城区"},{"n":"朝阳区"},{"n":"丰台区"},{"n":"石景山区"},{"n":"海淀区"},{"n":"门头沟区"},{"n":"房山区"},{"n":"通州区"},{"n":"顺义区"},{"n":"昌平区"},{"n":"大兴区"},{"n":"怀柔区"},{"n":"平谷区"}]
@@ -86,6 +86,7 @@ public class DistrictEntity extends BaseEntity{
                     return n;
                 }
 
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -113,6 +114,7 @@ public class DistrictEntity extends BaseEntity{
                     }
                 };
             }
+
 
             @Override
             public int describeContents() {

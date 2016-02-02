@@ -235,7 +235,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mTotal = Integer.parseInt(entity.getTotal_count());
 
         if (list.size() < Constants.PAGE_NUM) {
-            mListView.setNoMore();
+            mListView.setNoMoreWithToast();
         } else {
             mListView.setHasMore();
         }

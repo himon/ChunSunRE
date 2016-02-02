@@ -69,11 +69,11 @@ public interface Constants {
      */
 //    String HOST_URL = "http://cssv.chunsunkeji.com";
     String HOST_URL = "http://192.168.1.109:9101";
-    //String HOST_URL = "http://1.193.162.20:9101";// 外网
+//    String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    //        String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
     String IMG_HOST_URL = "http://192.168.1.109:9101";
-    //String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
+//    String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
     /**
      * 系统用户id，用于在互相奖励时做判断
@@ -172,6 +172,8 @@ public interface Constants {
     String CREATE_AD_JSON_REQUEST_URL = NEW_URL + "hb_create_v1_2_9";
     //创建圈子
     String CREATE_CIRCLE_JSON_REQUEST_URL = NEW_URL + "hb_create_circle";
+    //企业认证
+    String CREATE_USER_CMP_V = NEW_URL + "user_cmp_to_vip";
     //创建拼手气红包
     String CREATE_LUCK_JSON_REQUEST_URL = NEW_URL + "hb_create_fight";
     //获取红包支付明细
@@ -218,6 +220,14 @@ public interface Constants {
     String GET_USER_NO_READ_COUNT = "get_user_no_read_count";
     //清空用户消息
     String USER_READ_MESSAGE = "user_read_message";
+    //企业认证
+    String USER_CMP_V = "user_cmp_to_vip";
+    //银行卡提现信息
+    String USER_BANK_CASH_INFO = "user_bank_cash_info_v_1_1";
+    //银行卡提现
+    String USER_CASH_TO_BANK = "user_cash_to_bank";
+    //获取apk版本
+    String GET_APK_VERSION = HOST_URL + "/apk_update_json.txt";
 
     /**
      * 正式发布时需要修正-----市场渠道地址
@@ -302,6 +312,7 @@ public interface Constants {
     int EDIT_TYPE_DESC = 0x1010;
     int EDIT_TYPE_SEX = 0x1011;
     int EDIT_TYPE_JOB = 0x1012;
+    int EDIT_TYPE_BANK = 0x1013;
 
     /**
      * 标示从发广告跳转到登录
@@ -482,6 +493,10 @@ public interface Constants {
     int LISTENER_TYPE_GET_USER_READ = 0x2045;
     int LISTENER_TYPE_LOGOUT = 0x2046;
     int LISTENER_TYPE_CREATE_CHUNSUN_COUPON = 0x2047;
+    int LISTENER_TYPE_USER_CMP = 0x2048;
+    int LISTENER_TYPE_RECHARGE_BY_ALIPAY = 0x2049;
+    int LISTENER_TYPE_RECHARGE_BY_BANK = 0x2050;
+    int LISTENER_TYPE_GET_APK_VERSION = 0x2051;
 
     /**
      * 发广告默认数据

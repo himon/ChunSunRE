@@ -324,6 +324,18 @@
         <activity
             android:name=".ui.activity.personal.AtMeActivity"
             android:label="@string/title_activity_at_me" />
+        <activity
+            android:name=".ui.activity.personal.AuthenticationActivity"
+            android:label="@string/title_activity_authentication" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.AuthenticationInstructionActivity"
+            android:label="@string/title_activity_authentication_instruction" >
+        </activity>
+        <activity
+            android:name=".ui.activity.personal.WithdrawCashBankConfirmActivity"
+            android:label="@string/title_activity_withdraw_cash_bank_confirm" >
+        </activity>
     </application>
 
 </manifest>

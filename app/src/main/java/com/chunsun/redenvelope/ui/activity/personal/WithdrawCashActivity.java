@@ -7,8 +7,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
+import com.chunsun.redenvelope.entities.json.UserInfoEntity;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.IWithdrawCashView;
 
@@ -47,8 +49,10 @@ public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashV
     @Override
     protected void initView() {
         initTitleBar("提现", "", "", Constants.TITLE_TYPE_SAMPLE);
-
-
+        UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
+        if (userEntity.is_proxy()) {
+            mRlBank.setVisibility(View.GONE);
+        }
         initEvent();
     }
 
@@ -74,7 +78,11 @@ public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashV
 
     @Override
     public void toWithdrawCashByBank() {
-
+        Intent intent = new Intent(this, WithdrawCashBankActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Constants.EXTRA_KEY, mBankPoundage);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

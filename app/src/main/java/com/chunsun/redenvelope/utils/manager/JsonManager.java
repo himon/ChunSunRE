@@ -683,4 +683,70 @@ public class JsonManager {
         }
         return jsonObject.toString();
     }
+
+    /**
+     * 企业认证
+     *
+     * @param token
+     * @param cmp_name
+     * @param cmp_tel
+     * @param address
+     * @param cmp_contact
+     * @param contact_mobile
+     * @param licence_img_byte_str
+     * @param ID_img_byte_str
+     * @param bank_name
+     * @param bank_no
+     * @param tax_no
+     * @return
+     */
+    public static String initDataCmpToJson(String token, String cmp_name, String cmp_tel, String address, String contact_mobile, String cmp_contact, String bank_no, String bank_name, String tax_no, String licence_img_byte_str, String ID_img_byte_str) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("cmp_name", cmp_name);
+            jsonObject.put("cmp_tel", cmp_tel);
+            jsonObject.put("address", address);
+            jsonObject.put("cmp_contact", cmp_contact);
+            jsonObject.put("contact_mobile", contact_mobile);
+            jsonObject.put("licence_img_byte_str", licence_img_byte_str);
+            jsonObject.put("ID_img_byte_str", ID_img_byte_str);
+            jsonObject.put("bank_name", bank_name);
+            jsonObject.put("bank_no", bank_no);
+            jsonObject.put("tax_no", tax_no);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    /**
+     * 银行卡提现
+     *
+     * @param token
+     * @param name
+     * @param bank_name
+     * @param bank_no
+     * @param open_bank_name
+     * @param province
+     * @param city
+     * @param rate_id
+     * @return
+     */
+    public static String initDataWithdrawCashBankToJson(String token, String name, String bank_name, String bank_no, String open_bank_name, String province, String city, String rate_id) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", token);
+            jsonObject.put("name", name);
+            jsonObject.put("bank_name", bank_name);
+            jsonObject.put("bank_no", bank_no);
+            jsonObject.put("open_bank_name", open_bank_name);
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+            jsonObject.put("rate_id", rate_id);
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
 }

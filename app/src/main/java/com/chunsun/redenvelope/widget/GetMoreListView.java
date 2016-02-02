@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GetMoreListView extends ListView {
@@ -206,6 +207,11 @@ public class GetMoreListView extends ListView {
             footView.setVisibility(View.GONE);
             removeFooterView(footView);
         }
+    }
+
+    public void setNoMoreWithToast(){
+        setNoMore();
+        ShowToast.Short("没有更多了");
     }
 
     /**

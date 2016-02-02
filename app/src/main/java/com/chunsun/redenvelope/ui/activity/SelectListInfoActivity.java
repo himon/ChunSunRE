@@ -10,11 +10,13 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.SampleEntity;
 import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
+import com.chunsun.redenvelope.entities.json.DistrictEntity;
 import com.chunsun.redenvelope.event.EditUserInfoEvent;
 import com.chunsun.redenvelope.event.SelectAdDelaySecondsRateEvent;
+import com.chunsun.redenvelope.event.WithdrawCashEvent;
 import com.chunsun.redenvelope.ui.adapter.SelectListInfoAdaper;
-import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.base.SelectListBase;
+import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISelectListInfoView;
 
 import java.util.ArrayList;
@@ -95,8 +97,15 @@ public class SelectListInfoActivity extends BaseActivity implements ISelectListI
                 case Constants.EDIT_TYPE_JOB://修改用户基本信息职业
                     EventBus.getDefault().post(new EditUserInfoEvent(Constants.EDIT_TYPE_JOB, ((SampleEntity) entity).getValue()));
                     break;
+                case Constants.EDIT_TYPE_BANK://选择银行
+                    EventBus.getDefault().post(new WithdrawCashEvent(1, ((SampleEntity) entity).getValue()));
+                    break;
                 default:
             }
+        }else if(entity instanceof DistrictEntity.AreaEntity){
+            EventBus.getDefault().post(new WithdrawCashEvent(2, ((DistrictEntity.AreaEntity) entity).getP()));
+        }else if(entity instanceof DistrictEntity.AreaEntity.CcEntity){
+            EventBus.getDefault().post(new WithdrawCashEvent(3, ((DistrictEntity.AreaEntity.CcEntity) entity).getC()));
         }
 
         for (SelectListBase item : mList) {

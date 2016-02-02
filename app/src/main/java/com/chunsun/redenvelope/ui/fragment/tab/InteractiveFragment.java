@@ -11,7 +11,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,6 +49,14 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView, InteractivePlatformPresenter> implements IInteractivePlatformView, View.OnClickListener {
 
+    @Bind(R.id.ll_record_type)
+    LinearLayout mLLRecordType;
+    @Bind(R.id.rg_main_record_type)
+    RadioGroup mRgRecordType;
+    @Bind(R.id.rb_main_comment_country)
+    RadioButton mRbCommentCountry;
+    @Bind(R.id.rb_main_comment_local)
+    RadioButton mRbCommentLocal;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
@@ -87,6 +97,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
      * 互动平台帮助类
      */
     private InteractiveHelper mInteractiveHelper;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,7 +120,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
 
     @Override
     protected void initView() {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.adapter_interactive_platform_top_item_view, null);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.adapter_interactive_platform_top_item_view, null);
         mTvTitle = (TextView) view.findViewById(R.id.tv_system_title);
         mTvContent = (TextView) view.findViewById(R.id.tv_system_content);
         mTvTime = (TextView) view.findViewById(R.id.tv_system_content_time);
@@ -149,12 +160,32 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
             }
         }, 100);
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                mListView.doOnScrollStateChanged(view, scrollState);
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+//              System.out.println("firstVisibleItem = " + firstVisibleItem + " visibleItemCount = " + visibleItemCount + " totalItemCount = " + totalItemCount);
+                if (firstVisibleItem >= 1) {
+                    mLLRecordType.setVisibility(View.VISIBLE);
+                } else {
+                    mLLRecordType.setVisibility(View.GONE);
+                }
+            }
+        });
+
         initEvent();
     }
 
     private void initEvent() {
         mRbCountry.setOnClickListener(this);
+        mRbCommentCountry.setOnClickListener(this);
         mRbLocal.setOnClickListener(this);
+        mRbCommentLocal.setOnClickListener(this);
         mBtnSendComment.setOnClickListener(this);
 
         //设置发送按钮不可点击
@@ -240,11 +271,13 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rb_comment_country:
+            case R.id.rb_main_comment_country:
                 mCurrentCheckType = 0;
                 mListView.setHasMore();
                 changerDataList();
                 break;
             case R.id.rb_comment_local:
+            case R.id.rb_main_comment_local:
                 mCurrentCheckType = 1;
                 if (isLocalFinished) {
                     mListView.setNoMore();
@@ -283,6 +316,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
         List<InteractiveEntity.ResultEntity.ListEntity> list = entity.getResult().getList();
         mTotalLocal = Integer.parseInt(entity.getResult().getTotal_count());
         mRbLocal.setText(MainApplication.getContext().getCity());
+        mRbCommentLocal.setText(MainApplication.getContext().getCity());
         if (mCurrentCheckType == 1 && list.size() < Constants.PAGE_NUM) {
             //设置没有更多的数据了,不再显示加载更多按钮
             mListView.setNoMore();
@@ -332,8 +366,10 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
      */
     @Override
     public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice) {
-        InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
-        mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
+        if (notice.size() > 0) {
+            InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
+            mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
+        }
     }
 
     /**

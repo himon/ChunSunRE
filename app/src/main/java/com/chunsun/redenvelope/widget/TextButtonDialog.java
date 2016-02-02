@@ -115,4 +115,28 @@ public class TextButtonDialog extends Dialog {
         }
     }
 
+    public void okSetEnabled() {
+        btnOk.setEnabled(false);
+        btnOk.setText("正在下载中...");
+        tvContent.setText("下载完成后，请到消息中心点击安装！");
+    }
+
+    public void setDownloadApkProgress(int progress) {
+        btnOk.setText("正在下载中... " + progress + "%");
+    }
+
+    /**
+     * 强制升级
+     *
+     * @param btnText
+     */
+    public void isSingleButton(String btnText) {
+        if (btnCancel != null && btnOk != null) {
+            btnCancel.setVisibility(View.GONE);
+            btnOk.setBackgroundResource(R.drawable.selector_radius_apk_update);
+            btnOk.setTextColor(Color.rgb(255, 84, 18));
+            btnOk.setText(btnText);
+        }
+    }
+
 }

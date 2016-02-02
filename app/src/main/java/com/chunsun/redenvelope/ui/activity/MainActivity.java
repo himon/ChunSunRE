@@ -21,6 +21,7 @@ import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.callback.LoginCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.TitlePopupItemEntity;
+import com.chunsun.redenvelope.entities.json.ApkVersionEntity;
 import com.chunsun.redenvelope.entities.json.UserNoReadCountEntity;
 import com.chunsun.redenvelope.event.BaiduMapLocationEvent;
 import com.chunsun.redenvelope.event.MainEvent;
@@ -38,10 +39,12 @@ import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
+import com.chunsun.redenvelope.utils.AppUtil;
 import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.manager.XgManager;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 import com.chunsun.redenvelope.widget.CustomViewPager;
+import com.chunsun.redenvelope.widget.TextButtonDialog;
 import com.chunsun.redenvelope.widget.popupwindow.TitlePopup;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -96,6 +99,9 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     //圈子排序弹窗按钮
     private TitlePopup mOrderPopup;
     private MainPresenter mPresenter;
+    //强制升级Dialog
+    private TextButtonDialog mUpdateDialog = null;
+    private ApkVersionEntity mApkInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +242,20 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             }
         });
 
+        mUpdateDialog = new TextButtonDialog(this, R.style.progress_dialog,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        switch (arg0.getId()) {
+                            case R.id.btn_confirm_ok:
+                                // TODO升级
+                                mPresenter.downloadApk(mApkInfo, MainActivity.this);
+                                mUpdateDialog.okSetEnabled();
+                        }
+                    }
+                });
+        mUpdateDialog.setIsCanHide(false);
+
         initEvent();
     }
 
@@ -261,6 +281,8 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
 
     @Override
     protected void initData() {
+
+        upGrade();
 
         mSelectedColor = getResources().getColor(R.color.global_red);
         mUnSelectedColor = getResources().getColor(R.color.font_gray);
@@ -289,6 +311,13 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         mOrderPopup.addAction(new TitlePopupItemEntity("我的"));
         mOrderPopup.addAction(new TitlePopupItemEntity("收藏"));
         mOrderPopup.addAction(new TitlePopupItemEntity("附近"));
+    }
+
+    /**
+     * 检测新版本升级
+     */
+    private void upGrade() {
+        mPresenter.upGrade();
     }
 
     @Override
@@ -484,6 +513,32 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     }
 
     @Override
+    public void isUpGrade(ApkVersionEntity apk) {
+        mApkInfo = apk;
+        try {
+            int code = AppUtil.getCode(this);
+            if (apk.getVersionCode() > code) {
+                if ("1".equals(apk.getUpdate())) {//强制更新
+                    mUpdateDialog.show();
+                    mUpdateDialog.setDialogContent(apk.getDescription(), 15);
+                    mUpdateDialog.isSingleButton("下载新版本");
+                } else {
+//                    BDAutoUpdateSDK.cpUpdateCheck(this,
+//                            new MyCPCheckUpdateCallback());
+                }
+            }
+        } catch (Exception e) {
+            String message = e.getMessage();
+        }
+
+    }
+
+    @Override
+    public void setDownloadProgress(int progress) {
+        mUpdateDialog.setDownloadApkProgress(progress);
+    }
+
+    @Override
     public void showLoading() {
         showCircleLoading();
     }
@@ -540,11 +595,11 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             mViewPager.setCurrentItem(1, false);
         } else if ("user_no_read_count".equals(event.getMsg())) {//获取用户未读消息
             mPresenter.getUserNoReadCount(new Preferences(this).getToken());
-        }else if(Constants.FROM_CIRCLE.equals(event.getMsg())){
+        } else if (Constants.FROM_CIRCLE.equals(event.getMsg())) {
             mViewPager.setCurrentItem(2, false);
             showTitleBar(R.id.iv_toInteractive);
             mCircleFragment.refresh();
-        }else if(Constants.FROM_REGISTER.equals(event.getMsg())){
+        } else if (Constants.FROM_REGISTER.equals(event.getMsg())) {
             mViewPager.setCurrentItem(2, false);
             showTitleBar(R.id.iv_toInteractive);
             //刷新MeFragment页面

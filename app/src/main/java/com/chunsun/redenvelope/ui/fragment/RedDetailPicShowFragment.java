@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +24,16 @@ import com.chunsun.redenvelope.scanlibrary.ScanResultActivity;
 import com.chunsun.redenvelope.scanlibrary.scan.ScanUtil;
 import com.chunsun.redenvelope.scanlibrary.scan.decode.BitmapDecoder;
 import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ResultParser;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -120,9 +128,31 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
             case R.id.tv_scanf:
                 scan();
             case R.id.tv_download_pic:
-
+                downloadPic();
                 break;
         }
+    }
+
+    /**
+     * 下载图片
+     */
+    private void downloadPic() {
+        OkHttpUtils.get().url(mUrl).build().execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(), SystemClock.currentThreadTimeMillis() + ".jpg") {
+            @Override
+            public void inProgress(float progress) {
+
+            }
+
+            @Override
+            public void onError(Request request, Exception e) {
+                ShowToast.Short("下载到失败");
+            }
+
+            @Override
+            public void onResponse(File file) {
+                ShowToast.Short("下载到：" + file.getAbsolutePath());
+            }
+        });
     }
 
     private void showTools() {

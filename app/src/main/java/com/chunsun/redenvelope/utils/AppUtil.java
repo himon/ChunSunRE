@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 public class AppUtil {
     /**
      * 获取app版本号
+     *
      * @param context
      * @return
      */
@@ -26,6 +27,25 @@ public class AppUtil {
         } catch (Exception e) {
             e.printStackTrace();
             return "";
+        }
+    }
+
+    /**
+     * 获取app VersionCode
+     *
+     * @param context
+     * @return
+     */
+    public static int getCode(Context context) {
+        try {
+            PackageManager manager = context.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(),
+                    0);
+            int versionCode = info.versionCode;
+            return versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 }

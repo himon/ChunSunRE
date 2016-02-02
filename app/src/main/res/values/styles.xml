@@ -2,8 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="colorAccent">@color/global_red</item>
         <!--
         <item name="android:windowAnimationStyle">@style/Animation.Activity.Translucent.Style</item>
          -->
@@ -11,11 +9,13 @@
 
     <style name="ActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowIsTranslucent">false</item>
+        <item name="colorAccent">@color/global_red</item>
     </style>
 
     <style name="Translucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="colorAccent">@color/global_red</item>
         <!-- Note that we use the base animation style here (that is no
              animations) because we really have no idea how this kind of
              activity will be used. -->

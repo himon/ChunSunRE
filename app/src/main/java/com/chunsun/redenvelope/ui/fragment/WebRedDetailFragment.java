@@ -124,4 +124,20 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
                 break;
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mWebView != null) {
+            mWebView.onPause();
+        }
+    }
 }

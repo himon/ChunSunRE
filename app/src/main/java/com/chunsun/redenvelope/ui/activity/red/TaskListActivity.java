@@ -194,7 +194,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
         mTotal = Integer.parseInt(entity.getTotal_count());
 
         if (list.size() < Constants.PAGE_NUM) {
-            mListView.setNoMore();
+            mListView.setNoMoreWithToast();
         }
 
         mCurrentPage++;

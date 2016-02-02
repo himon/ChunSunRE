@@ -14,6 +14,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.json.AdDelaySecondsRateEntity;
 import com.chunsun.redenvelope.entities.json.AdPayAmountDetailEntity;
+import com.chunsun.redenvelope.entities.json.ApkVersionEntity;
 import com.chunsun.redenvelope.entities.json.AtMessageEntity;
 import com.chunsun.redenvelope.entities.json.BalanceEntity;
 import com.chunsun.redenvelope.entities.json.BalanceListEntity;
@@ -2310,7 +2311,7 @@ public class HttpManager {
      * @param listener
      * @param activity
      */
-    public void rechargeByAlipay(final String token, final String zfb_no, final String zfb_name, final int zfb_poundage_id, final BaseSingleLoadedListener listener, Activity activity) {
+    public void rechargeByAlipay(final String token, final String zfb_no, final String zfb_name, final int zfb_poundage_id, final UserLoseMultiLoadedListener listener, Activity activity) {
 
         GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
                 SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
@@ -2318,7 +2319,7 @@ public class HttpManager {
             @Override
             public void onResponse(SampleResponseEntity response) {
                 if (response.isSuccess()) {
-                    listener.onSuccess(response);
+                    listener.onSuccess(Constants.LISTENER_TYPE_RECHARGE_BY_ALIPAY, response);
                 } else {
                     listener.onError(response.getMsg());
                 }
@@ -2699,6 +2700,7 @@ public class HttpManager {
 
     /**
      * 创建春笋券
+     *
      * @param token
      * @param grab_id
      * @param listener
@@ -2729,5 +2731,171 @@ public class HttpManager {
             }
         };
         RequestManager.addRequest(request, mFragment);
+    }
+
+    /**
+     * 企业认证
+     *
+     * @param token
+     * @param cmp_name
+     * @param cmp_tel
+     * @param address
+     * @param contact_mobile
+     * @param cmp_contact
+     * @param bank_no
+     * @param bank_name
+     * @param tax_no
+     * @param licence_img_byte_str
+     * @param id_img_byte_str
+     * @param listener
+     * @param mActivity
+     */
+    public void userCmp(final String token, final String cmp_name, final String cmp_tel, final String address, final String contact_mobile, final String cmp_contact, final String bank_no, final String bank_name, final String tax_no, final String licence_img_byte_str, final String id_img_byte_str, final UserLoseMultiLoadedListener listener, Activity mActivity) {
+        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_USER_CMP, response);
+                } else {
+                    listener.onException(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                byte[] data = error.networkResponse.data;
+                String str = new String(data);
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+//                params.put("token", token);
+//                params.put("cmp_name", cmp_name);
+//                params.put("cmp_tel", cmp_tel);
+//                params.put("address", address);
+//                params.put("cmp_contact", cmp_contact);
+//                params.put("contact_mobile", contact_mobile);
+//                params.put("licence_img_byte_str", licence_img_byte_str);
+//                params.put("ID_img_byte_str", id_img_byte_str);
+//                params.put("bank_name", bank_name);
+//                params.put("bank_no", bank_no);
+//                params.put("tax_no", tax_no);
+                params.put("methodName", Constants.USER_CMP_V);
+                params.put("parames", JsonManager.initDataCmpToJson(token, cmp_name, cmp_tel, address, contact_mobile, cmp_contact, bank_no, bank_name, tax_no, licence_img_byte_str, id_img_byte_str));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, mActivity);
+    }
+
+    /**
+     * 获取提现的基础信息
+     *
+     * @param token
+     * @param listener
+     * @param activity
+     */
+    public void userCashInfo(final String token, final UserLoseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<SampleResponseObjectEntity> request = new GsonRequest<SampleResponseObjectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseObjectEntity.class, null, new Response.Listener<SampleResponseObjectEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseObjectEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_CREATE_CHUNSUN_COUPON, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                byte[] data = error.networkResponse.data;
+                String str = new String(data);
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("methodName", Constants.USER_BANK_CASH_INFO);
+                params.put("parames", JsonManager.initDataTokenToJson(token));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 银行卡提现
+     *
+     * @param token
+     * @param name
+     * @param bank_name
+     * @param bank_no
+     * @param open_bank_name
+     * @param province
+     * @param city
+     * @param rate_id
+     * @param listener
+     * @param activity
+     */
+    public void rechargeByBank(final String token, final String name, final String bank_name, final String bank_no, final String open_bank_name, final String province, final String city, final String rate_id, final UserLoseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+
+            @Override
+            public void onResponse(SampleResponseEntity response) {
+                if (response.isSuccess()) {
+                    listener.onSuccess(Constants.LISTENER_TYPE_RECHARGE_BY_BANK, response);
+                } else {
+                    listener.onError(response.getMsg());
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("methodName", Constants.USER_CASH_TO_BANK);
+                params.put("parames", JsonManager.initDataWithdrawCashBankToJson(token, name, bank_name, bank_no, open_bank_name, province, city, rate_id));
+                return params;
+            }
+        };
+        RequestManager.addRequest(request, activity);
+    }
+
+    /**
+     * 获取升级信息
+     *
+     * @param listener
+     * @param activity
+     */
+    public void upGrade(final BaseMultiLoadedListener listener, Activity activity) {
+        GsonRequest<ApkVersionEntity> request = new GsonRequest<ApkVersionEntity>(Request.Method.GET, StringUtil.preUrl(Constants.GET_APK_VERSION),
+                ApkVersionEntity.class, null, new Response.Listener<ApkVersionEntity>() {
+
+            @Override
+            public void onResponse(ApkVersionEntity response) {
+                listener.onSuccess(Constants.LISTENER_TYPE_GET_APK_VERSION, response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listener.onException(error.getMessage());
+            }
+        });
+        RequestManager.addRequest(request, activity);
     }
 }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -44,6 +45,12 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlatformView, InteractivePlatformPresenter> implements IInteractivePlatformView {
 
+    @Bind(R.id.ll_record_type)
+    LinearLayout mLLRecordType;
+    @Bind(R.id.rb_main_comment_country)
+    RadioButton mRbCommentCountry;
+    @Bind(R.id.rb_main_comment_local)
+    RadioButton mRbCommentLocal;
     @Bind(R.id.ptr_main)
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
@@ -180,9 +187,11 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
-                int[] location = new int[2];
-                mRgType.getLocationOnScreen(location);
-                System.out.println("top：" + location[0]);
+                if (firstVisibleItem >= 1) {
+                    mLLRecordType.setVisibility(View.VISIBLE);
+                } else {
+                    mLLRecordType.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -194,7 +203,9 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
         mNavLeft.setOnClickListener(this);
 
         mRbCountry.setOnClickListener(this);
+        mRbCommentCountry.setOnClickListener(this);
         mRbLocal.setOnClickListener(this);
+        mRbCommentLocal.setOnClickListener(this);
         mBtnSendComment.setOnClickListener(this);
 
         //设置发送按钮不可点击
@@ -290,11 +301,13 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
     protected void click(View v) {
         switch (v.getId()) {
             case R.id.rb_comment_country:
+            case R.id.rb_main_comment_country:
                 mCurrentCheckType = 0;
                 mListView.setHasMore();
                 changerDataList();
                 break;
             case R.id.rb_comment_local:
+            case R.id.rb_main_comment_local:
                 mCurrentCheckType = 1;
                 if (isLocalFinished) {
                     mListView.setNoMore();

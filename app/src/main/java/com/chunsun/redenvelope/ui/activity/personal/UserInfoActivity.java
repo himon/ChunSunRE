@@ -72,8 +72,10 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     SettingItem mSiAlipay;
     @Bind(R.id.ital_identify_code)
     SettingItem mSiId;
-    @Bind(R.id.ital_description)
-    SettingItem mSiDesc;
+    @Bind(R.id.ll_description)
+    LinearLayout mSiDesc;
+    @Bind(R.id.tv_description)
+    TextView mTvDesc;
     @Bind(R.id.ital_authentication)
     SettingItem mSiAuthentication;
 
@@ -178,10 +180,12 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             case R.id.ital_identify_code:
                 toEdit(mMoreContentList[7], mSiId.getData(), 1, Constants.EDIT_TYPE_ID_CARD);
                 break;
-            case R.id.ital_description://个性签名
-                toEdit(mMoreContentList[8], mSiDesc.getData(), 4, Constants.EDIT_TYPE_DESC);
+            case R.id.ll_description://个性签名
+                toEdit(mMoreContentList[8], mTvDesc.getText().toString(), 10, Constants.EDIT_TYPE_DESC);
                 break;
             case R.id.ital_authentication://认证
+                Intent intent = new Intent(this, AuthenticationActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -268,7 +272,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             mSiId.setVisibility(View.VISIBLE);
         }
         //签名介绍
-        mSiDesc.setContentTextBlack(mMoreContentList[8], mUserEntity.getRemark());
+        mTvDesc.setText(mUserEntity.getRemark());
         //认证
         if (TextUtils.isEmpty(mMoreContentList[9])) {
             mSiAuthentication.setVisibility(View.GONE);
@@ -405,7 +409,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 MainApplication.getContext().getUserEntity().setID_num(event.getContent());
                 break;
             case Constants.EDIT_TYPE_DESC:
-                mSiDesc.setData(event.getContent());
+                mTvDesc.setText(event.getContent());
                 MainApplication.getContext().getUserEntity().setRemark(event.getContent());
                 break;
             case Constants.EDIT_TYPE_SEX:

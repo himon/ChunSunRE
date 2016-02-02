@@ -15,4 +15,6 @@ public interface MainMode {
      * @param listener
      */
     void getUserNoReadCount(String token, BaseMultiLoadedListener listener);
+
+    void upGrade(BaseMultiLoadedListener listener);
 }

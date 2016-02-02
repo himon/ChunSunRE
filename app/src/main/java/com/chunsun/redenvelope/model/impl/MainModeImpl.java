@@ -24,4 +24,9 @@ public class MainModeImpl extends BaseModeImpl implements MainMode {
     public void getUserNoReadCount(String token, BaseMultiLoadedListener listener) {
         mManager.getUserNoReadCount(token, listener, mActivity);
     }
+
+    @Override
+    public void upGrade(BaseMultiLoadedListener listener) {
+        mManager.upGrade(listener, mActivity);
+    }
 }

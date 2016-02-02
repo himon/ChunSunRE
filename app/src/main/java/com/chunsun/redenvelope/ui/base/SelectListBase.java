@@ -47,4 +47,13 @@ public class SelectListBase implements Parcelable {
         this.type = in.readInt();
     }
 
+    public static final Parcelable.Creator<SelectListBase> CREATOR = new Parcelable.Creator<SelectListBase>() {
+        public SelectListBase createFromParcel(Parcel source) {
+            return new SelectListBase(source);
+        }
+
+        public SelectListBase[] newArray(int size) {
+            return new SelectListBase[size];
+        }
+    };
 }

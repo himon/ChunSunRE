@@ -29,7 +29,7 @@
     <string name="invite_code">邀请码</string>
     <string name="read_and_agree">阅读并同意</string>
     <string name="optional">选填</string>
-    <string name="agreement">《春笋红包注册协议》</string>
+    <string name="agreement">阅读并同意 《春笋红包注册协议》</string>
     <string name="next_step">下一步</string>
     <string name="pwd">密码</string>
     <string name="comfirm_pwd">确认密码</string>
@@ -65,6 +65,9 @@
     <string name="novice_guidelines">新手指引</string>
     <string name="circle">圈子</string>
     <string name="at_me">与我相关</string>
+    <string name="authentication_instruction_1">1.上传公司有效期内营业执照原件，或者加盖公章复印件。</string>
+    <string name="authentication_instruction_2">2.上传办理人，手持身份证正面照，面部不可遮挡，身份证文字头像必须清晰。</string>
+    <string name="authentication_instruction_3">3.填写公司信息。</string>
 
     <!-- 发广告记录 -->
     <string name="range">范  围：</string>
@@ -268,5 +271,10 @@
     <string name="title_activity_luck_ad_pay">LuckAdPayActivity</string>
     <string name="title_activity_at_me">AtMeActivity</string>
     <string name="title_activity_show_big_image">ShowBigImageActivity</string>
+    <string name="title_activity_authentication">AuthenticationActivity</string>
+    <string name="title_activity_authentication_instruction">AuthenticationInstructionActivity
+    </string>
+    <string name="title_activity_withdraw_cash_bank_confirm">WithdrawCashBankConfirmActivity
+    </string>
 
 </resources>

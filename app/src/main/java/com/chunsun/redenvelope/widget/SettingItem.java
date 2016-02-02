@@ -40,11 +40,8 @@ public class SettingItem extends LinearLayout {
     }
 
     public void setContentTextBlack(String content, String data) {
-        mTvContent.setText(content);
+       setContent(content, data);
         mTvContent.setTextColor(getResources().getColor(android.R.color.black));
-        mTvData.setText(data);
-        mTvData.setVisibility(View.VISIBLE);
-
     }
 
     public void setContentNoArrow(String content, String data) {

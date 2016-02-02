@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.view;
 
+import com.chunsun.redenvelope.entities.json.ApkVersionEntity;
 import com.chunsun.redenvelope.entities.json.UserNoReadCountEntity;
 import com.chunsun.redenvelope.ui.base.view.LoadingView;
 
@@ -32,7 +33,22 @@ public interface IMainView extends LoadingView {
 
     /**
      * 显示用户未读消息数量
+     *
      * @param entity
      */
     void setUserNoReadCount(List<UserNoReadCountEntity.ResultEntity> entity);
+
+    /**
+     * 下载apk
+     *
+     * @param apk
+     */
+    void isUpGrade(ApkVersionEntity apk);
+
+    /**
+     * 显示下载进度
+     *
+     * @param b
+     */
+    void setDownloadProgress(int b);
 }
