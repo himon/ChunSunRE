@@ -106,4 +106,26 @@ public class CommonWebActivity extends BaseActivity {
             back();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mWebView != null) {
+            mWebView.onPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebView.loadData("<a></a>", "text/html", "utf-8");
+    }
 }

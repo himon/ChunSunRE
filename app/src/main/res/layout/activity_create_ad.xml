@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:pickerui="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/root">
+    xmlns:pickerui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_gray">
 
-    <include layout="@layout/layout_title_bar"/>
+    <include layout="@layout/layout_title_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +18,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ad_confirm"
             android:layout_marginTop="30dp"
+            android:text="@string/ad_confirm"
             android:textColor="@color/global_red"
-            android:textSize="@dimen/font_size_sp_30"/>
+            android:textSize="@dimen/font_size_sp_30" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/choose_type"
             android:textColor="@color/font_gray6"
-            android:textSize="@dimen/font_size_sp_14"/>
+            android:textSize="@dimen/font_size_sp_14" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/coupon"
-                android:textColor="@color/selector_radio_button_text_red_white"/>
+                android:textColor="@color/selector_radio_button_text_red_white" />
 
             <RadioButton
                 android:id="@+id/btn_repeat"
@@ -60,7 +61,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/repeat"
-                android:textColor="@color/selector_radio_button_text_red_white"/>
+                android:textColor="@color/selector_radio_button_text_red_white" />
 
             <RadioButton
                 android:id="@+id/btn_lift"
@@ -74,7 +75,7 @@
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/life"
-                android:textColor="@color/selector_radio_button_text_red_white"/>
+                android:textColor="@color/selector_radio_button_text_red_white" />
 
             <RadioButton
                 android:id="@+id/btn_link"
@@ -87,7 +88,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/link"
-                android:textColor="@color/selector_radio_button_text_red_white"/>
+                android:textColor="@color/selector_radio_button_text_red_white" />
 
             <RadioButton
                 android:id="@+id/btn_near"
@@ -100,7 +101,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/near"
-                android:textColor="@color/selector_radio_button_text_red_white"/>
+                android:textColor="@color/selector_radio_button_text_red_white" />
         </RadioGroup>
 
         <TextView
@@ -109,7 +110,7 @@
             android:layout_marginTop="40dp"
             android:text="@string/send_range"
             android:textColor="@color/font_gray6"
-            android:textSize="@dimen/font_size_sp_14"/>
+            android:textSize="@dimen/font_size_sp_14" />
 
         <RelativeLayout
             android:id="@+id/rl_province"
@@ -125,8 +126,7 @@
                 android:id="@+id/tv_province"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                />
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:id="@+id/iv_province"
@@ -134,7 +134,7 @@
                 android:layout_height="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/img_pull_down_triangle"/>
+                android:src="@drawable/img_pull_down_triangle" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -151,8 +151,7 @@
                 android:id="@+id/tv_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                />
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:id="@+id/iv_city"
@@ -160,7 +159,7 @@
                 android:layout_height="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/img_pull_down_triangle"/>
+                android:src="@drawable/img_pull_down_triangle" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -178,15 +177,14 @@
                 android:id="@+id/tv_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                />
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/img_pull_down_triangle"/>
+                android:src="@drawable/img_pull_down_triangle" />
         </RelativeLayout>
 
         <Button
@@ -200,7 +198,7 @@
             android:gravity="center"
             android:text="@string/next_step"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_size_sp_18"/>
+            android:textSize="@dimen/font_size_sp_18" />
     </LinearLayout>
 
     <com.dpizarro.uipicker.library.picker.PickerUI
@@ -218,6 +216,6 @@
         pickerui:itemsClickables="true"
         pickerui:linesCenterColor="#3941ff"
         pickerui:textCenterColor="#000000"
-        pickerui:textNoCenterColor="#737373"/>
+        pickerui:textNoCenterColor="#737373" />
 
 </RelativeLayout>

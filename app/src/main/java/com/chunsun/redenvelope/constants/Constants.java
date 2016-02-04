@@ -226,6 +226,8 @@ public interface Constants {
     String USER_BANK_CASH_INFO = "user_bank_cash_info_v_1_1";
     //银行卡提现
     String USER_CASH_TO_BANK = "user_cash_to_bank";
+    //创建春笋券
+    String CREATE_CHUNSUN_TICKET = "create_chunsun_ticket";
     //获取apk版本
     String GET_APK_VERSION = HOST_URL + "/apk_update_json.txt";
 
@@ -313,6 +315,7 @@ public interface Constants {
     int EDIT_TYPE_SEX = 0x1011;
     int EDIT_TYPE_JOB = 0x1012;
     int EDIT_TYPE_BANK = 0x1013;
+    int EDIT_TYPE_AUTHENTICATION = 0x1014;
 
     /**
      * 标示从发广告跳转到登录
@@ -353,6 +356,11 @@ public interface Constants {
      * 注册成功
      */
     String FROM_REGISTER = "from_register";
+
+    /**
+     * 刷新me
+     */
+    String REFRESH_ME = "refresh_me";
 
     /**
      * 标示从欢迎页跳转到登录

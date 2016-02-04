@@ -86,10 +86,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -124,10 +121,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -161,10 +155,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -199,10 +190,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -236,10 +224,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -274,10 +259,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -311,10 +293,7 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -349,10 +328,6 @@
                     android:textColor="@color/font_gray2"
                     android:textSize="@dimen/font_size_sp_16" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src="@drawable/img_arrow" />
             </LinearLayout>
 
             <Button

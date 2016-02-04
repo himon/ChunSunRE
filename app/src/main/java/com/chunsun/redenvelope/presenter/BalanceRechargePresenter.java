@@ -62,6 +62,6 @@ public class BalanceRechargePresenter implements BaseSingleLoadedListener<Balanc
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 }

@@ -123,6 +123,8 @@ public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAd
                             if (position != 2) {
                                 mRlProvince.setEnabled(false);
                                 mRlCity.setEnabled(false);
+                                mTvProvince.setText(mCurrentProvince.getP());
+                                mTvCity.setText(mCurrentCity.getC());
                                 mIvProvince.setVisibility(View.INVISIBLE);
                                 mIvCity.setVisibility(View.INVISIBLE);
                             } else {

@@ -36,6 +36,7 @@ public class AuthenticationPresenter extends UserLosePresenter<IAuthenticationVi
         switch (event_tag) {
             case Constants.LISTENER_TYPE_USER_CMP:
                 ShowToast.Short(((SampleResponseEntity) data).getMsg());
+                mIAuthenticationView.setCommitSuccess();
                 break;
         }
     }

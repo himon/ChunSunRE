@@ -137,6 +137,7 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(content);
         } else {
             mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
+            sp.setText(mDetailEntity.getContent());
         }
         //分享图片
         if (TextUtils.isEmpty(mDetailEntity.getCover_img_url())) {
@@ -146,6 +147,8 @@ public class ShareSdkHelper implements PlatformActionListener {
         }else {
             sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
         }
+        sp.setSiteUrl(url);
+        sp.setUrl(url);
         Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
         // 设置分享事件回调
         weibo.setPlatformActionListener(this);

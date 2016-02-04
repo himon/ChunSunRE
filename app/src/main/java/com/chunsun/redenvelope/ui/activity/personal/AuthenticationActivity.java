@@ -10,11 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.clip.BitmapClipUtils;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.UserInfoEntity;
+import com.chunsun.redenvelope.event.EditUserInfoEvent;
+import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.AuthenticationPresenter;
 import com.chunsun.redenvelope.ui.base.activity.MBaseActivity;
@@ -27,6 +31,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.entity.Photo;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
@@ -106,8 +111,8 @@ public class AuthenticationActivity extends MBaseActivity<IAuthenticationView, A
         mEtBankName.setText(userEntity.getBank_name());
         mEtTaxNum.setText(userEntity.getTax_no());
 
-        setImage(Constants.IMG_HOST_URL + userEntity.getLicence_img_url(), mIvBusiness);
-        setImage(Constants.IMG_HOST_URL + userEntity.getID_img_url(), mIvIdentify);
+        setImage(Constants.IMG_HOST_URL + userEntity.getLicence_img_url(), mIvBusiness, 1);
+        setImage(Constants.IMG_HOST_URL + userEntity.getID_img_url(), mIvIdentify, 2);
 
         if ("1".equals(is_v) || "2".equals(is_v)) {
             mIvBusiness.setEnabled(false);
@@ -195,10 +200,10 @@ public class AuthenticationActivity extends MBaseActivity<IAuthenticationView, A
                         .createImageThumbnailScale(path, 800));
         if (sign == 1) {
             mBusinessLicenseBase64 = Base64Utils.bitmapToBase64(bitmap);
-            setImage(path, mIvBusiness);
+            setImage(path, mIvBusiness, 0);
         } else if (sign == 2) {
             mIdentifyCardBase64 = Base64Utils.bitmapToBase64(bitmap);
-            setImage(path, mIvIdentify);
+            setImage(path, mIvIdentify, 0);
         }
     }
 
@@ -207,15 +212,26 @@ public class AuthenticationActivity extends MBaseActivity<IAuthenticationView, A
      *
      * @param path
      */
-    private void setImage(String path, ImageView imageView) {
+    private void setImage(String path, final ImageView imageView, final int index) {
         if (!TextUtils.isEmpty(path)) {
             Glide.with(this)
                     .load(path)
+                    .asBitmap()
                     .centerCrop()
                     .thumbnail(0.1f)
                     .placeholder(R.drawable.img_default_capture)
                     .error(R.drawable.img_default_error)
-                    .into(imageView);
+                    .into(new SimpleTarget<Bitmap>(800, 480) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+                            imageView.setImageBitmap(bitmap);
+                            if (index == 1) {
+                                mBusinessLicenseBase64 = Base64Utils.bitmapToBase64(bitmap);
+                            } else if (index == 2) {
+                                mIdentifyCardBase64 = Base64Utils.bitmapToBase64(bitmap);
+                            }
+                        }
+                    });
         }
     }
 
@@ -246,5 +262,12 @@ public class AuthenticationActivity extends MBaseActivity<IAuthenticationView, A
     @Override
     public void hideLoading() {
         hideCircleLoading();
+    }
+
+    @Override
+    public void setCommitSuccess() {
+        EventBus.getDefault().post(new MainEvent(Constants.REFRESH_ME));
+        EventBus.getDefault().post(new EditUserInfoEvent(Constants.EDIT_TYPE_AUTHENTICATION, "审核中"));
+        back();
     }
 }

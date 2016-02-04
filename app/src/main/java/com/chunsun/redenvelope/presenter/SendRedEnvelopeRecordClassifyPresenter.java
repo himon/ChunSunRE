@@ -85,6 +85,6 @@ public class SendRedEnvelopeRecordClassifyPresenter implements BaseSingleLoadedL
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 }

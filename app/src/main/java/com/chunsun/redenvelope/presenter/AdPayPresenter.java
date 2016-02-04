@@ -82,7 +82,6 @@ public class AdPayPresenter extends UserLosePresenter<IAdPayView> implements Use
     @Override
     public void onException(String msg) {
         mIAdPayView.hideLoading();
-        ShowToast.Short(msg);
     }
 
 

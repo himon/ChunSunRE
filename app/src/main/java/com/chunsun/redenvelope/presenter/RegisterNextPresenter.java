@@ -83,7 +83,6 @@ public class RegisterNextPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
         registerNextView.hideLoading();
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.autoupdatesdk.AppUpdateInfo;
+import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
+import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.app.context.LoginContext;
@@ -523,8 +529,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
                     mUpdateDialog.setDialogContent(apk.getDescription(), 15);
                     mUpdateDialog.isSingleButton("下载新版本");
                 } else {
-//                    BDAutoUpdateSDK.cpUpdateCheck(this,
-//                            new MyCPCheckUpdateCallback());
+                    BDAutoUpdateSDK.cpUpdateCheck(this, new MyCPCheckUpdateCallback());
                 }
             }
         } catch (Exception e) {
@@ -604,6 +609,9 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             showTitleBar(R.id.iv_toInteractive);
             //刷新MeFragment页面
             mMeFragment.getData();
+        } else if(Constants.REFRESH_ME.equals(event.getMsg())){
+            //刷新MeFragment页面
+            mMeFragment.getData();
         }
     }
 
@@ -648,5 +656,47 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private class MyCPCheckUpdateCallback implements CPCheckUpdateCallback {
+
+        @Override
+        public void onCheckUpdateCallback(AppUpdateInfo info, AppUpdateInfoForInstall infoForInstall) {
+            if(infoForInstall != null && !TextUtils.isEmpty(infoForInstall.getInstallPath())) {
+                BDAutoUpdateSDK.cpUpdateInstall(getApplicationContext(), infoForInstall.getInstallPath());
+            }else if(info != null) {
+                BDAutoUpdateSDK.cpUpdateDownload(MainActivity.this, info, new UpdateDownloadCallback());
+            }else {
+            }
+        }
+    }
+
+    private class UpdateDownloadCallback implements CPUpdateDownloadCallback {
+
+        @Override
+        public void onDownloadComplete(String apkPath) {
+            BDAutoUpdateSDK.cpUpdateInstall(getApplicationContext(), apkPath);
+        }
+
+        @Override
+        public void onStart() {
+
+        }
+
+        @Override
+        public void onPercent(int percent, long rcvLen, long fileSize) {
+
+        }
+
+        @Override
+        public void onFail(Throwable error, String content) {
+
+        }
+
+        @Override
+        public void onStop() {
+
+        }
+
     }
 }

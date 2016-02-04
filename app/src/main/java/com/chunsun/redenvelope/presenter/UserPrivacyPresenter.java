@@ -57,6 +57,6 @@ public class UserPrivacyPresenter implements BaseSingleLoadedListener<SampleResp
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 }

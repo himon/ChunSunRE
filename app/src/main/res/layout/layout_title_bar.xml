@@ -4,24 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/tools_bar_height"
     android:background="@color/global_red"
-    android:padding="7dp">
+    android:paddingRight="7dp">
 
-    <ImageView
-        android:id="@+id/iv_nav_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/img_place"
-        android:visibility="gone" />
+    <RelativeLayout
+        android:id="@+id/rl_back"
+        android:layout_width="100dp"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_nav_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iv_nav_icon"
-        android:textColor="@android:color/white"
-        android:visibility="gone" />
+        <ImageView
+            android:layout_marginLeft="7dp"
+            android:id="@+id/iv_nav_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/img_place"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_nav_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_nav_icon"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_nav_mid"

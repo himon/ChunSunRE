@@ -241,6 +241,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         mBtnSendComment.setOnClickListener(this);
         //设置发送按钮不可点击
         mBtnSendComment.setEnabled(false);
+        mIvHead.setOnLongClickListener(mHeadPortraitOnLongClickListener);
 
         mEtComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -305,6 +306,8 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
         }
         mTvTime.setText(mDetail.getSend_time());
         mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
+        mIvHead.setTag(R.id.tag_first, mDetail.getUser_id());
+        mIvHead.setTag(R.id.tag_second, mDetail.getNick_name());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         /**

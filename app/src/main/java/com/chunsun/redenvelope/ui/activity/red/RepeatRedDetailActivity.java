@@ -188,6 +188,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         mLLComplaint.setOnClickListener(this);
         mBtnSendComment.setOnClickListener(this);
         mLLRepeat.setOnClickListener(this);
+        mIvHead.setOnLongClickListener(mHeadPortraitOnLongClickListener);
 
         //设置发送按钮不可点击
         mBtnSendComment.setEnabled(false);
@@ -308,6 +309,8 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         }
         mTvTime.setText(mDetail.getSend_time());
         mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
+        mIvHead.setTag(R.id.tag_first, entity.getUser_id());
+        mIvHead.setTag(R.id.tag_second, entity.getNick_name());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         ArrayList<String> list = new ArrayList<String>();

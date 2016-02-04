@@ -175,9 +175,9 @@ public class UserRewardActivity extends BaseActivity implements IUserRewardView 
      */
     private void payReward() {
         if (Constants.INTERACTIVE_PLATFORM_COUNTRY.equals(mRedId)) {
-            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, "全国", "全国");
+            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), "0", "全国", "全国");
         } else if (Constants.INTERACTIVE_PLATFORM_LOCAL.equals(mRedId)) {
-            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, MainApplication.getContext().getProvince(), MainApplication.getContext().getCity());
+            mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), "0", MainApplication.getContext().getProvince(), MainApplication.getContext().getCity());
         } else {
             mPresenter.pay(mToken, mUserId, StringUtil.textview2String(mEtAmount), StringUtil.textview2String(mEtContent), mRedId, "", "");
         }

@@ -67,7 +67,7 @@ public class AdPayActivity extends BaseActivity implements IAdPayView {
 
     @Override
     protected void initView() {
-        initTitleBar("新广告", "", "", Constants.TITLE_TYPE_SAMPLE);
+        initTitleBar("支付", "", "", Constants.TITLE_TYPE_SAMPLE);
         initEvent();
     }
 
@@ -108,6 +108,10 @@ public class AdPayActivity extends BaseActivity implements IAdPayView {
     @Override
     public void setData(AdPayAmountDetailEntity.ResultEntity result) {
         mResult = result;
+
+        if(!result.isEnable_unionpay()){
+            mIvBankCard.setImageResource(R.drawable.img_unpay_bank);
+        }
 
         mTvPrice.setText("￥" + result.getPayable_amount() + "元");
         mTvDelayCost.setText("￥" + result.getDelay_amount() + "元");

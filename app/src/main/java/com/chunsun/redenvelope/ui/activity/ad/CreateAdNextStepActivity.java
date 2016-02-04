@@ -463,9 +463,17 @@ public class CreateAdNextStepActivity extends BaseActivity implements ICreateAdN
             mAdEntity.setDelaySeconds(mDelaySecondsRate.get(2));
             mAdEntity.setStartTime(mStartTime);
 
-            calcAdTotalPrice(mMinPrice, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
 
-            mEtPrice.setText(mMinPrice);
+            float price = Float.parseFloat(mMinPrice);
+            String usePrice = "";
+            if(price > 0.03){
+                usePrice = price + "";
+            }else{
+                usePrice = "0.03";
+            }
+            calcAdTotalPrice(usePrice, Constants.AD_DEFAULT_NUM, Constants.AD_DEFAULT_DAYS);
+
+            mEtPrice.setText(usePrice);
             mEtNum.setText(Constants.AD_DEFAULT_NUM);
             mEtDays.setText(Constants.AD_DEFAULT_DAYS);
             mTvTime.setText(mStartTime);

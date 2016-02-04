@@ -87,7 +87,6 @@ public class UserInfoPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
     @Override
     public void onException(String msg) {
         mIUserInfoView.showLoading();
-        ShowToast.Short(msg);
     }
 
     private ArrayList<SampleEntity> initSexList() {

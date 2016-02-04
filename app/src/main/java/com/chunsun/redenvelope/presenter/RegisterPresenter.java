@@ -189,7 +189,6 @@ public class RegisterPresenter extends BaseMultiLoadedListenerImpl<BaseEntity> {
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
         registerView.hideLoading();
     }
 }

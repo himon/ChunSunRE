@@ -48,7 +48,7 @@ public abstract class UserLosePresenter<T> extends BasePresenter<T> {
     }
 
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 
 }

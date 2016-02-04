@@ -218,7 +218,8 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         mBtnPay.setOnClickListener(this);
         //设置发送按钮不可点击
         mBtnSendComment.setEnabled(false);
-
+        //头像长按@
+        mIvHead.setOnLongClickListener(mHeadPortraitOnLongClickListener);
 
         mEtComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -362,6 +363,8 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
         mTvUserName.setText(detail.getNick_name());
         mTvTime.setText(detail.getSend_time());
         mRedDetailHelper.webViewSetText(mWvContent, detail.getContent());
+        mIvHead.setTag(R.id.tag_first, detail.getUser_id());
+        mIvHead.setTag(R.id.tag_second, detail.getNick_name());
         ImageLoader.getInstance().displayImage(detail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
         /**
          * 轮播图

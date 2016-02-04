@@ -80,6 +80,6 @@ public class UpdatePasswordPresenter implements BaseSingleLoadedListener<SampleR
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 }

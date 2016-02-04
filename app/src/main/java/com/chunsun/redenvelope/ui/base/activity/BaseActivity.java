@@ -26,6 +26,8 @@ import butterknife.Bind;
 
 public abstract class BaseActivity extends FragmentActivity implements View.OnClickListener {
 
+    @Bind(R.id.rl_back)
+    protected RelativeLayout mRlBack;
     @Bind(R.id.iv_nav_icon)
     protected ImageView mNavIcon;
     @Bind(R.id.tv_nav_left)
@@ -137,6 +139,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         }
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mRlBack.setOnClickListener(this);
     }
 
     protected void showCircleLoading() {
@@ -192,6 +195,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.tv_nav_left:
             case R.id.iv_nav_icon:
+            case R.id.rl_back:
                 if (isLeftType == 0) {
                     back();
                 } else if (isLeftType == 1) {

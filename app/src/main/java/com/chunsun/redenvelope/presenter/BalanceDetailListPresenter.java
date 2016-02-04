@@ -84,6 +84,6 @@ public class BalanceDetailListPresenter implements BaseSingleLoadedListener<Bala
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
+
     }
 }

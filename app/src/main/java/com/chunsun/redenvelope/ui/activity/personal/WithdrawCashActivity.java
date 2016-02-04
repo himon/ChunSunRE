@@ -50,7 +50,7 @@ public class WithdrawCashActivity extends BaseActivity implements IWithdrawCashV
     protected void initView() {
         initTitleBar("提现", "", "", Constants.TITLE_TYPE_SAMPLE);
         UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
-        if (userEntity.is_proxy()) {
+        if (!userEntity.is_proxy()) {
             mRlBank.setVisibility(View.GONE);
         }
         initEvent();

@@ -167,7 +167,8 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
             mAdEntity.setAgreement(true);
 
             if ("0.01".equals(mAdEntity.getPrice())) {
-                mTvMaxCount.setText("（选填：最多3张）");
+                mLLImages.setVisibility(View.GONE);
+                mTvContentPicTitle.setVisibility(View.GONE);
             } else if ("0.02".equals(mAdEntity.getPrice())) {
                 mTvMaxCount.setText("（选填：最多5张）");
             }
@@ -277,6 +278,8 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
             case R.id.btn_next_step://提交
                 showLoading();
                 if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_CIRCLE_LINK + "")) {
+                    mAdEntity.setTitle(StringUtil.textview2String(mEtTitle));
+                    mAdEntity.setContent(StringUtil.textview2String(mEtContent));
                     mPresenter.commitCircle(mToken, mAdEntity, StringUtil.textview2String(mEtTitle), StringUtil.textview2String(mEtContent), mPhotos);
                 } else if (mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK + "") || mAdEntity.getType().getKey().equals(Constants.RED_DETAIL_TYPE_lUCK_LINK + "")) {
                     if (mSuperadditionEntity != null) {

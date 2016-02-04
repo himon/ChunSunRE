@@ -106,6 +106,9 @@ public class CreateCircleActivity extends BaseCreateActivity<ICreateAdView, Crea
                                 mTvCity.setText(mCurrentCity.getC());
                                 mTvProvince.setEnabled(false);
                                 mTvCity.setEnabled(false);
+                                //选中当前位置
+                                mAdEntity.setProvince(mCurrentProvince);
+                                mAdEntity.setCity(mCurrentCity);
                             } else {
                                 mIvProvince.setVisibility(View.VISIBLE);
                                 mIvCity.setVisibility(View.VISIBLE);

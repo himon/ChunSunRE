@@ -95,6 +95,7 @@
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.6.2" level="project" />
+    <orderEntry type="library" exported="" name="BDAutoUpdateSDK_20150605_V1.2.0" level="project" />
     <orderEntry type="library" exported="" name="Xg_sdk_v2.39_20150915_1121" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="jg_filter_sdk_1.1" level="project" />
@@ -102,10 +103,12 @@
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QZone-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
+    <orderEntry type="library" exported="" name="need_lib" level="project" />
     <orderEntry type="library" exported="" name="MobLogCollector" level="project" />
     <orderEntry type="library" exported="" name="wup-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="patchupdate" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Core-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-SinaWeibo-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="butterknife-7.0.1" level="project" />

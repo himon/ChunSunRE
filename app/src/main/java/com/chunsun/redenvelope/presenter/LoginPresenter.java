@@ -110,6 +110,5 @@ public class LoginPresenter extends BasePresenter<ILoginView> implements BaseSin
     @Override
     public void onException(String msg) {
         loginView.hideLoading();
-        ShowToast.Short(msg);
     }
 }

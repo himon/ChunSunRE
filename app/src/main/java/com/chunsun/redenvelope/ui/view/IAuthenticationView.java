@@ -9,4 +9,5 @@ import com.chunsun.redenvelope.ui.base.view.LoadingView;
  * @des
  */
 public interface IAuthenticationView extends LoadingView{
+    void setCommitSuccess();
 }

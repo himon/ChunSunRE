@@ -126,7 +126,7 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    public void onResume() {
+     public void onResume() {
         super.onResume();
         if (mWebView != null) {
             mWebView.onResume();
@@ -139,5 +139,11 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
         if (mWebView != null) {
             mWebView.onPause();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mWebView.loadData("<a></a>", "text/html", "utf-8");
     }
 }

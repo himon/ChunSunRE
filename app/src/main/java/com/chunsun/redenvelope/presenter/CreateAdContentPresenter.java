@@ -76,7 +76,7 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
     @Override
     public void onException(String msg) {
         mICreateAdContentView.hideLoading();
-        ShowToast.Short(msg);
+
     }
 
     @Override

@@ -130,7 +130,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
 
     @Override
     protected BasePresenter createPresenter() {
-        return  new MyCircleListDetailPresenter(this);
+        return new MyCircleListDetailPresenter(this);
     }
 
     private void initTitle() {
@@ -176,7 +176,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
                 getData();
             }
         });
-        mDataAdapter = new RedDetailFragmentAdapter(this, 7,  mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
+        mDataAdapter = new RedDetailFragmentAdapter(this, 7, mListComment, mListRedRecord, mCurrentCheckType, new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -221,6 +221,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mBtnSendComment.setOnClickListener(this);
         //设置发送按钮不可点击
         mBtnSendComment.setEnabled(false);
+        mIvHead.setOnLongClickListener(mHeadPortraitOnLongClickListener);
 
         mEtComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -295,6 +296,8 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mTvUserName.setText(mDetail.getNick_name());
         mTvTime.setText(mDetail.getSend_time());
         mRedDetailHelper.webViewSetText(mWvContent, mDetail.getContent());
+        mIvHead.setTag(R.id.tag_first, detail.getUser_id());
+        mIvHead.setTag(R.id.tag_second, detail.getNick_name());
         ImageLoader.getInstance().displayImage(mDetail.getU_img_url(), mIvHead, MainApplication.getContext().getHeadOptions());
 
         /**

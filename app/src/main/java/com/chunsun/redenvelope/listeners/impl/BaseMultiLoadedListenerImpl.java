@@ -50,6 +50,5 @@ public abstract class BaseMultiLoadedListenerImpl<T> implements UserLoseMultiLoa
 
     @Override
     public void onException(String msg) {
-        ShowToast.Short(msg);
     }
 }

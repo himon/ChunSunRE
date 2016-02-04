@@ -262,7 +262,9 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
             } else if (7 == mDetail.getHb_type()) {
                 mShowUrl = shareHost + "pages/circle/index.html?hbId=" + mDetail.getId();
             }  else {
-                mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mGrabEntity.getResult().getHb_grab_id());
+                if(mGrabEntity != null) {
+                    mShowUrl = (shareHost + Constants.SHARE_RED_ENVELOPE_URL + mGrabEntity.getResult().getHb_grab_id());
+                }
             }
         }
         mShareSdkHelper = new ShareSdkHelper(mContext, mDetail, shareHost, mFrom, mShareLimitResult != null);

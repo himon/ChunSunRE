@@ -52,6 +52,5 @@ public class WithdrawcashConfirmPresenter extends UserLosePresenter<IWithdrawcas
     @Override
     public void onException(String msg) {
         mIWithdrawcashAlipayConfirmView.hideLoading();
-        ShowToast.Short(msg);
     }
 }

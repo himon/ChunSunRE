@@ -434,6 +434,9 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                     }
                 }
                 break;
+            case Constants.EDIT_TYPE_AUTHENTICATION:
+                mSiAuthentication.setData(event.getContent());
+                break;
         }
     }
 

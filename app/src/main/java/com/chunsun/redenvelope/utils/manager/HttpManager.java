@@ -2397,7 +2397,7 @@ public class HttpManager {
                 params.put("img_byte_str8", adEntity.getImagePath8());
                 params.put("province", adEntity.getProvince().getP());
                 params.put("city", adEntity.getCity().getC());
-                params.put("range", adEntity.getDistance().getKey());
+                params.put("range", adEntity.getDistance().getCount());
                 params.put("longitude", MainApplication.getContext().getLongitude() + "");
                 params.put("latitude", MainApplication.getContext().getLatitude() + "");
                 return params;
@@ -2725,7 +2725,7 @@ public class HttpManager {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
-                params.put("methodName", Constants.USER_READ_MESSAGE);
+                params.put("methodName", Constants.CREATE_CHUNSUN_TICKET);
                 params.put("parames", JsonManager.initShareOpenDataToJson(token, grab_id));
                 return params;
             }

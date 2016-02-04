@@ -58,6 +58,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="c6xynw42gFPGoqRXvf3WNgcG" />
 
+        <!-- 百度自动更新 -->
+        <meta-data android:name="BDAPPID" android:value="6089762"/>
+        <meta-data android:name="BDAPPKEY" android:value="1nbOTDrUXW5BqCKS6Durf5KhtQFy17XQ"/>
+
         <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
         <meta-data
             android:name="XG_V2_ACCESS_ID"
@@ -217,6 +221,24 @@
 
         <!-- 百度地图 end -->
 
+        <!-- 百度自动更新 -->
+
+        <activity android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
+            android:screenOrientation="sensor"
+            android:exported="false"
+            android:theme="@style/bdp_update_dialog_style_fullscreen" />
+
+        <receiver android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE"/>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE"/>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS"/>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- 百度自动更新 end -->
 
         <!-- 信鸽 begin -->
 
