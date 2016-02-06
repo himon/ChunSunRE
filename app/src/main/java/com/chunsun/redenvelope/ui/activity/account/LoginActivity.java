@@ -154,6 +154,9 @@ public class LoginActivity extends MBaseActivity<ILoginView, LoginPresenter> imp
             EventBus.getDefault().post(new MainEvent(Constants.FROM_TAB3));
         } else if (mFrom.equals(Constants.FROM_COMMENT)) {
             EventBus.getDefault().post(new MainEvent(Constants.FROM_COMMENT));
+        } else if (mFrom.equals(Constants.FROM_INTERACTIVE)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
         back();
     }

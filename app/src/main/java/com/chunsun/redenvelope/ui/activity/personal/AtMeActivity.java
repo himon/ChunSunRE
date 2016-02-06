@@ -12,7 +12,6 @@ import com.chunsun.redenvelope.entities.json.AtMessageEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.AtMePresenter;
 import com.chunsun.redenvelope.ui.activity.InteractivePlatformActivity;
-import com.chunsun.redenvelope.ui.activity.red.RedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.RepeatRedDetailActivity;
 import com.chunsun.redenvelope.ui.activity.red.web.WebRedDetailActivity;
 import com.chunsun.redenvelope.ui.adapter.AtMeAdapter;
@@ -30,6 +29,9 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
+/**
+ * 与我相关
+ */
 public class AtMeActivity extends MBaseActivity<IAtMeView, AtMePresenter> implements IAtMeView {
 
     @Bind(R.id.ptr_main)
@@ -124,8 +126,9 @@ public class AtMeActivity extends MBaseActivity<IAtMeView, AtMePresenter> implem
             } else if (type == Constants.RED_DETAIL_TYPE_REPEAT) {//转发
                 intent = new Intent(this, RepeatRedDetailActivity.class);
                 intent.putExtra(Constants.EXTRA_KEY, id);
-            } else{
-                intent = new Intent(this, RedDetailActivity.class);
+            } else {
+//                intent = new Intent(this, RedDetailActivity.class);
+                intent = new Intent(this, MyCircleListDetailActivity.class);
                 intent.putExtra(Constants.EXTRA_KEY, id);
                 intent.putExtra(Constants.EXTRA_KEY2, type);
             }

@@ -7,6 +7,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MyCircleListDetailMode;
@@ -49,6 +50,16 @@ public class MyCircleListDetailPresenter extends UserLosePresenter<IMyCircleList
     }
 
     /**
+     * 获取领取记录列表
+     *
+     * @param hb_id
+     * @param page_index
+     */
+    public void getRedRecordList(String hb_id, int page_index) {
+        mMyCircleListDetailMode.getRedRecordList(hb_id, page_index, this);
+    }
+
+    /**
      * 设置收藏当前红包
      *
      * @param mToken
@@ -79,6 +90,9 @@ public class MyCircleListDetailPresenter extends UserLosePresenter<IMyCircleList
                 break;
             case Constants.LISTENER_TYPE_GET_COMMENT_LIST:
                 onGetCommentSuccesss((RedDetailCommentEntity) data);
+                break;
+            case Constants.LISTENER_TYPE_GET_RECORD_LIST:
+                onGetRedRecordSuccesss((RedDetailGetRedRecordEntity) data);
                 break;
             case Constants.LISTENER_TYPE_COMMENT:
                 onCommentSuccess((SampleResponseEntity) data);
@@ -114,6 +128,16 @@ public class MyCircleListDetailPresenter extends UserLosePresenter<IMyCircleList
     public void onGetCommentSuccesss(RedDetailCommentEntity response) {
         RedDetailCommentEntity.ResultEntity result = response.getResult();
         mIMyCircleListDetailView.setCommentData(result);
+    }
+
+    /**
+     * 成功获取领取记录列表
+     *
+     * @param response
+     */
+    public void onGetRedRecordSuccesss(RedDetailGetRedRecordEntity response) {
+        RedDetailGetRedRecordEntity.ResultEntity result = response.getResult();
+        mIMyCircleListDetailView.setGetRedRecord(result);
     }
 
     /**

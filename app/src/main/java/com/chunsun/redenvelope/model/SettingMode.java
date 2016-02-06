@@ -8,4 +8,6 @@ import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 public interface SettingMode {
 
     void logout(String token, UserLoseMultiLoadedListener listener);
+
+    void upGrade(UserLoseMultiLoadedListener listener);
 }

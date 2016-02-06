@@ -360,9 +360,9 @@ public class CreateAdContentActivity extends MBaseActivity<ICreateAdContentView,
 
         Intent intent = null;
         String type = mAdEntity.getType().getKey();
-        if ((Constants.RED_DETAIL_TYPE_LEFT + "").equals(type) || (Constants.RED_DETAIL_TYPE_NEAR + "").equals(type) || (Constants.RED_DETAIL_TYPE_COUPON + "").equals(type)) {
+        if ((Constants.RED_DETAIL_TYPE_LEFT + "").equals(type) || (Constants.RED_DETAIL_TYPE_NEAR + "").equals(type) || (Constants.RED_DETAIL_TYPE_COUPON + "").equals(type) || (Constants.RED_DETAIL_TYPE_lUCK + "").equals(type)) {
             intent = new Intent(this, PreviewRedDetailActivity.class);
-        } else if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(type)) {
+        } else if ((Constants.RED_DETAIL_TYPE_LINK + "").equals(type) || (Constants.RED_DETAIL_TYPE_lUCK_LINK + "").equals(type)) {
             intent = new Intent(this, PreviewWebRedDetailActivity.class);
         } else if ((Constants.RED_DETAIL_TYPE_REPEAT + "").equals(type)) {
             intent = new Intent(this, PreviewRepeatRedDetailActivity.class);

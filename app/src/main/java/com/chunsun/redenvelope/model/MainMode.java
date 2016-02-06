@@ -1,6 +1,7 @@
 package com.chunsun.redenvelope.model;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 
 /**
  * @author Administrator
@@ -16,5 +17,5 @@ public interface MainMode {
      */
     void getUserNoReadCount(String token, BaseMultiLoadedListener listener);
 
-    void upGrade(BaseMultiLoadedListener listener);
+    void upGrade(UserLoseMultiLoadedListener listener);
 }

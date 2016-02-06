@@ -39,4 +39,9 @@ public class MyCircleListDetailModeImpl extends BaseModeImpl implements MyCircle
     public void sendComment(String token, String hb_id, String content, String at, UserLoseMultiLoadedListener listener) {
         mManager.sendComment(token, hb_id, content, at, listener, null, mActivity);
     }
+
+    @Override
+    public void getRedRecordList(String hb_id, int page_index, UserLoseMultiLoadedListener listener) {
+        mManager.getRedRecordList(hb_id, page_index, listener, null, mActivity);
+    }
 }

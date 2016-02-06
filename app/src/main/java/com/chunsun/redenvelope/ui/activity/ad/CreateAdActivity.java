@@ -127,6 +127,9 @@ public class CreateAdActivity extends BaseCreateActivity<ICreateAdView, CreateAd
                                 mTvCity.setText(mCurrentCity.getC());
                                 mIvProvince.setVisibility(View.INVISIBLE);
                                 mIvCity.setVisibility(View.INVISIBLE);
+                                //选中当前位置
+                                mAdEntity.setProvince(mCurrentProvince);
+                                mAdEntity.setCity(mCurrentCity);
                             } else {
                                 mRlProvince.setEnabled(true);
                                 mRlCity.setEnabled(true);

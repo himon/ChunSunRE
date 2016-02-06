@@ -58,7 +58,6 @@ public class WebRedDetailFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                System.out.println("newProgress：" + newProgress);
                 if (newProgress > 80) {
                     if (mFlag) {
                         EventBus.getDefault().post(new WebRedDetailEvent("hideLoading"));

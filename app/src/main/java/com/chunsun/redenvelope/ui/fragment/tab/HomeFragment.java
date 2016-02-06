@@ -82,6 +82,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
      */
     RedEvenlopeListHelper mRedEvenlopeListHelper;
 
+    private boolean isCheck;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -134,7 +136,8 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(getActivity(), Constants.FROM_TAB1)) {
+                if (!isCheck && (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(getActivity(), Constants.FROM_TAB1))) {
+                    isCheck = true;
                     showLoading();
                     mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                     toJump();
@@ -318,6 +321,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
                     break;
             }
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isCheck = false;
+            }
+        }, 1000);
+
     }
 
 

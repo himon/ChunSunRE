@@ -68,7 +68,9 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
     /**
      * 帮助类
      */
-    RedEvenlopeListHelper mRedEvenlopeListHelper;
+    private RedEvenlopeListHelper mRedEvenlopeListHelper;
+
+    private boolean isCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +111,8 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(TaskListActivity.this, Constants.FROM_TAB1)) {
+                if (!isCheck && (Constants.SCROLL_AD_TYPE == mScrollAdType || LoginContext.getLoginContext().forward(TaskListActivity.this, Constants.FROM_TAB1))) {
+                    isCheck = true;
                     showLoading();
                     mEntity = (RedListDetailEntity.ResultEntity.PoolEntity) parent.getAdapter().getItem(position);
                     toJump(mEntity.getId());
@@ -271,6 +274,12 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
                     break;
             }
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isCheck = false;
+            }
+        }, 1000);
     }
 
     @Override

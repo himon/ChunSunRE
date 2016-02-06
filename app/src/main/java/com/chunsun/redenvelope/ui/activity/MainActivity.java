@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.autoupdatesdk.AppUpdateInfo;
-import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
-import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
-import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
-import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.callback.LoginCallback;
+import com.chunsun.redenvelope.callback.MyCallback;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.TitlePopupItemEntity;
 import com.chunsun.redenvelope.entities.json.ApkVersionEntity;
@@ -45,8 +40,8 @@ import com.chunsun.redenvelope.ui.fragment.tab.HomeFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.InteractiveFragment;
 import com.chunsun.redenvelope.ui.fragment.tab.NewMeFragment;
 import com.chunsun.redenvelope.ui.view.IMainView;
-import com.chunsun.redenvelope.utils.AppUtil;
 import com.chunsun.redenvelope.utils.ShowToast;
+import com.chunsun.redenvelope.utils.manager.ApkUpdateManager;
 import com.chunsun.redenvelope.utils.manager.XgManager;
 import com.chunsun.redenvelope.widget.ChangeColorIconWithText;
 import com.chunsun.redenvelope.widget.CustomViewPager;
@@ -117,6 +112,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         mPresenter = new MainPresenter(this);
+        MainApplication.getContext().initBaiduMap();
         initView();
         initData();
     }
@@ -333,6 +329,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
                 toAdExplain();
                 break;
             case R.id.ib_nav_right:
+            case R.id.rl_nav_right:
                 mTitlePopup.show(mToolsBar);
                 break;
             case R.id.rl_create:
@@ -492,7 +489,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     @Override
     public void toScan() {
         Intent intent = new Intent(this, CaptureActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 77);
     }
 
     /**
@@ -519,23 +516,17 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     }
 
     @Override
-    public void isUpGrade(ApkVersionEntity apk) {
+    public void isUpGrade(final ApkVersionEntity apk) {
         mApkInfo = apk;
-        try {
-            int code = AppUtil.getCode(this);
-            if (apk.getVersionCode() > code) {
-                if ("1".equals(apk.getUpdate())) {//强制更新
-                    mUpdateDialog.show();
-                    mUpdateDialog.setDialogContent(apk.getDescription(), 15);
-                    mUpdateDialog.isSingleButton("下载新版本");
-                } else {
-                    BDAutoUpdateSDK.cpUpdateCheck(this, new MyCPCheckUpdateCallback());
-                }
+        ApkUpdateManager manager = new ApkUpdateManager(getApplicationContext());
+        manager.upGrade(apk, new MyCallback() {
+            @Override
+            public void callback() {
+                mUpdateDialog.show();
+                mUpdateDialog.setDialogContent(apk.getDescription(), 15);
+                mUpdateDialog.isSingleButton("下载新版本");
             }
-        } catch (Exception e) {
-            String message = e.getMessage();
-        }
-
+        });
     }
 
     @Override
@@ -609,7 +600,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             showTitleBar(R.id.iv_toInteractive);
             //刷新MeFragment页面
             mMeFragment.getData();
-        } else if(Constants.REFRESH_ME.equals(event.getMsg())){
+        } else if (Constants.REFRESH_ME.equals(event.getMsg())) {
             //刷新MeFragment页面
             mMeFragment.getData();
         }
@@ -656,47 +647,5 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private class MyCPCheckUpdateCallback implements CPCheckUpdateCallback {
-
-        @Override
-        public void onCheckUpdateCallback(AppUpdateInfo info, AppUpdateInfoForInstall infoForInstall) {
-            if(infoForInstall != null && !TextUtils.isEmpty(infoForInstall.getInstallPath())) {
-                BDAutoUpdateSDK.cpUpdateInstall(getApplicationContext(), infoForInstall.getInstallPath());
-            }else if(info != null) {
-                BDAutoUpdateSDK.cpUpdateDownload(MainActivity.this, info, new UpdateDownloadCallback());
-            }else {
-            }
-        }
-    }
-
-    private class UpdateDownloadCallback implements CPUpdateDownloadCallback {
-
-        @Override
-        public void onDownloadComplete(String apkPath) {
-            BDAutoUpdateSDK.cpUpdateInstall(getApplicationContext(), apkPath);
-        }
-
-        @Override
-        public void onStart() {
-
-        }
-
-        @Override
-        public void onPercent(int percent, long rcvLen, long fileSize) {
-
-        }
-
-        @Override
-        public void onFail(Throwable error, String content) {
-
-        }
-
-        @Override
-        public void onStop() {
-
-        }
-
     }
 }

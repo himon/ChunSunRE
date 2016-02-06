@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chunsun.redenvelope" >
+    package="com.chunsun.redenvelope">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
@@ -51,7 +51,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- meta-data需要写在application中 -->
         <meta-data
@@ -59,8 +59,12 @@
             android:value="c6xynw42gFPGoqRXvf3WNgcG" />
 
         <!-- 百度自动更新 -->
-        <meta-data android:name="BDAPPID" android:value="6089762"/>
-        <meta-data android:name="BDAPPKEY" android:value="1nbOTDrUXW5BqCKS6Durf5KhtQFy17XQ"/>
+        <meta-data
+            android:name="BDAPPID"
+            android:value="6089762" />
+        <meta-data
+            android:name="BDAPPKEY"
+            android:value="1nbOTDrUXW5BqCKS6Durf5KhtQFy17XQ" />
 
         <!-- 【必须】 请修改为APP的AccessId，“21”开头的10位数字，中间没空格 -->
         <meta-data
@@ -74,81 +78,181 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.WelcomeActivity" >
+        <activity
+            android:name=".ui.activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.account.RegisterActivity" />
+        <activity
+            android:name=".ui.activity.account.RegisterActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.account.LoginActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".ui.activity.account.QuickLoginActivity" />
-        <activity android:name=".ui.activity.account.ForgetPwdActivity" />
-        <activity android:name=".ui.activity.account.RegisterNextActivity" />
-        <activity android:name=".ui.activity.CommonWebActivity" />
-        <activity android:name=".ui.activity.account.ForgetPwdNextActivity" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.account.QuickLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.account.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.account.RegisterNextActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CommonWebActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.account.ForgetPwdNextActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.red.RedDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Translucent"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.red.web.WebRedDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
-        <activity android:name=".ui.activity.EditInfoActivity" />
-        <activity android:name=".ui.activity.personal.NotReceivingRedActivity" />
-        <activity android:name=".ui.activity.personal.CollectRedEnvelopeListActivity" />
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordClassifyActivity" />
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordListActivity" />
-        <activity android:name=".ui.activity.personal.SendRedEnvelopeRecordDetailActivity" />
-        <activity android:name=".ui.activity.personal.BalanceDetailListActivity" />
-        <activity android:name=".ui.activity.personal.WithdrawCashAlipayActivity" />
-        <activity android:name=".ui.activity.personal.WithdrawCashBankActivity" />
-        <activity android:name=".ui.activity.personal.WithdrawcashAlipayConfirmActivity" />
-        <activity android:name=".ui.activity.personal.PhoneRechargeActivity" />
-        <activity android:name=".ui.activity.personal.PhoneRechargeConfirmActivity" />
-        <activity android:name=".ui.activity.personal.BalanceRechargeActivity" />
-        <activity android:name=".ui.activity.personal.MineInviteCodeActivity" />
-        <activity android:name=".ui.activity.personal.InviteRecordListActivity" />
-        <activity android:name=".ui.activity.personal.SettingActivity" />
-        <activity android:name=".ui.activity.personal.AboutUsActivity" />
-        <activity android:name=".ui.activity.personal.UpdatePasswordActivity" />
-        <activity android:name=".ui.activity.personal.UserPrivacyActivity" />
-        <activity android:name=".ui.activity.SelectListInfoActivity" />
-        <activity android:name=".ui.activity.ad.CreateAdContentActivity" />
-        <activity android:name=".ui.activity.ad.AdPayActivity" />
-        <activity android:name=".ui.activity.ad.PayResultActivity" />
+        <activity
+            android:name=".ui.activity.EditInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.NotReceivingRedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.CollectRedEnvelopeListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.SendRedEnvelopeRecordClassifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.SendRedEnvelopeRecordListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.SendRedEnvelopeRecordDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.BalanceDetailListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.WithdrawCashAlipayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.WithdrawCashBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.WithdrawcashAlipayConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.PhoneRechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.PhoneRechargeConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.BalanceRechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.MineInviteCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.InviteRecordListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.UserPrivacyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.SelectListInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.CreateAdContentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.AdPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.PayResultActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.InteractivePlatformActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.red.web.WebRedDetailCommentActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.personal.UserInfoActivity" />
-        <activity android:name=".ui.activity.red.UserRewardActivity" />
-        <activity android:name=".ui.activity.red.RedDetailPicShowActivity" />
-        <activity android:name=".clip.PicClipActivity" />
+        <activity
+            android:name=".ui.activity.personal.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.red.UserRewardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.red.RedDetailPicShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clip.PicClipActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.red.RepeatRedDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Translucent"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.personal.WalletActivity" />
-        <activity android:name=".ui.activity.personal.WithdrawCashActivity" />
-        <activity android:name=".ui.activity.ad.CreateAdActivity" />
-        <activity android:name=".ui.activity.ad.CreateAdNextStepActivity" />
-        <activity android:name=".ui.activity.ad.CreateAdRepeatNextStepActivity" />
-        <activity android:name=".ui.activity.scan.ScanChunsunCodeResultActivity" />
-        <activity android:name=".ui.activity.red.PushNoticeShowActivity" />
-        <activity android:name=".ui.activity.ad.CreateAdCouponNextStepActivity" />
-        <activity android:name=".ui.activity.personal.ChunsunCouponWebActivity" />
+        <activity
+            android:name=".ui.activity.personal.WalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.WithdrawCashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.CreateAdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.CreateAdNextStepActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.CreateAdRepeatNextStepActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.scan.ScanChunsunCodeResultActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.red.PushNoticeShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ad.CreateAdCouponNextStepActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.personal.ChunsunCouponWebActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.personal.MineInviteCodeWebActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme" />
-        <activity android:name=".ui.activity.red.preview.PreviewRedDetailActivity" />
-        <activity android:name=".ui.activity.red.preview.PreviewWebRedDetailActivity" />
-        <activity android:name=".ui.activity.red.preview.PreviewRepeatRedDetailActivity" />
+        <activity
+            android:name=".ui.activity.red.preview.PreviewRedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.red.preview.PreviewWebRedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.red.preview.PreviewRepeatRedDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 图片选择 -->
         <activity
@@ -186,7 +290,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <data android:scheme="tencent1104499875" />
 
@@ -213,7 +317,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
@@ -223,18 +327,20 @@
 
         <!-- 百度自动更新 -->
 
-        <activity android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
-            android:screenOrientation="sensor"
+        <activity
+            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
             android:exported="false"
+            android:screenOrientation="sensor"
             android:theme="@style/bdp_update_dialog_style_fullscreen" />
 
-        <receiver android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
+        <receiver
+            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE"/>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 
@@ -248,7 +354,7 @@
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent" >
+            android:theme="@android:style/Theme.Translucent">
             <intent-filter>
 
                 <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
@@ -259,8 +365,8 @@
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
-            android:process=":xg_service_v2" >
-            <intent-filter android:priority="0x7fffffff" >
+            android:process=":xg_service_v2">
+            <intent-filter android:priority="0x7fffffff">
 
                 <!-- 【必须】 信鸽SDK的内部广播 -->
                 <action android:name="com.tencent.android.tpush.action.SDK" />
@@ -275,7 +381,7 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
             <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
-            <intent-filter android:priority="0x7fffffff" >
+            <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
@@ -295,7 +401,7 @@
         <!-- 【必须】 通知service，其中android:name部分要改为当前包名 -->
         <service
             android:name="com.tencent.android.tpush.rpc.XGRemoteService"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
 
                 <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
@@ -312,7 +418,7 @@
         -->
         <!-- 【可选】APP实现的Receiver，用于接收消息透传和操作结果的回调，请根据需要添加 -->
         <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
-        <receiver android:name=".receiver.MessageReceiver" >
+        <receiver android:name=".receiver.MessageReceiver">
             <intent-filter>
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
@@ -348,16 +454,13 @@
             android:label="@string/title_activity_at_me" />
         <activity
             android:name=".ui.activity.personal.AuthenticationActivity"
-            android:label="@string/title_activity_authentication" >
-        </activity>
+            android:label="@string/title_activity_authentication"></activity>
         <activity
             android:name=".ui.activity.personal.AuthenticationInstructionActivity"
-            android:label="@string/title_activity_authentication_instruction" >
-        </activity>
+            android:label="@string/title_activity_authentication_instruction"></activity>
         <activity
             android:name=".ui.activity.personal.WithdrawCashBankConfirmActivity"
-            android:label="@string/title_activity_withdraw_cash_bank_confirm" >
-        </activity>
+            android:label="@string/title_activity_withdraw_cash_bank_confirm"></activity>
     </application>
 
 </manifest>

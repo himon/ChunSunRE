@@ -2,6 +2,7 @@ package com.chunsun.redenvelope.ui.view;
 
 import com.chunsun.redenvelope.entities.json.RedDetailCommentEntity;
 import com.chunsun.redenvelope.entities.json.RedDetailEntity;
+import com.chunsun.redenvelope.entities.json.RedDetailGetRedRecordEntity;
 import com.chunsun.redenvelope.entities.json.SampleResponseEntity;
 
 import java.util.ArrayList;
@@ -36,4 +37,6 @@ public interface IMyCircleListDetailView {
      * 评论成功
      */
     void commentSuccess();
+
+    void setGetRedRecord(RedDetailGetRedRecordEntity.ResultEntity result);
 }

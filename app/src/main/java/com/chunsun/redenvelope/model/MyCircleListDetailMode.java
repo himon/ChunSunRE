@@ -39,4 +39,6 @@ public interface MyCircleListDetailMode {
      * @param content
      */
     void sendComment(String token, String hb_id, String content, String at, UserLoseMultiLoadedListener listener);
+
+    void getRedRecordList(String hb_id, int page_index, UserLoseMultiLoadedListener listener);
 }

@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.chunsun.redenvelope.scanlibrary.constants.Constants;
@@ -130,6 +131,7 @@ public final class CaptureActivity extends Activity implements
     private String photoPath;
 
     private Handler mHandler = new MyHandler(this);
+    private EditText mCode;
 
     class MyHandler extends Handler {
 
@@ -188,7 +190,10 @@ public final class CaptureActivity extends Activity implements
         findViewById(R.id.capture_scan_photo).setOnClickListener(this);
 
         findViewById(R.id.capture_flashlight).setOnClickListener(this);
+        //验证
+        findViewById(R.id.btn_validate_quan).setOnClickListener(this);
 
+        mCode = (EditText) findViewById(R.id.et_quan_code);
     }
 
     protected void initData() {
@@ -519,6 +524,8 @@ public final class CaptureActivity extends Activity implements
                 isFlashlightOpen = true;
             }
 
+        } else if (i == R.id.btn_validate_quan) {//验证
+            handleResult(mCode.getText().toString().trim());
         } else {
         }
 

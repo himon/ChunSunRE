@@ -81,7 +81,7 @@ public class RedDetailFragmentPresenter extends UserLosePresenter<IRedDetailFrag
         UserInfoEntity userEntity = MainApplication.getContext().getUserEntity();
 
         if(userEntity == null){
-            ShowToast.Short("正在获取用户信息，请稍后发送！");
+            redDetailFragmentView.userIsEmpty();
             return;
         }
 

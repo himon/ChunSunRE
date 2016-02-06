@@ -2,6 +2,7 @@ package com.chunsun.redenvelope.ui.fragment.tab;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -26,6 +27,7 @@ import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
 import com.chunsun.redenvelope.ui.base.fragment.BaseAtFragment;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -370,6 +372,13 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
             InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
             mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
         }
+    }
+
+    @Override
+    public void UserIsEmpty() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_INTERACTIVE);
+        startActivity(intent);
     }
 
     /**

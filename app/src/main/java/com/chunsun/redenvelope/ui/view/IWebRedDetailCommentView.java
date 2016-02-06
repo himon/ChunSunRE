@@ -26,4 +26,6 @@ public interface IWebRedDetailCommentView {
      * 评论成功
      */
     void commentSuccess();
+
+    void userNoEmpty();
 }

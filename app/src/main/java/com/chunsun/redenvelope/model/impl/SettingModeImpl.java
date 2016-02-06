@@ -22,4 +22,9 @@ public class SettingModeImpl implements SettingMode {
     public void logout(final String token, final UserLoseMultiLoadedListener listener) {
         mManager.logout(token, listener, mActivity);
     }
+
+    @Override
+    public void upGrade(UserLoseMultiLoadedListener listener) {
+        mManager.upGrade(listener, mActivity);
+    }
 }

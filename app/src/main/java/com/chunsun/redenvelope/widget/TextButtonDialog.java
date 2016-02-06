@@ -139,4 +139,26 @@ public class TextButtonDialog extends Dialog {
         }
     }
 
+    /**
+     * 设置检查更新
+     */
+    public void isCheckUpGrade() {
+        if (btnCancel != null && btnOk != null) {
+            btnCancel.setText("取消");
+            btnCancel.setTextColor(Color.rgb(0, 0, 0));
+            btnOk.setText("升级");
+            btnOk.setTextColor(Color.rgb(255, 84, 18));
+        }
+    }
+
+    /**
+     * 设置检查更新 点击后
+     */
+    public void checkSetEnabled() {
+        btnCancel.setVisibility(View.GONE);
+        btnOk.setEnabled(false);
+        btnOk.setText("正在下载中...");
+        tvContent.setText("下载完成后，请到消息中心点击安装！");
+    }
+
 }

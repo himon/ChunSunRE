@@ -22,6 +22,7 @@ import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.WebRedDetailCommentPresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.activity.red.UserRewardActivity;
 import com.chunsun.redenvelope.ui.adapter.WebRedDetailCommentAdapter;
 import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
@@ -314,6 +315,13 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
         mListComment.clear();
         mPresenter.getCommentList(mRedId, mCurrentCommentPage);
         clearAt();
+    }
+
+    @Override
+    public void userNoEmpty() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_WELCOME);
+        startActivity(intent);
     }
 
     @Override

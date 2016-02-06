@@ -474,6 +474,7 @@ public class CreateAdCouponNextStepActivity extends BaseActivity implements ICre
     protected void click(View v) {
         switch (v.getId()) {
             case R.id.tv_nav_right:
+            case R.id.rl_nav_right:
                 toIllustrate();
                 break;
             case R.id.iv_explain:

@@ -49,6 +49,11 @@ public class InteractivePlatformPresenter extends UserLosePresenter<IInteractive
      * @param at
      */
     public void sendComment(String token, int currentCheckType, String comment, String at) {
+
+        if(MainApplication.getContext().getUserEntity() == null){
+            mIInteractivePlatformView.UserIsEmpty();
+            return;
+        }
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;

@@ -48,10 +48,16 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
 
     @Bind(R.id.iv_pic)
     ImageView mIvPicture;
+    @Bind(R.id.rl_back)
+    RelativeLayout mRlBack;
     @Bind(R.id.ll_exit)
     RelativeLayout mLLExit;
+    @Bind(R.id.iv_exit)
+    ImageView mIvExit;
     @Bind(R.id.tv_exit)
     TextView mTvExit;
+    @Bind(R.id.rl_enter)
+    RelativeLayout mRlEnter;
     @Bind(R.id.tv_enter)
     TextView mTvEnter;
     @Bind(R.id.ll_other)
@@ -89,7 +95,10 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
 
     private void initEvent() {
         mIvPicture.setOnClickListener(this);
+        mRlBack.setOnClickListener(this);
+        mIvExit.setOnClickListener(this);
         mTvExit.setOnClickListener(this);
+        mRlEnter.setOnClickListener(this);
         mTvEnter.setOnClickListener(this);
         mTvDownloadPic.setOnClickListener(this);
         mTvScan.setOnClickListener(this);
@@ -115,6 +124,8 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
                 }
                 break;
             case R.id.tv_exit:
+            case R.id.iv_exit:
+            case R.id.rl_back:
                 EventBus.getDefault().post(new RedDetailBackEvent(""));
                 break;
             case R.id.tv_scanf:
@@ -123,6 +134,7 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
                 downloadPic();
                 break;
             case R.id.tv_enter:
+            case R.id.rl_enter:
                 EventBus.getDefault().post(new RedDetailBackEvent("enter"));
                 break;
         }
@@ -140,7 +152,7 @@ public class RedDetailPicPreviewFragment extends BaseFragment implements View.On
 
             @Override
             public void onError(Request request, Exception e) {
-                ShowToast.Short("下载到失败"   );
+                ShowToast.Short("下载到失败");
             }
 
             @Override

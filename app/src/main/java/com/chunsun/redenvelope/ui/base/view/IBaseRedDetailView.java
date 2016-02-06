@@ -34,4 +34,9 @@ public interface IBaseRedDetailView {
      * 评论成功
      */
     void commentSuccess();
+
+    /**
+     * 评论的时候user为空
+     */
+    void userIsEmpty();
 }

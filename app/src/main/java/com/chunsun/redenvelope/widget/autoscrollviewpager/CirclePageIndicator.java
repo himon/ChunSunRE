@@ -82,7 +82,6 @@ public class CirclePageIndicator extends LinearLayout {
     }
 
     public void changePointView(int cur) {
-        System.out.println("cur-->" + cur + "/point-->" + getPagePositon());
         View view = getChildAt(getPagePositon());
         View curView = getChildAt(cur);
         if (view != null && curView != null) {

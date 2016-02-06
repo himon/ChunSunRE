@@ -23,6 +23,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.InteractiveEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.InteractivePlatformPresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.InteractivePlatformAdapter;
 import com.chunsun.redenvelope.ui.base.activity.at.BaseAtActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -295,6 +296,13 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
     public void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice) {
         InteractiveEntity.ResultEntity.NoticeEntity noticeEntity = notice.get(0);
         mInteractiveHelper.setNoticeBoard(noticeEntity, mTvTitle, mTvContent, mTvTime);
+    }
+
+    @Override
+    public void UserIsEmpty() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_INTERACTIVE);
+        startActivity(intent);
     }
 
     @Override

@@ -53,6 +53,10 @@ public class WebRedDetailCommentPresenter extends UserLosePresenter<IWebRedDetai
      * @param comment
      */
     public void sendComment(String comment, String token, String id, String at) {
+        if(MainApplication.getContext().getUserEntity() == null){
+            mIWebRedDetailCommentView.userNoEmpty();
+            return;
+        }
         if ("4".equals(MainApplication.getContext().getUserEntity().getStatus())) {
             ShowToast.Short("您已被禁言，有什么疑问请联系客服!");
             return;

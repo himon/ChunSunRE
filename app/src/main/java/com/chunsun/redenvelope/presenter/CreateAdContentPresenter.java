@@ -2,12 +2,12 @@ package com.chunsun.redenvelope.presenter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.chunsun.redenvelope.clip.BitmapClipUtils;
 import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.AdEntity;
 import com.chunsun.redenvelope.entities.BaseEntity;
@@ -19,8 +19,8 @@ import com.chunsun.redenvelope.ui.activity.ad.CreateAdContentActivity;
 import com.chunsun.redenvelope.ui.base.presenter.UserLosePresenter;
 import com.chunsun.redenvelope.ui.view.ICreateAdContentView;
 import com.chunsun.redenvelope.utils.Base64Utils;
+import com.chunsun.redenvelope.utils.ImageUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
-import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
 import java.util.ArrayList;
 
@@ -200,16 +200,14 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
 
             Photo item = mPhotos.get(i);
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(item.getPath(), options);
+            /**
+             * 计算图片角度
+             */
+            int degree = ImageUtils.readPictureDegree(item.getPath());
 
-            // Calculate inSampleSize
-            options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 800, 480);
-            // Decode bitmap with inSampleSize set
-            options.inJustDecodeBounds = false;
-
-            Bitmap bitmap = BitmapFactory.decodeFile(item.getPath(), options);
+            Bitmap bitmap = ImageUtils.rotaingImageView(degree,
+                    BitmapClipUtils
+                            .createImageThumbnailScale(item.getPath(), 800));
 
             switch (i) {
                 case 0:
@@ -312,7 +310,7 @@ public class CreateAdContentPresenter extends UserLosePresenter<ICreateAdContent
             }
         }
 
-        if(!mAdEntity.isAgreement()){
+        if (!mAdEntity.isAgreement()) {
             ShowToast.Short("请同意春笋红包发广告协议！");
             return true;
         }

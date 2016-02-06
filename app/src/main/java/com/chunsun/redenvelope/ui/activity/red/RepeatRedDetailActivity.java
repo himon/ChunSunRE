@@ -30,6 +30,7 @@ import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RepeatRedDetailPresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.RepeatRedDetailAdapter;
 import com.chunsun.redenvelope.ui.base.activity.at.BaseSwipeBackAtActivity;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -371,6 +372,13 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
         clearAt();
+    }
+
+    @Override
+    public void userIsEmpty() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_WELCOME);
+        startActivity(intent);
     }
 
     @Override

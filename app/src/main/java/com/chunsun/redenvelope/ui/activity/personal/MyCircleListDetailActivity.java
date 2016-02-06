@@ -40,6 +40,7 @@ import com.chunsun.redenvelope.widget.autoscrollviewpager.GuideGallery;
 import com.chunsun.redenvelope.widget.autoscrollviewpager.ImageAdapter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,8 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
     PtrClassicFrameLayout mPtr;
     @Bind(R.id.gmlv_main)
     GetMoreListView mListView;
+    @Bind(R.id.ll_comment_input_container)
+    LinearLayout mLLInputComment;
     @Bind(R.id.et_comment)
     EditText mEtComment;
     @Bind(R.id.btn_send_comment)
@@ -82,6 +85,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
     RelativeLayout mRlRedEnvelope;
     RadioButton mRbCommentRecord;
     RadioButton mRbGetRedRecord;
+    TextView mTvEffectiveDate;
 
     //轮播图adapter
     private ImageAdapter mAdapter;
@@ -98,8 +102,12 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
     private boolean isRefresh;
     //当前评论显示页数
     private int mCurrentCommentPage = 1;
+    //当前领取记录显示页数
+    private int mCurrentGetPage = 1;
     //评论列表总数
     private int mTotalComment = 0;
+    //领取记录列表总数
+    private int mTotalGetRedRecord = 0;
     //标示当前列表显示的是评论还是领取记录， 0 ： 评论， 1 ： 领取记录
     private int mCurrentCheckType = 0;
     //评论列表
@@ -115,6 +123,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
      * 红包帮助类
      */
     RedDetailHelper mRedDetailHelper;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,17 +142,9 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         return new MyCircleListDetailPresenter(this);
     }
 
-    private void initTitle() {
-        mNavIcon.setVisibility(View.VISIBLE);
-        mNavIcon.setImageResource(R.drawable.img_back);
-        mNavLeft.setText("返回");
-        mNavLeft.setVisibility(View.VISIBLE);
-        mNavTitle.setText("春笋圈子");
-    }
-
     @Override
     protected void initView() {
-        initTitle();
+        initTitleBar("春笋圈子", "", "", Constants.TITLE_TYPE_SAMPLE);
 
         View view = LayoutInflater.from(this).inflate(R.layout.layout_red_detail_item, null);
         mIvHead = (ImageView) view.findViewById(R.id.iv_head_logo);
@@ -160,6 +161,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mRlRedEnvelope = (RelativeLayout) view.findViewById(R.id.rl_red_envelope);
         mRbCommentRecord = (RadioButton) view.findViewById(R.id.rb_comment_record);
         mRbGetRedRecord = (RadioButton) view.findViewById(R.id.rb_get_red_record);
+        mTvEffectiveDate = (TextView) view.findViewById(R.id.tv_effective_date);
 
         mLLGuarantee.setVisibility(View.GONE);
         mRlRedEnvelope.setVisibility(View.GONE);
@@ -216,6 +218,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mIbRepeat.setOnClickListener(this);
         mIvHead.setOnClickListener(this);
         mRbCommentRecord.setOnClickListener(this);
+        mRbGetRedRecord.setOnClickListener(this);
         mLLCollect.setOnClickListener(this);
         mLLComplaint.setOnClickListener(this);
         mBtnSendComment.setOnClickListener(this);
@@ -265,6 +268,11 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         Intent intent = getIntent();
         if (intent != null) {
             mRedDetailId = intent.getStringExtra(Constants.EXTRA_KEY);
+            mType = intent.getIntExtra(Constants.EXTRA_KEY2, 0);
+            if (mType == Constants.RED_DETAIL_TYPE_LEFT || mType == Constants.RED_DETAIL_TYPE_NEAR || mType == Constants.RED_DETAIL_TYPE_COUPON || mType == Constants.RED_DETAIL_TYPE_lUCK || mType == Constants.RED_DETAIL_TYPE_COUPON) {
+                mNavTitle.setText("春笋红包");
+                mRbGetRedRecord.setVisibility(View.VISIBLE);
+            }
         }
         mPresenter.getData(mToken, mRedDetailId);
     }
@@ -277,15 +285,34 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
             mCurrentCheckType = 0;
         }
         mPresenter.getCommentList(mRedDetailId, mCurrentCommentPage);
+        mPresenter.getRedRecordList(mRedDetailId, mCurrentGetPage);
+    }
+
+    private void setRedEnvelopeStatus() {
+        if (Constants.RED_DETAIL_TYPE_COUPON == mType) {
+            mTvEffectiveDate.setVisibility(View.VISIBLE);
+            mTvEffectiveDate.setVisibility(View.VISIBLE);
+            mTvEffectiveDate.setText("有效期：" + mDetail.getStart_time() + " -- "
+                    + mDetail.getEnd_time());
+        }
     }
 
     public void getData() {
-        if (mCurrentCommentPage * Constants.PAGE_NUM > mTotalComment + Constants.PAGE_NUM) {
-            mListView.getMoreComplete();
-            mPtr.refreshComplete();
-            return;
+        if (mCurrentCheckType == 0) {
+            if (mCurrentCommentPage * Constants.PAGE_NUM > mTotalComment + Constants.PAGE_NUM) {
+                mListView.getMoreComplete();
+                mPtr.refreshComplete();
+                return;
+            }
+            mPresenter.getCommentList(mDetail.getId(), ++mCurrentCommentPage);
+        } else {
+            if (mCurrentGetPage * Constants.PAGE_NUM > mTotalGetRedRecord + Constants.PAGE_NUM) {
+                mListView.getMoreComplete();
+                mPtr.refreshComplete();
+                return;
+            }
+            mPresenter.getRedRecordList(mDetail.getId(), mCurrentGetPage);
         }
-        mPresenter.getCommentList(mRedDetailId, mCurrentCommentPage);
     }
 
     @Override
@@ -305,6 +332,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
          */
         mAdapter = new ImageAdapter(mUrls, this);
         mViewPager.setAdapter(mAdapter);
+        setRedEnvelopeStatus();
     }
 
     @Override
@@ -316,7 +344,9 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
             //设置没有更多的数据了,不再显示加载更多按钮
             mListView.setNoMore();
         }
-        mCurrentCommentPage++;
+        if (mCurrentCommentPage == 1) {
+            mListComment.clear();
+        }
         mListComment.addAll(list);
         mDataAdapter.notifyDataSetChanged();
         //加载更多完成
@@ -348,6 +378,28 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         clearAt();
     }
 
+    @Override
+    public void setGetRedRecord(RedDetailGetRedRecordEntity.ResultEntity result) {
+        BigDecimal share_min_amount = result.getShare_min_amount();
+        mDataAdapter.setShareMinAmount(share_min_amount);
+
+        List<RedDetailGetRedRecordEntity.ResultEntity.RecordsEntity> list = result.getRecords();
+        mTotalGetRedRecord = result.getTotal_count();
+
+        if (mCurrentCheckType == 1 && list.size() < Constants.PAGE_NUM) {
+            //设置没有更多的数据了,不再显示加载更多按钮
+            mListView.setNoMore();
+        } else {
+            mListView.setHasMore();
+        }
+
+        mCurrentGetPage++;
+        mListRedRecord.addAll(list);
+        mDataAdapter.notifyDataSetChanged();
+        //加载更多完成
+        mListView.getMoreComplete();
+    }
+
     /**
      * 开启轮播图自动滚动
      */
@@ -377,6 +429,16 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
             case R.id.btn_send_comment://评论
                 mPresenter.sendComment(StringUtil.textview2String(mEtComment), mToken, mDetail.getId(), at);
                 break;
+            case R.id.rb_comment_record:
+                mCurrentCheckType = 0;
+                mLLInputComment.setVisibility(View.VISIBLE);
+                changerDataList();
+                break;
+            case R.id.rb_get_red_record:
+                mCurrentCheckType = 1;
+                mLLInputComment.setVisibility(View.GONE);
+                changerDataList();
+                break;
         }
     }
 
@@ -387,6 +449,14 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
         mCurrentCommentPage = 1;
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
+    }
+
+    /**
+     * 切换列表
+     */
+    public void changerDataList() {
+        mDataAdapter.setData(mListComment, mListRedRecord, mCurrentCheckType);
+        mDataAdapter.notifyDataSetChanged();
     }
 
     public void onEvent(RewardEvent event) {

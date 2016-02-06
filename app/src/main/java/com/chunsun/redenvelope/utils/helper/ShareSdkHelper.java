@@ -12,8 +12,8 @@ import com.chunsun.redenvelope.entities.json.RedDetailEntity;
 import com.chunsun.redenvelope.event.CreateCircleResultEvent;
 import com.chunsun.redenvelope.event.RedDetailEvent;
 import com.chunsun.redenvelope.event.WebRedDetailEvent;
+import com.chunsun.redenvelope.utils.BitmapClipUtils;
 import com.chunsun.redenvelope.utils.ShowToast;
-import com.chunsun.redenvelope.utils.manager.BitmapUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -129,22 +129,30 @@ public class ShareSdkHelper implements PlatformActionListener {
         // 标题的超链接
         sp.setTitleUrl(url);
         //分享的文本
-        if (TextUtils.isEmpty(mDetailEntity.getContent())) {
-            sp.setText(mDetailEntity.getTitle() + ">>更多详情请点击：" + url);
-        } else if (mDetailEntity.getContent().length() > 100) {
-            String content = mDetailEntity.getContent().substring(0, 100);
-            content += ">>更多详情请点击：" + url;
-            sp.setText(content);
-        } else {
-            mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
+        if (!TextUtils.isEmpty(mDetailEntity.getContent()) && mDetailEntity.getContent().contains(">>更多详情请点击：")) {
             sp.setText(mDetailEntity.getContent());
+        } else {
+            if (TextUtils.isEmpty(mDetailEntity.getContent())) {
+                sp.setText(mDetailEntity.getTitle() + ">>更多详情请点击：" + url);
+            } else if (mDetailEntity.getContent().length() > 100) {
+                String content = mDetailEntity.getContent().substring(0, 100);
+                content += ">>更多详情请点击：" + url;
+                sp.setText(content);
+            } else {
+                if(url.contains(">>更多详情请点击：")){
+                    sp.setText(url);
+                }else {
+                    mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
+                    sp.setText(mDetailEntity.getContent());
+                }
+            }
         }
         //分享图片
         if (TextUtils.isEmpty(mDetailEntity.getCover_img_url())) {
             Bitmap bitmap = BitmapFactory.decodeResource(
                     mContext.getResources(), R.mipmap.ic_launcher);
             sp.setImageData(bitmap);
-        }else {
+        } else {
             sp.setImageUrl(mShareHost + mDetailEntity.getCover_img_url());
         }
         sp.setSiteUrl(url);
@@ -189,14 +197,18 @@ public class ShareSdkHelper implements PlatformActionListener {
             } else {
                 File file = new File(mDetailEntity.getCover_img_url());
                 if (file.exists()) {
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inJustDecodeBounds = true;
-                    options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 150, 150);
-                    options.inJustDecodeBounds = false;
-                    Bitmap bitmap = BitmapFactory.decodeFile(mDetailEntity.getCover_img_url(), options);
-                    //Bitmap bitmap = BitmapClipUtils.createImageThumbnailScale(mDetailEntity.getCover_img_url(), 150);
-                    if (bitmap != null) {
-                        sp.setImageData(bitmap);
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inJustDecodeBounds = true;
+//                    options.inSampleSize = BitmapUtils.calculateInSampleSize(options, 100, 100);
+//                    options.inJustDecodeBounds = false;
+                    try {
+                        //Bitmap bitmap = BitmapFactory.decodeFile(mDetailEntity.getCover_img_url(), options);
+                        Bitmap bitmap = BitmapClipUtils.createImageThumbnailScale(mDetailEntity.getCover_img_url(), 150);
+                        if (bitmap != null) {
+                            sp.setImageData(bitmap);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -227,8 +239,8 @@ public class ShareSdkHelper implements PlatformActionListener {
 //                                CouponRedDetailEvent couponRedShare = new CouponRedDetailEvent("share", shareType);
 //                                EventBus.getDefault().post(couponRedShare);
 //                            } else {
-                                RedDetailEvent redShare = new RedDetailEvent("share", shareType);
-                                EventBus.getDefault().post(redShare);
+                            RedDetailEvent redShare = new RedDetailEvent("share", shareType);
+                            EventBus.getDefault().post(redShare);
 //                            }
                             break;
                     }

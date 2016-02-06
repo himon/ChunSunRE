@@ -3,6 +3,7 @@ package com.chunsun.redenvelope.model.impl;
 import android.app.Activity;
 
 import com.chunsun.redenvelope.listeners.BaseMultiLoadedListener;
+import com.chunsun.redenvelope.listeners.UserLoseMultiLoadedListener;
 import com.chunsun.redenvelope.model.MainMode;
 import com.chunsun.redenvelope.ui.base.mode.BaseModeImpl;
 
@@ -26,7 +27,7 @@ public class MainModeImpl extends BaseModeImpl implements MainMode {
     }
 
     @Override
-    public void upGrade(BaseMultiLoadedListener listener) {
+    public void upGrade(UserLoseMultiLoadedListener listener) {
         mManager.upGrade(listener, mActivity);
     }
 }

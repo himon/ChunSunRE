@@ -3,6 +3,8 @@ package com.chunsun.redenvelope.ui.activity.personal;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -103,6 +105,10 @@ public class AuthenticationActivity extends MBaseActivity<IAuthenticationView, A
         String is_v = userEntity.getIs_v();
 
         mEtName.setText(userEntity.getCompany_name());
+        //光标放到最末尾
+        Editable etext = mEtName.getText();
+        Selection.setSelection(etext, etext.length());
+
         mEtTel.setText(userEntity.getCompany_tel());
         mEtAddress.setText(userEntity.getAddress());
         mEtOperator.setText(userEntity.getCompany_contact());

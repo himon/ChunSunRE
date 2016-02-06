@@ -8,12 +8,15 @@ import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.MainApplication;
 import com.chunsun.redenvelope.app.context.LoginContext;
 import com.chunsun.redenvelope.app.state.impl.LogoutState;
+import com.chunsun.redenvelope.callback.MyCallback;
 import com.chunsun.redenvelope.constants.Constants;
+import com.chunsun.redenvelope.entities.json.ApkVersionEntity;
 import com.chunsun.redenvelope.event.MainEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.SettingPresenter;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.view.ISettingView;
+import com.chunsun.redenvelope.utils.manager.ApkUpdateManager;
 import com.chunsun.redenvelope.widget.SettingItem;
 import com.chunsun.redenvelope.widget.TextButtonDialog;
 
@@ -42,6 +45,9 @@ public class SettingActivity extends BaseActivity implements ISettingView {
     private SettingPresenter mPresenter;
     private TextButtonDialog mExitDialog;
     private String mToken;
+    private ApkVersionEntity mApkInfo;
+
+    private TextButtonDialog mUpdateDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,23 @@ public class SettingActivity extends BaseActivity implements ISettingView {
         mSiUpdatePwd.setContent("修改密码");
         mSiPrivacy.setContent("隐私");
         mSiLogout.setContent("退出账号");
+
+        mUpdateDialog = new TextButtonDialog(this, R.style.progress_dialog,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        switch (arg0.getId()) {
+                            case R.id.btn_confirm_ok:
+                                // TODO升级
+                                mPresenter.downloadApk(mApkInfo, SettingActivity.this);
+                                mUpdateDialog.checkSetEnabled();
+                                break;
+                            case R.id.btn_confirm_cancel:
+                                mUpdateDialog.cancel();
+                                break;
+                        }
+                    }
+                });
 
         initEvent();
     }
@@ -94,6 +117,7 @@ public class SettingActivity extends BaseActivity implements ISettingView {
                 toAboutUs();
                 break;
             case R.id.si_check_update:
+                mPresenter.upGrade();
                 break;
             case R.id.si_clear:
                 mPresenter.clearCache();
@@ -136,6 +160,27 @@ public class SettingActivity extends BaseActivity implements ISettingView {
     public void toUpdatePrivacy() {
         Intent intent = new Intent(this, UserPrivacyActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void isUpGrade(final ApkVersionEntity apk) {
+        mApkInfo = apk;
+        ApkUpdateManager manager = new ApkUpdateManager(getApplicationContext());
+        manager.upCheckGrade(apk, new MyCallback() {
+            @Override
+            public void callback() {
+                mUpdateDialog.show();
+                mUpdateDialog.setDialogContent(apk.getDescription(), 15);
+                mUpdateDialog.isCheckUpGrade();
+            }
+        }, new MyCallback() {
+            @Override
+            public void callback() {
+                mUpdateDialog.show();
+                mUpdateDialog.setDialogContent("已经是最新版本", 15);
+                mUpdateDialog.singleButtonDialog();
+            }
+        });
     }
 
     private View.OnClickListener mExitListener = new View.OnClickListener() {

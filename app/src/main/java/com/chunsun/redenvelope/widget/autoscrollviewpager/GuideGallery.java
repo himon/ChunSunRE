@@ -78,17 +78,13 @@ public class GuideGallery extends Gallery {
         int kEvent;
         if (isScrollingLeft(e1, e2)) { // Check if scrolling left
             kEvent = KeyEvent.KEYCODE_DPAD_LEFT;
-            System.out.println("AAAA" + this.getSelectedItemPosition());
         } else { // Otherwise scrolling right
             kEvent = KeyEvent.KEYCODE_DPAD_RIGHT;
-            System.out.println("BBB" + this.getSelectedItemPosition());
         }
         onKeyDown(kEvent, null);
         if (this.getSelectedItemPosition() == 0)
             //this.setSelection(AdImageAdapter.size);
             this.setSelection(size);
-
-        System.out.println("DDD" + this.getSelectedItemPosition());
         return true;
 
     }

@@ -96,6 +96,7 @@ public class CreateCircleResultActivity extends BaseActivity {
                 toCircle();
                 break;
             case R.id.btn_sync_friend:
+                showCircleLoading();
                 sync();
                 break;
             case R.id.btn_try_again:
@@ -126,5 +127,6 @@ public class CreateCircleResultActivity extends BaseActivity {
         } else if ("cancel".equals(msg)) {
             ShowToast.Short("取消分享！");
         }
+        hideCircleLoading();
     }
 }

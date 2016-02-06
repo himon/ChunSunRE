@@ -34,4 +34,6 @@ public interface IInteractivePlatformView extends LoadingView {
      * @param notice
      */
     void setNoticeBoard(List<InteractiveEntity.ResultEntity.NoticeEntity> notice);
+
+    void UserIsEmpty();
 }

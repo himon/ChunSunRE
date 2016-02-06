@@ -67,11 +67,11 @@ public interface Constants {
     /**
      * 服务器地址
      */
-//    String HOST_URL = "http://cssv.chunsunkeji.com";
+//      String HOST_URL = "http://cssv.chunsunkeji.com";
     String HOST_URL = "http://192.168.1.109:9101";
 //    String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-    //        String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+//      String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
     String IMG_HOST_URL = "http://192.168.1.109:9101";
 //    String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
@@ -341,6 +341,8 @@ public interface Constants {
      * 标示从tab3的fragment跳转到登录
      */
     String FROM_TAB3 = "from_tab3";
+
+    String FROM_INTERACTIVE = "from_interactive";
 
     /**
      * 圈子评论

@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,10 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
 
     @Bind(R.id.iv_pic)
     PhotoView mIvPicture;
+    @Bind(R.id.ll_back)
+    LinearLayout mLLBack;
+    @Bind(R.id.iv_exit)
+    ImageView mIvBack;
     @Bind(R.id.ll_exit)
     LinearLayout mLLExit;
     @Bind(R.id.tv_exit)
@@ -83,7 +88,9 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
     }
 
     private void initEvent() {
+        mLLBack.setOnClickListener(this);
         mTvExit.setOnClickListener(this);
+        mIvBack.setOnClickListener(this);
         mTvDownloadPic.setOnClickListener(this);
         mTvScan.setOnClickListener(this);
         mIvPicture.setOnLongClickListener(new View.OnLongClickListener() {
@@ -123,6 +130,8 @@ public class RedDetailPicShowFragment extends BaseFragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_exit:
+            case R.id.iv_exit:
+            case R.id.ll_back:
                 EventBus.getDefault().post(new RedDetailShowPicBackEvent(""));
                 break;
             case R.id.tv_scanf:

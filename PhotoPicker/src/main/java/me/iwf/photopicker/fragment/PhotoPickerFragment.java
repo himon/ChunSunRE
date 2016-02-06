@@ -2,6 +2,7 @@ package me.iwf.photopicker.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.ListPopupWindow;
@@ -44,6 +45,7 @@ public class PhotoPickerFragment extends Fragment {
 
     private PopupDirectoryListAdapter listAdapter;
     private List<PhotoDirectory> directories;
+    private Bundle mediaStoreArgs;
 
 
     @Override
@@ -54,7 +56,7 @@ public class PhotoPickerFragment extends Fragment {
 
         captureManager = new ImageCaptureManager(getActivity());
 
-        Bundle mediaStoreArgs = new Bundle();
+        mediaStoreArgs = new Bundle();
         if (getActivity() instanceof PhotoPickerActivity) {
             mediaStoreArgs.putBoolean(EXTRA_SHOW_GIF, ((PhotoPickerActivity) getActivity()).isShowGif());
         }
@@ -167,16 +169,23 @@ public class PhotoPickerFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ImageCaptureManager.REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             captureManager.galleryAddPic();
-            if (directories.size() > 0) {
-                String path = captureManager.getCurrentPhotoPath();
-                PhotoDirectory directory = directories.get(INDEX_ALL_PHOTOS);
-                directory.getPhotos().add(INDEX_ALL_PHOTOS, new Photo(path.hashCode(), path));
-                directory.setCoverPath(path);
-                photoGridAdapter.notifyDataSetChanged();
-            }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (directories.size() > 0) {
+                        String path = captureManager.getCurrentPhotoPath();
+                        PhotoDirectory directory = directories.get(INDEX_ALL_PHOTOS);
+                        System.out.println(directory.getPhotos().size());
+                        directory.getPhotos().add(INDEX_ALL_PHOTOS, new Photo(path.hashCode(), path));
+                        directory.setCoverPath(path);
+                        System.out.println(directory.getPhotos().size());
+                        photoGridAdapter.notifyDataSetChanged();
+                    }
+                }
+            }, 500);
         }
     }
-
 
     public PhotoGridAdapter getPhotoGridAdapter() {
         return photoGridAdapter;

@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -34,6 +35,7 @@ import com.chunsun.redenvelope.event.RewardEvent;
 import com.chunsun.redenvelope.event.ShareRedEnvelopeEvent;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.RedDetailFragmentPresenter;
+import com.chunsun.redenvelope.ui.activity.account.LoginActivity;
 import com.chunsun.redenvelope.ui.adapter.RedDetailFragmentAdapter;
 import com.chunsun.redenvelope.ui.base.fragment.BaseAtFragment;
 import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
@@ -66,6 +68,8 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     TextView mNavLeft;
     @Bind(R.id.tv_nav_mid)
     TextView mNavTitle;
+    @Bind(R.id.rl_nav_right)
+    RelativeLayout mRlNavRight;
     @Bind(R.id.ib_nav_right)
     ImageButton mIbRepeat;
     @Bind(R.id.view_bg)
@@ -205,6 +209,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     private void initEvent() {
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
+        mRlNavRight.setOnClickListener(this);
         mIbRepeat.setOnClickListener(this);
         mIvHead.setOnClickListener(this);
         mRbCommentRecord.setOnClickListener(this);
@@ -331,6 +336,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
                 EventBus.getDefault().post(new RedDetailBackEvent(""));
                 break;
             case R.id.ib_nav_right:
+            case R.id.rl_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(getActivity(), mDetail, new GrabEntity());
                 noRewardMenuWindow.showAtLocation(mMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -403,6 +409,13 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
         mListComment.clear();
         mPresenter.getCommentList(mDetail.getId(), mCurrentCommentPage);
         clearAt();
+    }
+
+    @Override
+    public void userIsEmpty() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY, Constants.FROM_WELCOME);
+        startActivity(intent);
     }
 
     @Override

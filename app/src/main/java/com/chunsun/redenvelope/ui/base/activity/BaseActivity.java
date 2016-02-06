@@ -34,6 +34,8 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
     protected TextView mNavLeft;
     @Bind(R.id.tv_nav_mid)
     protected TextView mNavTitle;
+    @Bind(R.id.rl_nav_right)
+    protected RelativeLayout mRlNavRight;
     @Bind(R.id.tv_nav_right)
     protected TextView mNavRight;
     @Bind(R.id.ib_nav_right)
@@ -140,6 +142,7 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mRlBack.setOnClickListener(this);
+        mRlNavRight.setOnClickListener(this);
     }
 
     protected void showCircleLoading() {
@@ -203,9 +206,13 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
                 } else if (isLeftType == 2) {
                     MainApplication.getContext().getLocationClient().start();
                     ShowToast.Short("重新获取位置");
+                    break;
                 }
                 break;
+            default:
+                click(v);
+                break;
         }
-        click(v);
+
     }
 }
