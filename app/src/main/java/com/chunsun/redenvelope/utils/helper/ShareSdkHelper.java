@@ -132,19 +132,16 @@ public class ShareSdkHelper implements PlatformActionListener {
         if (!TextUtils.isEmpty(mDetailEntity.getContent()) && mDetailEntity.getContent().contains(">>更多详情请点击：")) {
             sp.setText(mDetailEntity.getContent());
         } else {
-            if (TextUtils.isEmpty(mDetailEntity.getContent())) {
+            if (TextUtils.isEmpty(mDetailEntity.getContent()) || mDetailEntity.getContent().startsWith("http")) {
                 sp.setText(mDetailEntity.getTitle() + ">>更多详情请点击：" + url);
             } else if (mDetailEntity.getContent().length() > 100) {
                 String content = mDetailEntity.getContent().substring(0, 100);
                 content += ">>更多详情请点击：" + url;
                 sp.setText(content);
             } else {
-                if(url.contains(">>更多详情请点击：")){
-                    sp.setText(url);
-                }else {
-                    mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
-                    sp.setText(mDetailEntity.getContent());
-                }
+                mDetailEntity.setContent(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
+                sp.setText(mDetailEntity.getContent() + ">>更多详情请点击：" + url);
+
             }
         }
         //分享图片

@@ -2882,6 +2882,9 @@ public class HttpManager {
      * @param activity
      */
     public void upGrade(final BaseMultiLoadedListener listener, Activity activity) {
+        //Accept-Encoding
+//        Map<String, String> headers = new HashMap<>();
+//        headers.put("Accept-Encoding", "gbk");
         GsonRequest<ApkVersionEntity> request = new GsonRequest<ApkVersionEntity>(Request.Method.GET, StringUtil.preUrl(Constants.GET_APK_VERSION),
                 ApkVersionEntity.class, null, new Response.Listener<ApkVersionEntity>() {
 

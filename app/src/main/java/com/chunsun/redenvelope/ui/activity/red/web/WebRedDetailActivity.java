@@ -30,6 +30,7 @@ import com.chunsun.redenvelope.ui.base.presenter.BasePresenter;
 import com.chunsun.redenvelope.ui.fragment.WebRedDetailFragment;
 import com.chunsun.redenvelope.ui.view.IWebRedDetailView;
 import com.chunsun.redenvelope.utils.DensityUtils;
+import com.chunsun.redenvelope.utils.ShowToast;
 import com.chunsun.redenvelope.utils.helper.RedDetailHelper;
 import com.chunsun.redenvelope.widget.popupwindow.ShareRedEnvelopePopupWindow;
 
@@ -307,6 +308,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         switch (v.getId()) {
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
+                ShowToast.Short(mRed.getContent());
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity);
                 noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
