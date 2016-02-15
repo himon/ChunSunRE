@@ -79,6 +79,7 @@ public class InteractivePlatformPresenter extends UserLosePresenter<IInteractive
                 mIInteractivePlatformView.setLocalList((InteractiveEntity) data);
                 break;
             case Constants.LISTENER_TYPE_COMMENT:
+                ShowToast.Short(data.getMsg());
                 mIInteractivePlatformView.hideLoading();
                 mIInteractivePlatformView.commentSuccess();
                 break;

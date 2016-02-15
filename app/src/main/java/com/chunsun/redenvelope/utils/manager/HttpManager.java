@@ -1253,11 +1253,11 @@ public class HttpManager {
      * @param activity
      */
     public void sendComment(final String token, final String comment, final String province, final String city, final String at, final UserLoseMultiLoadedListener listener, final Activity activity) {
-        GsonRequest<SampleResponseEntity> request = new GsonRequest<SampleResponseEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
-                SampleResponseEntity.class, null, new Response.Listener<SampleResponseEntity>() {
+        GsonRequest<SampleResponseObjectEntity> request = new GsonRequest<SampleResponseObjectEntity>(Request.Method.POST, StringUtil.preUrl(Constants.WEB_SERVICE_URL),
+                SampleResponseObjectEntity.class, null, new Response.Listener<SampleResponseObjectEntity>() {
 
             @Override
-            public void onResponse(SampleResponseEntity response) {
+            public void onResponse(SampleResponseObjectEntity response) {
                 if (response.isSuccess()) {
                     listener.onSuccess(Constants.LISTENER_TYPE_COMMENT, response);
                 } else {
