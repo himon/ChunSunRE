@@ -23,7 +23,7 @@ public interface IHomeFragmentView extends LoadingView {
      *
      * @param advert
      */
-    void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert);
+    void setAdData(RedAutoAdEntity.ResultEntity advert);
 
     /**
      * 跳转红包详情

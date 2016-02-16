@@ -1,5 +1,6 @@
 package com.chunsun.redenvelope.ui.fragment.tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.context.LoginContext;
@@ -17,6 +20,7 @@ import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.entities.json.RedListDetailEntity;
 import com.chunsun.redenvelope.preference.Preferences;
 import com.chunsun.redenvelope.presenter.HomeFragmentPresenter;
+import com.chunsun.redenvelope.ui.activity.CommonWebActivity;
 import com.chunsun.redenvelope.ui.activity.MainActivity;
 import com.chunsun.redenvelope.ui.adapter.RedListAdapter;
 import com.chunsun.redenvelope.ui.base.fragment.BaseFragment;
@@ -48,6 +52,10 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     GetMoreListView mListView;
     @Bind(R.id.iv_to_top)
     ImageView mIvTop;
+    @Bind(R.id.ll_sys_notice_container)
+    LinearLayout mLLNotice;
+    @Bind(R.id.tv_title)
+    TextView mTvNotice;
 
     private GuideGallery mViewPager;
     private HomeFragmentPresenter mPresenter;
@@ -192,6 +200,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
 
     private void initEvent() {
         mIvTop.setOnClickListener(this);
+        mLLNotice.setOnClickListener(this);
     }
 
     @Override
@@ -259,12 +268,13 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
     }
 
     @Override
-    public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
-        imageAdapter = new AdImageAdapter(advert, getActivity());
-        if (advert.size() == 0) {
+    public void setAdData(RedAutoAdEntity.ResultEntity advert) {
+        List<RedAutoAdEntity.ResultEntity.AdvertEntity> adList = advert.getAdvert();
+        imageAdapter = new AdImageAdapter(adList, getActivity());
+        if (adList.size() == 0) {
             mListView.removeHeaderView(mViewPager);
         } else {
-            mViewPager.setSize(advert.size());
+            mViewPager.setSize(adList.size());
             mViewPager.setAdapter(imageAdapter);
             mViewPager.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -274,6 +284,18 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
                 }
             });
             mViewPager.startAutoScroll();
+        }
+        if (advert.getNotice() != null) {
+            RedAutoAdEntity.ResultEntity.NoticeEntity noticeEntity = advert.getNotice().get(0);
+            mTvNotice.setText(noticeEntity.getTitle());
+            mLLNotice.setTag(noticeEntity);
+            mLLNotice.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mLLNotice.setVisibility(View.GONE);
+                }
+            }, 5000);
         }
     }
 
@@ -396,6 +418,18 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         switch (v.getId()) {
             case R.id.iv_to_top:
                 mListView.setSelection(0);
+                break;
+            case R.id.ll_sys_notice_container:
+                RedAutoAdEntity.ResultEntity.NoticeEntity entity = (RedAutoAdEntity.ResultEntity.NoticeEntity) v.getTag();
+                Intent intentWeb = new Intent(v.getContext(),
+                        CommonWebActivity.class);
+                intentWeb.putExtra(
+                        Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_URL,
+                        Constants.SYSTEM_NOTICE_URL + entity.getId());
+                intentWeb.putExtra(
+                        Constants.INTENT_BUNDLE_KEY_COMMON_WEB_VIEW_TITLE,
+                        entity.getTitle());
+                v.getContext().startActivity(intentWeb);
                 break;
         }
     }

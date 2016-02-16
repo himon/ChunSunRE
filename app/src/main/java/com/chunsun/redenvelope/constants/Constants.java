@@ -67,12 +67,12 @@ public interface Constants {
     /**
      * 服务器地址
      */
-      String HOST_URL = "http://cssv.chunsunkeji.com";
-//    String HOST_URL = "http://192.168.1.109:9101";
+//    String HOST_URL = "http://cssv.chunsunkeji.com";
+    String HOST_URL = "http://192.168.1.109:9101";
 //    String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-      String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-//    String IMG_HOST_URL = "http://192.168.1.109:9101";
+    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+    String IMG_HOST_URL = "http://192.168.1.109:9101";
 //    String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
     /**
@@ -237,7 +237,7 @@ public interface Constants {
     String CHANNEL_PACKAGE_NAME = "test";
 
     /**
-     * 推送通知的url
+     * 推送通知的url or 公告跳转地址
      */
     String SYSTEM_NOTICE_URL = Constants.HOST_URL
             + "/pages/notice/index.aspx?id=";

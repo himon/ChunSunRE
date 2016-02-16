@@ -31,4 +31,29 @@
         android:src="@drawable/img_to_top"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/ll_sys_notice_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#66ffff00"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_below="@+id/main_nav"
+        android:padding="4dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/img_arrow" />
+    </LinearLayout>
+
 </RelativeLayout>

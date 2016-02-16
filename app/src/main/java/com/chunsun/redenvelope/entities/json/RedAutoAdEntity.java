@@ -1,6 +1,5 @@
 package com.chunsun.redenvelope.entities.json;
 
-import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.BaseEntity;
 
 import java.util.List;
@@ -11,8 +10,9 @@ import java.util.List;
  */
 public class RedAutoAdEntity extends BaseEntity {
 
+
     /**
-     * result : {"advert":[{"img_url":"/upload/201507/21/201507210910071288.png","title":"你发广告，春笋买单","zhaiyao":"你发广告，春笋买单<br />","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210914541343.png","title":"324","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210910262348.jpg","title":"34","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210910165558.png","title":"1的","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"}],"notice":[]}
+     * result : {"advert":[{"img_url":"/upload/201601/29/201601291743368431.png","title":"圈子","zhaiyao":"","target_url":"http://viewer.maka.im/k/EEJDLI6E?DSCKID=6dcc8eba-6de0-449c-b9b4-f301f6a05917&DSTIMESTAMP=1450520232113"},{"img_url":"/upload/201601/29/201601291742457072.png","title":"圈子","zhaiyao":"","target_url":"http://eqxiu.com/s/tFGXjEEZ?from=singlemessage&isappinstalled=0"}],"notice":[{"id":148,"title":"红包来了"}]}
      */
     private ResultEntity result;
 
@@ -26,17 +26,17 @@ public class RedAutoAdEntity extends BaseEntity {
 
     public static class ResultEntity {
         /**
-         * advert : [{"img_url":"/upload/201507/21/201507210910071288.png","title":"你发广告，春笋买单","zhaiyao":"你发广告，春笋买单<br />","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210914541343.png","title":"324","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210910262348.jpg","title":"34","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"},{"img_url":"/upload/201507/21/201507210910165558.png","title":"1的","zhaiyao":"","target_url":"http://sv.chunsunkeji.com/pages/shuoming/index.html"}]
-         * notice : []
+         * advert : [{"img_url":"/upload/201601/29/201601291743368431.png","title":"圈子","zhaiyao":"","target_url":"http://viewer.maka.im/k/EEJDLI6E?DSCKID=6dcc8eba-6de0-449c-b9b4-f301f6a05917&DSTIMESTAMP=1450520232113"},{"img_url":"/upload/201601/29/201601291742457072.png","title":"圈子","zhaiyao":"","target_url":"http://eqxiu.com/s/tFGXjEEZ?from=singlemessage&isappinstalled=0"}]
+         * notice : [{"id":148,"title":"红包来了"}]
          */
         private List<AdvertEntity> advert;
-        private List<?> notice;
+        private List<NoticeEntity> notice;
 
         public void setAdvert(List<AdvertEntity> advert) {
             this.advert = advert;
         }
 
-        public void setNotice(List<?> notice) {
+        public void setNotice(List<NoticeEntity> notice) {
             this.notice = notice;
         }
 
@@ -44,16 +44,16 @@ public class RedAutoAdEntity extends BaseEntity {
             return advert;
         }
 
-        public List<?> getNotice() {
+        public List<NoticeEntity> getNotice() {
             return notice;
         }
 
         public static class AdvertEntity {
             /**
-             * img_url : /upload/201507/21/201507210910071288.png
-             * title : 你发广告，春笋买单
-             * zhaiyao : 你发广告，春笋买单<br />
-             * target_url : http://sv.chunsunkeji.com/pages/shuoming/index.html
+             * img_url : /upload/201601/29/201601291743368431.png
+             * title : 圈子
+             * zhaiyao :
+             * target_url : http://viewer.maka.im/k/EEJDLI6E?DSCKID=6dcc8eba-6de0-449c-b9b4-f301f6a05917&DSTIMESTAMP=1450520232113
              */
             private String img_url;
             private String title;
@@ -77,7 +77,7 @@ public class RedAutoAdEntity extends BaseEntity {
             }
 
             public String getImg_url() {
-                return Constants.IMG_HOST_URL + img_url.trim();
+                return img_url;
             }
 
             public String getTitle() {
@@ -90,6 +90,31 @@ public class RedAutoAdEntity extends BaseEntity {
 
             public String getTarget_url() {
                 return target_url;
+            }
+        }
+
+        public static class NoticeEntity {
+            /**
+             * id : 148
+             * title : 红包来了
+             */
+            private int id;
+            private String title;
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public String getTitle() {
+                return title;
             }
         }
     }

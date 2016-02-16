@@ -243,6 +243,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
                 mIbInfo.setVisibility(View.GONE);
                 mRlGetRed.setVisibility(View.GONE);
                 mLLComment.setVisibility(View.VISIBLE);
+                mNavTitle.setText("春笋圈子");
             }
         }
         mPresenter.getData(new Preferences(this).getToken(), mRedDetailId);

@@ -313,6 +313,8 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         mOrderPopup.addAction(new TitlePopupItemEntity("我的"));
         mOrderPopup.addAction(new TitlePopupItemEntity("收藏"));
         mOrderPopup.addAction(new TitlePopupItemEntity("附近"));
+
+        //mNavLeft.setText(MainApplication.getContext().getCity().equals("市辖区") ? MainApplication.getContext().getProvince() : MainApplication.getContext().getCity());
     }
 
     /**

@@ -168,7 +168,7 @@ public class MainApplication extends Application {
         super.onCreate();
         initIMEI();
         initHeadOptions();
-        //initBaiduMap();
+        initBaiduMap();
 
         initUserState();
 

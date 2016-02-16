@@ -225,7 +225,7 @@ public class SearchCircleActivity extends BaseActivity implements IHomeFragmentV
     }
 
     @Override
-    public void setAdData(List<RedAutoAdEntity.ResultEntity.AdvertEntity> advert) {
+    public void setAdData(RedAutoAdEntity.ResultEntity advert) {
 
     }
 

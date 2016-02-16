@@ -54,7 +54,7 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
                 break;
             case Constants.LISTENER_TYPE_AD:
                 RedAutoAdEntity entity2 = (RedAutoAdEntity) data;
-                mHomeFragmentView.setAdData(entity2.getResult().getAdvert());
+                mHomeFragmentView.setAdData(entity2.getResult());
                 break;
         }
     }
@@ -72,6 +72,6 @@ public class HomeFragmentPresenter extends BaseMultiLoadedListenerImpl<BaseEntit
 
     public void loadAdCash(String cash) {
         RedAutoAdEntity entity = mGson.fromJson(cash, RedAutoAdEntity.class);
-        mHomeFragmentView.setAdData(entity.getResult().getAdvert());
+        mHomeFragmentView.setAdData(entity.getResult());
     }
 }
