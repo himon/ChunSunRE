@@ -207,6 +207,7 @@ public class CircleDetailFragment extends BaseAtFragment<IRedDetailFragmentView,
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mRlNavRight.setOnClickListener(this);

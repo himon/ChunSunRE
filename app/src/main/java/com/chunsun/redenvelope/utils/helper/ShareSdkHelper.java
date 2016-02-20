@@ -125,7 +125,7 @@ public class ShareSdkHelper implements PlatformActionListener {
     private void sinaWeiboShareParams(String url) {
         ShareParams sp = new ShareParams();
         sp.setShareType(Platform.SHARE_WEBPAGE);
-        sp.setText(mDetailEntity.getTitle());
+        sp.setText(mDetailEntity.getShareLinkTitle());
         // 标题的超链接
         sp.setTitleUrl(url);
         //分享的文本
@@ -133,7 +133,7 @@ public class ShareSdkHelper implements PlatformActionListener {
             sp.setText(mDetailEntity.getContent());
         } else {
             if (TextUtils.isEmpty(mDetailEntity.getContent()) || mDetailEntity.getContent().startsWith("http")) {
-                sp.setText(mDetailEntity.getTitle() + ">>更多详情请点击：" + url);
+                sp.setText(mDetailEntity.getShareLinkTitle() + ">>更多详情请点击：" + url);
             } else if (mDetailEntity.getContent().length() > 100) {
                 String content = mDetailEntity.getContent().substring(0, 100);
                 content += ">>更多详情请点击：" + url;

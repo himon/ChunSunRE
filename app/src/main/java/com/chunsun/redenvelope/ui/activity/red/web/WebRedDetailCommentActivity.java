@@ -140,6 +140,7 @@ public class WebRedDetailCommentActivity extends BaseAtActivity<IWebRedDetailCom
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mRbCommentRecord.setOnClickListener(this);

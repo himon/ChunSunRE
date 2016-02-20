@@ -208,6 +208,7 @@ public class SendRedEnvelopeRecordDetailActivity extends BaseAtActivity<ISendRed
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mRbCommentRecord.setOnClickListener(this);

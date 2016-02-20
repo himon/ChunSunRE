@@ -163,6 +163,10 @@ public class RedDetailEntity extends BaseEntity {
             private String id;
             private String current_u_id;
             private String title;
+            /**
+             * 新浪微博，链接类分享标题
+             */
+            private String shareLinkTitle;
             private String weixin;
             /**
              * 可以打开的链接数
@@ -645,6 +649,14 @@ public class RedDetailEntity extends BaseEntity {
                 this.comment_count = comment_count;
             }
 
+            public String getShareLinkTitle() {
+                return shareLinkTitle;
+            }
+
+            public void setShareLinkTitle(String shareLinkTitle) {
+                this.shareLinkTitle = shareLinkTitle;
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -687,6 +699,7 @@ public class RedDetailEntity extends BaseEntity {
                 dest.writeString(this.id);
                 dest.writeString(this.current_u_id);
                 dest.writeString(this.title);
+                dest.writeString(this.shareLinkTitle);
                 dest.writeString(this.weixin);
                 dest.writeInt(this.can_open_linknum);
                 dest.writeString(this.user_id);
@@ -747,6 +760,7 @@ public class RedDetailEntity extends BaseEntity {
                 this.id = in.readString();
                 this.current_u_id = in.readString();
                 this.title = in.readString();
+                this.shareLinkTitle = in.readString();
                 this.weixin = in.readString();
                 this.can_open_linknum = in.readInt();
                 this.user_id = in.readString();

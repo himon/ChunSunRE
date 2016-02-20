@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -200,6 +199,7 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
 
@@ -236,19 +236,6 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        mEtComment.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (!at.equals("0")) {
-                        at = "0";
-                        mEtComment.setHint("请输入评论内容...");
-                    }
-                }
-                return false;
             }
         });
     }
@@ -310,12 +297,16 @@ public class InteractivePlatformActivity extends BaseAtActivity<IInteractivePlat
         switch (v.getId()) {
             case R.id.rb_comment_country:
             case R.id.rb_main_comment_country:
+                mRbCommentCountry.setChecked(true);
+                mRbCountry.setChecked(true);
                 mCurrentCheckType = 0;
                 mListView.setHasMore();
                 changerDataList();
                 break;
             case R.id.rb_comment_local:
             case R.id.rb_main_comment_local:
+                mRbCommentLocal.setChecked(true);
+                mRbLocal.setChecked(true);
                 mCurrentCheckType = 1;
                 if (isLocalFinished) {
                     mListView.setNoMore();

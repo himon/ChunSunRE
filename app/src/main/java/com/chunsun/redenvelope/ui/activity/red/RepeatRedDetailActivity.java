@@ -182,6 +182,7 @@ public class RepeatRedDetailActivity extends BaseSwipeBackAtActivity<IRepeatRedD
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mIvHead.setOnClickListener(this);

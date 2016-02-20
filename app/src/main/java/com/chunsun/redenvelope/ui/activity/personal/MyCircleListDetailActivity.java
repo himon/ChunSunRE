@@ -213,6 +213,7 @@ public class MyCircleListDetailActivity extends BaseAtActivity<IMyCircleListDeta
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mIbRepeat.setOnClickListener(this);

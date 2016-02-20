@@ -256,11 +256,12 @@ public class ShareRedEnvelopePopupWindow extends PopupWindow implements View.OnC
         if (mDetail != null) {
             if (4 == mDetail.getHb_type() || 8 == mDetail.getHb_type() || 10 == mDetail.getHb_type()) {
                 mShowUrl = mDetail.getContent();
-                if(mDetail.getTitle().startsWith("我正在看【")){
-
-                }else {
-                    mDetail.setTitle("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
-                }
+//                if(mDetail.getTitle().startsWith("我正在看【")){
+//
+//                }else {
+//                    mDetail.setTitle("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
+//                }
+                mDetail.setShareLinkTitle("我正在看【" + mDetail.getTitle() + "】分享给你一起来看");
             } else if (-1 == mDetail.getHb_type()) {// 邀请码分享
                 mShowUrl = shareHost + "/pages/share/invitation_code.aspx?token=" + new Preferences(MainApplication.getContext()).getToken();
             } else if (7 == mDetail.getHb_type()) {

@@ -17,7 +17,6 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.chunsun.redenvelope.R;
 import com.chunsun.redenvelope.app.context.LoginContext;
-import com.chunsun.redenvelope.app.exceptionHandler.MyCrashHandler;
 import com.chunsun.redenvelope.app.state.impl.LoginState;
 import com.chunsun.redenvelope.app.state.impl.LogoutState;
 import com.chunsun.redenvelope.constants.Constants;
@@ -196,8 +195,8 @@ public class MainApplication extends Application {
         }
 
         // 全局捕获异常
-        MyCrashHandler handler = MyCrashHandler.getInstance();
-        Thread.currentThread().setUncaughtExceptionHandler(handler);
+        //MyCrashHandler handler = MyCrashHandler.getInstance();
+        //Thread.currentThread().setUncaughtExceptionHandler(handler);
     }
 
     /**

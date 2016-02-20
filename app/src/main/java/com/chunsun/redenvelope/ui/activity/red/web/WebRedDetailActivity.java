@@ -309,7 +309,6 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         switch (v.getId()) {
             case R.id.ib_nav_right:
                 mViewBg.setVisibility(View.VISIBLE);
-                ShowToast.Short(mRed.getContent());
                 ShareRedEnvelopePopupWindow noRewardMenuWindow = new ShareRedEnvelopePopupWindow(this, mRed, mGrabEntity);
                 noRewardMenuWindow.showAtLocation(mLLMain, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -350,7 +349,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
 
         if (mRed.is_open()) {
             mIvIcon.setVisibility(View.GONE);
-            mTvContent.setText("您已经领取红包" + mRed.getPrice() + "元");
+            mTvContent.setText("您已经领取了红包");
             mRlGetRed.setBackgroundColor(getResources().getColor(
                     R.color.global_red_tran));
         } else if (!mRed.isHb_status()) {
@@ -427,7 +426,7 @@ public class WebRedDetailActivity extends SwipeBackActivity<IWebRedDetailView, W
         if (mRed.isGrab_status()) {
             if (mRed.is_open()) {
                 mIvIcon.setVisibility(View.GONE);
-                mTvContent.setText("您已经领取红包" + mRed.getPrice() + "元");
+                mTvContent.setText("您已经领取了红包");
                 mRlGetRed.setBackgroundColor(getResources().getColor(R.color.global_red_tran));
             } else {
                 countDown();

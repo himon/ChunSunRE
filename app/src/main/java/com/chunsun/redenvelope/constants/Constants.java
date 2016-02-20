@@ -67,12 +67,12 @@ public interface Constants {
     /**
      * 服务器地址
      */
-//    String HOST_URL = "http://cssv.chunsunkeji.com";
-    String HOST_URL = "http://192.168.1.109:9101";
+    String HOST_URL = "http://cssv.chunsunkeji.com";
+//    String HOST_URL = "http://192.168.1.109:9101";
 //    String HOST_URL = "http://1.193.162.20:9101";// 外网
 
-    //    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
-    String IMG_HOST_URL = "http://192.168.1.109:9101";
+    String IMG_HOST_URL = "http://cssv.chunsunkeji.com";
+//    String IMG_HOST_URL = "http://192.168.1.109:9101";
 //    String IMG_HOST_URL = "http://1.193.162.20:9101";// 外网
 
     /**

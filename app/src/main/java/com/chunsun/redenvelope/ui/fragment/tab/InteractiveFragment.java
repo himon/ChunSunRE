@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,7 +170,6 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 mListView.doOnScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
-//              System.out.println("firstVisibleItem = " + firstVisibleItem + " visibleItemCount = " + visibleItemCount + " totalItemCount = " + totalItemCount);
                 if (firstVisibleItem >= 1) {
                     mLLRecordType.setVisibility(View.VISIBLE);
                 } else {
@@ -184,6 +182,7 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
     }
 
     private void initEvent() {
+        deleteAt();
         mRbCountry.setOnClickListener(this);
         mRbCommentCountry.setOnClickListener(this);
         mRbLocal.setOnClickListener(this);
@@ -217,19 +216,6 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        mEtComment.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DEL) {
-                    if (!at.equals("0")) {
-                        at = "0";
-                        mEtComment.setHint("请输入评论内容...");
-                    }
-                }
-                return false;
             }
         });
     }
@@ -274,12 +260,16 @@ public class InteractiveFragment extends BaseAtFragment<IInteractivePlatformView
         switch (v.getId()) {
             case R.id.rb_comment_country:
             case R.id.rb_main_comment_country:
+                mRbCommentCountry.setChecked(true);
+                mRbCountry.setChecked(true);
                 mCurrentCheckType = 0;
                 mListView.setHasMore();
                 changerDataList();
                 break;
             case R.id.rb_comment_local:
             case R.id.rb_main_comment_local:
+                mRbCommentLocal.setChecked(true);
+                mRbLocal.setChecked(true);
                 mCurrentCheckType = 1;
                 if (isLocalFinished) {
                     mListView.setNoMore();

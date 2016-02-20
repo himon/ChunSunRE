@@ -99,6 +99,8 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
         int density = (int) (120 * DensityUtils.getDensity(this));
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, density);
         mViewPager = new GuideGallery(this);
+        //解决滑动切换时有声音
+        mViewPager.setSoundEffectsEnabled(false);
         mViewPager.setLayoutParams(params);
 
         /**
@@ -240,7 +242,7 @@ public class TaskListActivity extends BaseActivity implements IHomeFragmentView 
             });
             mViewPager.startAutoScroll();
         }
-        if (advert.getNotice() != null) {
+        if (advert.getNotice() != null && advert.getNotice().size() > 0) {
             RedAutoAdEntity.ResultEntity.NoticeEntity noticeEntity = advert.getNotice().get(0);
             mTvNotice.setText(noticeEntity.getTitle());
             mLLNotice.setTag(noticeEntity);

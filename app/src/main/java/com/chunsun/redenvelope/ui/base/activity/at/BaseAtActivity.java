@@ -1,5 +1,7 @@
 package com.chunsun.redenvelope.ui.base.activity.at;
 
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -63,11 +65,30 @@ public abstract class BaseAtActivity<V, T extends BasePresenter<V>> extends MBas
      */
     protected abstract void toUserRewardActivity(String id);
 
-    protected  void clearAt(){
+    protected void clearAt() {
         mEtComment.setText("");
         mEtComment.setHint("请输入评论内容...");
         at = "0";
         hideKeyboard();
+    }
+
+    /**
+     * 删除at
+     */
+    protected void deleteAt() {
+        mEtComment.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (TextUtils.isEmpty(mEtComment.getText().toString().trim()) && !at.equals("0")) {
+                        at = "0";
+                        mEtComment.setHint("请输入评论内容...");
+                    }
+                }
+                return false;
+            }
+        });
     }
 
 }

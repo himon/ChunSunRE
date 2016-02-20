@@ -233,6 +233,7 @@ public class RedDetailFragment extends BaseAtFragment<IRedDetailFragmentView, Re
     }
 
     private void initEvent() {
+        deleteAt();
         mNavIcon.setOnClickListener(this);
         mNavLeft.setOnClickListener(this);
         mRlNavRight.setOnClickListener(this);

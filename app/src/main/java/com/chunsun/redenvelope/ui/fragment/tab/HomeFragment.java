@@ -124,6 +124,9 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
         int density = (int) (120 * DensityUtils.getDensity(getActivity()));
         AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, density);
         mViewPager = new GuideGallery(getActivity());
+        //解决滑动切换时有声音
+        //android:soundEffectsEnabled="false"
+        mViewPager.setSoundEffectsEnabled(false);
         mViewPager.setLayoutParams(params);
 
         /**
@@ -285,7 +288,7 @@ public class HomeFragment extends BaseFragment implements IHomeFragmentView, Loa
             });
             mViewPager.startAutoScroll();
         }
-        if (advert.getNotice() != null) {
+        if (advert.getNotice() != null && advert.getNotice().size() > 0) {
             RedAutoAdEntity.ResultEntity.NoticeEntity noticeEntity = advert.getNotice().get(0);
             mTvNotice.setText(noticeEntity.getTitle());
             mLLNotice.setTag(noticeEntity);
