@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.entities.json.RedAutoAdEntity;
 import com.chunsun.redenvelope.utils.DensityUtils;
 import com.chunsun.redenvelope.utils.helper.ImageLoaderHelper;
@@ -55,7 +56,7 @@ public class AdImageAdapter extends BaseAdapter {
         } else {
             holderView = (HolderView) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(getItem(position).getImg_url(), holderView.ivPic, mOptions);
+        ImageLoader.getInstance().displayImage(Constants.IMG_HOST_URL + getItem(position).getImg_url(), holderView.ivPic, mOptions);
         return convertView;
     }
 

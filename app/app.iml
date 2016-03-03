@@ -135,8 +135,8 @@
     <orderEntry type="library" exported="" name="Xg_sdk_v2.39_20150915_1121" level="project" />
 >>>>>>> Stashed changes
     <orderEntry type="library" exported="" name="support-v4-23.0.1" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="glide-3.6.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="wup-1.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-QZone-2.6.2" level="project" />
     <orderEntry type="library" exported="" name="library-2.4.0" level="project" />

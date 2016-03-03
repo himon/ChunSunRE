@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -13,6 +12,7 @@ import com.chunsun.redenvelope.constants.Constants;
 import com.chunsun.redenvelope.event.RedDetailShowPicBackEvent;
 import com.chunsun.redenvelope.ui.base.activity.BaseActivity;
 import com.chunsun.redenvelope.ui.fragment.RedDetailPicShowFragment;
+import com.chunsun.redenvelope.widget.ViewPagerFixed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class RedDetailPicShowActivity extends BaseActivity {
     @Bind(R.id.main_nav)
     RelativeLayout mToolsBar;
     @Bind(R.id.viewpager)
-    ViewPager mViewPager;
+    ViewPagerFixed mViewPager;
 
     private FragmentPagerAdapter mAdapter;
     private ArrayList<String> mUrls;
