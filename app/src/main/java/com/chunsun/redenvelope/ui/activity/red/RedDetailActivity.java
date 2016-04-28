@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -181,4 +182,6 @@ public class RedDetailActivity extends SwipeBackActivity<IRedDetailView, RedDeta
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
+
+
 }
